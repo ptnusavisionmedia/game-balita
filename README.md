@@ -1,0 +1,59 @@
+# Bayi GuguGaga
+
+Aplikasi permainan edukatif untuk anak usia 1-5 tahun: mengenal angka, warna, bentuk, hewan, musik, mewarnai, dan puzzle sederhana — ringan, aman, dan ramah disentuh anak kecil.
+
+## Tech stack
+
+**Flutter (Dart)**, dengan struktur monorepo *feature-first* yang dikelola lewat [Melos](https://melos.invertase.dev/).
+
+Alasan dipilih untuk tim 7 orang yang semuanya dibantu AI (Claude):
+
+- **Ringan**: APK bisa di-split per ABI, tree-shaking ikon, AOT compile — cocok untuk device low-end yang biasa dipegang anak/ortu.
+- **Satu codebase** untuk Android, iOS, dan web (berguna untuk demo cepat ke stakeholder tanpa build APK).
+- **Dart kuat tipe & mudah dibaca** — AI model & developer baru sama-sama cepat paham kode orang lain, gampang nebak di mana bug-nya.
+- **Modular per fitur** (lihat [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)) — tiap mini-game adalah package Dart terpisah, jadi 7 orang (+ 7 sesi Claude yang berbeda) bisa kerja paralel tanpa rebutan file dan tanpa perlu baca seluruh codebase.
+- **Hot reload** mempercepat iterasi animasi/audio untuk UI anak-anak.
+- **Ekosistem matang** untuk kebutuhan game anak: `flutter_animate`, `rive`/`lottie` (animasi karakter), `audioplayers` (efek suara & VO), `just_audio`.
+
+## Struktur project
+
+```
+bayi-gugugaga/
+├── packages/
+│   ├── core/              # design system, model, service bersama (dipakai semua modul)
+│   ├── app/                # shell app: navigasi, home menu, parental gate, settings
+│   ├── feature_angka/      # mini-game berhitung
+│   ├── feature_warna/      # mini-game warna & bentuk
+│   ├── feature_hewan/      # mini-game suara hewan
+│   ├── feature_musik/      # mini-game musik/piano sederhana
+│   ├── feature_mewarnai/   # mini-game mewarnai
+│   └── feature_puzzle/     # mini-game puzzle & mencocokkan
+├── docs/                   # arsitektur, pembagian tim, cara kerja dengan AI
+└── melos.yaml
+```
+
+Aturan dependensi: `feature_*` hanya boleh depend ke `core`, **tidak boleh** saling depend antar `feature_*`. `app` meng-assemble semua fitur. Ini yang membuat 7 modul benar-benar independen.
+
+## Mulai development
+
+Project ini di-scaffold strukturnya tapi **belum** di-generate dengan `flutter create` (SDK Flutter belum terpasang di environment ini). Langkah pertama untuk siapa pun yang pegang laptop dengan Flutter SDK terpasang:
+
+```bash
+dart pub global activate melos
+melos bootstrap
+```
+
+Lalu generate platform folder (android/ios/web) untuk package `app` dan tiap `feature_*` / `core` sebagai package Flutter biasa:
+
+```bash
+cd packages/app
+flutter create . --platforms=android,ios,web --org com.gugugaga
+```
+
+(Setiap package `feature_*` dan `core` juga perlu di-`flutter create .` sekali agar punya `pubspec.yaml` yang valid sebagai Flutter package — isi `pubspec.yaml` contoh sudah disiapkan, tinggal disesuaikan.)
+
+Baca selanjutnya:
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — kenapa modular, aturan dependensi, cara menambah modul baru
+- [docs/TEAM.md](docs/TEAM.md) — pembagian 7 orang per modul
+- [docs/AI_WORKFLOW.md](docs/AI_WORKFLOW.md) — cara kerja tim yang semua pakai Claude/AI tanpa saling tabrakan
+- [CONTRIBUTING.md](CONTRIBUTING.md) — branch, commit, PR

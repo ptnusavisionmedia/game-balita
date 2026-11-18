@@ -1,0 +1,21 @@
+name: bayi_gugugaga
+
+packages:
+  - packages/**
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  analyze:
+    run: melos exec -- flutter analyze
+    description: Jalankan flutter analyze di semua package
+
+  test:
+    run: melos exec --dir-exists=test -- flutter test
+    description: Jalankan flutter test di semua package yang punya folder test
+
+  format:
+    run: melos exec -- dart format .
+    description: Format semua package

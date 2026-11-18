@@ -1,0 +1,11 @@
+# Isi dengan GitHub username tiap pemegang modul (lihat docs/TEAM.md)
+# Siapa pun yang membuka PR yang menyentuh path ini akan otomatis minta review ke owner-nya.
+
+packages/core/             @lead-username
+packages/app/               @lead-username
+packages/feature_angka/      @dev-angka
+packages/feature_warna/      @dev-warna
+packages/feature_hewan/      @dev-hewan
+packages/feature_musik/      @dev-musik
+packages/feature_mewarnai/   @dev-mewarnai
+packages/feature_puzzle/     @dev-puzzle
