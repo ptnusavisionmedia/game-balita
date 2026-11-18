@@ -4,15 +4,15 @@ Prinsip: **1 orang = 1 modul penuh** (UI, logic, asset, test untuk modul itu), s
 
 | # | Nama (isi) | Modul (`packages/...`) | Tanggung jawab | GitHub username |
 |---|---|---|---|---|
-| 1 | _(Lead/Architect)_ | `core` + `app` | Design system, navigasi utama, parental gate, integrasi semua fitur, review PR yang menyentuh `core` | `@` |
-| 2 | | `feature_angka` | Mini-game berhitung (1-10, drag angka, suara hitung) | `@` |
-| 3 | | `feature_warna` | Mini-game kenal warna & bentuk dasar | `@` |
-| 4 | | `feature_hewan` | Mini-game suara & nama hewan | `@` |
-| 5 | | `feature_musik` | Mini-game piano/perkusi sederhana | `@` |
-| 6 | | `feature_mewarnai` | Mini-game mewarnai (tap/drag warna ke pola) | `@` |
-| 7 | | `feature_puzzle` | Mini-game puzzle & mencocokkan bentuk/gambar | `@` |
+| 1 | Dev 1 (Lead/Architect) | `core` + `app` | Design system, navigasi utama, parental gate, integrasi semua fitur, review PR yang menyentuh `core` | `@lead-username` |
+| 2 | Dev 2 | `feature_angka` | Mini-game berhitung (1-10, drag angka, suara hitung) | `@dev-angka` |
+| 3 | Dev 3 | `feature_warna` | Mini-game kenal warna & bentuk dasar | `@dev-warna` |
+| 4 | Dev 4 | `feature_hewan` | Mini-game suara & nama hewan | `@dev-hewan` |
+| 5 | Dev 5 | `feature_musik` | Mini-game piano/perkusi sederhana | `@dev-musik` |
+| 6 | Dev 6 | `feature_mewarnai` | Mini-game mewarnai (tap/drag warna ke pola) | `@dev-mewarnai` |
+| 7 | Dev 7 | `feature_puzzle` | Mini-game puzzle & mencocokkan bentuk/gambar | `@dev-puzzle` |
 
-> Isi kolom Nama & GitHub username, lalu update `.github/CODEOWNERS` agar sinkron.
+> Placeholder. Ganti "Dev 1".."Dev 7" dengan nama asli dan `@...` dengan username GitHub asli, lalu pastikan `.github/CODEOWNERS` tetap sinkron.
 
 ## Kenapa bukan dibagi per layer (FE/BE/Asset/QA)?
 
