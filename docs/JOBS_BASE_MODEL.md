@@ -4,6 +4,22 @@ Lihat alasan & scope lengkap di [docs/PLAN_BASE_MODEL.md](PLAN_BASE_MODEL.md). P
 
 > **Status stack**: Godot 4.7.2 sudah diinstall & semua 8 scene lolos headless tanpa error (2026-11-19). Yang belum dicoba: interaksi sentuhan asli & export APK — lihat Definition of Done di `docs/PLAN_BASE_MODEL.md`.
 
+## Bisa paralel atau harus nunggu?
+
+Hampir semua job bisa mulai **bersamaan sekarang** — alasan teknisnya ada di `docs/ROLES.md` (struktur folder per orang nyaris tidak overlap sama sekali). Satu-satunya gate yang disengaja bukan soal tabrakan file, tapi kualitas: **coding modul kedua** tiap dev (`feature_warna`/`feature_musik`/`feature_puzzle`) ditahan sampai `feature_angka` lolos demo interaktif — supaya 3 orang tidak menebak-nebak pola sebelum terbukti jalan.
+
+| Job | Bisa mulai sekarang? | Catatan |
+|---|---|---|
+| Job 1 (Bramantyo) — CI export job | ✅ Ya | Sudah selesai sebagian besar, sisa CI export tidak nunggu siapa pun |
+| Job 2 (Dev 2) — spek `feature_warna` | ✅ Ya | Nulis spek tidak nunggu apa pun |
+| Job 2 (Dev 2) — **coding** `feature_warna` | ⛔ **Tunggu** | Sengaja ditahan sampai `feature_angka` lolos demo interaktif (lihat `docs/PLAN_BASE_MODEL.md`) |
+| Job 3 (Dev 3) — spek `feature_hewan`+`feature_musik` | ✅ Ya | |
+| Job 4 (Dev 4) — spek `feature_mewarnai`+`feature_puzzle` | ✅ Ya | |
+| Job 5 (Dev Testing) — checklist QA | ✅ Ya | Testing interaktif `feature_angka` juga bisa mulai begitu ada device/emulator, tidak nunggu job lain |
+| Job 6 (Asset 1) — style guide + ilustrasi `feature_angka` | ✅ Ya | Spek `feature_angka` sudah ada dari awal |
+| Job 7 (Asset 2) — SFX/VO `feature_angka` | ✅ Ya | |
+| Job 8 (Asset 3) — video/marketing | ✅ Ya | Memang didesain dari awal "tidak bergantung ke base model" |
+
 ## Job 1 — Bramantyo — `core/` + `scenes/`
 
 Jalur kritis base model. Sudah ditulis & lolos headless — cek dulu sebelum nulis ulang:
