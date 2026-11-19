@@ -52,9 +52,12 @@ flutter create . --platforms=android,ios,web --org com.gugugaga
 
 (Setiap package `feature_*` dan `core` juga perlu di-`flutter create .` sekali agar punya `pubspec.yaml` yang valid sebagai Flutter package — isi `pubspec.yaml` contoh sudah disiapkan, tinggal disesuaikan.)
 
+Sesi AI/developer baru: mulai dari [CLAUDE.md](CLAUDE.md) (entry point wajib — urutan dokumen & cara klaim task).
+
 Baca selanjutnya:
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — kenapa modular, aturan dependensi, cara menambah modul baru
-- [docs/TEAM.md](docs/TEAM.md) — pembagian 7 orang per modul
+- [docs/TEAM.md](docs/TEAM.md) — pembagian tim: 4 developer + 3 asset creator
+- [docs/TASK_BOARD.md](docs/TASK_BOARD.md) — task mana yang Open/Claimed/Done
 - [docs/AI_WORKFLOW.md](docs/AI_WORKFLOW.md) — cara kerja tim yang semua pakai Claude/AI tanpa saling tabrakan
 - [docs/PLAN_BASE_MODEL.md](docs/PLAN_BASE_MODEL.md) — plan fase sekarang (base model)
 - [docs/JOBS_BASE_MODEL.md](docs/JOBS_BASE_MODEL.md) — tugas tiap orang untuk fase base model

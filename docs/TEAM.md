@@ -1,24 +1,32 @@
-# Pembagian tim (7 orang)
+# Pembagian tim (7 orang — 4 developer + 3 asset creator)
 
-Prinsip: **1 orang = 1 modul penuh** (UI, logic, asset, test untuk modul itu), supaya tiap orang bisa kerja paralel dari awal sampai selesai tanpa menunggu orang lain, dan tiap sesi Claude cukup diberi konteks 1 folder package saja.
+Prinsip: developer kerja per modul (bisa pegang >1 modul kalau jumlah dev lebih sedikit dari jumlah modul), asset creator kerja per **jenis konten** lintas modul (ilustrasi, audio, video/marketing) — bukan dipaksa coding. Lihat [[../obsidian-vault/Decisions Log|alasan restructure ini]].
+
+## Developer (4 orang)
 
 | # | Nama (isi) | Modul (`packages/...`) | Tanggung jawab | GitHub username |
 |---|---|---|---|---|
-| 1 | Dev 1 (Lead/Architect) | `core` + `app` | Design system, navigasi utama, parental gate, integrasi semua fitur, review PR yang menyentuh `core` | `@lead-username` |
-| 2 | Dev 2 | `feature_angka` | Mini-game berhitung (1-10, drag angka, suara hitung) | `@dev-angka` |
-| 3 | Dev 3 | `feature_warna` | Mini-game kenal warna & bentuk dasar | `@dev-warna` |
-| 4 | Dev 4 | `feature_hewan` | Mini-game suara & nama hewan | `@dev-hewan` |
-| 5 | Dev 5 | `feature_musik` | Mini-game piano/perkusi sederhana | `@dev-musik` |
-| 6 | Dev 6 | `feature_mewarnai` | Mini-game mewarnai (tap/drag warna ke pola) | `@dev-mewarnai` |
-| 7 | Dev 7 | `feature_puzzle` | Mini-game puzzle & mencocokkan bentuk/gambar | `@dev-puzzle` |
+| 1 | Dev 1 (Lead/Architect) | `core` + `app` | Design system, state/persistence bersama, navigasi utama, parental gate, CI/Docker, integrasi semua fitur, review PR yang menyentuh `core` | `@lead-username` |
+| 2 | Dev 2 | `feature_angka` + `feature_warna` | `feature_angka` jadi **pilot base model** (dikerjakan dulu, lihat docs/JOBS_BASE_MODEL.md), `feature_warna` nyusul setelah base model lolos | `@dev-angka-warna` |
+| 3 | Dev 3 | `feature_hewan` + `feature_musik` | 2 modul, coding paralel setelah base model lolos | `@dev-hewan-musik` |
+| 4 | Dev 4 | `feature_mewarnai` + `feature_puzzle` | 2 modul, coding paralel setelah base model lolos | `@dev-mewarnai-puzzle` |
 
-> Placeholder. Ganti "Dev 1".."Dev 7" dengan nama asli dan `@...` dengan username GitHub asli, lalu pastikan `.github/CODEOWNERS` tetap sinkron.
+## Asset Creator (3 orang) — TIDAK coding
 
-## Kenapa bukan dibagi per layer (FE/BE/Asset/QA)?
+| # | Nama (isi) | Fokus | Tanggung jawab | GitHub username |
+|---|---|---|---|---|
+| 5 | Asset 1 — Ilustrator | Gambar/ikon untuk semua 6 modul + app icon + splash | Bikin style guide ilustrasi dulu (1x, jadi acuan semua modul), lalu produksi ilustrasi per modul sesuai spek di `obsidian-vault/Specs/<modul>.md`, taruh file di `packages/feature_xxx/assets/images/` | `@asset-ilustrasi` |
+| 6 | Asset 2 — Audio/VO | SFX, voice-over, musik latar untuk semua 6 modul | Rekam/cari SFX (tap/benar/coba-lagi) & VO (angka, nama warna/hewan, dst) sesuai spek modul, taruh file di `packages/feature_xxx/assets/audio/` | `@asset-audio` |
+| 7 | Asset 3 — Video/Marketing | Video promo, konten Play Store, upload listing | Video trailer/demo, screenshot & video untuk Play Store listing, koordinasi dengan Dev 1 soal APK untuk recording, upload ke `marketing/` | `@asset-video` |
 
-Untuk game anak sesederhana ini, tiap mini-game kecil dan hampir berdiri sendiri (tidak ada backend, tidak ada state kompleks antar-fitur). Membagi per layer justru membuat 1 fitur butuh koordinasi 3-4 orang untuk hal sepele. Membagi per fitur membuat setiap orang punya "produk kecil" yang jelas selesainya, dan cocok dengan cara kerja AI-assisted dev: tiap sesi Claude paling efektif kalau scope-nya sempit dan jelas.
+> Isi "Nama (isi)" dengan nama asli dan `@...` dengan username GitHub asli, lalu pastikan `.github/CODEOWNERS` tetap sinkron.
 
-Role lintas-modul yang tetap perlu disepakati di awal (bisa dirangkap, tidak perlu orang baru):
-- **Asset style guide**: siapa yang menentukan gaya ilustrasi/warna supaya 7 mini-game terasa satu produk (biasanya pemegang `core`).
-- **QA lintas modul**: sebelum rilis, satu orang (bisa bergilir) main-in semua modul di device low-end.
-- **Release manager**: yang pegang `app`, karena dia yang build APK final.
+## Kenapa restructure dari "7 developer" ke "4 dev + 3 asset creator"
+
+Kualitas app anak sangat bergantung ilustrasi/audio/video yang menarik — bukan skill yang otomatis dimiliki developer, dan memaksa semua orang coding 1 modul penuh tidak efisien kalau sebenarnya kekuatan tim lebih ke konten. 3 modul yang tersisa (6 modul, 3 dev selain Lead) dibagi 2 modul/orang — tetap realistis karena base model (lihat docs/PLAN_BASE_MODEL.md) membuktikan pola dulu sebelum modul lain digarap, dan asset creator sudah menyiapkan materi dari awal supaya begitu dev mulai coding modul ke-2/ke-3, aset sudah siap (tidak nunggu).
+
+## Role lintas-modul yang tetap perlu disepakati (bisa dirangkap)
+
+- **QA lintas modul** sebelum rilis: bisa bergilir, atau Asset 3 (yang paling dekat ke "produk jadi" lewat perekaman video).
+- **Release manager** (build & sign APK): Dev 1.
+- **Publish ke Play Store Console**: Asset 3, tapi APK final dari Dev 1 — jadi wajib koordinasi, bukan kerja sendiri-sendiri.

@@ -1,11 +1,20 @@
 # Isi dengan GitHub username tiap pemegang modul (lihat docs/TEAM.md)
 # Siapa pun yang membuka PR yang menyentuh path ini akan otomatis minta review ke owner-nya.
 
-packages/core/             @lead-username
-packages/app/               @lead-username
-packages/feature_angka/      @dev-angka
-packages/feature_warna/      @dev-warna
-packages/feature_hewan/      @dev-hewan
-packages/feature_musik/      @dev-musik
-packages/feature_mewarnai/   @dev-mewarnai
-packages/feature_puzzle/     @dev-puzzle
+packages/core/                       @lead-username
+packages/app/                        @lead-username
+
+packages/feature_angka/              @dev-angka-warna
+packages/feature_warna/              @dev-angka-warna
+
+packages/feature_hewan/              @dev-hewan-musik
+packages/feature_musik/              @dev-hewan-musik
+
+packages/feature_mewarnai/           @dev-mewarnai-puzzle
+packages/feature_puzzle/             @dev-mewarnai-puzzle
+
+# Asset creator tidak wajib jadi reviewer kode, tapi otomatis ke-notify kalau
+# ada yang mengubah folder asset modul yang mereka isi.
+packages/*/assets/images/            @asset-ilustrasi
+packages/*/assets/audio/             @asset-audio
+marketing/                           @asset-video

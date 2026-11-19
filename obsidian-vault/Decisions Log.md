@@ -49,3 +49,15 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Keputusan**: pakai image Docker (`ghcr.io/cirruslabs/flutter:3.24.3`) yang sama di CI dan lokal (`docker-compose.yml`) untuk `melos bootstrap`/`analyze`/`test`/`build apk`. **Tidak** dipakai untuk `flutter run` ke emulator (butuh GPU/virtualisasi native, tidak praktis di Docker Windows) — dev tetap install Flutter SDK native untuk kerja harian dengan hot reload.
 
 **Alasan**: menghindari masalah "beda versi Flutter antar laptop" di tim 7 orang. Instalasi Docker Desktop sendiri (butuh WSL2 + restart) sengaja tidak dijalankan otomatis — itu aksi sistem yang harus dijalankan manual oleh tiap orang, lihat `docs/DOCKER.md`.
+
+## 2026-11-19 — Restructure tim: 4 developer + 3 asset creator (bukan 7 developer)
+
+**Keputusan**: dari 7 orang, 4 jadi developer (Dev 1 pegang `core`+`app`, Dev 2-4 masing-masing pegang 2 modul `feature_*`), 3 jadi asset creator penuh (Asset 1 ilustrasi, Asset 2 audio/VO, Asset 3 video/marketing & Play Store listing) — **tidak coding**. Detail di `docs/TEAM.md`, tugas konkret per orang di `docs/JOBS_BASE_MODEL.md` Job 6-8.
+
+**Alasan**: kualitas app anak sangat bergantung ilustrasi/audio/video yang menarik, bukan skill yang otomatis dimiliki developer. Memaksa 7 orang semua coding 1 modul penuh tidak efisien kalau kekuatan tim sebagian besar di konten, bukan kode. Asset creator kerja lintas-modul (bukan per modul) karena jumlahnya lebih sedikit dari jumlah modul, dan bisa mulai dari style guide + `feature_angka` (pilot) duluan.
+
+## 2026-11-19 — Tambah CLAUDE.md & docs/TASK_BOARD.md: entry point wajib untuk sesi AI baru
+
+**Keputusan**: `CLAUDE.md` di root repo (otomatis dibaca Claude Code tiap sesi baru) jadi entry point wajib, mengarahkan ke urutan dokumen yang harus dibaca + cara klaim task di `docs/TASK_BOARD.md` sebelum mulai kerja (tulis status `Claimed` + commit kecil, supaya 2 orang/2 sesi AI tidak kerja task yang sama tanpa sadar).
+
+**Alasan**: sebelumnya tidak ada mekanisme ini — kalau 7 orang (atau sesi AI berbeda) jalan paralel tanpa papan task bersama, risiko kerja dobel atau task ke-skip semakin tinggi seiring tim membesar.
