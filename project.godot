@@ -1,15 +1,23 @@
 ; Engine configuration file.
-; Dibuat manual (bukan lewat editor) sebagai scaffold awal — buka sekali di
-; Godot Editor untuk re-save dan generate file pendukung (.godot/ cache, dll).
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
 
 config_version=5
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
 config/name="Bayi GuguGaga"
 config/description="Game edukatif untuk anak 1-5 tahun: angka, warna, hewan, musik, mewarnai, puzzle."
 run/main_scene="res://scenes/Home.tscn"
-config/features=PackedStringArray("4.3")
+config/features=PackedStringArray("4.7")
 
 [autoload]
 

@@ -46,16 +46,17 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
 
 ## Definition of Done (base model dianggap selesai kalau semua ini benar)
 
-Godot sudah diinstall & dicoba di sesi ini (lihat Decisions Log 2026-11-19 "Godot DIVERIFIKASI jalan") — semua 8 scene lolos headless tanpa error, 1 bug nyata (path script salah di 5 placeholder) ketemu & diperbaiki. Yang **belum** dicoba adalah interaksi sentuhan asli (hanya device fisik/emulator yang bisa) dan export APK sungguhan.
+Godot sudah diinstall & dicoba **secara interaktif sungguhan** di sesi ini (bukan cuma headless) — user main `feature_angka` langsung (jawab semua soal benar), reward bintang + confetti muncul, dan `user://progress.cfg` terbukti terisi (4 sesi tercatat, bukan cuma dugaan). Lihat Decisions Log 2026-11-19.
 
 - [x] Project ini bisa dibuka Godot 4.x tanpa error (`--headless --import` lolos, semua `class_name` ter-register).
 - [x] Tiap scene (`Home`, `Settings`, `feature_angka`, 5 placeholder) lolos dijalankan headless tanpa error GDScript/parse.
-- [ ] Dari Home, buka `feature_angka`, selesaikan 1 level, lihat reward bintang, balik ke Home — **secara interaktif** (sentuhan/klik asli, headless run cuma membuktikan tidak crash saat load).
-- [ ] Tutup app, buka lagi → hasil game sebelumnya masih tersimpan (progres tidak hilang) — cek file `user://progress.cfg` setelah main sungguhan.
+- [x] `feature_angka`: 1 sesi (4 soal) dimainkan **sungguhan** (klik asli), semua jawaban benar → reward bintang + confetti muncul.
+- [x] Progres tersimpan — `user://progress.cfg` terisi 4 entri `GameResult` nyata dengan timestamp, bukan simulasi.
+- [ ] Dari **Home** (bukan langsung scene `feature_angka`), navigasi penuh Home → game → balik ke Home — belum dicoba (sesi ini langsung run `Angka.tscn` berdiri sendiri untuk tes cepat).
 - [ ] Toggle suara di Settings beneran mematikan/menyalakan audio (begitu ada SFX asli dari Job 7/Asset 2), dan tersimpan setelah app ditutup-buka lagi.
 - [ ] Masuk Settings harus lewat `ParentalGateDialog` dulu (tahan tombol 3 detik, cek secara sentuhan asli).
 - [ ] Export debug APK (`Project > Export`) berhasil, atau minimal export desktop (Windows/Linux) kalau Android export template belum disetup — butuh `export_presets.cfg` yang belum dibuat.
-- [ ] `docs/` dan `obsidian-vault/` ter-update dan ter-push ke `main`.
+- [x] `docs/` dan `obsidian-vault/` ter-update dan ter-push ke `main`.
 
 ## Urutan kerja (supaya tidak saling blok)
 

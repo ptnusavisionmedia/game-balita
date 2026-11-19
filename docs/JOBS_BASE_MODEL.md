@@ -47,7 +47,7 @@ Modul `feature_angka` jadi **contoh pola** untuk 5 modul lain di Fase 2, jadi di
 - [x] Selesai sesi → `StarRewardOverlay` → simpan hasil via `ProgressRepository.record_result(...)`.
 - [x] Tombol kembali ke Home.
 
-**Definition of done `feature_angka`**: 1 level bisa dimainkan dari Home sampai balik ke Home, hasilnya kebaca lagi kalau app ditutup-buka. **Status: kode selesai & lolos headless — belum dicoba main sungguhan.**
+**Definition of done `feature_angka`**: 1 level bisa dimainkan dari Home sampai balik ke Home, hasilnya kebaca lagi kalau app ditutup-buka. **Status: DIMAINKAN SUNGGUHAN (2026-11-19) — 4 soal dijawab benar, reward bintang+confetti muncul, `user://progress.cfg` terisi 4 entri nyata. Sisa: coba lewat navigasi Home (bukan langsung buka scene-nya).**
 
 `feature_warna` (modul kedua Dev 2): **belum coding** — tunggu base model (`feature_angka`) lolos demo. Selama itu:
 - [ ] Tulis spek 1 halaman di `obsidian-vault/Specs/feature_warna.md` (format ikuti `feature_angka.md`).

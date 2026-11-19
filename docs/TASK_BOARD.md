@@ -25,7 +25,8 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Spek + asset list `feature_mewarnai` | Dev | feature_mewarnai | Open | Dev 4 | | |
 | Spek + asset list `feature_puzzle` | Dev | feature_puzzle | Open | Dev 4 | | |
 | `docs/QA_CHECKLIST.md` + pertimbangkan addon GUT | Dev | lintas-modul | Open | Dev Testing | | lihat JOBS_BASE_MODEL Job 5 |
-| Test interaktif `feature_angka` di device/emulator asli | Dev | feature_angka | Open | Dev Testing | | headless cuma cek tidak crash, bukan gameplay |
+| Test interaktif `feature_angka` di laptop (desktop, bukan device Android) | Dev | feature_angka | Done | (sesi AI + user, 2026-11-19) | 2026-11-19 | 4 soal dijawab benar, reward+confetti muncul, progress.cfg terisi nyata |
+| Test interaktif `feature_angka` di device/emulator Android asli | Dev | feature_angka | Open | Dev Testing | | yang di atas baru di desktop Windows, belum di Android |
 | Style guide ilustrasi | Asset | branding | Open | Asset 1 | | acuan semua modul berikutnya |
 | Ilustrasi `feature_angka` (1-5 objek, ganti ikon hati placeholder) + app icon/splash draft | Asset | feature_angka | Open | Asset 1 | | |
 | SFX dasar (tap/benar/coba-lagi) | Asset | core | Open | Asset 2 | | dipakai via SfxService, format .wav/.ogg |

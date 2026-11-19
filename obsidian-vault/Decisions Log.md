@@ -189,3 +189,15 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Alasan**: struktur 15 orang (QA Tester/UI-UX Designer/DevOps/Compliance Officer terpisah, Asset 4-6 generalist, Dev App terpisah dari Bramantyo) dirasa menambah koordinasi tanpa menambah kecepatan sebanding untuk fase base model — balik ke ukuran yang lebih ramping, cukup jauh, mendekati struktur 7-orang paling awal (Dev 2-4 masing-masing 2 modul, Asset 1-3 generalist per jenis media), ditambah 1 pelajaran yang tetap dipertahankan dari eksperimen 15-orang: **Dev Testing sebagai role coding terpisah**.
 
 **Yang diupdate**: `docs/TEAM.md`, `docs/ROLES.md`, `.github/CODEOWNERS`, `docs/JOBS_BASE_MODEL.md` (job direnumbering 1-8, bukan 1-15 lagi), `docs/TASK_BOARD.md`, `docs/PLAN_BASE_MODEL.md` ("Urutan kerja"), serta semua mention "15 orang" di `README.md`, `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/AI_WORKFLOW.md`, `docs/GIT_WORKFLOW.md`, `docs/DOCKER.md`, `CONTRIBUTING.md`, `obsidian-vault/Project Overview.md`. Kode (`core/`, `scenes/`, `features/*`) **tidak berubah** — restructure ini murni dokumen pembagian tim, bukan kode.
+
+## 2026-11-19 — `feature_angka` DIMAINKAN SUNGGUHAN (bukan cuma headless) — semua lolos
+
+**Yang dilakukan**: atas permintaan user, buka Godot Editor via terminal (`Godot_v4.7.2-stable_win64.exe --path . -e`, GUI, bukan `--headless`) dan jalankan scene `features/feature_angka/Angka.tscn` berdiri sendiri (`--path . features/feature_angka/Angka.tscn`, tanpa `--headless`) sebagai window game terpisah di desktop Windows. User lalu **benar-benar klik tombol** menjawab 4 soal, semua benar.
+
+**Hasil**: reward bintang + confetti (`StarRewardOverlay`) muncul seperti dirancang. Dicek file save `C:\Users\User\AppData\Roaming\Godot\app_userdata\Bayi GuguGaga\progress.cfg` — **terisi 4 entri `GameResult` nyata** dengan timestamp asli (bukan simulasi/dugaan): `game_id: "feature_angka"`, `stars_earned: 3` tiap entri.
+
+**Ini verifikasi paling kuat sejauh ini** — sebelumnya cuma headless (`exit 0`, tidak crash saat load) yang membuktikan tidak ada error GDScript, tapi tidak membuktikan gameplay-nya BENAR. Sekarang: logic soal, deteksi jawaban benar, `SfxService.play(null)` placeholder tidak crash, `StarRewardOverlay` dengan `CPUParticles2D` render dengan benar, dan `ProgressRepository.record_result()` + `ConfigFile.save()` benar-benar menulis ke disk — semua terbukti jalan.
+
+**Side-effect**: Godot Editor otomatis menulis ulang `project.godot` saat pertama dibuka (tambah section `[animation]`, ubah `config/features` dari `"4.3"` ke `"4.7"` menyesuaikan versi editor 4.7.2) — ini perilaku normal Godot, bukan perubahan manual, dibiarkan apa adanya.
+
+**Masih belum dicoba**: navigasi lewat `Home.tscn` (sesi ini langsung buka scene `Angka.tscn` berdiri sendiri, bukan lewat tombol di Home), `ParentalGateDialog`/Settings secara sentuhan asli, toggle suara (belum ada SFX asli untuk didengar), export APK, dan testing di device Android asli (baru di desktop Windows).
