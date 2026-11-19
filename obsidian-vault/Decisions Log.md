@@ -143,3 +143,23 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Yang TIDAK ikut terhapus (di luar repo ini, di komputer sesi AI)**: instalasi Flutter SDK (`C:\Users\User\flutter`) dan Android SDK (`C:\Users\User\android-sdk`) yang sempat di-install untuk verifikasi — dibiarkan, tidak relevan lagi kalau bahasa pemrograman ganti, tapi tidak mengganggu karena di luar folder repo.
 
 **Belum diputuskan**: bahasa/stack pengganti. Begitu dipilih, `docs/ARCHITECTURE.md`, `docs/LIBRARIES.md`, `docs/DOCKER.md`, `docs/UI_UX_DESIGN.md` (bagian implementasi), dan `docs/JOBS_BASE_MODEL.md` perlu direvisi menyesuaikan — isinya saat ini masih bicara konsep Flutter/Dart (package, pubspec, widget) yang sudah tidak relevan untuk kode, meski prinsip pembagian modul/tim kemungkinan masih bisa dipakai ulang.
+
+## 2026-11-19 — Stack baru ditentukan: GODOT 4 (GDScript)
+
+**Keputusan**: user memilih **Godot** sebagai pengganti Flutter. Ini juga membalik keputusan 2026-11-19 sebelumnya ("Godot dipertimbangkan, tetap pakai Flutter") — alasan "scaffold Flutter sudah jalan" di keputusan itu sudah tidak relevan karena Flutter sudah dihapus total duluan.
+
+**Implementasi (base model ditulis ulang dari nol)**:
+- `project.godot` — config utama, `[autoload]` untuk `ProgressRepository`/`SfxService`/`AudioService`.
+- `core/scripts/`: `app_colors.gd` (palet, konstanta `UPPER_CASE` gaya GDScript), `progress_repository.gd` (autoload, pakai `ConfigFile` bawaan — setara `shared_preferences` tapi tanpa plugin), `sfx_service.gd` + `audio_service.gd` (2 `AudioStreamPlayer` terpisah, SFX vs musik/VO), `parental_gate_dialog.gd` (tahan tombol 3 detik, dibangun programatik lewat kode bukan node tree manual di `.tscn`), `big_round_button.gd`.
+- `core/scenes/`: `BigRoundButton.tscn`, `StarRewardOverlay.tscn` (confetti via `CPUParticles2D`, bukan particle custom), `ParentalGateDialog.tscn` — semua scene minimal (root node + script), UI sesungguhnya dibangun di `_ready()` lewat kode, bukan di-drag manual di editor (lebih aman untuk ditulis sesi AI tanpa editor, risiko kesalahan `.tscn` tangan jadi minimal).
+- `scenes/home.gd` + `Home.tscn`, `scenes/settings.gd` + `Settings.tscn` — menu utama + pengaturan, pola sama dengan `HomeMenu`/`SettingsScreen` versi Flutter tapi pakai `change_scene_to_file` bukan `Navigator.push`.
+- `features/feature_angka/angka.gd` + `Angka.tscn` — pilot, logic sama (4 soal, 3 pilihan, reward, simpan progres) ditulis ulang di GDScript. Pakai ikon teks "♥" sebagai placeholder visual (bukan `Icons.favorite` Flutter lagi).
+- 5 modul lain (`feature_warna/hewan/musik/mewarnai/puzzle`) — placeholder scene (label + tombol kembali), sama seperti versi Flutter.
+- `docs/ARCHITECTURE.md`, `docs/LIBRARIES.md`, `docs/DOCKER.md`, `docs/UI_UX_DESIGN.md`, `docs/TEAM.md`, `docs/ROLES.md`, `docs/JOBS_BASE_MODEL.md`, `docs/PLAN_BASE_MODEL.md`, `docs/TASK_BOARD.md`, `docs/AI_WORKFLOW.md`, `docs/GIT_WORKFLOW.md`, `CONTRIBUTING.md`, `CLAUDE.md`, `README.md`, `.github/CODEOWNERS`, `.github/workflows/ci.yml`, PR/issue template — semua diupdate dari path/istilah Flutter (`packages/`, `pubspec.yaml`, widget) ke Godot (`core/`, `scenes/`, `features/`, scene/script, autoload).
+
+**Belum tercover, perlu library/fitur Godot yang setara dicari ulang nanti**:
+- `docs/LIBRARIES.md` versi Flutter sempat merencanakan `soundpool`, `confetti`, `flutter_animate`, `google_fonts`, `flutter_svg`, `mocktail` — ditulis ulang: hampir semua kebutuhan itu **sudah built-in Godot** (lihat `docs/LIBRARIES.md` baru), jadi tidak perlu addon pengganti satu-satu.
+- Testing: `mocktail`/`flutter_test` tidak ada penggantinya langsung — kalau Dev Testing (Job 9) perlu automated test, addon [GUT](https://github.com/bitwes/Gut) jadi pilihan pertama, belum dipasang.
+- CI/Docker: `.github/workflows/ci.yml` ditulis pakai image `barichello/godot-ci` dan command `godot4 --headless --quit-after 10`, **tapi belum pernah dijalankan/diverifikasi** — beda dari versi Flutter yang sempat benar-benar dicoba jalan (lihat entri "Flutter SDK diinstall & dipakai di sesi ini"). Perlu dicek ulang begitu Godot terpasang.
+
+**Belum diverifikasi sama sekali**: tidak ada instalasi Godot di sesi ini (beda dari Flutter yang sempat diinstall penuh + Android SDK). Semua kode di atas **belum pernah dibuka di Godot Editor**, jadi mungkin ada typo/error GDScript atau `.tscn` yang salah format yang belum ketahuan. Siapa pun yang install Godot 4 duluan: tolong buka project dan laporkan error pertama yang ketemu.

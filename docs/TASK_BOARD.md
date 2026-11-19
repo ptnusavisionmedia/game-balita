@@ -6,27 +6,30 @@ Commit klaim pakai format `claim: <nama task> — <nama orang>`, commit selesai 
 
 Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kalau ada task baru yang belum tercatat, jangan hapus baris `Done` (biar ada histori).
 
+> **2026-11-19**: stack diganti dari Flutter/Dart ke **Godot/GDScript** (lihat Decisions Log). Semua baris `Done` versi Flutter dihapus bersama kodenya; baris di bawah ini sudah versi Godot.
+
 | Task | Role | Area | Status | PIC | Tgl klaim | Catatan |
 |---|---|---|---|---|---|---|
-| AppTheme/AppColors, StarRewardOverlay, SfxService, Docker+CI scaffold | Dev | core / infra | Done | (sesi AI, 2026-11-19) | 2026-11-19 | Lihat docs/LIBRARIES.md, docs/DOCKER.md |
-| `ProgressRepository` (ChangeNotifier + shared_preferences) | Dev | core | Done | Bramantyo | 2026-11-19 | lihat docs/JOBS_BASE_MODEL.md Job 1 |
-| `ParentalGateDialog` | Dev | core | Done | Bramantyo | 2026-11-19 | tahan tombol 3 detik, `packages/core/lib/src/widgets/parental_gate_dialog.dart` |
-| Wiring navigasi Home ↔ Settings ↔ mini-game | Dev | app | Done | Dev App | 2026-11-19 | `packages/app/lib/main.dart` |
-| `SettingsScreen` (toggle suara) | Dev | app | Done | Dev App | 2026-11-19 | `packages/app/lib/src/settings_screen.dart` |
-| `feature_angka`: UI + logic soal (pilot base model) | Dev | feature_angka | Done | Dev 2 | 2026-11-19 | `packages/feature_angka/lib/src/angka_screen.dart` |
+| `AppColors`, `StarRewardOverlay`, `ParentalGateDialog`, `ProgressRepository`, `SfxService`/`AudioService` (Godot) | Dev | core | Done | (sesi AI, 2026-11-19) | 2026-11-19 | `core/scripts/`, `core/scenes/` — belum dicoba di Godot Editor sungguhan |
+| Wiring navigasi Home ↔ Settings ↔ mini-game | Dev | scenes | Done | Dev App | 2026-11-19 | `scenes/home.gd` |
+| `Settings.tscn` (toggle suara) | Dev | scenes | Done | Dev App | 2026-11-19 | `scenes/settings.gd` |
+| `feature_angka`: UI + logic soal (pilot base model) | Dev | feature_angka | Done | Dev 2 | 2026-11-19 | `features/feature_angka/angka.gd` |
 | `feature_angka`: wiring ke core (reward/sfx/progress) | Dev | feature_angka | Done | Dev 2 | 2026-11-19 | StarRewardOverlay + ProgressRepository + SfxService sudah terpasang |
+| Placeholder scene 5 modul lain (Warna/Hewan/Musik/Mewarnai/Puzzle) | Dev | feature_* | Done | (sesi AI, 2026-11-19) | 2026-11-19 | Cuma tombol "Kembali", isi logic-nya di Job 4-8 |
+| CI/Docker untuk Godot (export headless) | Dev | infra | Open | Bramantyo | | belum dibuat ulang setelah reset — lihat docs/DOCKER.md, image `barichello/godot-ci` |
+| **Verifikasi: buka project di Godot Editor, coba jalan** | Dev | base model | Open | (siapa saja yang punya Godot) | | lihat Definition of Done di docs/PLAN_BASE_MODEL.md — belum pernah dicoba sama sekali |
 | Spek + asset list `feature_warna` | Dev | feature_warna | Open | Dev Warna | | |
 | Spek + asset list `feature_hewan` | Dev | feature_hewan | Open | Dev 3 | | |
 | Spek + asset list `feature_musik` | Dev | feature_musik | Open | Dev Musik | | |
 | Spek + asset list `feature_mewarnai` | Dev | feature_mewarnai | Open | Dev 4 | | |
 | Spek + asset list `feature_puzzle` | Dev | feature_puzzle | Open | Dev Puzzle | | |
-| `docs/QA_CHECKLIST.md` + unit/widget test `core` | Dev | lintas-modul | Open | Dev Testing | | lihat JOBS_BASE_MODEL Job 9 |
+| `docs/QA_CHECKLIST.md` + pertimbangkan addon GUT | Dev | lintas-modul | Open | Dev Testing | | lihat JOBS_BASE_MODEL Job 9 |
 | Style guide ilustrasi | Asset | branding | Open | Asset 1 | | acuan semua modul berikutnya |
-| Ilustrasi `feature_angka` (buah 1-5) + app icon/splash draft | Asset | feature_angka | Open | Asset 1 | | |
-| SFX dasar (tap/benar/coba-lagi) | Asset | core | Open | Asset 2 | | dipakai via SfxService |
+| Ilustrasi `feature_angka` (1-5 objek, ganti ikon hati placeholder) + app icon/splash draft | Asset | feature_angka | Open | Asset 1 | | |
+| SFX dasar (tap/benar/coba-lagi) | Asset | core | Open | Asset 2 | | dipakai via SfxService, format .wav/.ogg |
 | VO angka 1-5 (Bahasa Indonesia) | Asset | feature_angka | Open | Asset 2 | | |
 | Riset referensi video + draft konsep promo | Asset | marketing | Open | Asset 3 | | |
-| Draft listing Play Store Console (belum publish) | Asset | marketing | Open | Asset 3 | | koordinasi Bramantyo + Dev App untuk APK |
+| Draft listing Play Store Console (belum publish) | Asset | marketing | Open | Asset 3 | | koordinasi Bramantyo + Dev App untuk export APK |
 | Assist ilustrasi (tunggu style guide) | Asset | feature_warna | Open | Asset 4 | | lihat JOBS_BASE_MODEL Job 13 |
 | Assist audio (tunggu spek feature_musik) | Asset | feature_musik | Open | Asset 5 | | lihat JOBS_BASE_MODEL Job 14 |
 | Assist riset referensi + dokumentasi asset pipeline | Asset | marketing | Open | Asset 6 | | lihat JOBS_BASE_MODEL Job 15 |

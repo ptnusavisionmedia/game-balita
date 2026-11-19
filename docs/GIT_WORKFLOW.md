@@ -28,23 +28,23 @@ Dokumen ini untuk kamu yang **baru pertama kali kerja tim lewat Git/GitHub**. Di
 Struktur proyek ini sengaja dibuat per-modul (lihat [docs/ARCHITECTURE.md](ARCHITECTURE.md)):
 
 ```
-packages/
-  core/              ← dipegang Bramantyo, SEMUA orang depend ke sini
-  app/               ← dipegang Bramantyo
+core/                        ← dipegang Bramantyo, SEMUA orang depend ke sini
+scenes/                       ← dipegang Dev App
+features/
   feature_angka/     ← dipegang Dev 2 — HANYA Dev 2 yang edit folder ini
-  feature_warna/     ← dipegang Dev 3 — HANYA Dev 3 yang edit folder ini
-  feature_hewan/     ← dipegang Dev 4
-  feature_musik/     ← dipegang Dev 5
-  feature_mewarnai/  ← dipegang Dev 6
-  feature_puzzle/    ← dipegang Dev 7
+  feature_warna/     ← dipegang Dev Warna — HANYA dia yang edit folder ini
+  feature_hewan/     ← dipegang Dev 3
+  feature_musik/     ← dipegang Dev Musik
+  feature_mewarnai/  ← dipegang Dev 4
+  feature_puzzle/    ← dipegang Dev Puzzle
 ```
 
 Kalau kamu pegang `feature_angka` dan temanmu pegang `feature_warna`, kalian **tidak pernah menyentuh file yang sama** — jadi secara teknis hampir mustahil tabrakan, asal:
 
 1. Kamu **cuma** mengedit folder modul kamu sendiri, tidak sentuh folder modul orang lain.
-2. Kalau butuh sesuatu dari `core` (misalnya tombol/suara yang belum ada), **minta ke Bramantyo**, jangan langsung edit `core` sendiri, apalagi `feature_*` lain.
+2. Kalau butuh sesuatu dari `core/` (misalnya tombol/suara yang belum ada), **minta ke Bramantyo**, jangan langsung edit `core/` sendiri, apalagi `feature_*` lain.
 
-Satu-satunya titik rawan tabrakan: `core` dan `app`, karena semua orang depend ke situ. Itu kenapa cuma Bramantyo yang pegang keduanya.
+Satu-satunya titik rawan tabrakan: `core/` dan `scenes/`, karena semua orang depend ke situ. Itu kenapa dipegang 2 orang berbeda (Bramantyo + Dev App) yang saling koordinasi, lihat `docs/TEAM.md`.
 
 ---
 
@@ -88,12 +88,12 @@ Format nama branch: `feature/<nama-modul>-<deskripsi-singkat>`. Contoh:
 
 ### Langkah 3 — Kerja seperti biasa
 
-Edit file **hanya** di `packages/<modul-kamu>/...`. Jangan edit folder modul orang lain, jangan edit `core` tanpa koordinasi dengan Bramantyo.
+Edit file **hanya** di `features/<modul-kamu>/...` (atau `core/`/`scenes/` sesuai peranmu). Jangan edit folder modul orang lain, jangan edit `core/` tanpa koordinasi dengan Bramantyo.
 
 ### Langkah 4 — Simpan kerjaanmu (commit), sesering mungkin
 
 ```bash
-git add packages/feature_angka
+git add features/feature_angka
 git commit -m "angka: tambah layar soal level 1"
 ```
 
@@ -138,7 +138,7 @@ Branch `feature/angka-level-1` boleh dihapus (GitHub biasanya kasih tombol "Dele
 4. ✅ Sebelum mulai kerjaan baru, **selalu** `git checkout main && git pull origin main` dulu (Langkah 1) — supaya kamu kerja dari versi terbaru.
 5. ❌ **Jangan edit folder/file di luar scope kamu**, kecuali bug fix kecil yang urgent (PR terpisah + tag pemiliknya). Scope persis per peran ada di [docs/ROLES.md](ROLES.md) — baca itu kalau ragu. Kalau nemu bug yang tidak mendesak, cukup laporkan (buat Issue di GitHub), jangan edit langsung.
 6. ✅ Butuh sesuatu dari `core`? Minta ke Bramantyo, jangan copy-paste kode `core` ke modulmu sendiri.
-7. ✅ Jalankan `dart run melos run analyze` sebelum push (lihat [CONTRIBUTING.md](../CONTRIBUTING.md)) — supaya tidak kirim kode yang jelas-jelas error.
+7. ✅ Buka project di Godot Editor dan cek tidak ada error di panel Output sebelum push (lihat [CONTRIBUTING.md](../CONTRIBUTING.md)) — supaya tidak kirim kode yang jelas-jelas error.
 8. ✅ PR kamu otomatis minta review ke pemilik folder terkait ([.github/CODEOWNERS](../.github/CODEOWNERS)) — ini cuma auto-assign reviewer, bukan gate yang blok merge, supaya proses tetap cepat.
 
 ---

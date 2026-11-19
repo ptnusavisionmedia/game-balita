@@ -1,0 +1,23 @@
+; Engine configuration file.
+; Dibuat manual (bukan lewat editor) sebagai scaffold awal — buka sekali di
+; Godot Editor untuk re-save dan generate file pendukung (.godot/ cache, dll).
+
+config_version=5
+
+[application]
+
+config/name="Bayi GuguGaga"
+config/description="Game edukatif untuk anak 1-5 tahun: angka, warna, hewan, musik, mewarnai, puzzle."
+run/main_scene="res://scenes/Home.tscn"
+config/features=PackedStringArray("4.3")
+
+[autoload]
+
+ProgressRepository="*res://core/scripts/progress_repository.gd"
+SfxService="*res://core/scripts/sfx_service.gd"
+AudioService="*res://core/scripts/audio_service.gd"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

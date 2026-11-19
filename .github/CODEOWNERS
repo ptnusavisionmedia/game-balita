@@ -1,0 +1,17 @@
+# Isi dengan GitHub username tiap pemegang modul (lihat docs/TEAM.md, docs/ROLES.md)
+# Siapa pun yang membuka PR yang menyentuh path ini akan otomatis minta review ke owner-nya.
+
+core/                                 @bramantyo
+scenes/                               @dev-app
+
+features/feature_angka/              @dev-angka
+features/feature_warna/              @dev-warna
+features/feature_hewan/              @dev-hewan
+features/feature_musik/              @dev-musik
+features/feature_mewarnai/           @dev-mewarnai
+features/feature_puzzle/             @dev-puzzle
+
+# Asset/design generalist (Asset 1-6), tidak dibatasi 1 jenis media.
+features/*/assets/images/            @asset-1 @asset-4
+features/*/assets/audio/             @asset-2 @asset-5
+marketing/                           @asset-3 @asset-6

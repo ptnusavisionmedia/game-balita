@@ -6,14 +6,14 @@ Prinsip diminta user: **5 developer baru + 3 asset/design creator baru**, ditamb
 
 | # | Nama (isi) | Modul/area | Tanggung jawab | GitHub username |
 |---|---|---|---|---|
-| 1 | Bramantyo | `packages/core/**` | Design system, state/persistence bersama (`ProgressRepository` — sudah selesai), parental gate | `@bramantyo` |
-| 2 | **Dev App (baru)** | `packages/app/**` | Navigasi, Home menu, Settings screen, wiring parental gate — dipisah dari Bramantyo supaya `core`+`app` tidak numpuk di 1 orang | `@dev-app` |
-| 3 | Dev 2 | `feature_angka` | **Pilot base model** — fokus 1 modul saja (`feature_warna` dilepas ke Dev baru) | `@dev-angka` |
-| 4 | **Dev Warna (baru)** | `feature_warna` | 1 modul, coding paralel setelah base model lolos | `@dev-warna` |
-| 5 | Dev 3 | `feature_hewan` | 1 modul (`feature_musik` dilepas ke Dev baru) | `@dev-hewan` |
-| 6 | **Dev Musik (baru)** | `feature_musik` | 1 modul, coding paralel setelah base model lolos | `@dev-musik` |
-| 7 | Dev 4 | `feature_mewarnai` | 1 modul (`feature_puzzle` dilepas ke Dev baru) | `@dev-mewarnai` |
-| 8 | **Dev Puzzle (baru)** | `feature_puzzle` | 1 modul, coding paralel setelah base model lolos | `@dev-puzzle` |
+| 1 | Bramantyo | `core/**` | Design system, state/persistence bersama (`ProgressRepository` — sudah selesai), parental gate (autoload singleton + scene reusable) | `@bramantyo` |
+| 2 | **Dev App (baru)** | `scenes/**` | Navigasi, Home menu, Settings screen, wiring parental gate — dipisah dari Bramantyo supaya `core`+`scenes` tidak numpuk di 1 orang | `@dev-app` |
+| 3 | Dev 2 | `features/feature_angka/**` | **Pilot base model** — fokus 1 modul saja (`feature_warna` dilepas ke Dev baru) | `@dev-angka` |
+| 4 | **Dev Warna (baru)** | `features/feature_warna/**` | 1 modul, coding paralel setelah base model lolos | `@dev-warna` |
+| 5 | Dev 3 | `features/feature_hewan/**` | 1 modul (`feature_musik` dilepas ke Dev baru) | `@dev-hewan` |
+| 6 | **Dev Musik (baru)** | `features/feature_musik/**` | 1 modul, coding paralel setelah base model lolos | `@dev-musik` |
+| 7 | Dev 4 | `features/feature_mewarnai/**` | 1 modul (`feature_puzzle` dilepas ke Dev baru) | `@dev-mewarnai` |
+| 8 | **Dev Puzzle (baru)** | `features/feature_puzzle/**` | 1 modul, coding paralel setelah base model lolos | `@dev-puzzle` |
 | 9 | **Dev Testing (baru)** | lintas-modul (test + bugfix) | Nulis unit/widget test untuk semua modul, fix bug yang dilaporkan — **bukan** peran non-coding, tetap nulis kode (test & fix), bukan cuma melaporkan | `@dev-testing` |
 
 Hasil: 6 modul `feature_*` sekarang **1 modul = 1 developer** (sebelumnya 2 modul/orang), `core` dan `app` dipisah jadi 2 orang, dan ada 1 dev khusus testing/bugfix lintas-modul.

@@ -2,41 +2,43 @@
 
 Lihat alasan & scope lengkap di [docs/PLAN_BASE_MODEL.md](PLAN_BASE_MODEL.md). Pemetaan orang mengikuti [docs/TEAM.md](TEAM.md) — nama masih placeholder, ganti saat sudah fix.
 
-## Job 1 — Bramantyo — `core`
+> **Catatan stack**: base model sempat ditulis di Flutter/Dart, lalu diganti ke **Godot/GDScript** (lihat `obsidian-vault/Decisions Log.md`). Checklist di bawah sudah diupdate untuk Godot — kode-nya sudah ditulis ulang, tapi **belum pernah dibuka/dicoba di Godot Editor sungguhan**.
+
+## Job 1 — Bramantyo — `core/`
 
 Jalur kritis base model. Sebagian sudah di-scaffold sesi ini supaya Job 1 tidak mulai dari nol — cek dulu sebelum nulis ulang:
 
-- [x] `AppTheme` + `AppColors` (palet & font Baloo 2, lihat `docs/UI_UX_DESIGN.md`) — `packages/core/lib/src/theme/`.
-- [x] `StarRewardOverlay` pakai package `confetti` — `packages/core/lib/src/widgets/star_reward_overlay.dart`.
-- [x] `SfxService` (SFX latensi rendah, `soundpool`) + `AudioService` (musik/VO, `audioplayers`) — lihat `docs/LIBRARIES.md`.
-- [x] `ProgressRepository` (`ChangeNotifier` + `shared_preferences`) — `packages/core/lib/src/services/progress_repository.dart` (+ unit test), sudah di-wire ke `main()`.
-- [x] `ParentalGateDialog` (tahan tombol 3 detik) — `packages/core/lib/src/widgets/parental_gate_dialog.dart`.
-- [x] CI/Docker (`.github/workflows/ci.yml`, `Dockerfile`, `docker-compose.yml`) — lihat `docs/DOCKER.md`.
-- [ ] Review PR dari Job 3 begitu wiring ke `core` siap.
+- [x] `AppColors` (palet, lihat `docs/UI_UX_DESIGN.md`) — `core/scripts/app_colors.gd`.
+- [x] `StarRewardOverlay` pakai `CPUParticles2D` bawaan Godot — `core/scenes/StarRewardOverlay.tscn` + `core/scripts/star_reward_overlay.gd`.
+- [x] `SfxService` (SFX) + `AudioService` (musik/VO) — autoload singleton, `core/scripts/sfx_service.gd` + `audio_service.gd`, lihat `docs/LIBRARIES.md`.
+- [x] `ProgressRepository` (autoload singleton, pakai `ConfigFile` bawaan Godot) — `core/scripts/progress_repository.gd`, sudah terdaftar di `[autoload]` `project.godot`.
+- [x] `ParentalGateDialog` (tahan tombol 3 detik) — `core/scenes/ParentalGateDialog.tscn` + `core/scripts/parental_gate_dialog.gd`.
+- [ ] CI/Docker untuk Godot (`.github/workflows/ci.yml`, `Dockerfile`) — **belum dibuat ulang** setelah reset dari Flutter, lihat `docs/DOCKER.md` untuk rencana pakai image `barichello/godot-ci`.
+- [ ] Review PR dari Job 3 begitu wiring ke `core/` siap.
 
-**Definition of done Job 1**: semua checklist tercentang + bisa dipakai modul lain tanpa perlu baca isi `core/src/`. **Status: selesai** (sisa cuma review PR, bersifat ongoing).
+**Definition of done Job 1**: semua checklist tercentang + bisa dipakai modul lain tanpa perlu baca isi `core/scripts/`. **Status: kode selesai, CI/Docker belum, belum diverifikasi jalan di Godot Editor.**
 
-## Job 2 — Dev App (baru) — `app`
+## Job 2 — Dev App (baru) — `scenes/`
 
-Dipisah dari Bramantyo supaya `core` + `app` tidak numpuk 1 orang.
+Dipisah dari Bramantyo supaya `core/` + `scenes/` tidak numpuk 1 orang.
 
-- [x] Wiring navigasi Home ↔ Settings ↔ mini-game, pasang `ParentalGateDialog` di depan Settings — `packages/app/lib/main.dart`.
-- [x] `SettingsScreen` (toggle suara, baca/tulis lewat `ProgressRepository`, sinkron ke `SfxService`/`AudioService`) — `packages/app/lib/src/settings_screen.dart`.
-- [ ] Update `HomeMenu` supaya menampilkan status progres singkat per mini-game (opsional, ditunda — base model sudah cukup tanpa ini).
+- [x] Wiring navigasi Home ↔ Settings ↔ mini-game, pasang `ParentalGateDialog` sebelum masuk Settings — `scenes/home.gd`.
+- [x] `Settings.tscn` (toggle suara, baca/tulis lewat `ProgressRepository`, sinkron ke `SfxService`/`AudioService`) — `scenes/settings.gd`.
+- [ ] Update `Home` supaya menampilkan status progres singkat per mini-game (opsional, ditunda — base model sudah cukup tanpa ini).
 
-**Definition of done Job 2**: dari Home bisa masuk Settings (lewat parental gate) dan balik, toggle suara nyata mempengaruhi `SfxService`/`AudioService`. **Status: selesai.**
+**Definition of done Job 2**: dari Home bisa masuk Settings (lewat parental gate) dan balik, toggle suara nyata mempengaruhi `SfxService`/`AudioService`. **Status: kode selesai, belum diverifikasi jalan.**
 
-## Job 3 — Dev 2 — `feature_angka` (PILOT)
+## Job 3 — Dev 2 — `features/feature_angka/` (PILOT)
 
 Modul ini jadi **contoh pola** untuk 5 modul lain di Fase 2, jadi dikerjakan paling teliti.
 
-- [x] UI: tampilkan kumpulan objek (1-5 buah, ikon placeholder — belum ilustrasi final dari Asset 1), pilihan angka untuk di-tap.
+- [x] UI: tampilkan kumpulan objek (1-5 ikon hati, placeholder — belum ilustrasi final dari Asset 1), pilihan angka untuk di-tap (`BigRoundButton`).
 - [x] Logic: deteksi tap benar/salah, random urutan soal (4 soal per sesi).
-- [x] Feedback: suara lewat `core.SfxService` — asset audio belum ada (Job 11 belum selesai), tapi `SfxService` sudah di-guard supaya tidak crash kalau asset belum ada; otomatis aktif begitu Asset 2 upload file-nya.
-- [x] Selesai sesi → `StarRewardOverlay` → simpan `GameResult` via `ProgressRepository`.
-- [x] Tombol kembali ke Home (otomatis lewat `Navigator.pop` setelah simpan hasil).
+- [x] Feedback: panggil `SfxService.play(...)` — asset audio belum ada (Job 11 belum selesai), untuk sekarang dipanggil dengan `null` (sudah di-guard, tidak crash); tinggal isi `AudioStream` begitu Asset 2 upload file (ada komentar `# TODO Asset 2` di kode).
+- [x] Selesai sesi → `StarRewardOverlay` → simpan hasil via `ProgressRepository.record_result(...)`.
+- [x] Tombol kembali ke Home (`get_tree().change_scene_to_file(...)` setelah simpan hasil).
 
-**Definition of done Job 3**: 1 level bisa dimainkan dari Home sampai balik ke Home, hasilnya kebaca lagi kalau app ditutup-buka. **Status: selesai — base model siap ditest**, lihat `packages/feature_angka/lib/src/angka_screen.dart`.
+**Definition of done Job 3**: 1 level bisa dimainkan dari Home sampai balik ke Home, hasilnya kebaca lagi kalau app ditutup-buka. **Status: kode selesai, lihat `features/feature_angka/angka.gd` — belum pernah dibuka di Godot Editor sungguhan.**
 
 ## Job 4 — Dev Warna (baru) — spek `feature_warna`
 
@@ -44,7 +46,7 @@ Modul ini jadi **contoh pola** untuk 5 modul lain di Fase 2, jadi dikerjakan pal
 
 - [ ] Tulis spek 1 halaman di `obsidian-vault/Specs/feature_warna.md` (format ikuti `feature_angka.md`).
 - [ ] Daftar asset yang dibutuhkan.
-- [ ] Baca PR Job 3 (`feature_angka`) begitu merge — ini pola yang dipakai di Fase 2.
+- [ ] Baca `features/feature_angka/angka.gd` begitu base model lolos demo — ini pola yang dipakai di Fase 2.
 
 ## Job 5 — Dev 3 — spek `feature_hewan`
 
@@ -62,29 +64,29 @@ Sama seperti Job 4, untuk `feature_mewarnai`.
 
 Sama seperti Job 4, untuk `feature_puzzle`.
 
-**Definition of done Job 4-8**: spek + daftar asset tiap modul sudah ada di vault, siap langsung coding begitu base model demo lolos.
+**Definition of done Job 4-8**: spek + daftar asset tiap modul sudah ada di vault, siap langsung coding begitu base model demo lolos. Placeholder scene (`Warna.tscn`, `Hewan.tscn`, dst — tombol "Kembali" saja) sudah ada, tinggal diisi logic masing-masing.
 
 ## Job 9 — Dev Testing (baru)
 
 Peran lintas-modul, kerja tidak nunggu modul tertentu selesai:
 
-- [ ] Susun `docs/QA_CHECKLIST.md` (bukan dokumen "QA" terpisah sebagai jabatan, tapi checklist teknis yang dipakai Dev Testing sendiri): hit-area ≥64dp, suara kebaca, reward muncul, progres tersimpan setelah app ditutup-buka, device low-end tidak lag.
-- [ ] Tulis unit/widget test untuk `core` (`ProgressRepository` sudah ada contohnya di `packages/core/test/progress_repository_test.dart` — ikuti pola ini untuk service lain).
+- [ ] Susun `docs/QA_CHECKLIST.md`: hit-area ≥64dp, suara kebaca, reward muncul, progres tersimpan setelah app ditutup-buka, device low-end tidak lag.
+- [ ] Pertimbangkan addon [GUT](https://github.com/bitwes/Gut) untuk automated test GDScript (lihat `docs/LIBRARIES.md`) — belum dipasang di base model.
 - [ ] Begitu Job 3 (`feature_angka`) demo-able: test penuh pakai checklist, kalau nemu bug **perbaiki langsung** (bukan cuma laporkan — ini bedanya dari role QA biasa, lihat `docs/ROLES.md`), PR terpisah + tag Dev 2.
 - [ ] Siapkan minimal 1 device Android low-end asli untuk testing (bukan cuma emulator).
 
 ## Job 10 — Asset 1 (Ilustrator, lead)
 
 - [ ] **Style guide ilustrasi** dulu (1x, acuan semua modul + acuan Asset 4): gaya gambar, palet warna karakter, ukuran minimum elemen yang bisa di-tap. Taruh di `obsidian-vault/Specs/style-guide-ilustrasi.md`.
-- [ ] Ilustrasi `feature_angka` (buah 1-5) sesuai spek pilot — prioritas.
+- [ ] Ilustrasi `feature_angka` (buah/objek 1-5, pengganti ikon hati placeholder) sesuai spek pilot — prioritas.
 - [ ] App icon & splash screen draft.
-- [ ] Taruh file di `packages/feature_angka/assets/images/`.
+- [ ] Taruh file di `features/feature_angka/assets/images/` — format `.png`/`.svg` (Godot import otomatis rasterize SVG saat di-drag ke editor).
 
 ## Job 11 — Asset 2 (Audio/VO, lead)
 
-- [ ] SFX dasar: tap, benar, coba-lagi (lewat `SfxService`, format pendek & ringan — lihat `docs/LIBRARIES.md`).
+- [ ] SFX dasar: tap, benar, coba-lagi (lewat `SfxService`, format `.wav`/`.ogg` pendek & ringan — lihat `docs/LIBRARIES.md`).
 - [ ] VO angka 1-5 (bahasa Indonesia, nada ramah anak).
-- [ ] Taruh file di `packages/feature_angka/assets/audio/`.
+- [ ] Taruh file di `features/feature_angka/assets/audio/`, lalu update `features/feature_angka/angka.gd` (ganti `SfxService.play(null)` jadi `SfxService.play(preload("res://features/feature_angka/assets/audio/<nama_file>"))`).
 
 ## Job 12 — Asset 3 (Video/Marketing, lead)
 
@@ -92,7 +94,7 @@ Tidak bergantung ke base model, bisa jalan dari sekarang:
 
 - [ ] Riset referensi video promo app sejenis, kumpulkan di `marketing/references/`.
 - [ ] Draft konsep video promo/trailer (storyboard kasar).
-- [ ] Draft listing Play Store Console (judul, deskripsi, kategori) — **belum publish**, tunggu APK dari Bramantyo + Dev App.
+- [ ] Draft listing Play Store Console (judul, deskripsi, kategori) — **belum publish**, tunggu APK export dari Bramantyo + Dev App.
 - [ ] Begitu `feature_angka` demo-able, rekam video demo pertama.
 
 ## Job 13 — Asset 4 (baru, fleksibel)

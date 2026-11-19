@@ -8,19 +8,23 @@
 
 ## Status sekarang (2026-11-19)
 
-- [x] Repo + struktur monorepo Flutter (Melos) ter-scaffold & ter-push.
-- [x] 6 package `feature_*` + `core` + `app` ada, tapi isinya masih placeholder/screen kosong.
-- [x] `core`: `AppTheme`/`AppColors` (palet & font), `StarRewardOverlay` (confetti), `SfxService`+`AudioService` sudah di-scaffold dengan library optimized (lihat [[../docs/LIBRARIES|docs/LIBRARIES.md]]).
-- [x] Docker (`Dockerfile`, `docker-compose.yml`) + CI (`.github/workflows/ci.yml`) untuk environment konsisten (lihat [[../docs/DOCKER|docs/DOCKER.md]]) — Docker Desktop sendiri belum terinstall, perlu dijalankan manual per laptop.
-- [ ] **Sedang dikerjakan: Fase 1 — Base Model** (lihat [[../docs/PLAN_BASE_MODEL|docs/PLAN_BASE_MODEL.md]]). Sisa: `ProgressRepository`, `ParentalGateDialog`, `SettingsScreen`, wiring `feature_angka` end-to-end.
-- [ ] Fase 2 (belum mulai): 6 modul lain coding paralel mengikuti pola dari base model.
+**Stack diganti dari Flutter/Dart ke Godot 4/GDScript** — base model Flutter sempat selesai & terverifikasi jalan, lalu dihapus total atas permintaan user, ditulis ulang di Godot (lihat [[Decisions Log]] untuk histori lengkap).
+
+- [x] Repo + struktur folder Godot (`core/`, `scenes/`, `features/feature_*`) ter-scaffold & ter-push.
+- [x] `core/`: `AppColors`, `ProgressRepository`, `SfxService`/`AudioService`, `StarRewardOverlay` (confetti via `CPUParticles2D`), `ParentalGateDialog` — semua ditulis ulang di GDScript (lihat [[../docs/LIBRARIES|docs/LIBRARIES.md]]).
+- [x] `scenes/Home.tscn` + `Settings.tscn` wiring navigasi + parental gate.
+- [x] `features/feature_angka` (pilot) implementasi penuh.
+- [x] Placeholder scene untuk 5 modul lain (`feature_warna/hewan/musik/mewarnai/puzzle`).
+- [ ] **Belum pernah dibuka/dicoba di Godot Editor sungguhan** — sesi AI ini tidak install Godot untuk reset ini (beda dari base model Flutter sebelumnya yang sempat diinstall & diverifikasi). Lihat Definition of Done di [[../docs/PLAN_BASE_MODEL|docs/PLAN_BASE_MODEL.md]].
+- [ ] CI/Docker untuk Godot — ditulis (`docs/DOCKER.md`, `.github/workflows/ci.yml`) tapi juga belum diverifikasi.
+- [ ] Fase 2 (belum mulai): 5 modul lain coding paralel mengikuti pola dari base model.
 
 ## Keputusan besar
 
-Lihat [[Decisions Log]] untuk detail & alasan. Ringkasan:
-- Stack: **Flutter + Dart**, monorepo feature-first (Melos).
-- State management fase 1: **`ChangeNotifier` bawaan Flutter** (sengaja belum pakai Riverpod/Bloc).
-- Pembagian tim: **per fitur/modul**, bukan per layer (FE/BE/QA).
+Lihat [[Decisions Log]] untuk detail & alasan lengkap (termasuk histori kenapa sempat pakai Flutter lalu ganti). Ringkasan terkini:
+- Stack: **Godot 4 (GDScript)** — bukan Flutter/Dart lagi.
+- State/persistence: autoload singleton (`ProgressRepository`) + `ConfigFile` bawaan Godot.
+- Pembagian tim: **per fitur/modul**, bukan per layer (FE/BE/QA) — prinsip ini tidak berubah walau stack ganti.
 
 ## Link cepat
 

@@ -4,61 +4,48 @@ Aplikasi permainan edukatif untuk anak usia 1-5 tahun: mengenal angka, warna, be
 
 ## Tech stack
 
-**Flutter (Dart)**, dengan struktur monorepo *feature-first* yang dikelola lewat [Melos](https://melos.invertase.dev/).
+**Godot 4 (GDScript)**, struktur *feature-first* — 1 scene/folder per mini-game, mirip prinsip modular yang sebelumnya dipakai di percobaan Flutter (lihat `obsidian-vault/Decisions Log.md` untuk histori penggantian stack).
 
 Alasan dipilih untuk tim 15 orang yang semuanya dibantu AI (Claude):
 
-- **Ringan**: APK bisa di-split per ABI, tree-shaking ikon, AOT compile — cocok untuk device low-end yang biasa dipegang anak/ortu.
-- **Satu codebase** untuk Android, iOS, dan web (berguna untuk demo cepat ke stakeholder tanpa build APK).
-- **Dart kuat tipe & mudah dibaca** — AI model & developer baru sama-sama cepat paham kode orang lain, gampang nebak di mana bug-nya.
-- **Modular per fitur** (lihat [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)) — tiap mini-game adalah package Dart terpisah, jadi 15 orang (+ sesi Claude masing-masing) bisa kerja paralel tanpa rebutan file dan tanpa perlu baca seluruh codebase.
-- **Hot reload** mempercepat iterasi animasi/audio untuk UI anak-anak.
-- **Ekosistem matang** untuk kebutuhan game anak: `flutter_animate`, `rive`/`lottie` (animasi karakter), `audioplayers` (efek suara & VO), `just_audio`.
+- **Game engine sungguhan**: particle system (confetti reward), node 2D, audio latensi rendah bawaan — semua "rasa game" yang di Flutter perlu digabung dari banyak package pihak ketiga, di Godot sudah native. Lihat [docs/LIBRARIES.md](docs/LIBRARIES.md).
+- **Scene-based**: 1 mini-game = 1 scene (`.tscn` + `.gd`) di foldernya sendiri — modular secara alami, cocok untuk tim besar kerja paralel tanpa rebutan file.
+- **GDScript mudah dibaca**: sintaks mirip Python, developer baru & AI cepat paham kode orang lain.
+- **Editor visual**: non-programmer (illustrator, UI/UX designer) bisa bantu susun scene lewat Godot Editor tanpa harus baca kode.
+- **Ringan & open source**: export APK kecil, tidak ada lisensi/biaya engine.
 
 ## Struktur project
 
 ```
 bayi-gugugaga/
-├── packages/
-│   ├── core/              # design system, model, service bersama (dipakai semua modul)
-│   ├── app/                # shell app: navigasi, home menu, parental gate, settings
-│   ├── feature_angka/      # mini-game berhitung
-│   ├── feature_warna/      # mini-game warna & bentuk
-│   ├── feature_hewan/      # mini-game suara hewan
-│   ├── feature_musik/      # mini-game musik/piano sederhana
-│   ├── feature_mewarnai/   # mini-game mewarnai
-│   └── feature_puzzle/     # mini-game puzzle & mencocokkan
-├── docs/                   # arsitektur, pembagian tim, cara kerja dengan AI
-└── melos.yaml
+├── project.godot           # config utama Godot
+├── core/
+│   ├── scripts/             # autoload singleton: ProgressRepository, SfxService, AudioService, AppColors
+│   └── scenes/               # scene reusable: BigRoundButton, StarRewardOverlay, ParentalGateDialog
+├── scenes/
+│   ├── Home.tscn             # menu utama
+│   └── Settings.tscn         # pengaturan (lewat parental gate)
+├── features/
+│   ├── feature_angka/        # mini-game berhitung (pilot base model)
+│   ├── feature_warna/        # mini-game warna & bentuk
+│   ├── feature_hewan/        # mini-game suara hewan
+│   ├── feature_musik/        # mini-game musik/piano sederhana
+│   ├── feature_mewarnai/     # mini-game mewarnai
+│   └── feature_puzzle/       # mini-game puzzle & mencocokkan
+├── docs/                    # arsitektur, pembagian tim, cara kerja dengan AI
+└── obsidian-vault/          # decisions log, spek tiap mini-game
 ```
 
-Aturan dependensi: `feature_*` hanya boleh depend ke `core`, **tidak boleh** saling depend antar `feature_*`. `app` meng-assemble semua fitur. Ini yang membuat 7 modul benar-benar independen.
+Aturan dependensi: `features/feature_*` hanya boleh pakai `core/` (autoload singleton + scene reusable), **tidak boleh** saling depend antar `feature_*`. `scenes/Home.tscn` jadi titik masuk yang meng-assemble semua fitur. Ini yang membuat 6 modul benar-benar independen — detail di [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Mulai development
 
-Project ini sudah diverifikasi bisa dibangun (`flutter pub get`, `flutter analyze`, `flutter test`, `flutter build web` — semua lolos, lihat `obsidian-vault/Decisions Log.md`). Package `app` sudah punya platform `web`; platform `android`/`ios` belum di-generate (butuh Android SDK/Xcode yang tidak ada di environment sesi AI ini).
+1. Install [Godot 4](https://godotengine.org/download) (versi stable terbaru, minimal 4.3).
+2. Buka folder repo ini lewat **Project > Import** di Godot Editor, pilih `project.godot`.
+3. Godot akan generate folder `.godot/` (cache, sudah di-`.gitignore`) saat pertama dibuka — ini normal.
+4. Scene utama: `scenes/Home.tscn` (sudah di-set sebagai `run/main_scene` di `project.godot`) — tekan F5 atau tombol Play untuk coba jalan.
 
-Langkah pertama untuk siapa pun yang pegang laptop dengan Flutter SDK terpasang:
-
-```bash
-flutter pub get
-```
-
-Ini otomatis resolve dependency **semua** package sekaligus (pakai [Dart/Flutter native workspace](https://dart.dev/go/pub-workspaces), lihat `pubspec.yaml` di root) — **tidak perlu** `dart pub global activate melos` lagi. Melos sendiri cuma dipakai untuk jalankan script lintas-package:
-
-```bash
-dart run melos run analyze   # flutter analyze di semua package
-dart run melos run test      # flutter test di semua package yang punya test
-```
-
-Untuk generate platform `android`/`ios` (belum ada, butuh Android SDK/Xcode) untuk package `app`:
-
-```bash
-cd packages/app
-flutter create . --platforms=android,ios --org com.gugugaga
-```
-
-`packages/core` dan `packages/feature_*` **tidak perlu** `flutter create` — mereka package Dart/Flutter biasa (bukan app), `pubspec.yaml`-nya sudah valid dan sudah terverifikasi `flutter analyze`/`flutter test` jalan tanpa masalah.
+Base model (`feature_angka` sebagai pilot + core services) sudah ditulis tapi **belum pernah dibuka di Godot Editor sungguhan** — lihat `obsidian-vault/Decisions Log.md` untuk status verifikasi terkini.
 
 Sesi AI/developer baru: mulai dari [CLAUDE.md](CLAUDE.md) (entry point wajib — urutan dokumen & cara klaim task).
 
@@ -70,9 +57,9 @@ Baca selanjutnya:
 - [docs/AI_WORKFLOW.md](docs/AI_WORKFLOW.md) — cara kerja tim yang semua pakai Claude/AI tanpa saling tabrakan
 - [docs/PLAN_BASE_MODEL.md](docs/PLAN_BASE_MODEL.md) — plan fase sekarang (base model)
 - [docs/JOBS_BASE_MODEL.md](docs/JOBS_BASE_MODEL.md) — tugas tiap orang untuk fase base model
-- [docs/LIBRARIES.md](docs/LIBRARIES.md) — analisis & pilihan library (kenapa pakai ini, bukan tulis sendiri)
+- [docs/LIBRARIES.md](docs/LIBRARIES.md) — fitur bawaan Godot yang dipakai (kenapa jarang butuh addon pihak ketiga)
 - [docs/UI_UX_DESIGN.md](docs/UI_UX_DESIGN.md) — prinsip UX, information architecture, color palette
-- [docs/DOCKER.md](docs/DOCKER.md) — environment konsisten lewat Docker untuk analyze/test/build
+- [docs/DOCKER.md](docs/DOCKER.md) — environment konsisten lewat Docker untuk export/CI headless
 - [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md) — **baru pertama kolaborasi lewat Git? mulai dari sini** — panduan lengkap step-by-step biar tidak tabrakan
 - [CONTRIBUTING.md](CONTRIBUTING.md) — branch, commit, PR (versi singkat)
 

@@ -5,7 +5,7 @@ title: "[modul] ringkasan usulan"
 labels: enhancement
 ---
 
-**Modul**: `packages/...` (atau "modul baru" kalau mini-game baru)
+**Modul**: `features/...` (atau "modul baru" kalau mini-game baru)
 
 **Usulan**:
 

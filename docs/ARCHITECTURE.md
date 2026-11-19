@@ -1,54 +1,46 @@
 # Arsitektur
 
-## Kenapa monorepo feature-first?
+## Kenapa feature-first?
 
-Tim ada 15 orang, semua dibantu AI (Claude). Masalah paling umum di tim sebesar ini bukan "kodenya salah", tapi **rebutan file dan merge conflict**, plus tiap sesi AI yang harus membaca seluruh codebase untuk paham konteks. Feature-first monorepo menyelesaikan dua masalah itu sekaligus:
+Tim ada 15 orang, semua dibantu AI (Claude). Masalah paling umum di tim sebesar ini bukan "kodenya salah", tapi **rebutan file dan merge conflict**, plus tiap sesi AI yang harus membaca seluruh codebase untuk paham konteks. Struktur feature-first menyelesaikan dua masalah itu sekaligus:
 
-- Satu mini-game = satu package Dart (`packages/feature_xxx`). Isinya lengkap: UI, logic, asset, test.
+- Satu mini-game = satu folder (`features/feature_xxx/`). Isinya lengkap: scene (`.tscn`), script (`.gd`), asset.
 - Developer (dan sesi Claude-nya) yang pegang `feature_angka` **tidak perlu** buka folder `feature_musik` sama sekali.
-- Conflict antar modul = 0, karena tidak ada file yang di-share kecuali lewat `core`.
+- Conflict antar modul = 0, karena tidak ada file yang di-share kecuali lewat `core/`.
 
 ## Aturan dependensi (wajib)
 
 ```
-feature_* ──depends on──> core
-app       ──depends on──> core, feature_angka, feature_warna, feature_hewan,
-                           feature_musik, feature_mewarnai, feature_puzzle
-feature_* ──TIDAK BOLEH depend ke feature_* lain──
+features/feature_* ──pakai──> core/ (autoload singleton + scene reusable)
+scenes/Home.tscn    ──pakai──> core/, features/feature_angka, feature_warna, feature_hewan,
+                                feature_musik, feature_mewarnai, feature_puzzle
+features/feature_* ──TIDAK BOLEH saling depend antar feature_* lain──
 ```
 
-`core` berisi yang benar-benar dipakai bersama saja:
-- Design tokens (warna, ukuran, font untuk UI anak — tombol besar, kontras tinggi)
-- Widget umum (`BigRoundButton`, `StarRewardOverlay`, `ParentalGateDialog`)
-- Service umum (audio player wrapper, progress/save-state lokal, analytics ringan)
-- Model data umum (`ChildProfile`, `GameResult`)
+`core/` berisi yang benar-benar dipakai bersama saja:
+- **Autoload singleton** (`project.godot` `[autoload]`, dipanggil global lewat nama-nya): `ProgressRepository` (simpan/baca progres & setting suara), `SfxService` (SFX pendek), `AudioService` (musik/VO panjang).
+- **Scene reusable** (`core/scenes/`): `BigRoundButton.tscn`, `StarRewardOverlay.tscn`, `ParentalGateDialog.tscn`.
+- **Konstanta/tema** (`core/scripts/app_colors.gd`): palet warna (lihat `docs/UI_UX_DESIGN.md`).
 
-Kalau sebuah fitur butuh sesuatu dari `core` yang belum ada: **tambahkan ke `core`, jangan import langsung antar-feature package**. Perubahan di `core` wajib lewat PR yang di-review pemilik `core`/`app` (lihat `docs/TEAM.md`), karena dia satu-satunya titik yang menyentuh semua modul.
+Kalau sebuah fitur butuh sesuatu dari `core/` yang belum ada: **tambahkan ke `core/`, jangan copy-paste logic ke tiap feature**. Perubahan di `core/` wajib lewat PR yang di-review Bramantyo (pemegang `core`, lihat `docs/TEAM.md`), karena dia satu-satunya titik yang menyentuh semua modul.
 
-## Tiap mini-game sebagai package
+## Tiap mini-game sebagai folder sendiri
 
 Struktur standar tiap `feature_*`:
 
 ```
-packages/feature_angka/
-├── pubspec.yaml
-├── lib/
-│   ├── feature_angka.dart     # satu-satunya file yang di-export, public API
-│   └── src/
-│       ├── angka_screen.dart
-│       ├── angka_controller.dart
-│       └── widgets/
-├── assets/
-│   ├── images/
-│   └── audio/
-└── test/
+features/feature_angka/
+├── Angka.tscn         # scene utama, 1 file ini yang dipanggil dari Home
+├── angka.gd           # script scene, semua logic mini-game ini
+└── assets/
+    ├── images/
+    └── audio/
 ```
 
-`app` hanya tahu satu widget per fitur (contoh: `AngkaGameScreen`) yang di-export dari `feature_angka.dart`. Internal (`src/`) bebas diubah pemilik modul tanpa mempengaruhi siapa pun.
+`scenes/home.gd` hanya tahu path ke 1 scene per fitur (`res://features/feature_angka/Angka.tscn`), dipanggil lewat `get_tree().change_scene_to_file(...)`. Isi dalam folder fitur bebas diubah pemilik modul tanpa mempengaruhi siapa pun — tidak ada konsep "public API file" seperti di Flutter karena tiap fitur cuma 1 scene yang dipanggil dari luar.
 
 ## Menambah modul baru
 
-1. Copy struktur folder `feature_puzzle` sebagai template.
-2. Tambahkan path baru di `melos.yaml` (biasanya otomatis ter-detect kalau polanya `packages/*`).
-3. Daftarkan di `pubspec.yaml` milik `app` + panggil widget export-nya di menu utama.
-4. Update `docs/TEAM.md` dan `.github/CODEOWNERS`.
+1. Copy struktur folder `features/feature_puzzle` sebagai template.
+2. Tambah 1 baris di `_GAMES` di `scenes/home.gd` (nama + path scene).
+3. Update `docs/TEAM.md`.

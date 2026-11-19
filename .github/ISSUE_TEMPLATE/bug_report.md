@@ -5,7 +5,7 @@ title: "[modul] ringkasan bug"
 labels: bug
 ---
 
-**Modul**: `packages/...`
+**Modul**: `features/...` (atau `core`/`scenes`)
 
 **Yang terjadi**:
 

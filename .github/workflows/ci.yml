@@ -1,0 +1,25 @@
+# CATATAN: belum pernah dijalankan/diverifikasi (sesi AI ini tidak install
+# Godot untuk reset-stack ini). Perlu dicek oleh Bramantyo begitu Godot
+# terpasang — terutama nama binary CLI (`godot4` vs `godot`) dan flag
+# `--quit-after`. Lihat docs/TASK_BOARD.md.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    container: barichello/godot-ci:4.3
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Buka project headless (tangkap error GDScript/scene)
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates
+          godot4 --headless --path . --quit-after 10
+
+      # TODO Bramantyo: tambah job export APK debug begitu export_presets.cfg
+      # dan keystore sudah disiapkan (lihat docs/DOCKER.md, docs/JOBS_BASE_MODEL.md Job 1).

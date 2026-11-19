@@ -6,16 +6,16 @@ Dokumen ini jawaban konkret untuk "siapa boleh edit apa". Kalau `docs/TEAM.md` b
 
 | Peran | Siapa (lihat TEAM.md) | Boleh edit | **Tidak boleh** edit |
 |---|---|---|---|
-| Core maintainer | Bramantyo | `packages/core/**`, `.github/**`, `Dockerfile`, `docker-compose.yml`, `melos.yaml` (infra tetap di Bramantyo untuk sekarang) | `packages/app/**`, `packages/feature_*/**`, `marketing/**` |
-| App maintainer | Dev App (baru) | `packages/app/**` | `packages/core/**`, `packages/feature_*/**`, `marketing/**` |
-| Mini-game Developer | Dev 2 | `packages/feature_angka/**` | folder modul lain, `core`, `app` |
-| Mini-game Developer | Dev Warna (baru) | `packages/feature_warna/**` | folder modul lain, `core`, `app` |
-| Mini-game Developer | Dev 3 | `packages/feature_hewan/**` | folder modul lain, `core`, `app` |
-| Mini-game Developer | Dev Musik (baru) | `packages/feature_musik/**` | folder modul lain, `core`, `app` |
-| Mini-game Developer | Dev 4 | `packages/feature_mewarnai/**` | folder modul lain, `core`, `app` |
-| Mini-game Developer | Dev Puzzle (baru) | `packages/feature_puzzle/**` | folder modul lain, `core`, `app` |
-| Testing/Bugfix (lintas-modul) | Dev Testing (baru) | `packages/*/test/**` (semua modul) + boleh fix bug di `packages/**` manapun kalau ada laporan — **wajib** PR terpisah + tag pemilik modul (lihat aturan "bug fix urgent" di bawah) | menambah fitur baru (bukan scope-nya — itu punya pemilik modul masing-masing) |
-| Asset/Design | Asset 1-6 | `packages/*/assets/images/**`, `packages/*/assets/audio/**`, `marketing/**` (fleksibel, tidak dibatasi 1 jenis media — lihat TEAM.md) | file `.dart` apa pun |
+| Core maintainer | Bramantyo | `core/**`, `.github/**`, `Dockerfile`, `docker-compose.yml`, `project.godot` (infra tetap di Bramantyo untuk sekarang) | `scenes/**`, `features/feature_*/**`, `marketing/**` |
+| App maintainer | Dev App (baru) | `scenes/**` | `core/**`, `features/feature_*/**`, `marketing/**` |
+| Mini-game Developer | Dev 2 | `features/feature_angka/**` | folder modul lain, `core`, `scenes` |
+| Mini-game Developer | Dev Warna (baru) | `features/feature_warna/**` | folder modul lain, `core`, `scenes` |
+| Mini-game Developer | Dev 3 | `features/feature_hewan/**` | folder modul lain, `core`, `scenes` |
+| Mini-game Developer | Dev Musik (baru) | `features/feature_musik/**` | folder modul lain, `core`, `scenes` |
+| Mini-game Developer | Dev 4 | `features/feature_mewarnai/**` | folder modul lain, `core`, `scenes` |
+| Mini-game Developer | Dev Puzzle (baru) | `features/feature_puzzle/**` | folder modul lain, `core`, `scenes` |
+| Testing/Bugfix (lintas-modul) | Dev Testing (baru) | `features/*/tests/**` (kalau ada, lihat docs/LIBRARIES.md soal GUT) + boleh fix bug di `core/**`/`features/**`/`scenes/**` manapun kalau ada laporan — **wajib** PR terpisah + tag pemilik modul (lihat aturan "bug fix urgent" di bawah) | menambah fitur baru (bukan scope-nya — itu punya pemilik modul masing-masing) |
+| Asset/Design | Asset 1-6 | `features/*/assets/images/**`, `features/*/assets/audio/**`, `marketing/**` (fleksibel, tidak dibatasi 1 jenis media — lihat TEAM.md) | file `.gd`/`.tscn` apa pun |
 
 **Semua peran** boleh edit (karena ini koordinasi bersama, bukan kode produk):
 - `docs/TASK_BOARD.md` — khusus baris task sendiri (klaim/update status).

@@ -1,6 +1,6 @@
 # Bayi GuguGaga — Panduan untuk AI/siapa pun yang baru mulai sesi di repo ini
 
-App game edukatif Android (+iOS/web) untuk anak 1-5 tahun. Monorepo Flutter (Melos), 15 orang: 9 developer (termasuk 1 dev testing lintas-modul) + 6 asset/design creator (ilustrasi/audio/video, fleksibel — tidak coding).
+App game edukatif Android untuk anak 1-5 tahun. Dibangun di **Godot 4 (GDScript)**, struktur feature-first (lihat `obsidian-vault/Decisions Log.md` untuk histori pergantian stack dari Flutter). 15 orang: 9 developer (termasuk 1 dev testing lintas-modul) + 6 asset/design creator (ilustrasi/audio/video, fleksibel — tidak coding).
 
 ## LANGKAH 0 — WAJIB di setiap conversation/sesi BARU, sebelum apa pun lain
 
@@ -33,7 +33,7 @@ Kalau ragu task mana yang dimaksud, atau user cuma bilang "lanjut kerja" tanpa n
 
 - **Jangan edit file di luar scope task yang kamu klaim**, kecuali bug fix kecil yang urgent. Scope persis per peran (folder mana boleh, mana tidak) ada di **[docs/ROLES.md](docs/ROLES.md)** — baca itu kalau ragu. Dijaga 2 lapis: struktur folder (hampir tidak overlap) + klaim di TASK_BOARD sebelum kerja. Sengaja **tidak** dipasang gate otomatis (CI/branch protection yang blok merge) supaya fix mendesak tidak terhambat.
 - **Developer**: jangan edit folder modul yang bukan milikmu (lihat `docs/TEAM.md` + `docs/ROLES.md`) kecuali bug fix urgent (PR terpisah + tag pemiliknya), jangan push langsung ke `main` (selalu lewat PR, lihat `docs/GIT_WORKFLOW.md`) — **kecuali** commit yang HANYA mengubah baris status di `docs/TASK_BOARD.md` (klaim/done), itu boleh push langsung ke `main` supaya klaim cepat terlihat orang lain.
-- **Asset creator**: taruh aset di `packages/feature_xxx/assets/images/` atau `assets/audio/` modul yang sesuai (lihat spek di `obsidian-vault/Specs/<modul>.md`), atau di `marketing/` untuk konten promosi — bukan di lokasi lain.
+- **Asset creator**: taruh aset di `features/feature_xxx/assets/images/` atau `assets/audio/` modul yang sesuai (lihat spek di `obsidian-vault/Specs/<modul>.md`), atau di `marketing/` untuk konten promosi — bukan di lokasi lain.
 - Butuh sesuatu di luar scope kamu (bukan bug fix urgent)? Jangan edit langsung — minta ke pemegangnya atau buat Issue (lihat `docs/ROLES.md`).
 - Dependency/library baru → catat alasannya di `docs/LIBRARIES.md` (jangan tambah tanpa catatan, lihat prinsip "jangan tulis kode sendiri kalau ada library lebih optimal" di sana).
 - Keputusan besar/berubah arah → tambah entri **baru** di `obsidian-vault/Decisions Log.md` (jangan edit/hapus entri lama).
