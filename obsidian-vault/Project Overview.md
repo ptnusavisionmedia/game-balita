@@ -32,3 +32,4 @@ Lihat [[Decisions Log]] untuk detail & alasan. Ringkasan:
 - [[../docs/LIBRARIES|Analisis Libraries]]
 - [[../docs/UI_UX_DESIGN|UI/UX Design & Color Palette]]
 - [[../docs/DOCKER|Docker]]
+- [[../docs/GIT_WORKFLOW|Cara Kolaborasi Git (pemula)]]

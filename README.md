@@ -61,7 +61,8 @@ Baca selanjutnya:
 - [docs/LIBRARIES.md](docs/LIBRARIES.md) — analisis & pilihan library (kenapa pakai ini, bukan tulis sendiri)
 - [docs/UI_UX_DESIGN.md](docs/UI_UX_DESIGN.md) — prinsip UX, information architecture, color palette
 - [docs/DOCKER.md](docs/DOCKER.md) — environment konsisten lewat Docker untuk analyze/test/build
-- [CONTRIBUTING.md](CONTRIBUTING.md) — branch, commit, PR
+- [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md) — **baru pertama kolaborasi lewat Git? mulai dari sini** — panduan lengkap step-by-step biar tidak tabrakan
+- [CONTRIBUTING.md](CONTRIBUTING.md) — branch, commit, PR (versi singkat)
 
 ## Context & decisions (Obsidian)
 
