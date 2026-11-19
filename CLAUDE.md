@@ -2,6 +2,8 @@
 
 App game edukatif Android untuk anak 1-5 tahun. Dibangun di **Godot 4 (GDScript)**, struktur feature-first (lihat `obsidian-vault/Decisions Log.md` untuk histori pergantian stack dari Flutter). 8 orang: 5 developer (termasuk 1 dev testing lintas-modul) + 3 asset/design creator (ilustrasi/audio/video, fleksibel — tidak coding).
 
+> **Kamu manusia yang baru mau mulai sesi?** Tempel [docs/MASTER_PROMPT.md](docs/MASTER_PROMPT.md) (isi dulu sesuai dirimu) sebagai pesan pertama — itu kasih tahu Claude siapa kamu & scope kamu, dokumen ini (`CLAUDE.md`) baru kasih tahu Claude aturan umumnya.
+
 ## LANGKAH 0 — WAJIB di setiap conversation/sesi BARU, sebelum apa pun lain
 
 Ini bukan saran, ini urutan tetap. Setiap kali sesi AI baru dibuka di repo ini (conversation baru, context baru), sebelum baca kode atau mulai kerja apa pun:

@@ -37,6 +37,7 @@ Lihat [[Decisions Log]] untuk detail & alasan lengkap (termasuk histori kenapa s
 - [[../docs/LIBRARIES|Analisis Libraries]]
 - [[../docs/UI_UX_DESIGN|UI/UX Design & Color Palette]]
 - [[../docs/DOCKER|Docker]]
+- [[../docs/MASTER_PROMPT|Master Prompt (tempel sebagai pesan pertama)]]
 - [[../docs/GIT_WORKFLOW|Cara Kolaborasi Git (pemula)]]
 - [[../docs/TASK_BOARD|Task Board (klaim task di sini)]]
 - [[../docs/ROLES|Peran & batas file (kenapa tidak tabrakan)]]

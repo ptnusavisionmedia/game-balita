@@ -63,6 +63,7 @@ Baca selanjutnya:
 - [docs/LIBRARIES.md](docs/LIBRARIES.md) — fitur bawaan Godot yang dipakai (kenapa jarang butuh addon pihak ketiga)
 - [docs/UI_UX_DESIGN.md](docs/UI_UX_DESIGN.md) — prinsip UX, information architecture, color palette
 - [docs/DOCKER.md](docs/DOCKER.md) — environment konsisten lewat Docker untuk export/CI headless
+- [docs/MASTER_PROMPT.md](docs/MASTER_PROMPT.md) — **tempel ini sebagai pesan pertama** tiap buka sesi Claude baru untuk kerja di repo ini
 - [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md) — **baru pertama kolaborasi lewat Git? mulai dari sini** — panduan lengkap step-by-step biar tidak tabrakan
 - [CONTRIBUTING.md](CONTRIBUTING.md) — branch, commit, PR (versi singkat)
 
