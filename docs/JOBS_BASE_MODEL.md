@@ -9,7 +9,7 @@ Jalur kritis base model. Sebagian sudah di-scaffold sesi ini supaya Job 1 tidak 
 - [x] `packages/core`: `AppTheme` + `AppColors` (palet & font Baloo 2, lihat `docs/UI_UX_DESIGN.md`) — **sudah ada**, isi `packages/core/lib/src/theme/`.
 - [x] `packages/core`: `StarRewardOverlay` pakai package `confetti` — **sudah ada**, `packages/core/lib/src/widgets/star_reward_overlay.dart`.
 - [x] `packages/core`: `SfxService` (SFX latensi rendah, `soundpool`) + `AudioService` (musik/VO, `audioplayers`) — **sudah ada**, lihat `docs/LIBRARIES.md` untuk pembagian tugasnya.
-- [ ] `packages/core`: `ProgressRepository` — `ChangeNotifier` + `shared_preferences`, simpan/baca `GameResult` dan setting suara. **Belum dibuat, mulai dari sini.**
+- [x] `packages/core`: `ProgressRepository` — `ChangeNotifier` + `shared_preferences`, simpan/baca `GameResult` dan setting suara. **Sudah ada**, `packages/core/lib/src/services/progress_repository.dart` (+ unit test). Wajib panggil `ProgressRepository.instance.init()` di `main()` sebelum `runApp` — sudah diwiring di `packages/app/lib/main.dart`.
 - [ ] `packages/core`: `ParentalGateDialog` (gate sederhana, misal tahan tombol 3 detik).
 - [ ] `packages/app`: wiring navigasi Home ↔ Settings ↔ mini-game, pasang `ParentalGateDialog` di depan Settings.
 - [ ] `packages/app`: `SettingsScreen` (toggle suara, baca/tulis lewat `ProgressRepository`).

@@ -7,7 +7,9 @@ import 'package:feature_musik/feature_musik.dart';
 import 'package:feature_mewarnai/feature_mewarnai.dart';
 import 'package:feature_puzzle/feature_puzzle.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ProgressRepository.instance.init();
   runApp(const BayiGuguGagaApp());
 }
 

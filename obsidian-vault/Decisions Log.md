@@ -85,3 +85,9 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Keputusan**: `scripts/check_pr_scope.sh` dan job `scope-check` di CI **dihapus**. Rekomendasi branch protection "Require review from Code Owners" juga dibatalkan. Tinggal 2 lapis: (1) struktural (folder per peran nyaris tidak overlap) + (2) koordinasi (klaim di TASK_BOARD sebelum kerja). `.github/CODEOWNERS` tetap ada tapi cuma untuk auto-assign reviewer, bukan gate yang blok merge. Aturan "jangan edit folder orang lain" dilonggarkan untuk **bug fix kecil yang urgent** — boleh langsung, asal PR terpisah + tag pemilik modulnya, tidak wajib tunggu approval.
 
 **Alasan**: user khawatir gate otomatis (CI yang menolak PR lintas-modul, atau approval wajib dari code owner) bikin bug fix mendadak jadi lambat/susah ditangani. Kecepatan menangani bug dinilai lebih penting daripada penegakan teknis yang kaku — cukup andalkan struktur folder + disiplin klaim task, sama seperti sebelum `docs/ROLES.md` ditambah lapis 3.
+
+## 2026-11-19 — `ProgressRepository` selesai (Job 1, Bramantyo)
+
+**Keputusan/implementasi**: `packages/core/lib/src/services/progress_repository.dart` — `ChangeNotifier` + `shared_preferences`, simpan `GameResult` (list, di-serialize JSON per entry) dan flag `soundEnabled`. API: `init()` (wajib dipanggil sekali di `main()` sebelum `runApp`), `recordResult()`, `latestResultFor(gameId)`, `setSoundEnabled()`. `GameResult` ditambah `toJson`/`fromJson`. Ada unit test (`packages/core/test/progress_repository_test.dart`) yang verifikasi data survive "re-init" (simulasi app ditutup-buka).
+
+**Belum**: `ParentalGateDialog`, wiring navigasi Home↔Settings, `SettingsScreen` — sisa checklist Job 1 di `docs/JOBS_BASE_MODEL.md`.
