@@ -4,15 +4,16 @@ Lihat alasan & scope lengkap di [docs/PLAN_BASE_MODEL.md](PLAN_BASE_MODEL.md). P
 
 ## Job 1 — Dev 1 (Lead/Architect) — `core` + `app`
 
-Jalur kritis base model. Tugas:
+Jalur kritis base model. Sebagian sudah di-scaffold sesi ini supaya Job 1 tidak mulai dari nol — cek dulu sebelum nulis ulang:
 
-- [ ] `packages/core`: `AppTheme` (warna, spacing, font-size token untuk UI anak).
-- [ ] `packages/core`: `ProgressRepository` — `ChangeNotifier` + `shared_preferences`, simpan/baca `GameResult` dan setting suara.
-- [ ] `packages/core`: `StarRewardOverlay` (animasi reward, dipakai semua mini-game nanti).
+- [x] `packages/core`: `AppTheme` + `AppColors` (palet & font Baloo 2, lihat `docs/UI_UX_DESIGN.md`) — **sudah ada**, isi `packages/core/lib/src/theme/`.
+- [x] `packages/core`: `StarRewardOverlay` pakai package `confetti` — **sudah ada**, `packages/core/lib/src/widgets/star_reward_overlay.dart`.
+- [x] `packages/core`: `SfxService` (SFX latensi rendah, `soundpool`) + `AudioService` (musik/VO, `audioplayers`) — **sudah ada**, lihat `docs/LIBRARIES.md` untuk pembagian tugasnya.
+- [ ] `packages/core`: `ProgressRepository` — `ChangeNotifier` + `shared_preferences`, simpan/baca `GameResult` dan setting suara. **Belum dibuat, mulai dari sini.**
 - [ ] `packages/core`: `ParentalGateDialog` (gate sederhana, misal tahan tombol 3 detik).
 - [ ] `packages/app`: wiring navigasi Home ↔ Settings ↔ mini-game, pasang `ParentalGateDialog` di depan Settings.
 - [ ] `packages/app`: `SettingsScreen` (toggle suara, baca/tulis lewat `ProgressRepository`).
-- [ ] `.github/workflows/ci.yml`: jalankan `melos run analyze` + `melos run test` di tiap push/PR.
+- [x] `.github/workflows/ci.yml` + `Dockerfile`/`docker-compose.yml` — **sudah ada**, jalankan `melos run analyze` + `melos run test` di tiap push/PR lewat image Docker yang sama dengan lokal (lihat `docs/DOCKER.md`).
 - [ ] Review PR dari Job 2 begitu wiring ke `core` siap.
 
 **Definition of done Job 1**: semua checklist di atas tercentang + bisa dipakai Job 2 tanpa Job 2 perlu baca isi `core/src/`.

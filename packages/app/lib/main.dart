@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:core/core.dart';
 import 'package:feature_angka/feature_angka.dart';
 import 'package:feature_warna/feature_warna.dart';
 import 'package:feature_hewan/feature_hewan.dart';
@@ -18,6 +19,7 @@ class BayiGuguGagaApp extends StatelessWidget {
     return MaterialApp(
       title: 'Bayi GuguGaga',
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
       home: const HomeMenu(),
     );
   }

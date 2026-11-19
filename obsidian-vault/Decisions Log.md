@@ -31,3 +31,21 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Alasan**: kalau 7 orang langsung coding paralel tanpa pola yang terbukti jalan, hasilnya 7 cara berbeda pakai `core` yang harus dirapikan ulang. 5 dev yang belum pegang modul coding selama fase ini mengerjakan spek + daftar asset dulu (lihat `Specs/`), supaya tidak nganggur dan begitu base model lolos, mereka langsung jalan tanpa delay.
 
 **State management**: sengaja pakai `ChangeNotifier` bawaan Flutter dulu untuk `ProgressRepository`, bukan Riverpod/Bloc — alasan: barrier masuk rendah untuk tim dengan level campuran. Revisit kalau base model kerasa kurang.
+
+## 2026-11-19 — Pilih library optimized daripada tulis sendiri (audio, reward, font)
+
+**Keputusan**: `soundpool` untuk SFX pendek (bukan `audioplayers` yang latensinya lebih tinggi untuk suara berulang), `confetti` untuk animasi reward (bukan particle system manual), `flutter_animate` untuk micro-interaction (bukan `AnimationController` manual), `google_fonts` (Baloo 2) untuk tipografi, `flutter_svg` untuk ikon vektor. Tetap **tidak** menambah Flame/Riverpod/Rive di base model — dianggap belum perlu (lihat `docs/LIBRARIES.md` untuk rasional lengkap tiap pilihan).
+
+**Alasan**: ini area yang "mudah dipertanyakan optimasinya" kalau ditulis sendiri (latensi audio, performa particle system di device low-end) — pakai library teruji lebih aman daripada reinvent.
+
+## 2026-11-19 — Color palette & tipografi ditetapkan
+
+**Keputusan**: palet warna hangat-kontras-tinggi (sunshine `#FFC93C`, cream `#FFFDF5`, ink `#2B2D42`, leaf/coral/gold untuk feedback, 6 warna aksen per mini-game), font Baloo 2. Detail & rasional lengkap (termasuk kenapa bukan merah untuk "salah") di `docs/UI_UX_DESIGN.md`. Implementasi: `packages/core/lib/src/theme/`.
+
+**Keputusan tambahan**: tidak ada dark mode untuk base model — app anak selalu pakai tema cerah terlepas dari system theme.
+
+## 2026-11-19 — Docker untuk konsistensi environment (analyze/test/build, bukan untuk `flutter run`)
+
+**Keputusan**: pakai image Docker (`ghcr.io/cirruslabs/flutter:3.24.3`) yang sama di CI dan lokal (`docker-compose.yml`) untuk `melos bootstrap`/`analyze`/`test`/`build apk`. **Tidak** dipakai untuk `flutter run` ke emulator (butuh GPU/virtualisasi native, tidak praktis di Docker Windows) — dev tetap install Flutter SDK native untuk kerja harian dengan hot reload.
+
+**Alasan**: menghindari masalah "beda versi Flutter antar laptop" di tim 7 orang. Instalasi Docker Desktop sendiri (butuh WSL2 + restart) sengaja tidak dijalankan otomatis — itu aksi sistem yang harus dijalankan manual oleh tiap orang, lihat `docs/DOCKER.md`.

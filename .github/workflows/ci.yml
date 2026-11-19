@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  analyze-test:
+    runs-on: ubuntu-latest
+    # Image sama dengan Dockerfile lokal, biar hasil CI = hasil lokal.
+    container: ghcr.io/cirruslabs/flutter:3.24.3
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Activate Melos
+        run: dart pub global activate melos 1.0.1
+
+      - name: Bootstrap
+        run: melos bootstrap
+
+      - name: Analyze
+        run: melos run analyze
+
+      - name: Test
+        run: melos run test

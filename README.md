@@ -58,6 +58,9 @@ Baca selanjutnya:
 - [docs/AI_WORKFLOW.md](docs/AI_WORKFLOW.md) — cara kerja tim yang semua pakai Claude/AI tanpa saling tabrakan
 - [docs/PLAN_BASE_MODEL.md](docs/PLAN_BASE_MODEL.md) — plan fase sekarang (base model)
 - [docs/JOBS_BASE_MODEL.md](docs/JOBS_BASE_MODEL.md) — tugas tiap orang untuk fase base model
+- [docs/LIBRARIES.md](docs/LIBRARIES.md) — analisis & pilihan library (kenapa pakai ini, bukan tulis sendiri)
+- [docs/UI_UX_DESIGN.md](docs/UI_UX_DESIGN.md) — prinsip UX, information architecture, color palette
+- [docs/DOCKER.md](docs/DOCKER.md) — environment konsisten lewat Docker untuk analyze/test/build
 - [CONTRIBUTING.md](CONTRIBUTING.md) — branch, commit, PR
 
 ## Context & decisions (Obsidian)

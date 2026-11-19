@@ -1,0 +1,5 @@
+**/.dart_tool/
+**/build/
+**/.pub-cache/
+.git/
+obsidian-vault/

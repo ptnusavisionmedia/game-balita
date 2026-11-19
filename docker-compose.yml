@@ -1,0 +1,14 @@
+services:
+  dev:
+    build: .
+    volumes:
+      - .:/workspace
+      # cache terpisah biar pub-cache tiap kontainer tidak diunduh ulang
+      - flutter-pub-cache:/root/.pub-cache
+    working_dir: /workspace
+    tty: true
+    stdin_open: true
+    command: bash
+
+volumes:
+  flutter-pub-cache:

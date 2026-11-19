@@ -10,7 +10,9 @@
 
 - [x] Repo + struktur monorepo Flutter (Melos) ter-scaffold & ter-push.
 - [x] 6 package `feature_*` + `core` + `app` ada, tapi isinya masih placeholder/screen kosong.
-- [ ] **Sedang dikerjakan: Fase 1 — Base Model** (lihat [[../docs/PLAN_BASE_MODEL|docs/PLAN_BASE_MODEL.md]]). Tujuan: 1 mini-game (`feature_angka`) jalan end-to-end sebagai pola, sebelum 6 modul lain mulai paralel.
+- [x] `core`: `AppTheme`/`AppColors` (palet & font), `StarRewardOverlay` (confetti), `SfxService`+`AudioService` sudah di-scaffold dengan library optimized (lihat [[../docs/LIBRARIES|docs/LIBRARIES.md]]).
+- [x] Docker (`Dockerfile`, `docker-compose.yml`) + CI (`.github/workflows/ci.yml`) untuk environment konsisten (lihat [[../docs/DOCKER|docs/DOCKER.md]]) — Docker Desktop sendiri belum terinstall, perlu dijalankan manual per laptop.
+- [ ] **Sedang dikerjakan: Fase 1 — Base Model** (lihat [[../docs/PLAN_BASE_MODEL|docs/PLAN_BASE_MODEL.md]]). Sisa: `ProgressRepository`, `ParentalGateDialog`, `SettingsScreen`, wiring `feature_angka` end-to-end.
 - [ ] Fase 2 (belum mulai): 6 modul lain coding paralel mengikuti pola dari base model.
 
 ## Keputusan besar
@@ -27,3 +29,6 @@ Lihat [[Decisions Log]] untuk detail & alasan. Ringkasan:
 - [[../docs/AI_WORKFLOW|Cara kerja tim dengan AI]]
 - [[../docs/PLAN_BASE_MODEL|Plan Base Model]]
 - [[../docs/JOBS_BASE_MODEL|Jobs Base Model]]
+- [[../docs/LIBRARIES|Analisis Libraries]]
+- [[../docs/UI_UX_DESIGN|UI/UX Design & Color Palette]]
+- [[../docs/DOCKER|Docker]]
