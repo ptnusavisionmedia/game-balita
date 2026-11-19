@@ -65,3 +65,9 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 ## 2026-11-19 — Nama Dev 1 diisi: Bramantyo (tanpa title "Lead")
 
 **Keputusan**: Dev 1 (pegang `core`+`app`) namanya **Bramantyo**. Atas permintaan eksplisit, title "Lead/Architect" dihapus dari semua dokumen — dia tetap pegang `core`+`app` secara teknis (titik integrasi semua modul), tapi tanpa label jabatan "Lead". Referensi "Dev 1 (Lead)" di `docs/TEAM.md`, `docs/JOBS_BASE_MODEL.md`, `docs/GIT_WORKFLOW.md`, `docs/PLAN_BASE_MODEL.md`, `.github/CODEOWNERS`, `docs/TASK_BOARD.md` diganti jadi "Bramantyo".
+
+## 2026-11-19 — Klaim task jadi LANGKAH 0 wajib di setiap sesi/conversation baru
+
+**Keputusan**: `CLAUDE.md` diperketat — klaim task di `docs/TASK_BOARD.md` sekarang jadi **langkah pertama mutlak** tiap kali sesi AI/conversation baru dibuka di repo ini, sebelum baca dokumen lain atau mulai kerja. Kalau task belum jelas dari instruksi user, sesi AI **wajib tanya dulu**, tidak boleh menebak. Commit klaim pakai format baku `claim: <nama task> — <nama orang>`, commit selesai `done: <nama task> — <nama orang>`, dan **push duluan** sebelum mulai kerja task-nya.
+
+**Alasan**: sebelumnya "klaim task" cuma salah satu langkah di tengah daftar baca — user minta ini jadi gerbang wajib paling awal, supaya tidak mungkin ada sesi/orang yang mulai kerja tanpa tercatat di board, dan nama di PIC langsung pakai nama asli begitu diketahui (bukan "Dev 1"/"Asset 2" generik terus-terusan).

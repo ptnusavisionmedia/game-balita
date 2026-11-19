@@ -2,24 +2,32 @@
 
 App game edukatif Android (+iOS/web) untuk anak 1-5 tahun. Monorepo Flutter (Melos), 7 orang: 4 developer + 3 asset creator (ilustrasi/audio/video — tidak coding).
 
-## Baca dulu, urutan ini, sebelum menyentuh apa pun
+## LANGKAH 0 — WAJIB di setiap conversation/sesi BARU, sebelum apa pun lain
 
-1. **[docs/TEAM.md](docs/TEAM.md)** — siapa pegang modul/role apa. Cek posisi kamu di sini.
-2. **[docs/TASK_BOARD.md](docs/TASK_BOARD.md)** — task mana `Open`/`Claimed`/`Done`. **Klaim task di sini SEBELUM mulai kerja** (caranya di bawah).
-3. **[obsidian-vault/Decisions Log.md](obsidian-vault/Decisions%20Log.md)** — keputusan yang sudah diambil & alasannya. Jangan buka ulang diskusi yang sudah diputuskan tanpa alasan baru.
-4. **[docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md)** — cara branch/commit/PR. Wajib, semua role.
-5. Kalau role developer: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** (aturan dependensi antar modul).
-6. Dokumen pendukung sesuai kebutuhan task yang diklaim: [docs/LIBRARIES.md](docs/LIBRARIES.md), [docs/UI_UX_DESIGN.md](docs/UI_UX_DESIGN.md), [docs/DOCKER.md](docs/DOCKER.md), [docs/PLAN_BASE_MODEL.md](docs/PLAN_BASE_MODEL.md), [docs/JOBS_BASE_MODEL.md](docs/JOBS_BASE_MODEL.md).
+Ini bukan saran, ini urutan tetap. Setiap kali sesi AI baru dibuka di repo ini (conversation baru, context baru), sebelum baca kode atau mulai kerja apa pun:
 
-## Cara klaim task (WAJIB — supaya tidak ada 2 orang/2 sesi AI kerja hal yang sama)
+1. Buka **[docs/TASK_BOARD.md](docs/TASK_BOARD.md)**. Lihat task mana yang `Open`, `Claimed`, `Done`.
+2. Kalau user (orang yang chat sekarang) **sudah bilang** task/modul mana yang mau dikerjakan → cocokkan ke baris yang sesuai di board.
+   Kalau **belum bilang** → **tanya ke user dulu** task mana yang dimaksud (lihat `docs/TEAM.md` untuk tahu role/modul siapa). Jangan menebak atau asal pilih task orang lain.
+3. Begitu task sudah jelas: edit baris itu di `docs/TASK_BOARD.md` — ubah status jadi `Claimed`, isi kolom **PIC dengan nama orang yang chat** (bukan "Dev 1"/"Asset 2" generik lagi kalau namanya sudah diketahui dari `docs/TEAM.md`) dan kolom tanggal.
+4. **Commit perubahan INI SENDIRIAN dulu**, commit message wajib pakai format:
+   ```
+   claim: <nama task> — <nama orang>
+   ```
+   contoh: `claim: ProgressRepository — Bramantyo`
+5. **Push commit klaim ini ke `main` duluan**, SEBELUM mulai coding/kerja task-nya — supaya sesi/orang lain yang buka repo setelahnya langsung lihat task itu sudah diambil, dan tidak kerja dobel.
+6. Baru setelah itu lanjut baca dokumen pendukung & mulai kerja (lihat daftar di bawah).
+7. Setelah task selesai & PR di-merge: balik ke `TASK_BOARD.md`, ubah jadi `Done`, commit lagi dengan format `done: <nama task> — <nama orang>`, push.
 
-1. Buka `docs/TASK_BOARD.md`.
-2. Cari baris berstatus `Open` yang cocok role/modul kamu.
-3. Ubah jadi `Claimed`, isi kolom PIC & tanggal.
-4. **Commit & push perubahan INI SENDIRIAN dulu** (`git commit -m "claim: <nama task>"`) sebelum mulai kerja task-nya — sinyal ke orang/sesi lain bahwa task itu sudah diambil.
-5. Setelah selesai & PR di-merge: balik ke `TASK_BOARD.md`, ubah jadi `Done`, commit lagi.
+Kalau ragu task mana yang dimaksud, atau user cuma bilang "lanjut kerja" tanpa nama task spesifik: **tanya**, jangan asumsi.
 
-Kalau kamu sesi AI yang baru masuk **tanpa instruksi spesifik dari user** tentang task mana yang dikerjakan: tanya ke user dulu task mana yang dimaksud, jangan asal klaim task orang lain di board.
+## Baca selanjutnya, sesuai kebutuhan task yang diklaim
+
+1. **[docs/TEAM.md](docs/TEAM.md)** — siapa pegang modul/role apa.
+2. **[obsidian-vault/Decisions Log.md](obsidian-vault/Decisions%20Log.md)** — keputusan yang sudah diambil & alasannya. Jangan buka ulang diskusi yang sudah diputuskan tanpa alasan baru.
+3. **[docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md)** — cara branch/commit/PR. Wajib, semua role.
+4. Kalau role developer: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** (aturan dependensi antar modul).
+5. Dokumen pendukung lain: [docs/LIBRARIES.md](docs/LIBRARIES.md), [docs/UI_UX_DESIGN.md](docs/UI_UX_DESIGN.md), [docs/DOCKER.md](docs/DOCKER.md), [docs/PLAN_BASE_MODEL.md](docs/PLAN_BASE_MODEL.md), [docs/JOBS_BASE_MODEL.md](docs/JOBS_BASE_MODEL.md).
 
 ## Aturan keras
 
