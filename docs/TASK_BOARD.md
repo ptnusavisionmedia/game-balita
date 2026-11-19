@@ -9,7 +9,7 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Task | Role | Area | Status | PIC | Tgl klaim | Catatan |
 |---|---|---|---|---|---|---|
 | AppTheme/AppColors, StarRewardOverlay, SfxService, Docker+CI scaffold | Dev | core / infra | Done | (sesi AI, 2026-11-19) | 2026-11-19 | Lihat docs/LIBRARIES.md, docs/DOCKER.md |
-| `ProgressRepository` (ChangeNotifier + shared_preferences) | Dev | core | Open | Bramantyo | | lihat docs/JOBS_BASE_MODEL.md Job 1 |
+| `ProgressRepository` (ChangeNotifier + shared_preferences) | Dev | core | Claimed | Bramantyo | 2026-11-19 | lihat docs/JOBS_BASE_MODEL.md Job 1 |
 | `ParentalGateDialog` | Dev | core | Open | Bramantyo | | |
 | Wiring navigasi Home ↔ Settings ↔ mini-game | Dev | app | Open | Bramantyo | | |
 | `SettingsScreen` (toggle suara) | Dev | app | Open | Bramantyo | | |
