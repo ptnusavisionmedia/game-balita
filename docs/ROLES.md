@@ -21,26 +21,18 @@ Dokumen ini jawaban konkret untuk "siapa boleh edit apa". Kalau `docs/TEAM.md` b
 
 ## Kalau butuh sesuatu di luar scope kamu
 
-Jangan edit langsung. Ada 2 cara yang benar:
-1. **Minta ke pemegangnya** (chat/koordinasi), dia yang edit & PR.
-2. **Buat Issue di GitHub** describe kebutuhannya, biar masuk antrian task pemegang folder itu.
+Normalnya: **minta ke pemegangnya** (chat/koordinasi) atau **buat Issue di GitHub**, biar masuk antrian task pemegang folder itu, bukan diedit langsung.
 
-Ini bukan soal "tidak percaya" — ini supaya 1 orang/1 sesi AI tetap jadi satu-satunya yang paham penuh isi 1 folder, jadi reviewnya cepat dan tidak ada 2 pemahaman berbeda soal file yang sama.
+**Kecuali untuk bug fix kecil yang urgent** — boleh langsung edit folder orang lain kalau perlu (jangan sampai aturan ini menghalangi fix bug cepat). Syaratnya cuma:
+1. PR terpisah (jangan digabung dengan kerjaan modul sendiri).
+2. Tag/mention pemilik folder itu di PR-nya (lihat `docs/TEAM.md`) biar dia tahu & sempat cek, meskipun approval-nya bukan syarat wajib untuk merge.
+3. Tulis di deskripsi PR kenapa fix-nya mendesak / tidak sempat nunggu pemiliknya.
 
-## Kenapa ini aman dari tabrakan — 3 lapis, bukan cuma "saling percaya"
+Ini bukan soal "tidak percaya" — defaultnya tetap 1 orang/1 sesi AI yang paham penuh isi 1 folder, cuma tidak dibuat kaku sampai bug sepele jadi lambat ditangani.
 
-1. **Struktural (duluan)**: scope di atas nyaris tidak overlap sama sekali antar peran — modul berbeda = folder berbeda = file berbeda. Secara teknis susah tabrakan walau tidak ada yang mengatur.
+## Kenapa ini aman dari tabrakan — 2 lapis
+
+1. **Struktural**: scope di atas nyaris tidak overlap sama sekali antar peran — modul berbeda = folder berbeda = file berbeda. Secara teknis susah tabrakan walau tidak ada yang memaksa.
 2. **Koordinasi (TASK_BOARD)**: sebelum mulai, klaim task di `docs/TASK_BOARD.md` (lihat `CLAUDE.md` LANGKAH 0). Ini mencegah 2 orang/2 sesi AI kerja **task yang sama** di modul yang sama secara bersamaan.
-3. **Teknis/dipaksa GitHub (terakhir, bukan cuma janji)**:
-   - `.github/CODEOWNERS` sudah memetakan tiap folder ke pemiliknya.
-   - **Setelah ini diaktifkan oleh admin repo** (langkah manual, sekali saja — lihat di bawah), GitHub akan **menolak merge** PR yang menyentuh folder orang lain sampai pemilik folder itu kasih approve. Jadi walau ada yang kelepasan edit folder orang lain, kodenya **tidak bisa masuk ke `main`** tanpa izin pemiliknya.
-   - CI (`scope-check`, lihat `.github/workflows/ci.yml`) otomatis **gagal** kalau 1 PR menyentuh lebih dari 1 folder `packages/<modul>` sekaligus — mendeteksi "mengacak-acak file lain" secara otomatis, sebelum manusia sempat review.
 
-### Setup sekali oleh admin repo (supaya lapis 3 aktif)
-
-Di GitHub: **Settings → Branches → Add branch protection rule** untuk `main`:
-- ✅ Require a pull request before merging
-- ✅ Require review from Code Owners
-- ✅ Require status checks to pass before merging → pilih job `analyze-test` dan `scope-check`
-
-Tanpa langkah ini, CODEOWNERS cuma jadi "auto-assign reviewer" (masih bagus, tapi bisa di-skip). Dengan langkah ini, aturan "jangan acak file orang lain" **ditegakkan GitHub sendiri**, bukan cuma aturan tertulis.
+`.github/CODEOWNERS` tetap ada, tapi fungsinya cuma **auto-assign reviewer** (biar PR ke folder tertentu otomatis minta review ke pemiliknya) — bukan gate yang bisa blok merge. Sengaja tidak dipasang branch protection/CI yang memaksa, supaya bug fix atau perubahan mendesak tidak terhambat proses.

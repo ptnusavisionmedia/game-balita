@@ -79,3 +79,9 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Pengecualian baru**: commit yang HANYA mengubah baris status di `docs/TASK_BOARD.md` (klaim/done) boleh push langsung ke `main`, supaya klaim task cepat terlihat orang lain — tidak perlu nunggu PR untuk sekadar update status.
 
 **Alasan**: user minta jaminan konkret "tidak tabrakan", bukan cuma janji di dokumen. Jawabannya 3 lapis: (1) struktural — folder per peran nyaris tidak overlap, (2) koordinasi — klaim di TASK_BOARD sebelum kerja, (3) teknis — CODEOWNERS + branch protection + CI scope-check yang benar-benar **menolak** perubahan di luar scope, bukan cuma mengandalkan orang ingat aturan.
+
+## 2026-11-19 — Lapis 3 (CI scope-check + branch protection) DIBATALKAN, balik ke 2 lapis
+
+**Keputusan**: `scripts/check_pr_scope.sh` dan job `scope-check` di CI **dihapus**. Rekomendasi branch protection "Require review from Code Owners" juga dibatalkan. Tinggal 2 lapis: (1) struktural (folder per peran nyaris tidak overlap) + (2) koordinasi (klaim di TASK_BOARD sebelum kerja). `.github/CODEOWNERS` tetap ada tapi cuma untuk auto-assign reviewer, bukan gate yang blok merge. Aturan "jangan edit folder orang lain" dilonggarkan untuk **bug fix kecil yang urgent** — boleh langsung, asal PR terpisah + tag pemilik modulnya, tidak wajib tunggu approval.
+
+**Alasan**: user khawatir gate otomatis (CI yang menolak PR lintas-modul, atau approval wajib dari code owner) bikin bug fix mendadak jadi lambat/susah ditangani. Kecepatan menangani bug dinilai lebih penting daripada penegakan teknis yang kaku — cukup andalkan struktur folder + disiplin klaim task, sama seperti sebelum `docs/ROLES.md` ditambah lapis 3.

@@ -133,13 +133,13 @@ Branch `feature/angka-level-1` boleh dihapus (GitHub biasanya kasih tombol "Dele
 ## 5. Aturan supaya kolaborasi 7 orang tetap rapi
 
 1. ❌ **Jangan pernah** `git push` langsung ke `main`, **kecuali** commit yang HANYA mengubah baris status di `docs/TASK_BOARD.md` (klaim/done task — lihat `CLAUDE.md` LANGKAH 0). Semua perubahan lain lewat Pull Request, walau kerjaan kecil.
-2. ✅ **1 Pull Request = 1 modul.** Jangan campur perubahan `feature_angka` dan `feature_warna` di PR yang sama. Ini **dicek otomatis** oleh CI (`scope-check`) — PR yang menyentuh >1 folder `packages/<modul>` sekaligus akan gagal CI.
+2. ✅ **1 Pull Request = 1 modul** (idealnya). Jangan campur perubahan `feature_angka` dan `feature_warna` di PR yang sama — ini aturan kebiasaan, bukan dipaksa alat apa pun, supaya tidak menghalangi fix mendesak yang kebetulan menyentuh 2 modul.
 3. ✅ **Commit sering, kecil-kecil**, dengan pesan jelas — bukan 1 commit raksasa "update banyak" di akhir minggu.
 4. ✅ Sebelum mulai kerjaan baru, **selalu** `git checkout main && git pull origin main` dulu (Langkah 1) — supaya kamu kerja dari versi terbaru.
-5. ❌ **Jangan edit folder/file di luar scope kamu.** Scope persis per peran ada di [docs/ROLES.md](ROLES.md) — baca itu kalau ragu. Kalau nemu bug di modul orang lain, laporkan (buat Issue di GitHub), jangan edit langsung.
+5. ❌ **Jangan edit folder/file di luar scope kamu**, kecuali bug fix kecil yang urgent (PR terpisah + tag pemiliknya). Scope persis per peran ada di [docs/ROLES.md](ROLES.md) — baca itu kalau ragu. Kalau nemu bug yang tidak mendesak, cukup laporkan (buat Issue di GitHub), jangan edit langsung.
 6. ✅ Butuh sesuatu dari `core`? Minta ke Bramantyo, jangan copy-paste kode `core` ke modulmu sendiri.
 7. ✅ Jalankan `melos run analyze` sebelum push (lihat [CONTRIBUTING.md](../CONTRIBUTING.md)) — supaya tidak kirim kode yang jelas-jelas error.
-8. ✅ PR kamu otomatis minta review ke pemilik folder terkait ([.github/CODEOWNERS](../.github/CODEOWNERS)) — kalau repo sudah diset branch protection "Require review from Code Owners" (lihat `docs/ROLES.md`), PR **tidak bisa merge** tanpa approval pemilik folder itu, jadi walau kelepasan edit folder orang lain, tidak bisa masuk `main` tanpa izin.
+8. ✅ PR kamu otomatis minta review ke pemilik folder terkait ([.github/CODEOWNERS](../.github/CODEOWNERS)) — ini cuma auto-assign reviewer, bukan gate yang blok merge, supaya proses tetap cepat.
 
 ---
 

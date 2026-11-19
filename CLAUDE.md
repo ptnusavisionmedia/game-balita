@@ -31,10 +31,10 @@ Kalau ragu task mana yang dimaksud, atau user cuma bilang "lanjut kerja" tanpa n
 
 ## Aturan keras
 
-- **Jangan edit file di luar scope task yang kamu klaim.** Scope persis per peran (folder mana boleh, mana tidak) ada di **[docs/ROLES.md](docs/ROLES.md)** — baca itu kalau ragu. Ini ditegakkan 3 lapis: struktur folder, klaim di TASK_BOARD, dan CI (`scope-check`) yang otomatis gagal kalau 1 PR menyentuh >1 modul `packages/`.
-- **Developer**: jangan edit folder modul yang bukan milikmu (lihat `docs/TEAM.md` + `docs/ROLES.md`), jangan push langsung ke `main` (selalu lewat PR, lihat `docs/GIT_WORKFLOW.md`) — **kecuali** commit yang HANYA mengubah baris status di `docs/TASK_BOARD.md` (klaim/done), itu boleh push langsung ke `main` supaya klaim cepat terlihat orang lain.
+- **Jangan edit file di luar scope task yang kamu klaim**, kecuali bug fix kecil yang urgent. Scope persis per peran (folder mana boleh, mana tidak) ada di **[docs/ROLES.md](docs/ROLES.md)** — baca itu kalau ragu. Dijaga 2 lapis: struktur folder (hampir tidak overlap) + klaim di TASK_BOARD sebelum kerja. Sengaja **tidak** dipasang gate otomatis (CI/branch protection yang blok merge) supaya fix mendesak tidak terhambat.
+- **Developer**: jangan edit folder modul yang bukan milikmu (lihat `docs/TEAM.md` + `docs/ROLES.md`) kecuali bug fix urgent (PR terpisah + tag pemiliknya), jangan push langsung ke `main` (selalu lewat PR, lihat `docs/GIT_WORKFLOW.md`) — **kecuali** commit yang HANYA mengubah baris status di `docs/TASK_BOARD.md` (klaim/done), itu boleh push langsung ke `main` supaya klaim cepat terlihat orang lain.
 - **Asset creator**: taruh aset di `packages/feature_xxx/assets/images/` atau `assets/audio/` modul yang sesuai (lihat spek di `obsidian-vault/Specs/<modul>.md`), atau di `marketing/` untuk konten promosi — bukan di lokasi lain.
-- Butuh sesuatu di luar scope kamu? Jangan edit langsung — minta ke pemegangnya atau buat Issue (lihat `docs/ROLES.md`).
+- Butuh sesuatu di luar scope kamu (bukan bug fix urgent)? Jangan edit langsung — minta ke pemegangnya atau buat Issue (lihat `docs/ROLES.md`).
 - Dependency/library baru → catat alasannya di `docs/LIBRARIES.md` (jangan tambah tanpa catatan, lihat prinsip "jangan tulis kode sendiri kalau ada library lebih optimal" di sana).
 - Keputusan besar/berubah arah → tambah entri **baru** di `obsidian-vault/Decisions Log.md` (jangan edit/hapus entri lama).
 - Fase sekarang: **Base Model** (lihat `docs/PLAN_BASE_MODEL.md`) — jangan mulai coding 6 modul paralel sebelum base model (`feature_angka`) lolos demo.

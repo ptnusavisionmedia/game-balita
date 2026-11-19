@@ -6,18 +6,6 @@ on:
   pull_request:
 
 jobs:
-  scope-check:
-    # Hanya relevan untuk PR (perlu bandingkan ke base branch). Lihat docs/ROLES.md.
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Cek 1 PR = 1 modul packages/
-        run: bash scripts/check_pr_scope.sh origin/${{ github.base_ref }}
-
   analyze-test:
     runs-on: ubuntu-latest
     # Image sama dengan Dockerfile lokal, biar hasil CI = hasil lokal.
