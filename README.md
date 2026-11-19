@@ -56,4 +56,10 @@ Baca selanjutnya:
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — kenapa modular, aturan dependensi, cara menambah modul baru
 - [docs/TEAM.md](docs/TEAM.md) — pembagian 7 orang per modul
 - [docs/AI_WORKFLOW.md](docs/AI_WORKFLOW.md) — cara kerja tim yang semua pakai Claude/AI tanpa saling tabrakan
+- [docs/PLAN_BASE_MODEL.md](docs/PLAN_BASE_MODEL.md) — plan fase sekarang (base model)
+- [docs/JOBS_BASE_MODEL.md](docs/JOBS_BASE_MODEL.md) — tugas tiap orang untuk fase base model
 - [CONTRIBUTING.md](CONTRIBUTING.md) — branch, commit, PR
+
+## Context & decisions (Obsidian)
+
+Folder [obsidian-vault/](obsidian-vault/) menyimpan context yang mudah hilang kalau cuma di chat: log keputusan ([obsidian-vault/Decisions Log.md](obsidian-vault/Decisions%20Log.md)) dan spek tiap mini-game ([obsidian-vault/Specs/](obsidian-vault/Specs/)). Buka folder **root repo ini** sebagai vault di Obsidian (bukan sub-foldernya) supaya link antar dokumen bisa diklik. Isi vault ikut di-commit ke git seperti kode.
