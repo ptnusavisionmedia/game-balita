@@ -46,15 +46,15 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
 
 ## Definition of Done (base model dianggap selesai kalau semua ini benar)
 
-Base model Flutter sebelumnya **sudah pernah** diverifikasi penuh jalan (lihat Decisions Log 2026-11-19 "Base model diverifikasi jalan"), lalu dihapus total karena ganti stack ke Godot. Versi Godot ini **belum pernah dibuka/dicoba** sama sekali — checklist di bawah semuanya reset jadi belum tercentang sampai ada yang install Godot Editor dan coba langsung.
+Godot sudah diinstall & dicoba di sesi ini (lihat Decisions Log 2026-11-19 "Godot DIVERIFIKASI jalan") — semua 8 scene lolos headless tanpa error, 1 bug nyata (path script salah di 5 placeholder) ketemu & diperbaiki. Yang **belum** dicoba adalah interaksi sentuhan asli (hanya device fisik/emulator yang bisa) dan export APK sungguhan.
 
-- [ ] Project ini bisa dibuka di Godot Editor 4.x tanpa error ("Project > Import" lalu pilih `project.godot`).
-- [ ] Jalankan (F5) → `scenes/Home.tscn` muncul, 6 tombol mini-game + 1 tombol Settings kelihatan.
-- [ ] Dari Home, buka `feature_angka`, selesaikan 1 level, lihat reward bintang, balik ke Home.
-- [ ] Tutup app, buka lagi → hasil game sebelumnya masih tersimpan (progres tidak hilang) — cek file `user://progress.cfg`.
+- [x] Project ini bisa dibuka Godot 4.x tanpa error (`--headless --import` lolos, semua `class_name` ter-register).
+- [x] Tiap scene (`Home`, `Settings`, `feature_angka`, 5 placeholder) lolos dijalankan headless tanpa error GDScript/parse.
+- [ ] Dari Home, buka `feature_angka`, selesaikan 1 level, lihat reward bintang, balik ke Home — **secara interaktif** (sentuhan/klik asli, headless run cuma membuktikan tidak crash saat load).
+- [ ] Tutup app, buka lagi → hasil game sebelumnya masih tersimpan (progres tidak hilang) — cek file `user://progress.cfg` setelah main sungguhan.
 - [ ] Toggle suara di Settings beneran mematikan/menyalakan audio (begitu ada SFX asli dari Job 11), dan tersimpan setelah app ditutup-buka lagi.
 - [ ] Masuk Settings harus lewat `ParentalGateDialog` dulu (tahan tombol 3 detik, cek secara sentuhan asli).
-- [ ] Export debug APK (`Project > Export`) berhasil, atau minimal export desktop (Windows/Linux) kalau Android export template belum disetup.
+- [ ] Export debug APK (`Project > Export`) berhasil, atau minimal export desktop (Windows/Linux) kalau Android export template belum disetup — butuh `export_presets.cfg` yang belum dibuat.
 - [ ] `docs/` dan `obsidian-vault/` ter-update dan ter-push ke `main`.
 
 ## Urutan kerja (supaya tidak saling blok)

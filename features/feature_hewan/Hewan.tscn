@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://feature_hewan/hewan.gd" id="1"]
+[ext_resource type="Script" path="res://features/feature_hewan/hewan.gd" id="1"]
 
 [node name="Hewan" type="Control"]
 anchor_right = 1.0

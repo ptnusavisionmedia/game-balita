@@ -17,7 +17,8 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | `feature_angka`: wiring ke core (reward/sfx/progress) | Dev | feature_angka | Done | Dev 2 | 2026-11-19 | StarRewardOverlay + ProgressRepository + SfxService sudah terpasang |
 | Placeholder scene 5 modul lain (Warna/Hewan/Musik/Mewarnai/Puzzle) | Dev | feature_* | Done | (sesi AI, 2026-11-19) | 2026-11-19 | Cuma tombol "Kembali", isi logic-nya di Job 4-8 |
 | CI/Docker untuk Godot (export headless) | Dev | infra | Open | Bramantyo | | belum dibuat ulang setelah reset — lihat docs/DOCKER.md, image `barichello/godot-ci` |
-| **Verifikasi: buka project di Godot Editor, coba jalan** | Dev | base model | Open | (siapa saja yang punya Godot) | | lihat Definition of Done di docs/PLAN_BASE_MODEL.md — belum pernah dicoba sama sekali |
+| Verifikasi: buka project di Godot Editor/headless, cek semua scene lolos | Dev | base model | Done | (sesi AI, 2026-11-19) | 2026-11-19 | Godot 4.7.2 — semua 8 scene exit 0 headless; export APK/interaksi sentuhan asli masih belum dicoba |
+| CI/Docker untuk Godot (export headless) | Dev | infra | Claimed | (sesi AI, 2026-11-19) | 2026-11-19 | `.github/workflows/ci.yml` sudah ditulis & binary/flag terverifikasi (validate step), export job (APK) masih belum — lanjutannya milik Bramantyo |
 | Spek + asset list `feature_warna` | Dev | feature_warna | Open | Dev Warna | | |
 | Spek + asset list `feature_hewan` | Dev | feature_hewan | Open | Dev 3 | | |
 | Spek + asset list `feature_musik` | Dev | feature_musik | Open | Dev Musik | | |
