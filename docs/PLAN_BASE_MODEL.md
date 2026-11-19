@@ -45,13 +45,15 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
 
 ## Definition of Done (base model dianggap selesai kalau semua ini benar)
 
+Semua kode untuk poin-poin ini **sudah ditulis dan di-push** (lihat `docs/JOBS_BASE_MODEL.md` Job 1-3) — tapi **belum ada yang menjalankan `flutter run` sungguhan** di device/emulator, karena environment sesi AI ini tidak punya Flutter SDK terpasang. Siapa pun yang punya Flutter SDK: tolong jalankan `melos bootstrap` lalu `flutter run` di `packages/app` dan centang manual poin di bawah begitu terverifikasi.
+
 - [ ] `melos bootstrap` + `flutter run` di `packages/app` jalan tanpa error di emulator Android.
 - [ ] Dari Home, buka `feature_angka`, selesaikan 1 level, lihat reward bintang, balik ke Home.
 - [ ] Tutup app, buka lagi → hasil game sebelumnya masih tersimpan (progres tidak hilang).
 - [ ] Toggle suara di Settings beneran mematikan/menyalakan audio, dan tersimpan setelah app ditutup-buka lagi.
 - [ ] Masuk Settings harus lewat `ParentalGateDialog` dulu.
 - [ ] CI hijau di GitHub (analyze + test).
-- [ ] `docs/` dan `obsidian-vault/` ter-update dan ter-push ke `main`.
+- [x] `docs/` dan `obsidian-vault/` ter-update dan ter-push ke `main`.
 
 ## Urutan kerja (supaya tidak saling blok)
 

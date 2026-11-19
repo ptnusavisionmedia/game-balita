@@ -9,9 +9,16 @@ class AudioService {
   static final AudioService instance = AudioService._();
 
   final AudioPlayer _player = AudioPlayer();
+  bool muted = false;
 
   Future<void> playAsset(String assetPath) async {
-    await _player.play(AssetSource(assetPath));
+    if (muted) return;
+    try {
+      await _player.play(AssetSource(assetPath));
+    } catch (_) {
+      // Asset belum ada (belum diproduksi Asset creator) — jangan crash,
+      // base model harus tetap bisa ditest tanpa audio final.
+    }
   }
 
   Future<void> dispose() => _player.dispose();

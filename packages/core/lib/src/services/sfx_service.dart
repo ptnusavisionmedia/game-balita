@@ -20,9 +20,15 @@ class SfxService {
 
   Future<void> preload(String assetPath) async {
     if (_loaded.containsKey(assetPath)) return;
-    final bytes = await rootBundle.load(assetPath);
-    final soundId = await _pool.load(bytes);
-    _loaded[assetPath] = soundId;
+    try {
+      final bytes = await rootBundle.load(assetPath);
+      final soundId = await _pool.load(bytes);
+      _loaded[assetPath] = soundId;
+    } catch (_) {
+      // Asset belum ada (belum diproduksi Asset creator) — jangan crash,
+      // base model harus tetap bisa ditest tanpa audio final. play()
+      // otomatis no-op selama assetPath ini belum ke-load.
+    }
   }
 
   Future<void> play(String assetPath) async {

@@ -10,33 +10,33 @@ Jalur kritis base model. Sebagian sudah di-scaffold sesi ini supaya Job 1 tidak 
 - [x] `StarRewardOverlay` pakai package `confetti` — `packages/core/lib/src/widgets/star_reward_overlay.dart`.
 - [x] `SfxService` (SFX latensi rendah, `soundpool`) + `AudioService` (musik/VO, `audioplayers`) — lihat `docs/LIBRARIES.md`.
 - [x] `ProgressRepository` (`ChangeNotifier` + `shared_preferences`) — `packages/core/lib/src/services/progress_repository.dart` (+ unit test), sudah di-wire ke `main()`.
-- [ ] `ParentalGateDialog` (gate sederhana, misal tahan tombol 3 detik).
+- [x] `ParentalGateDialog` (tahan tombol 3 detik) — `packages/core/lib/src/widgets/parental_gate_dialog.dart`.
 - [x] CI/Docker (`.github/workflows/ci.yml`, `Dockerfile`, `docker-compose.yml`) — lihat `docs/DOCKER.md`.
-- [ ] Review PR dari Job 2 begitu wiring ke `core` siap.
+- [ ] Review PR dari Job 3 begitu wiring ke `core` siap.
 
-**Definition of done Job 1**: semua checklist tercentang + bisa dipakai modul lain tanpa perlu baca isi `core/src/`.
+**Definition of done Job 1**: semua checklist tercentang + bisa dipakai modul lain tanpa perlu baca isi `core/src/`. **Status: selesai** (sisa cuma review PR, bersifat ongoing).
 
 ## Job 2 — Dev App (baru) — `app`
 
 Dipisah dari Bramantyo supaya `core` + `app` tidak numpuk 1 orang.
 
-- [ ] Wiring navigasi Home ↔ Settings ↔ mini-game, pasang `ParentalGateDialog` (dari Job 1) di depan Settings.
-- [ ] `SettingsScreen` (toggle suara, baca/tulis lewat `ProgressRepository`).
-- [ ] Update `HomeMenu` (`packages/app/lib/main.dart`) supaya menampilkan status progres singkat per mini-game (opsional, boleh ditunda kalau base model sudah cukup tanpa ini).
+- [x] Wiring navigasi Home ↔ Settings ↔ mini-game, pasang `ParentalGateDialog` di depan Settings — `packages/app/lib/main.dart`.
+- [x] `SettingsScreen` (toggle suara, baca/tulis lewat `ProgressRepository`, sinkron ke `SfxService`/`AudioService`) — `packages/app/lib/src/settings_screen.dart`.
+- [ ] Update `HomeMenu` supaya menampilkan status progres singkat per mini-game (opsional, ditunda — base model sudah cukup tanpa ini).
 
-**Definition of done Job 2**: dari Home bisa masuk Settings (lewat parental gate) dan balik, toggle suara nyata mempengaruhi `SfxService`/`AudioService`.
+**Definition of done Job 2**: dari Home bisa masuk Settings (lewat parental gate) dan balik, toggle suara nyata mempengaruhi `SfxService`/`AudioService`. **Status: selesai.**
 
 ## Job 3 — Dev 2 — `feature_angka` (PILOT)
 
 Modul ini jadi **contoh pola** untuk 5 modul lain di Fase 2, jadi dikerjakan paling teliti.
 
-- [ ] UI: tampilkan kumpulan objek (1-5 buah), pilihan angka untuk di-tap.
-- [ ] Logic: deteksi tap benar/salah, random urutan soal sederhana (3-5 soal per sesi).
-- [ ] Feedback: suara + animasi benar/salah lewat `core.SfxService`.
-- [ ] Selesai sesi → tampilkan `StarRewardOverlay` → simpan `GameResult` via `ProgressRepository`.
-- [ ] Tombol kembali ke Home.
+- [x] UI: tampilkan kumpulan objek (1-5 buah, ikon placeholder — belum ilustrasi final dari Asset 1), pilihan angka untuk di-tap.
+- [x] Logic: deteksi tap benar/salah, random urutan soal (4 soal per sesi).
+- [x] Feedback: suara lewat `core.SfxService` — asset audio belum ada (Job 11 belum selesai), tapi `SfxService` sudah di-guard supaya tidak crash kalau asset belum ada; otomatis aktif begitu Asset 2 upload file-nya.
+- [x] Selesai sesi → `StarRewardOverlay` → simpan `GameResult` via `ProgressRepository`.
+- [x] Tombol kembali ke Home (otomatis lewat `Navigator.pop` setelah simpan hasil).
 
-**Definition of done Job 3**: 1 level bisa dimainkan dari Home sampai balik ke Home, hasilnya kebaca lagi kalau app ditutup-buka.
+**Definition of done Job 3**: 1 level bisa dimainkan dari Home sampai balik ke Home, hasilnya kebaca lagi kalau app ditutup-buka. **Status: selesai — base model siap ditest**, lihat `packages/feature_angka/lib/src/angka_screen.dart`.
 
 ## Job 4 — Dev Warna (baru) — spek `feature_warna`
 

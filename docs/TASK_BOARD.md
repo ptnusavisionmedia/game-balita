@@ -10,11 +10,11 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 |---|---|---|---|---|---|---|
 | AppTheme/AppColors, StarRewardOverlay, SfxService, Docker+CI scaffold | Dev | core / infra | Done | (sesi AI, 2026-11-19) | 2026-11-19 | Lihat docs/LIBRARIES.md, docs/DOCKER.md |
 | `ProgressRepository` (ChangeNotifier + shared_preferences) | Dev | core | Done | Bramantyo | 2026-11-19 | lihat docs/JOBS_BASE_MODEL.md Job 1 |
-| `ParentalGateDialog` | Dev | core | Open | Bramantyo | | |
-| Wiring navigasi Home ↔ Settings ↔ mini-game | Dev | app | Open | Dev App | | |
-| `SettingsScreen` (toggle suara) | Dev | app | Open | Dev App | | |
-| `feature_angka`: UI + logic soal (pilot base model) | Dev | feature_angka | Open | Dev 2 | | |
-| `feature_angka`: wiring ke core (reward/sfx/progress) | Dev | feature_angka | Open | Dev 2 | | tunggu ParentalGateDialog tidak diperlukan, progress sudah ada |
+| `ParentalGateDialog` | Dev | core | Done | Bramantyo | 2026-11-19 | tahan tombol 3 detik, `packages/core/lib/src/widgets/parental_gate_dialog.dart` |
+| Wiring navigasi Home ↔ Settings ↔ mini-game | Dev | app | Done | Dev App | 2026-11-19 | `packages/app/lib/main.dart` |
+| `SettingsScreen` (toggle suara) | Dev | app | Done | Dev App | 2026-11-19 | `packages/app/lib/src/settings_screen.dart` |
+| `feature_angka`: UI + logic soal (pilot base model) | Dev | feature_angka | Done | Dev 2 | 2026-11-19 | `packages/feature_angka/lib/src/angka_screen.dart` |
+| `feature_angka`: wiring ke core (reward/sfx/progress) | Dev | feature_angka | Done | Dev 2 | 2026-11-19 | StarRewardOverlay + ProgressRepository + SfxService sudah terpasang |
 | Spek + asset list `feature_warna` | Dev | feature_warna | Open | Dev Warna | | |
 | Spek + asset list `feature_hewan` | Dev | feature_hewan | Open | Dev 3 | | |
 | Spek + asset list `feature_musik` | Dev | feature_musik | Open | Dev Musik | | |

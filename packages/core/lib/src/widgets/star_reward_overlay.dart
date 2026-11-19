@@ -45,10 +45,16 @@ class _StarRewardOverlayState extends State<StarRewardOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    // SizedBox.expand supaya overlay ini selalu memenuhi parent-nya, baik
+    // dipakai langsung sebagai `body` maupun sebagai child non-positioned
+    // di dalam Stack lain (yang kasih loose constraints).
+    return SizedBox.expand(
+      child: Stack(
       alignment: Alignment.center,
       children: [
-        Container(color: Colors.black.withValues(alpha: 0.4)),
+        Positioned.fill(
+          child: Container(color: Colors.black.withValues(alpha: 0.4)),
+        ),
         Align(
           alignment: Alignment.topCenter,
           child: ConfettiWidget(
@@ -96,6 +102,7 @@ class _StarRewardOverlayState extends State<StarRewardOverlay> {
           ),
         ),
       ],
+      ),
     );
   }
 }

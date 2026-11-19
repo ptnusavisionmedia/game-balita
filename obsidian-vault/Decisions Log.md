@@ -101,3 +101,15 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Alasan**: user menilai role non-coding terpisah (QA/UI-UX/DevOps/Compliance) menambah kompleksitas tanpa perlu — lebih suka tim lean yang isinya murni coding + konten, dengan kebutuhan testing/QA dilebur ke 1 dev khusus (Dev Testing, tetap nulis kode: test + fix bug langsung) daripada jadi jabatan pelapor-saja yang tidak coding.
 
 **Konsekuensi yang dicatat, belum diselesaikan**: Privacy Policy & Google Play Families Policy (wajib sebelum submit ke Play Store untuk app anak) **belum ada pemegang jelas** karena role Compliance Officer dihapus dari struktur — dicatat di `docs/TEAM.md` & `docs/JOBS_BASE_MODEL.md` sebagai keputusan tertunda yang wajib diputuskan sebelum Fase 2 selesai.
+
+## 2026-11-19 — Base model (Job 1, 2, 3) selesai ditulis: `ParentalGateDialog`, `SettingsScreen`+navigasi, `feature_angka` penuh
+
+**Implementasi**:
+- `ParentalGateDialog` (`packages/core/lib/src/widgets/parental_gate_dialog.dart`) — tahan tombol 3 detik (`GestureDetector` onTapDown/onTapUp + `AnimationController`), dipanggil lewat `ParentalGateDialog.show(context)`.
+- `SettingsScreen` (`packages/app/lib/src/settings_screen.dart`) — toggle suara, sinkron ke `ProgressRepository.soundEnabled` + `SfxService.muted` + `AudioService.muted` (keduanya ditambah properti `muted`).
+- `HomeMenu` (`packages/app/lib/main.dart`) — tombol Settings di AppBar, wajib lewat `ParentalGateDialog` dulu; mute state di-restore dari `ProgressRepository` saat `main()` start.
+- `feature_angka` (`packages/feature_angka/lib/src/angka_screen.dart`) — implementasi penuh: 4 soal/sesi, pilihan 3 angka (1 benar + 2 pengecoh), feedback via `SfxService`, reward `StarRewardOverlay`, simpan `GameResult` via `ProgressRepository`. Pakai ikon placeholder (`Icons.favorite`) karena ilustrasi final (Asset 1, Job 10) belum ada.
+- **Bug fix sekaligus**: `StarRewardOverlay` sebelumnya backdrop-nya (`Container` tanpa `Positioned.fill`/`SizedBox.expand`) tidak akan memenuhi layar kalau diletakkan di dalam `Stack` lain — ditemukan & diperbaiki saat implementasi `feature_angka`.
+- **Robustness**: `SfxService.preload` dan `AudioService.playAsset` sekarang di-`try/catch` — kalau file asset belum ada (Asset creator belum upload), tidak crash, cuma no-op. Ini penting karena base model ditulis duluan sebelum asset final siap.
+
+**Belum diverifikasi jalan**: sesi AI ini tidak punya Flutter SDK, jadi semua di atas **belum pernah di-`flutter run`** sungguhan. Siapa pun dengan Flutter SDK terpasang perlu jadi orang pertama yang `melos bootstrap` + `flutter run` dan cek Definition of Done di `docs/PLAN_BASE_MODEL.md`.

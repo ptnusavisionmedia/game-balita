@@ -7,6 +7,7 @@ library core;
 
 export 'src/widgets/big_round_button.dart';
 export 'src/widgets/star_reward_overlay.dart';
+export 'src/widgets/parental_gate_dialog.dart';
 export 'src/services/audio_service.dart';
 export 'src/services/sfx_service.dart';
 export 'src/services/progress_repository.dart';

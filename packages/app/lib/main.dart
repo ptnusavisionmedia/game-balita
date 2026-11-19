@@ -7,9 +7,14 @@ import 'package:feature_musik/feature_musik.dart';
 import 'package:feature_mewarnai/feature_mewarnai.dart';
 import 'package:feature_puzzle/feature_puzzle.dart';
 
+import 'src/settings_screen.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ProgressRepository.instance.init();
+  final muted = !ProgressRepository.instance.soundEnabled;
+  SfxService.instance.muted = muted;
+  AudioService.instance.muted = muted;
   runApp(const BayiGuguGagaApp());
 }
 
@@ -44,6 +49,16 @@ class HomeMenu extends StatelessWidget {
     };
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Bayi GuguGaga'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: 'Pengaturan (orang tua)',
+            onPressed: () => _openSettings(context),
+          ),
+        ],
+      ),
       body: GridView.count(
         crossAxisCount: 2,
         children: games.entries.map((entry) {
@@ -56,5 +71,14 @@ class HomeMenu extends StatelessWidget {
         }).toList(),
       ),
     );
+  }
+
+  Future<void> _openSettings(BuildContext context) async {
+    final allowed = await ParentalGateDialog.show(context);
+    if (allowed && context.mounted) {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const SettingsScreen()),
+      );
+    }
   }
 }
