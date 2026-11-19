@@ -133,3 +133,13 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Juga dilakukan**: `flutter create . --platforms=web` untuk `packages/app` (platform `android`/`ios` belum, butuh Android SDK/Xcode yang tidak ada di sandbox ini) — menghasilkan `web/`, `test/widget_test.dart` (diganti dengan smoke test asli untuk `HomeMenu`, bukan template counter default).
 
 **Kesimpulan**: base model sekarang bukan cuma "kode sudah ditulis", tapi **terverifikasi benar-benar bisa di-build & lolos semua automated check**. Satu-satunya yang masih perlu manusia dengan device/emulator Android asli: interaksi sentuhan sungguhan (`ParentalGateDialog` tahan 3 detik, tap target di `feature_angka`, dengar SFX setelah Asset 2 upload file asli).
+
+## 2026-11-19 — RESET: semua kode Flutter/Dart dihapus, mau revisi bahasa pemrograman
+
+**Keputusan**: user minta hentikan build APK yang sedang jalan, lalu **hapus semua file kecuali `.md`** dari repo — artinya seluruh `packages/` (core + 6 `feature_*` + app), `pubspec.yaml` root, `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml`, `.github/CODEOWNERS`, `.gitignore`, `.dockerignore`, folder asset `marketing/` (kecuali `marketing/README.md`) — **dihapus dari git**. Yang tetap ada: semua dokumen `docs/`, `obsidian-vault/`, `CLAUDE.md`, `README.md`, `CONTRIBUTING.md`, template GitHub (`.md`).
+
+**Alasan**: user mau ganti bahasa pemrograman (belum diputuskan penggantinya saat entri ini ditulis) — base model Flutter/Dart yang baru diverifikasi jalan (lihat entri di atas) sengaja dibuang semua, bukan disimpan sebagai referensi, supaya repo bersih untuk mulai dari nol dengan stack baru.
+
+**Yang TIDAK ikut terhapus (di luar repo ini, di komputer sesi AI)**: instalasi Flutter SDK (`C:\Users\User\flutter`) dan Android SDK (`C:\Users\User\android-sdk`) yang sempat di-install untuk verifikasi — dibiarkan, tidak relevan lagi kalau bahasa pemrograman ganti, tapi tidak mengganggu karena di luar folder repo.
+
+**Belum diputuskan**: bahasa/stack pengganti. Begitu dipilih, `docs/ARCHITECTURE.md`, `docs/LIBRARIES.md`, `docs/DOCKER.md`, `docs/UI_UX_DESIGN.md` (bagian implementasi), dan `docs/JOBS_BASE_MODEL.md` perlu direvisi menyesuaikan — isinya saat ini masih bicara konsep Flutter/Dart (package, pubspec, widget) yang sudah tidak relevan untuk kode, meski prinsip pembagian modul/tim kemungkinan masih bisa dipakai ulang.
