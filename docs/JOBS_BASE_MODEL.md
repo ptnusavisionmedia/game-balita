@@ -2,7 +2,7 @@
 
 Lihat alasan & scope lengkap di [docs/PLAN_BASE_MODEL.md](PLAN_BASE_MODEL.md). Pemetaan orang mengikuti [docs/TEAM.md](TEAM.md) — nama masih placeholder, ganti saat sudah fix.
 
-## Job 1 — Dev 1 (Lead/Architect) — `core` + `app`
+## Job 1 — Bramantyo — `core` + `app`
 
 Jalur kritis base model. Sebagian sudah di-scaffold sesi ini supaya Job 1 tidak mulai dari nol — cek dulu sebelum nulis ulang:
 
@@ -75,7 +75,7 @@ Tidak bergantung ke base model, bisa jalan dari sekarang:
 
 - [ ] Riset referensi video promo app sejenis (kompetitor), kumpulkan sebagai referensi di `marketing/references/`.
 - [ ] Draft konsep video promo/trailer (storyboard kasar, belum perlu render final — base model belum punya cukup konten untuk direkam).
-- [ ] Draft listing Play Store Console (judul, deskripsi, kategori) — **belum publish**, tunggu APK dari Dev 1.
+- [ ] Draft listing Play Store Console (judul, deskripsi, kategori) — **belum publish**, tunggu APK dari Bramantyo.
 - [ ] Begitu `feature_angka` demo-able (base model lolos), rekam video demo pertama dari situ.
 
 ## Setelah base model demo lolos (Fase 2, belum mulai)

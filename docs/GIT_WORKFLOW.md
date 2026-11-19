@@ -29,8 +29,8 @@ Struktur proyek ini sengaja dibuat per-modul (lihat [docs/ARCHITECTURE.md](ARCHI
 
 ```
 packages/
-  core/              ← dipegang Dev 1 (Lead), SEMUA orang depend ke sini
-  app/               ← dipegang Dev 1 (Lead)
+  core/              ← dipegang Bramantyo, SEMUA orang depend ke sini
+  app/               ← dipegang Bramantyo
   feature_angka/     ← dipegang Dev 2 — HANYA Dev 2 yang edit folder ini
   feature_warna/     ← dipegang Dev 3 — HANYA Dev 3 yang edit folder ini
   feature_hewan/     ← dipegang Dev 4
@@ -42,9 +42,9 @@ packages/
 Kalau kamu pegang `feature_angka` dan temanmu pegang `feature_warna`, kalian **tidak pernah menyentuh file yang sama** — jadi secara teknis hampir mustahil tabrakan, asal:
 
 1. Kamu **cuma** mengedit folder modul kamu sendiri, tidak sentuh folder modul orang lain.
-2. Kalau butuh sesuatu dari `core` (misalnya tombol/suara yang belum ada), **minta ke Dev 1**, jangan langsung edit `core` sendiri, apalagi `feature_*` lain.
+2. Kalau butuh sesuatu dari `core` (misalnya tombol/suara yang belum ada), **minta ke Bramantyo**, jangan langsung edit `core` sendiri, apalagi `feature_*` lain.
 
-Satu-satunya titik rawan tabrakan: `core` dan `app`, karena semua orang depend ke situ. Itu kenapa cuma Dev 1 yang pegang keduanya.
+Satu-satunya titik rawan tabrakan: `core` dan `app`, karena semua orang depend ke situ. Itu kenapa cuma Bramantyo yang pegang keduanya.
 
 ---
 
@@ -88,7 +88,7 @@ Format nama branch: `feature/<nama-modul>-<deskripsi-singkat>`. Contoh:
 
 ### Langkah 3 — Kerja seperti biasa
 
-Edit file **hanya** di `packages/<modul-kamu>/...`. Jangan edit folder modul orang lain, jangan edit `core` tanpa koordinasi dengan Dev 1.
+Edit file **hanya** di `packages/<modul-kamu>/...`. Jangan edit folder modul orang lain, jangan edit `core` tanpa koordinasi dengan Bramantyo.
 
 ### Langkah 4 — Simpan kerjaanmu (commit), sesering mungkin
 
@@ -137,7 +137,7 @@ Branch `feature/angka-level-1` boleh dihapus (GitHub biasanya kasih tombol "Dele
 3. ✅ **Commit sering, kecil-kecil**, dengan pesan jelas — bukan 1 commit raksasa "update banyak" di akhir minggu.
 4. ✅ Sebelum mulai kerjaan baru, **selalu** `git checkout main && git pull origin main` dulu (Langkah 1) — supaya kamu kerja dari versi terbaru.
 5. ❌ **Jangan edit folder modul orang lain.** Kalau nemu bug di modul orang lain, laporkan (buat Issue di GitHub), jangan edit langsung.
-6. ✅ Butuh sesuatu dari `core`? Minta ke Dev 1, jangan copy-paste kode `core` ke modulmu sendiri.
+6. ✅ Butuh sesuatu dari `core`? Minta ke Bramantyo, jangan copy-paste kode `core` ke modulmu sendiri.
 7. ✅ Jalankan `melos run analyze` sebelum push (lihat [CONTRIBUTING.md](../CONTRIBUTING.md)) — supaya tidak kirim kode yang jelas-jelas error.
 
 ---
@@ -169,7 +169,7 @@ Ini paling sering terjadi kalau 2 orang **sama-sama ubah file yang sama** (biasa
    git commit -m "fix: resolve merge conflict"
    git push
    ```
-6. Kalau bingung/tidak yakin mana yang benar — **tanya dulu** ke orang yang ubah bagian itu sebelum asal pilih, atau tanya Dev 1 (Lead).
+6. Kalau bingung/tidak yakin mana yang benar — **tanya dulu** ke orang yang ubah bagian itu sebelum asal pilih, atau tanya Bramantyo.
 
 > Kalau kamu disiplin ikuti bagian 4 & 5 di atas (jangan edit folder orang lain, selalu pull sebelum mulai), kemungkinan besar kamu **tidak akan pernah** ketemu conflict selama proyek ini.
 

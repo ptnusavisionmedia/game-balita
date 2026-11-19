@@ -56,7 +56,7 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
 ## Urutan kerja (supaya tidak saling blok)
 
 ```
-Hari 1-2   Job 1 (Lead): AppTheme + ProgressRepository + ParentalGateDialog  ─┐
+Hari 1-2   Job 1 (Bramantyo): AppTheme + ProgressRepository + ParentalGateDialog  ─┐
                                                                                 ├─> keduanya butuh ini
 Hari 1-2   Job 2 (Dev angka): skeleton UI feature_angka (belum wire ke core) ─┘
 Hari 3-4   Job 1 + Job 2 wiring bareng: feature_angka pakai ProgressRepository,

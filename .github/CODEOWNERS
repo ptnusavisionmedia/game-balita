@@ -1,8 +1,8 @@
 # Isi dengan GitHub username tiap pemegang modul (lihat docs/TEAM.md)
 # Siapa pun yang membuka PR yang menyentuh path ini akan otomatis minta review ke owner-nya.
 
-packages/core/                       @lead-username
-packages/app/                        @lead-username
+packages/core/                       @bramantyo
+packages/app/                        @bramantyo
 
 packages/feature_angka/              @dev-angka-warna
 packages/feature_warna/              @dev-angka-warna

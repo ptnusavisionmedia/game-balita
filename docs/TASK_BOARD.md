@@ -7,10 +7,10 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Task | Role | Area | Status | PIC | Tgl klaim | Catatan |
 |---|---|---|---|---|---|---|
 | AppTheme/AppColors, StarRewardOverlay, SfxService, Docker+CI scaffold | Dev | core / infra | Done | (sesi AI, 2026-11-19) | 2026-11-19 | Lihat docs/LIBRARIES.md, docs/DOCKER.md |
-| `ProgressRepository` (ChangeNotifier + shared_preferences) | Dev | core | Open | Dev 1 | | lihat docs/JOBS_BASE_MODEL.md Job 1 |
-| `ParentalGateDialog` | Dev | core | Open | Dev 1 | | |
-| Wiring navigasi Home ↔ Settings ↔ mini-game | Dev | app | Open | Dev 1 | | |
-| `SettingsScreen` (toggle suara) | Dev | app | Open | Dev 1 | | |
+| `ProgressRepository` (ChangeNotifier + shared_preferences) | Dev | core | Open | Bramantyo | | lihat docs/JOBS_BASE_MODEL.md Job 1 |
+| `ParentalGateDialog` | Dev | core | Open | Bramantyo | | |
+| Wiring navigasi Home ↔ Settings ↔ mini-game | Dev | app | Open | Bramantyo | | |
+| `SettingsScreen` (toggle suara) | Dev | app | Open | Bramantyo | | |
 | `feature_angka`: UI + logic soal (pilot base model) | Dev | feature_angka | Open | Dev 2 | | |
 | `feature_angka`: wiring ke core (reward/sfx/progress) | Dev | feature_angka | Open | Dev 2 | | tunggu ProgressRepository |
 | Spek + asset list `feature_warna` | Dev | feature_warna | Open | Dev 2 | | |
@@ -23,7 +23,7 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | SFX dasar (tap/benar/coba-lagi) | Asset | core | Open | Asset 2 | | dipakai via SfxService |
 | VO angka 1-5 (Bahasa Indonesia) | Asset | feature_angka | Open | Asset 2 | | |
 | Riset referensi video + draft konsep promo | Asset | marketing | Open | Asset 3 | | |
-| Draft listing Play Store Console (belum publish) | Asset | marketing | Open | Asset 3 | | koordinasi Dev 1 untuk APK |
+| Draft listing Play Store Console (belum publish) | Asset | marketing | Open | Asset 3 | | koordinasi Bramantyo untuk APK |
 
 ## Setelah base model demo lolos
 
