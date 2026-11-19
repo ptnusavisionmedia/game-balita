@@ -15,8 +15,9 @@
 - [x] `scenes/Home.tscn` + `Settings.tscn` wiring navigasi + parental gate.
 - [x] `features/feature_angka` (pilot) implementasi penuh.
 - [x] Placeholder scene untuk 5 modul lain (`feature_warna/hewan/musik/mewarnai/puzzle`).
-- [ ] **Belum pernah dibuka/dicoba di Godot Editor sungguhan** — sesi AI ini tidak install Godot untuk reset ini (beda dari base model Flutter sebelumnya yang sempat diinstall & diverifikasi). Lihat Definition of Done di [[../docs/PLAN_BASE_MODEL|docs/PLAN_BASE_MODEL.md]].
-- [ ] CI/Docker untuk Godot — ditulis (`docs/DOCKER.md`, `.github/workflows/ci.yml`) tapi juga belum diverifikasi.
+- [x] **Godot 4.7.2 diinstall & semua 8 scene lolos headless** (exit 0, tanpa error) — 1 bug nyata ketemu & diperbaiki (path script salah di 5 placeholder). Lihat Definition of Done di [[../docs/PLAN_BASE_MODEL|docs/PLAN_BASE_MODEL.md]] untuk yang masih belum (interaksi sentuhan asli, export APK).
+- [x] CI headless validate (`.github/workflows/ci.yml`) — binary & flag terverifikasi lokal, cuma export job (APK) yang belum.
+- [x] Godot ditambahkan ke PATH komputer ini (`godot.bat` + User PATH) supaya sesi Claude Code berikutnya bisa langsung pakai `godot` tanpa path lengkap.
 - [ ] Fase 2 (belum mulai): 5 modul lain coding paralel mengikuti pola dari base model.
 
 ## Keputusan besar

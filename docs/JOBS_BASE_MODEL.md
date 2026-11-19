@@ -2,7 +2,7 @@
 
 Lihat alasan & scope lengkap di [docs/PLAN_BASE_MODEL.md](PLAN_BASE_MODEL.md). Pemetaan orang mengikuti [docs/TEAM.md](TEAM.md) — nama masih placeholder, ganti saat sudah fix.
 
-> **Catatan stack**: base model sempat ditulis di Flutter/Dart, lalu diganti ke **Godot/GDScript** (lihat `obsidian-vault/Decisions Log.md`). Checklist di bawah sudah diupdate untuk Godot — kode-nya sudah ditulis ulang, tapi **belum pernah dibuka/dicoba di Godot Editor sungguhan**.
+> **Catatan stack**: base model sempat ditulis di Flutter/Dart, lalu diganti ke **Godot/GDScript** (lihat `obsidian-vault/Decisions Log.md`). Godot 4.7.2 sudah diinstall & semua 8 scene lolos headless tanpa error (2026-11-19) — yang belum dicoba cuma interaksi sentuhan asli & export APK, lihat `docs/PLAN_BASE_MODEL.md`.
 
 ## Job 1 — Bramantyo — `core/`
 
@@ -13,10 +13,11 @@ Jalur kritis base model. Sebagian sudah di-scaffold sesi ini supaya Job 1 tidak 
 - [x] `SfxService` (SFX) + `AudioService` (musik/VO) — autoload singleton, `core/scripts/sfx_service.gd` + `audio_service.gd`, lihat `docs/LIBRARIES.md`.
 - [x] `ProgressRepository` (autoload singleton, pakai `ConfigFile` bawaan Godot) — `core/scripts/progress_repository.gd`, sudah terdaftar di `[autoload]` `project.godot`.
 - [x] `ParentalGateDialog` (tahan tombol 3 detik) — `core/scenes/ParentalGateDialog.tscn` + `core/scripts/parental_gate_dialog.gd`.
-- [ ] CI/Docker untuk Godot (`.github/workflows/ci.yml`, `Dockerfile`) — **belum dibuat ulang** setelah reset dari Flutter, lihat `docs/DOCKER.md` untuk rencana pakai image `barichello/godot-ci`.
+- [x] CI headless validate (`.github/workflows/ci.yml`, image `barichello/godot-ci`, binary `godot` + `--quit-after` sudah diverifikasi lokal) — buka 8 scene, tangkap error GDScript/scene.
+- [ ] CI export job (APK debug) — **belum dibuat**, butuh `export_presets.cfg` + keystore dulu.
 - [ ] Review PR dari Job 3 begitu wiring ke `core/` siap.
 
-**Definition of done Job 1**: semua checklist tercentang + bisa dipakai modul lain tanpa perlu baca isi `core/scripts/`. **Status: kode selesai, CI/Docker belum, belum diverifikasi jalan di Godot Editor.**
+**Definition of done Job 1**: semua checklist tercentang + bisa dipakai modul lain tanpa perlu baca isi `core/scripts/`. **Status: kode selesai & terverifikasi headless (Godot 4.7.2, semua scene exit 0). Sisa: CI export job, dan verifikasi interaktif di device/emulator asli.**
 
 ## Job 2 — Dev App (baru) — `scenes/`
 
@@ -26,7 +27,7 @@ Dipisah dari Bramantyo supaya `core/` + `scenes/` tidak numpuk 1 orang.
 - [x] `Settings.tscn` (toggle suara, baca/tulis lewat `ProgressRepository`, sinkron ke `SfxService`/`AudioService`) — `scenes/settings.gd`.
 - [ ] Update `Home` supaya menampilkan status progres singkat per mini-game (opsional, ditunda — base model sudah cukup tanpa ini).
 
-**Definition of done Job 2**: dari Home bisa masuk Settings (lewat parental gate) dan balik, toggle suara nyata mempengaruhi `SfxService`/`AudioService`. **Status: kode selesai, belum diverifikasi jalan.**
+**Definition of done Job 2**: dari Home bisa masuk Settings (lewat parental gate) dan balik, toggle suara nyata mempengaruhi `SfxService`/`AudioService`. **Status: kode selesai & lolos headless (exit 0), belum dicoba interaksi sentuhan asli (tahan tombol parental gate, dsb).**
 
 ## Job 3 — Dev 2 — `features/feature_angka/` (PILOT)
 
@@ -38,7 +39,7 @@ Modul ini jadi **contoh pola** untuk 5 modul lain di Fase 2, jadi dikerjakan pal
 - [x] Selesai sesi → `StarRewardOverlay` → simpan hasil via `ProgressRepository.record_result(...)`.
 - [x] Tombol kembali ke Home (`get_tree().change_scene_to_file(...)` setelah simpan hasil).
 
-**Definition of done Job 3**: 1 level bisa dimainkan dari Home sampai balik ke Home, hasilnya kebaca lagi kalau app ditutup-buka. **Status: kode selesai, lihat `features/feature_angka/angka.gd` — belum pernah dibuka di Godot Editor sungguhan.**
+**Definition of done Job 3**: 1 level bisa dimainkan dari Home sampai balik ke Home, hasilnya kebaca lagi kalau app ditutup-buka. **Status: kode selesai & lolos headless, lihat `features/feature_angka/angka.gd` — belum dicoba main sungguhan (tap pilihan, lihat reward) secara interaktif.**
 
 ## Job 4 — Dev Warna (baru) — spek `feature_warna`
 

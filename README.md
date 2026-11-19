@@ -40,12 +40,15 @@ Aturan dependensi: `features/feature_*` hanya boleh pakai `core/` (autoload sing
 
 ## Mulai development
 
-1. Install [Godot 4](https://godotengine.org/download) (versi stable terbaru, minimal 4.3).
-2. Buka folder repo ini lewat **Project > Import** di Godot Editor, pilih `project.godot`.
-3. Godot akan generate folder `.godot/` (cache, sudah di-`.gitignore`) saat pertama dibuka — ini normal.
-4. Scene utama: `scenes/Home.tscn` (sudah di-set sebagai `run/main_scene` di `project.godot`) — tekan F5 atau tombol Play untuk coba jalan.
+1. Install [Godot 4](https://godotengine.org/download) (versi stable terbaru, minimal 4.3) — download zip "standard" (bukan .NET/Mono), extract ke folder manapun.
+2. **(Opsional, disarankan)** supaya bisa ketik `godot` dari terminal mana pun:
+   - Buat file `godot.bat` di folder tempat extract, isinya: `@echo off` lalu baris `"%~dp0Godot_v4.x.x-stable_win64_console.exe" %*` (sesuaikan nama file `.exe`-nya).
+   - Tambahkan folder itu ke PATH (Windows: Environment Variables → User variables → `Path` → New). Perlu buka terminal/editor baru supaya PATH terbaca.
+3. Buka folder repo ini lewat **Project > Import** di Godot Editor, pilih `project.godot`.
+4. Godot akan generate folder `.godot/` (cache, sudah di-`.gitignore`) saat pertama dibuka — ini normal.
+5. Scene utama: `scenes/Home.tscn` (sudah di-set sebagai `run/main_scene` di `project.godot`) — tekan F5 atau tombol Play untuk coba jalan.
 
-Base model (`feature_angka` sebagai pilot + core services) sudah ditulis tapi **belum pernah dibuka di Godot Editor sungguhan** — lihat `obsidian-vault/Decisions Log.md` untuk status verifikasi terkini.
+Base model (`feature_angka` sebagai pilot + core services) sudah **terverifikasi lolos headless** (Godot 4.7.2, semua 8 scene exit 0, 1 bug ketemu & diperbaiki) — tapi belum pernah dicoba interaktif (sentuhan asli) atau export APK. Lihat `obsidian-vault/Decisions Log.md` untuk status verifikasi lengkap.
 
 Sesi AI/developer baru: mulai dari [CLAUDE.md](CLAUDE.md) (entry point wajib — urutan dokumen & cara klaim task).
 
