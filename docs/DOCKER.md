@@ -2,7 +2,7 @@
 
 ## Kenapa
 
-Tim ada 15 orang, semua pakai laptop berbeda. Masalah klasik: "di laptop saya export APK jalan, di laptop kamu error" karena versi Godot beda. Docker di sini dipakai supaya **CI (dan siapa pun yang mau) pakai versi Godot yang sama persis** untuk build/export headless.
+Tim ada 8 orang, semua pakai laptop berbeda. Masalah klasik: "di laptop saya export APK jalan, di laptop kamu error" karena versi Godot beda. Docker di sini dipakai supaya **CI (dan siapa pun yang mau) pakai versi Godot yang sama persis** untuk build/export headless.
 
 ## Yang BISA dilakukan lewat Docker
 

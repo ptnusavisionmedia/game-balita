@@ -2,7 +2,7 @@
 
 ## Kenapa feature-first?
 
-Tim ada 15 orang, semua dibantu AI (Claude). Masalah paling umum di tim sebesar ini bukan "kodenya salah", tapi **rebutan file dan merge conflict**, plus tiap sesi AI yang harus membaca seluruh codebase untuk paham konteks. Struktur feature-first menyelesaikan dua masalah itu sekaligus:
+Tim ada 8 orang, semua dibantu AI (Claude). Masalah paling umum di tim sebesar ini bukan "kodenya salah", tapi **rebutan file dan merge conflict**, plus tiap sesi AI yang harus membaca seluruh codebase untuk paham konteks. Struktur feature-first menyelesaikan dua masalah itu sekaligus:
 
 - Satu mini-game = satu folder (`features/feature_xxx/`). Isinya lengkap: scene (`.tscn`), script (`.gd`), asset.
 - Developer (dan sesi Claude-nya) yang pegang `feature_angka` **tidak perlu** buka folder `feature_musik` sama sekali.

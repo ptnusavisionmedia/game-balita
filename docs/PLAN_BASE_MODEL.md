@@ -31,7 +31,7 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
    - Ini jadi **pola rujukan** buat 5 modul lain di Fase 2.
 
 5. **CI dasar**
-   - **Belum dibuat ulang** setelah reset dari Flutter — rencana pakai image `barichello/godot-ci` untuk export/validasi headless (lihat `docs/DOCKER.md`), belum diimplementasi.
+   - Validate step (`barichello/godot-ci`, buka semua scene headless) sudah ditulis & terverifikasi lokal. Export job (APK) belum — butuh `export_presets.cfg` + keystore dulu.
 
 6. **Dokumentasi & context**
    - Semua keputusan dicatat di Obsidian vault (`obsidian-vault/Decisions Log.md`) supaya tidak hilang antar sesi/antar anggota tim.
@@ -41,8 +41,8 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
 - 5 mini-game lain (`warna`, `hewan`, `musik`, `mewarnai`, `puzzle`) — tetap placeholder, jangan disentuh dulu.
 - Asset final (ilustrasi/VO profesional) — pakai placeholder/asset sementara dulu.
 - Analytics, parental dashboard, multi-child profile, IAP/ads — di luar scope base model.
-- Testing framework (GUT) — ditunda sampai Dev Testing (Job 9) menilai perlu.
-- CI/Docker untuk Godot — belum dibuat ulang, lihat Job 1 di `docs/JOBS_BASE_MODEL.md`.
+- Testing framework (GUT) — ditunda sampai Dev Testing (Job 5) menilai perlu.
+- CI export job (APK) — belum dibuat, lihat Job 1 di `docs/JOBS_BASE_MODEL.md`.
 
 ## Definition of Done (base model dianggap selesai kalau semua ini benar)
 
@@ -52,7 +52,7 @@ Godot sudah diinstall & dicoba di sesi ini (lihat Decisions Log 2026-11-19 "Godo
 - [x] Tiap scene (`Home`, `Settings`, `feature_angka`, 5 placeholder) lolos dijalankan headless tanpa error GDScript/parse.
 - [ ] Dari Home, buka `feature_angka`, selesaikan 1 level, lihat reward bintang, balik ke Home — **secara interaktif** (sentuhan/klik asli, headless run cuma membuktikan tidak crash saat load).
 - [ ] Tutup app, buka lagi → hasil game sebelumnya masih tersimpan (progres tidak hilang) — cek file `user://progress.cfg` setelah main sungguhan.
-- [ ] Toggle suara di Settings beneran mematikan/menyalakan audio (begitu ada SFX asli dari Job 11), dan tersimpan setelah app ditutup-buka lagi.
+- [ ] Toggle suara di Settings beneran mematikan/menyalakan audio (begitu ada SFX asli dari Job 7/Asset 2), dan tersimpan setelah app ditutup-buka lagi.
 - [ ] Masuk Settings harus lewat `ParentalGateDialog` dulu (tahan tombol 3 detik, cek secara sentuhan asli).
 - [ ] Export debug APK (`Project > Export`) berhasil, atau minimal export desktop (Windows/Linux) kalau Android export template belum disetup — butuh `export_presets.cfg` yang belum dibuat.
 - [ ] `docs/` dan `obsidian-vault/` ter-update dan ter-push ke `main`.
@@ -60,18 +60,15 @@ Godot sudah diinstall & dicoba di sesi ini (lihat Decisions Log 2026-11-19 "Godo
 ## Urutan kerja (supaya tidak saling blok)
 
 ```
-Hari 1-2   Job 1 (Bramantyo): AppColors + ProgressRepository + ParentalGateDialog (sudah ditulis) ─┐
-                                                                                                      ├─> Job 3 butuh ini
-Hari 1-2   Job 3 (Dev 2): skeleton UI feature_angka (belum wire ke core) ──────────────────────────┘
-Hari 3-4   Job 1 + Job 3 wiring bareng: feature_angka pakai ProgressRepository,
-           SfxService, StarRewardOverlay yang sudah jadi (sudah ditulis, belum dicoba di editor)
-Hari 3-5   Job 2 (Dev App): Settings + navigasi + ParentalGateDialog wiring (sudah ditulis)
-Hari 1-5   Job 4-8 (5 dev modul lain): TIDAK coding fitur — siapkan spek 1 halaman
+Hari 1-2   Job 1 (Bramantyo): AppColors + ProgressRepository + ParentalGateDialog + Settings +
+           navigasi (SEMUA SUDAH DITULIS & lolos headless)
+Hari 1-2   Job 2 (Dev 2): feature_angka — skeleton UI → wiring ke core (SUDAH DITULIS & lolos headless)
+Hari 1-5   Job 2 (bagian warna) + Job 3-4 (Dev 3-4): TIDAK coding fitur dulu — siapkan spek 1 halaman
            + asset list modul masing-masing (lihat docs/JOBS_BASE_MODEL.md)
-Hari 1-5   Job 9 (Dev Testing): checklist QA, standby test begitu Job 3 demo-able
-Hari 1-5   Job 10-15 (Asset 1-6): style guide → produksi ilustrasi/audio/video feature_angka duluan
-Hari 5     Demo base model ke seluruh tim (buka di Godot Editor sungguhan) → kalau Definition
-           of Done lolos, lanjut Fase 2 (5 modul coding paralel)
+Hari 1-5   Job 5 (Dev Testing): checklist QA, test interaktif feature_angka begitu ada device/emulator
+Hari 1-5   Job 6-8 (Asset 1-3): style guide → produksi ilustrasi/audio/video feature_angka duluan
+Hari 5     Demo base model ke seluruh tim (coba main sungguhan, bukan cuma headless) → kalau Definition
+           of Done lolos, lanjut Fase 2 (modul kedua tiap dev coding paralel)
 ```
 
 Detail tugas per orang: [docs/JOBS_BASE_MODEL.md](JOBS_BASE_MODEL.md)

@@ -173,3 +173,19 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **CI diperbaiki juga**: `.github/workflows/ci.yml` sebelumnya pakai binary `godot4` yang salah — dicek ke [contoh resmi repo godot-ci](https://github.com/abarichello/godot-ci/blob/master/.github/workflows/godot-ci.yml), binary yang benar di image `barichello/godot-ci` adalah `godot` (tanpa angka). Step CI diupdate jadi loop buka semua 8 scene headless (bukan cuma main scene), supaya kalau ada modul lain yang kena bug serupa (path salah), CI langsung gagal — tidak nunggu ketahuan manual seperti kasus di atas.
 
 **Belum diverifikasi**: export APK/executable sungguhan (butuh `export_presets.cfg` yang belum disiapkan, dan Android export template kalau target Android — lihat Job 1 di `docs/JOBS_BASE_MODEL.md`). Interaksi sentuhan nyata (parental gate tahan 3 detik, tap target) juga belum dicoba — headless run cuma membuktikan tidak ada error saat load/`_ready()`, bukan membuktikan gameplay-nya terasa benar.
+
+## 2026-11-19 — Tim di-ramping dari 15 orang (9 dev + 6 asset) jadi 8 orang (5 dev + 3 asset)
+
+**Keputusan**: user minta ulang struktur tim jadi lebih kecil — awalnya diminta "4 dev + 4 asset", lalu diklarifikasi jadi **5 developer + 3 asset/design creator = 8 orang total**, menggantikan struktur 15 orang sebelumnya.
+
+**Struktur baru**:
+- **Bramantyo** — `core/` + `scenes/` digabung jadi 1 orang (role "Dev App" terpisah dihapus).
+- **Dev 2** — `feature_angka` (pilot) + `feature_warna` (2 modul, bukan 1).
+- **Dev 3** — `feature_hewan` + `feature_musik` (2 modul).
+- **Dev 4** — `feature_mewarnai` + `feature_puzzle` (2 modul).
+- **Dev Testing** — tetap dipertahankan sebagai role coding terpisah lintas-modul (satu-satunya tambahan dari struktur 7-orang paling awal sebelum ekspansi ke 15).
+- **Asset 1-3** — ilustrasi/audio/video, generalist Asset 4-6 (dari ekspansi 15 orang) **dihapus**.
+
+**Alasan**: struktur 15 orang (QA Tester/UI-UX Designer/DevOps/Compliance Officer terpisah, Asset 4-6 generalist, Dev App terpisah dari Bramantyo) dirasa menambah koordinasi tanpa menambah kecepatan sebanding untuk fase base model — balik ke ukuran yang lebih ramping, cukup jauh, mendekati struktur 7-orang paling awal (Dev 2-4 masing-masing 2 modul, Asset 1-3 generalist per jenis media), ditambah 1 pelajaran yang tetap dipertahankan dari eksperimen 15-orang: **Dev Testing sebagai role coding terpisah**.
+
+**Yang diupdate**: `docs/TEAM.md`, `docs/ROLES.md`, `.github/CODEOWNERS`, `docs/JOBS_BASE_MODEL.md` (job direnumbering 1-8, bukan 1-15 lagi), `docs/TASK_BOARD.md`, `docs/PLAN_BASE_MODEL.md` ("Urutan kerja"), serta semua mention "15 orang" di `README.md`, `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/AI_WORKFLOW.md`, `docs/GIT_WORKFLOW.md`, `docs/DOCKER.md`, `CONTRIBUTING.md`, `obsidian-vault/Project Overview.md`. Kode (`core/`, `scenes/`, `features/*`) **tidak berubah** — restructure ini murni dokumen pembagian tim, bukan kode.

@@ -3,7 +3,7 @@
 **Nama**: Bayi GuguGaga
 **Apa**: App game edukatif Android (+ iOS/web) untuk anak usia 1-5 tahun — kumpulan mini-game: angka, warna, hewan, musik, mewarnai, puzzle.
 **Target user**: anak 1-5 tahun (main), orang tua (parental gate, settings).
-**Tim**: 15 orang dibantu AI/Claude — 9 developer (1 modul `feature_*`/orang + core/app terpisah + 1 dev testing lintas-modul) + 6 asset/design creator (ilustrasi/audio/video, fleksibel, tidak coding). Lihat [[../docs/TEAM|docs/TEAM.md]].
+**Tim**: 8 orang dibantu AI/Claude — 5 developer (Bramantyo pegang core+scenes, 3 dev @ 2 modul `feature_*`, 1 dev testing lintas-modul) + 3 asset/design creator (ilustrasi/audio/video, fleksibel, tidak coding). Lihat [[../docs/TEAM|docs/TEAM.md]].
 **Repo**: https://github.com/ptnusavisionmedia/game-balita
 
 ## Status sekarang (2026-11-19)

@@ -1,4 +1,4 @@
-# Kerja tim 15 orang yang semua pakai Claude/AI
+# Kerja tim 8 orang yang semua pakai Claude/AI
 
 Struktur modular di repo ini sudah dirancang supaya tiap orang bisa buka sesi Claude Code sendiri-sendiri tanpa saling ganggu. Beberapa aturan praktis tambahan:
 
@@ -35,4 +35,4 @@ Karena semua kerja AI-assisted, progres bisa sangat cepat tapi juga mudah diverg
 
 ## 6. Rilis
 
-Hanya Bramantyo/Dev App yang menjalankan export APK final (`Project > Export` di Godot Editor), setelah semua `feature_*` di-merge ke `main` dan lolos checklist QA lintas modul (lihat `docs/TEAM.md`).
+Hanya Bramantyo yang menjalankan export APK final (`Project > Export` di Godot Editor), setelah semua `feature_*` di-merge ke `main` dan lolos checklist QA lintas modul (lihat `docs/TEAM.md`).

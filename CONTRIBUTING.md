@@ -23,7 +23,7 @@ Contoh: `angka: tambah animasi bintang saat jawaban benar`
   - Buka project di Godot Editor, cek tidak ada error merah di panel Output/Debugger.
   - Kalau ada automated test (addon GUT, lihat `docs/LIBRARIES.md`), jalankan dan pastikan lolos.
 - Isi PR template (lihat `.github/PULL_REQUEST_TEMPLATE.md`).
-- Minta review ke pemegang modul terkait, atau Bramantyo (`core`) / Dev App (`scenes`) kalau PR menyentuh situ.
+- Minta review ke pemegang modul terkait, atau Bramantyo kalau PR menyentuh `core/` atau `scenes/`.
 
 ## Aturan arsitektur (wajib dipatuhi reviewer)
 

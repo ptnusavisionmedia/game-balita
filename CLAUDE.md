@@ -1,6 +1,6 @@
 # Bayi GuguGaga — Panduan untuk AI/siapa pun yang baru mulai sesi di repo ini
 
-App game edukatif Android untuk anak 1-5 tahun. Dibangun di **Godot 4 (GDScript)**, struktur feature-first (lihat `obsidian-vault/Decisions Log.md` untuk histori pergantian stack dari Flutter). 15 orang: 9 developer (termasuk 1 dev testing lintas-modul) + 6 asset/design creator (ilustrasi/audio/video, fleksibel — tidak coding).
+App game edukatif Android untuk anak 1-5 tahun. Dibangun di **Godot 4 (GDScript)**, struktur feature-first (lihat `obsidian-vault/Decisions Log.md` untuk histori pergantian stack dari Flutter). 8 orang: 5 developer (termasuk 1 dev testing lintas-modul) + 3 asset/design creator (ilustrasi/audio/video, fleksibel — tidak coding).
 
 ## LANGKAH 0 — WAJIB di setiap conversation/sesi BARU, sebelum apa pun lain
 

@@ -6,7 +6,7 @@ Aplikasi permainan edukatif untuk anak usia 1-5 tahun: mengenal angka, warna, be
 
 **Godot 4 (GDScript)**, struktur *feature-first* — 1 scene/folder per mini-game, mirip prinsip modular yang sebelumnya dipakai di percobaan Flutter (lihat `obsidian-vault/Decisions Log.md` untuk histori penggantian stack).
 
-Alasan dipilih untuk tim 15 orang yang semuanya dibantu AI (Claude):
+Alasan dipilih untuk tim 8 orang yang semuanya dibantu AI (Claude):
 
 - **Game engine sungguhan**: particle system (confetti reward), node 2D, audio latensi rendah bawaan — semua "rasa game" yang di Flutter perlu digabung dari banyak package pihak ketiga, di Godot sudah native. Lihat [docs/LIBRARIES.md](docs/LIBRARIES.md).
 - **Scene-based**: 1 mini-game = 1 scene (`.tscn` + `.gd`) di foldernya sendiri — modular secara alami, cocok untuk tim besar kerja paralel tanpa rebutan file.
@@ -54,7 +54,7 @@ Sesi AI/developer baru: mulai dari [CLAUDE.md](CLAUDE.md) (entry point wajib —
 
 Baca selanjutnya:
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — kenapa modular, aturan dependensi, cara menambah modul baru
-- [docs/TEAM.md](docs/TEAM.md) — pembagian tim: 9 developer + 6 asset/design creator
+- [docs/TEAM.md](docs/TEAM.md) — pembagian tim: 5 developer + 3 asset/design creator
 - [docs/ROLES.md](docs/ROLES.md) — folder/file persis apa yang boleh/tidak boleh disentuh tiap peran, dan kenapa tidak akan tabrakan
 - [docs/TASK_BOARD.md](docs/TASK_BOARD.md) — task mana yang Open/Claimed/Done
 - [docs/AI_WORKFLOW.md](docs/AI_WORKFLOW.md) — cara kerja tim yang semua pakai Claude/AI tanpa saling tabrakan

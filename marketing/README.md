@@ -1,6 +1,6 @@
 # Marketing & Store Assets
 
-Dikelola Asset 3 (lihat [docs/TEAM.md](../docs/TEAM.md), [docs/JOBS_BASE_MODEL.md](../docs/JOBS_BASE_MODEL.md) Job 12). Isi folder ini **bukan** aset yang dipakai app (itu di `features/feature_xxx/assets/`), tapi untuk promosi & listing Play Store.
+Dikelola Asset 3 (lihat [docs/TEAM.md](../docs/TEAM.md), [docs/JOBS_BASE_MODEL.md](../docs/JOBS_BASE_MODEL.md) Job 8). Isi folder ini **bukan** aset yang dipakai app (itu di `features/feature_xxx/assets/`), tapi untuk promosi & listing Play Store.
 
 ```
 marketing/

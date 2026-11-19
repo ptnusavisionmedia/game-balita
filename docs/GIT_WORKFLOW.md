@@ -28,23 +28,23 @@ Dokumen ini untuk kamu yang **baru pertama kali kerja tim lewat Git/GitHub**. Di
 Struktur proyek ini sengaja dibuat per-modul (lihat [docs/ARCHITECTURE.md](ARCHITECTURE.md)):
 
 ```
-core/                        ← dipegang Bramantyo, SEMUA orang depend ke sini
-scenes/                       ← dipegang Dev App
+core/                ← dipegang Bramantyo, SEMUA orang depend ke sini
+scenes/               ← dipegang Bramantyo juga (digabung, tim ramping)
 features/
   feature_angka/     ← dipegang Dev 2 — HANYA Dev 2 yang edit folder ini
-  feature_warna/     ← dipegang Dev Warna — HANYA dia yang edit folder ini
+  feature_warna/     ← dipegang Dev 2 juga (modul kedua)
   feature_hewan/     ← dipegang Dev 3
-  feature_musik/     ← dipegang Dev Musik
+  feature_musik/     ← dipegang Dev 3 juga (modul kedua)
   feature_mewarnai/  ← dipegang Dev 4
-  feature_puzzle/    ← dipegang Dev Puzzle
+  feature_puzzle/    ← dipegang Dev 4 juga (modul kedua)
 ```
 
-Kalau kamu pegang `feature_angka` dan temanmu pegang `feature_warna`, kalian **tidak pernah menyentuh file yang sama** — jadi secara teknis hampir mustahil tabrakan, asal:
+Kalau kamu pegang `feature_angka` dan temanmu pegang `feature_hewan`, kalian **tidak pernah menyentuh file yang sama** — jadi secara teknis hampir mustahil tabrakan, asal:
 
 1. Kamu **cuma** mengedit folder modul kamu sendiri, tidak sentuh folder modul orang lain.
 2. Kalau butuh sesuatu dari `core/` (misalnya tombol/suara yang belum ada), **minta ke Bramantyo**, jangan langsung edit `core/` sendiri, apalagi `feature_*` lain.
 
-Satu-satunya titik rawan tabrakan: `core/` dan `scenes/`, karena semua orang depend ke situ. Itu kenapa dipegang 2 orang berbeda (Bramantyo + Dev App) yang saling koordinasi, lihat `docs/TEAM.md`.
+Satu-satunya titik rawan tabrakan: `core/` dan `scenes/`, karena semua orang depend ke situ. Itu kenapa dipegang 1 orang saja (Bramantyo) — tidak ada orang lain yang boleh edit, lihat `docs/TEAM.md`.
 
 ---
 
@@ -130,7 +130,7 @@ Branch `feature/angka-level-1` boleh dihapus (GitHub biasanya kasih tombol "Dele
 
 ---
 
-## 5. Aturan supaya kolaborasi 15 orang tetap rapi
+## 5. Aturan supaya kolaborasi 8 orang tetap rapi
 
 1. ❌ **Jangan pernah** `git push` langsung ke `main`, **kecuali** commit yang HANYA mengubah baris status di `docs/TASK_BOARD.md` (klaim/done task — lihat `CLAUDE.md` LANGKAH 0). Semua perubahan lain lewat Pull Request, walau kerjaan kecil.
 2. ✅ **1 Pull Request = 1 modul** (idealnya). Jangan campur perubahan `feature_angka` dan `feature_warna` di PR yang sama — ini aturan kebiasaan, bukan dipaksa alat apa pun, supaya tidak menghalangi fix mendesak yang kebetulan menyentuh 2 modul.

@@ -2,16 +2,19 @@
 # Siapa pun yang membuka PR yang menyentuh path ini akan otomatis minta review ke owner-nya.
 
 core/                                 @bramantyo
-scenes/                               @dev-app
+scenes/                               @bramantyo
 
-features/feature_angka/              @dev-angka
-features/feature_warna/              @dev-warna
-features/feature_hewan/              @dev-hewan
-features/feature_musik/              @dev-musik
-features/feature_mewarnai/           @dev-mewarnai
-features/feature_puzzle/             @dev-puzzle
+features/feature_angka/              @dev-angka-warna
+features/feature_warna/              @dev-angka-warna
+features/feature_hewan/              @dev-hewan-musik
+features/feature_musik/              @dev-hewan-musik
+features/feature_mewarnai/           @dev-mewarnai-puzzle
+features/feature_puzzle/             @dev-mewarnai-puzzle
 
-# Asset/design generalist (Asset 1-6), tidak dibatasi 1 jenis media.
-features/*/assets/images/            @asset-1 @asset-4
-features/*/assets/audio/             @asset-2 @asset-5
-marketing/                           @asset-3 @asset-6
+# Dev Testing lintas-modul, otomatis ke-notify di folder test semua modul.
+features/*/tests/                    @dev-testing
+
+# Asset/design (Asset 1-3), fleksibel lintas media.
+features/*/assets/images/            @asset-1
+features/*/assets/audio/             @asset-2
+marketing/                           @asset-3
