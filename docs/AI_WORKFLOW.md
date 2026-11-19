@@ -20,7 +20,7 @@ Karena semua modul depend ke `core`, perubahan di sana berdampak ke 6 modul lain
 - Branch: `feature/<nama-modul>-<deskripsi-singkat>`, contoh `feature/angka-drag-interaction`.
 - 1 PR = 1 modul (hindari PR yang menyentuh 2 `feature_*` berbeda).
 - Isi PR template: tandai apakah mayoritas kode dihasilkan AI (`AI-assisted: yes/no`) — bukan untuk melarang, tapi supaya reviewer tahu perlu cek lebih teliti bagian mana (biasanya: audio timing, hit-area tombol, edge case input anak-anak seperti multi-touch acak).
-- CI jalan per-package lewat Melos (`melos run analyze`, `melos run test`) sebelum merge.
+- CI jalan per-package lewat Melos (`dart run melos run analyze`, `dart run melos run test`) sebelum merge.
 
 ## 4. Review silang ringan
 

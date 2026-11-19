@@ -1,0 +1,39 @@
+name: bayi_gugugaga
+publish_to: "none"
+
+environment:
+  sdk: ^3.6.0
+
+dev_dependencies:
+  melos: ^8.10.1
+
+workspace:
+  - packages/core
+  - packages/app
+  - packages/feature_angka
+  - packages/feature_warna
+  - packages/feature_hewan
+  - packages/feature_musik
+  - packages/feature_mewarnai
+  - packages/feature_puzzle
+
+# Konfigurasi Melos sejak v7 WAJIB di sini (root pubspec.yaml), bukan di
+# melos.yaml terpisah lagi. Daftar package member sudah diambil otomatis
+# dari field `workspace:` di atas — tidak perlu diulang di sini.
+melos:
+  scripts:
+    analyze:
+      # Pakai `dart run melos exec`, bukan `melos exec` langsung — melos di
+      # sini cuma local dev_dependency (bukan global activate), jadi binary
+      # `melos` belum tentu ada di PATH. `dart` sudah pasti ada kalau Flutter
+      # SDK sudah di-setup.
+      run: dart run melos exec -- flutter analyze
+      description: Jalankan flutter analyze di semua package
+
+    test:
+      run: dart run melos exec --dir-exists=test -- flutter test
+      description: Jalankan flutter test di semua package yang punya folder test
+
+    format:
+      run: dart run melos exec -- dart format .
+      description: Format semua package

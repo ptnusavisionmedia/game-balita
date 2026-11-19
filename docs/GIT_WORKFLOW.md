@@ -138,7 +138,7 @@ Branch `feature/angka-level-1` boleh dihapus (GitHub biasanya kasih tombol "Dele
 4. ✅ Sebelum mulai kerjaan baru, **selalu** `git checkout main && git pull origin main` dulu (Langkah 1) — supaya kamu kerja dari versi terbaru.
 5. ❌ **Jangan edit folder/file di luar scope kamu**, kecuali bug fix kecil yang urgent (PR terpisah + tag pemiliknya). Scope persis per peran ada di [docs/ROLES.md](ROLES.md) — baca itu kalau ragu. Kalau nemu bug yang tidak mendesak, cukup laporkan (buat Issue di GitHub), jangan edit langsung.
 6. ✅ Butuh sesuatu dari `core`? Minta ke Bramantyo, jangan copy-paste kode `core` ke modulmu sendiri.
-7. ✅ Jalankan `melos run analyze` sebelum push (lihat [CONTRIBUTING.md](../CONTRIBUTING.md)) — supaya tidak kirim kode yang jelas-jelas error.
+7. ✅ Jalankan `dart run melos run analyze` sebelum push (lihat [CONTRIBUTING.md](../CONTRIBUTING.md)) — supaya tidak kirim kode yang jelas-jelas error.
 8. ✅ PR kamu otomatis minta review ke pemilik folder terkait ([.github/CODEOWNERS](../.github/CODEOWNERS)) — ini cuma auto-assign reviewer, bukan gate yang blok merge, supaya proses tetap cepat.
 
 ---

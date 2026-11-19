@@ -36,21 +36,29 @@ Aturan dependensi: `feature_*` hanya boleh depend ke `core`, **tidak boleh** sal
 
 ## Mulai development
 
-Project ini di-scaffold strukturnya tapi **belum** di-generate dengan `flutter create` (SDK Flutter belum terpasang di environment ini). Langkah pertama untuk siapa pun yang pegang laptop dengan Flutter SDK terpasang:
+Project ini sudah diverifikasi bisa dibangun (`flutter pub get`, `flutter analyze`, `flutter test`, `flutter build web` — semua lolos, lihat `obsidian-vault/Decisions Log.md`). Package `app` sudah punya platform `web`; platform `android`/`ios` belum di-generate (butuh Android SDK/Xcode yang tidak ada di environment sesi AI ini).
+
+Langkah pertama untuk siapa pun yang pegang laptop dengan Flutter SDK terpasang:
 
 ```bash
-dart pub global activate melos
-melos bootstrap
+flutter pub get
 ```
 
-Lalu generate platform folder (android/ios/web) untuk package `app` dan tiap `feature_*` / `core` sebagai package Flutter biasa:
+Ini otomatis resolve dependency **semua** package sekaligus (pakai [Dart/Flutter native workspace](https://dart.dev/go/pub-workspaces), lihat `pubspec.yaml` di root) — **tidak perlu** `dart pub global activate melos` lagi. Melos sendiri cuma dipakai untuk jalankan script lintas-package:
+
+```bash
+dart run melos run analyze   # flutter analyze di semua package
+dart run melos run test      # flutter test di semua package yang punya test
+```
+
+Untuk generate platform `android`/`ios` (belum ada, butuh Android SDK/Xcode) untuk package `app`:
 
 ```bash
 cd packages/app
-flutter create . --platforms=android,ios,web --org com.gugugaga
+flutter create . --platforms=android,ios --org com.gugugaga
 ```
 
-(Setiap package `feature_*` dan `core` juga perlu di-`flutter create .` sekali agar punya `pubspec.yaml` yang valid sebagai Flutter package — isi `pubspec.yaml` contoh sudah disiapkan, tinggal disesuaikan.)
+`packages/core` dan `packages/feature_*` **tidak perlu** `flutter create` — mereka package Dart/Flutter biasa (bukan app), `pubspec.yaml`-nya sudah valid dan sudah terverifikasi `flutter analyze`/`flutter test` jalan tanpa masalah.
 
 Sesi AI/developer baru: mulai dari [CLAUDE.md](CLAUDE.md) (entry point wajib — urutan dokumen & cara klaim task).
 

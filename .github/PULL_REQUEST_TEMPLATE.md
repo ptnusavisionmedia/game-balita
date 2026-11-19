@@ -12,8 +12,8 @@
 
 ## Checklist
 
-- [ ] `melos run analyze` lolos
-- [ ] `melos run test` lolos
+- [ ] `dart run melos run analyze` lolos
+- [ ] `dart run melos run test` lolos
 - [ ] Tidak ada import ke `feature_*` lain selain `core`
 - [ ] Sudah dicoba di device/emulator Android low-end
 - [ ] Area sentuh tombol minimal ~64dp

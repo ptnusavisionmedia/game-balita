@@ -9,18 +9,17 @@ jobs:
   analyze-test:
     runs-on: ubuntu-latest
     # Image sama dengan Dockerfile lokal, biar hasil CI = hasil lokal.
-    container: ghcr.io/cirruslabs/flutter:3.24.3
+    # Wajib Dart >=3.6 (native pub workspaces) — Flutter 3.50.0 (Dart 3.14)
+    # sudah terverifikasi jalan.
+    container: ghcr.io/cirruslabs/flutter:3.50.0
     steps:
       - uses: actions/checkout@v4
 
-      - name: Activate Melos
-        run: dart pub global activate melos 1.0.1
-
-      - name: Bootstrap
-        run: melos bootstrap
+      - name: Get dependencies (workspace, termasuk Melos sebagai dev_dependency)
+        run: flutter pub get
 
       - name: Analyze
-        run: melos run analyze
+        run: dart run melos run analyze
 
       - name: Test
-        run: melos run test
+        run: dart run melos run test

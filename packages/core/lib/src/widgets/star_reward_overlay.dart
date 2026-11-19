@@ -63,7 +63,7 @@ class _StarRewardOverlayState extends State<StarRewardOverlay> {
             shouldLoop: false,
             colors: const [
               AppColors.sunshine,
-              AppColors.sky,
+              AppColors.accentAngka,
               AppColors.leaf,
               AppColors.gold,
             ],

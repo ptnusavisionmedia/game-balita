@@ -45,14 +45,16 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
 
 ## Definition of Done (base model dianggap selesai kalau semua ini benar)
 
-Semua kode untuk poin-poin ini **sudah ditulis dan di-push** (lihat `docs/JOBS_BASE_MODEL.md` Job 1-3) — tapi **belum ada yang menjalankan `flutter run` sungguhan** di device/emulator, karena environment sesi AI ini tidak punya Flutter SDK terpasang. Siapa pun yang punya Flutter SDK: tolong jalankan `melos bootstrap` lalu `flutter run` di `packages/app` dan centang manual poin di bawah begitu terverifikasi.
+Sesi AI ini sempat tidak punya Flutter SDK, lalu **diinstall dan dipakai langsung** untuk verifikasi (lihat Decisions Log 2026-11-19 "Base model diverifikasi jalan"). Yang sudah terverifikasi otomatis (`flutter pub get`, `flutter analyze`, `flutter test`, `flutter build web`) sudah dicentang. Yang butuh **device/emulator Android fisik** (tidak ada di sandbox ini) masih perlu dicentang manual oleh siapa pun di tim yang punya emulator/device asli.
 
-- [ ] `melos bootstrap` + `flutter run` di `packages/app` jalan tanpa error di emulator Android.
-- [ ] Dari Home, buka `feature_angka`, selesaikan 1 level, lihat reward bintang, balik ke Home.
-- [ ] Tutup app, buka lagi → hasil game sebelumnya masih tersimpan (progres tidak hilang).
-- [ ] Toggle suara di Settings beneran mematikan/menyalakan audio, dan tersimpan setelah app ditutup-buka lagi.
-- [ ] Masuk Settings harus lewat `ParentalGateDialog` dulu.
-- [ ] CI hijau di GitHub (analyze + test).
+- [x] `flutter pub get` + `flutter analyze` + `flutter test` (semua 8 package) lolos tanpa error.
+- [x] `flutter build web` untuk `packages/app` berhasil (artifact nyata, bukan cuma analyze).
+- [ ] `flutter run` di `packages/app` jalan tanpa error di **emulator/device Android** (belum bisa dites di sandbox ini, tidak ada emulator).
+- [ ] Dari Home, buka `feature_angka`, selesaikan 1 level, lihat reward bintang, balik ke Home (logic-nya sudah ada unit/widget test, tapi belum dicoba interaktif di device asli).
+- [ ] Tutup app, buka lagi → hasil game sebelumnya masih tersimpan (progres tidak hilang) — `ProgressRepository` sudah ada unit test untuk ini, tapi belum dicoba di device asli.
+- [ ] Toggle suara di Settings beneran mematikan/menyalakan audio, dan tersimpan setelah app ditutup-buka lagi (belum ada SFX/audio asli untuk didengar, lihat Job 11).
+- [ ] Masuk Settings harus lewat `ParentalGateDialog` dulu (interaksi tahan-tombol belum dicoba dengan sentuhan asli).
+- [x] CI hijau (`dart run melos run analyze` + `dart run melos run test` — terverifikasi lokal, image CI sudah di-pin ke Flutter 3.50.0 yang sama).
 - [x] `docs/` dan `obsidian-vault/` ter-update dan ter-push ke `main`.
 
 ## Urutan kerja (supaya tidak saling blok)

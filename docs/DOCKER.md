@@ -2,11 +2,11 @@
 
 ## Kenapa
 
-Tim ada 15 orang, semua pakai laptop berbeda. Masalah klasik: "di laptop saya `melos bootstrap` jalan, di laptop kamu error" karena versi Flutter/Dart beda. Docker di sini dipakai supaya **semua orang (dan CI) pakai versi Flutter yang sama persis**, tanpa perlu install Flutter SDK manual di tiap laptop.
+Tim ada 15 orang, semua pakai laptop berbeda. Masalah klasik: "di laptop saya `flutter pub get` jalan, di laptop kamu error" karena versi Flutter/Dart beda. Docker di sini dipakai supaya **semua orang (dan CI) pakai versi Flutter yang sama persis**, tanpa perlu install Flutter SDK manual di tiap laptop.
 
 ## Yang BISA dilakukan lewat Docker
 
-- `melos bootstrap` (resolve dependency semua package)
+- `flutter pub get` (resolve dependency semua package, lewat Dart/Flutter native workspace)
 - `flutter analyze`
 - `flutter test`
 - `flutter build apk` (build APK release — tidak butuh emulator, cukup Android SDK yang sudah ada di image)
@@ -30,10 +30,12 @@ Restart laptop, buka Docker Desktop sekali untuk menyelesaikan setup awal, baru 
 
 ```bash
 docker compose build
-docker compose run --rm dev melos bootstrap
-docker compose run --rm dev melos run analyze
-docker compose run --rm dev melos run test
+docker compose run --rm dev flutter pub get
+docker compose run --rm dev dart run melos run analyze
+docker compose run --rm dev dart run melos run test
 ```
+
+(Pakai `dart run melos ...`, bukan `melos` langsung — Melos di proyek ini cuma dev_dependency lokal, bukan di-global-activate. `flutter pub get` sudah resolve dependency semua package sekaligus lewat Dart/Flutter native workspace.)
 
 Atau masuk shell interaktif di dalam kontainer (tetap tidak bisa `flutter run` ke emulator, tapi enak untuk debug dependency):
 

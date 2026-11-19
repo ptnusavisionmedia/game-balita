@@ -3,9 +3,10 @@
 ## Setup
 
 ```bash
-dart pub global activate melos
-melos bootstrap
+flutter pub get
 ```
+
+Ini resolve dependency semua package sekaligus (Dart/Flutter native workspace). Tidak perlu `dart pub global activate melos` — Melos sudah jadi dev_dependency di root `pubspec.yaml`, dipakai lewat `dart run melos ...`.
 
 ## Branch
 
@@ -21,8 +22,8 @@ Contoh: `angka: tambah animasi bintang saat jawaban benar`
 - 1 PR = 1 modul (`packages/<nama>`). Jangan campur perubahan `core` dengan `feature_*` dalam satu PR.
 - Pastikan lolos sebelum minta review:
   ```bash
-  melos run analyze
-  melos run test
+  dart run melos run analyze
+  dart run melos run test
   ```
 - Isi PR template (lihat `.github/PULL_REQUEST_TEMPLATE.md`).
 - Minta review ke pemegang modul terkait, atau pemegang `core`/`app` kalau PR menyentuh `core`.
