@@ -1,4 +1,4 @@
-# Kerja tim 7 orang yang semua pakai Claude/AI
+# Kerja tim 15 orang yang semua pakai Claude/AI
 
 Struktur modular di repo ini sudah dirancang supaya tiap orang bisa buka sesi Claude Code sendiri-sendiri tanpa saling ganggu. Beberapa aturan praktis tambahan:
 

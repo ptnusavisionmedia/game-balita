@@ -1,6 +1,6 @@
 # Bayi GuguGaga — Panduan untuk AI/siapa pun yang baru mulai sesi di repo ini
 
-App game edukatif Android (+iOS/web) untuk anak 1-5 tahun. Monorepo Flutter (Melos), 7 orang: 4 developer + 3 asset creator (ilustrasi/audio/video — tidak coding).
+App game edukatif Android (+iOS/web) untuk anak 1-5 tahun. Monorepo Flutter (Melos), 15 orang: 9 developer (termasuk 1 dev testing lintas-modul) + 6 asset/design creator (ilustrasi/audio/video, fleksibel — tidak coding).
 
 ## LANGKAH 0 — WAJIB di setiap conversation/sesi BARU, sebelum apa pun lain
 

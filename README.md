@@ -6,12 +6,12 @@ Aplikasi permainan edukatif untuk anak usia 1-5 tahun: mengenal angka, warna, be
 
 **Flutter (Dart)**, dengan struktur monorepo *feature-first* yang dikelola lewat [Melos](https://melos.invertase.dev/).
 
-Alasan dipilih untuk tim 7 orang yang semuanya dibantu AI (Claude):
+Alasan dipilih untuk tim 15 orang yang semuanya dibantu AI (Claude):
 
 - **Ringan**: APK bisa di-split per ABI, tree-shaking ikon, AOT compile — cocok untuk device low-end yang biasa dipegang anak/ortu.
 - **Satu codebase** untuk Android, iOS, dan web (berguna untuk demo cepat ke stakeholder tanpa build APK).
 - **Dart kuat tipe & mudah dibaca** — AI model & developer baru sama-sama cepat paham kode orang lain, gampang nebak di mana bug-nya.
-- **Modular per fitur** (lihat [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)) — tiap mini-game adalah package Dart terpisah, jadi 7 orang (+ 7 sesi Claude yang berbeda) bisa kerja paralel tanpa rebutan file dan tanpa perlu baca seluruh codebase.
+- **Modular per fitur** (lihat [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)) — tiap mini-game adalah package Dart terpisah, jadi 15 orang (+ sesi Claude masing-masing) bisa kerja paralel tanpa rebutan file dan tanpa perlu baca seluruh codebase.
 - **Hot reload** mempercepat iterasi animasi/audio untuk UI anak-anak.
 - **Ekosistem matang** untuk kebutuhan game anak: `flutter_animate`, `rive`/`lottie` (animasi karakter), `audioplayers` (efek suara & VO), `just_audio`.
 
@@ -56,7 +56,7 @@ Sesi AI/developer baru: mulai dari [CLAUDE.md](CLAUDE.md) (entry point wajib —
 
 Baca selanjutnya:
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — kenapa modular, aturan dependensi, cara menambah modul baru
-- [docs/TEAM.md](docs/TEAM.md) — pembagian tim: 4 developer + 3 asset creator
+- [docs/TEAM.md](docs/TEAM.md) — pembagian tim: 9 developer + 6 asset/design creator
 - [docs/ROLES.md](docs/ROLES.md) — folder/file persis apa yang boleh/tidak boleh disentuh tiap peran, dan kenapa tidak akan tabrakan
 - [docs/TASK_BOARD.md](docs/TASK_BOARD.md) — task mana yang Open/Claimed/Done
 - [docs/AI_WORKFLOW.md](docs/AI_WORKFLOW.md) — cara kerja tim yang semua pakai Claude/AI tanpa saling tabrakan

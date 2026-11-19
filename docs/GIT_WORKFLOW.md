@@ -130,7 +130,7 @@ Branch `feature/angka-level-1` boleh dihapus (GitHub biasanya kasih tombol "Dele
 
 ---
 
-## 5. Aturan supaya kolaborasi 7 orang tetap rapi
+## 5. Aturan supaya kolaborasi 15 orang tetap rapi
 
 1. ❌ **Jangan pernah** `git push` langsung ke `main`, **kecuali** commit yang HANYA mengubah baris status di `docs/TASK_BOARD.md` (klaim/done task — lihat `CLAUDE.md` LANGKAH 0). Semua perubahan lain lewat Pull Request, walau kerjaan kecil.
 2. ✅ **1 Pull Request = 1 modul** (idealnya). Jangan campur perubahan `feature_angka` dan `feature_warna` di PR yang sama — ini aturan kebiasaan, bukan dipaksa alat apa pun, supaya tidak menghalangi fix mendesak yang kebetulan menyentuh 2 modul.

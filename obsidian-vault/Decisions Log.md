@@ -91,3 +91,13 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Keputusan/implementasi**: `packages/core/lib/src/services/progress_repository.dart` — `ChangeNotifier` + `shared_preferences`, simpan `GameResult` (list, di-serialize JSON per entry) dan flag `soundEnabled`. API: `init()` (wajib dipanggil sekali di `main()` sebelum `runApp`), `recordResult()`, `latestResultFor(gameId)`, `setSoundEnabled()`. `GameResult` ditambah `toJson`/`fromJson`. Ada unit test (`packages/core/test/progress_repository_test.dart`) yang verifikasi data survive "re-init" (simulasi app ditutup-buka).
 
 **Belum**: `ParentalGateDialog`, wiring navigasi Home↔Settings, `SettingsScreen` — sisa checklist Job 1 di `docs/JOBS_BASE_MODEL.md`.
+
+## 2026-11-19 — Tim ditambah 8 orang jadi 15 (5 dev + 3 asset/design), BUKAN role QA/UI-UX/DevOps/Compliance terpisah
+
+**Konteks**: user minta tambah 8 orang. Draf pertama dari sesi AI memecahnya jadi role spesialis (QA Tester, UI/UX Designer, DevOps/Release Engineer, Privacy & Compliance Officer, Ilustrator B, Composer) — user **membatalkan** draf itu dan minta yang lebih sederhana: **5 orang coding fitur + 3 orang design (assets gambar/video/sound, fleksibel)**.
+
+**Keputusan final**: 15 orang = 9 developer (Bramantyo `core`, Dev App baru `app`, 6 developer @ 1 modul `feature_*` masing-masing — Dev 2/3/4 lama + Dev Warna/Musik/Puzzle baru, dan 1 Dev Testing baru lintas-modul untuk test+bugfix) + 6 asset/design creator (Asset 1-3 lama tetap lead per jenis media, Asset 4-6 baru generalist fleksibel lintas gambar/video/sound, bukan dipaku 1 jenis media). Detail di `docs/TEAM.md`, `docs/ROLES.md`, `docs/JOBS_BASE_MODEL.md` (semua ditulis ulang).
+
+**Alasan**: user menilai role non-coding terpisah (QA/UI-UX/DevOps/Compliance) menambah kompleksitas tanpa perlu — lebih suka tim lean yang isinya murni coding + konten, dengan kebutuhan testing/QA dilebur ke 1 dev khusus (Dev Testing, tetap nulis kode: test + fix bug langsung) daripada jadi jabatan pelapor-saja yang tidak coding.
+
+**Konsekuensi yang dicatat, belum diselesaikan**: Privacy Policy & Google Play Families Policy (wajib sebelum submit ke Play Store untuk app anak) **belum ada pemegang jelas** karena role Compliance Officer dihapus dari struktur — dicatat di `docs/TEAM.md` & `docs/JOBS_BASE_MODEL.md` sebagai keputusan tertunda yang wajib diputuskan sebelum Fase 2 selesai.

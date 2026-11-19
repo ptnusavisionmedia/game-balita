@@ -6,13 +6,16 @@ Dokumen ini jawaban konkret untuk "siapa boleh edit apa". Kalau `docs/TEAM.md` b
 
 | Peran | Siapa (lihat TEAM.md) | Boleh edit | **Tidak boleh** edit |
 |---|---|---|---|
-| Core/App maintainer | Bramantyo | `packages/core/**`, `packages/app/**`, `.github/**`, `Dockerfile`, `docker-compose.yml`, `melos.yaml` | `packages/feature_*/**` (minta Dev modul terkait), `marketing/**` |
-| Mini-game Developer A | Dev 2 | `packages/feature_angka/**`, `packages/feature_warna/**` | `packages/core/**`, `packages/app/**`, `packages/feature_hewan|musik|mewarnai|puzzle/**` |
-| Mini-game Developer B | Dev 3 | `packages/feature_hewan/**`, `packages/feature_musik/**` | folder modul lain, `core`, `app` |
-| Mini-game Developer C | Dev 4 | `packages/feature_mewarnai/**`, `packages/feature_puzzle/**` | folder modul lain, `core`, `app` |
-| Ilustrator | Asset 1 | `packages/*/assets/images/**`, `obsidian-vault/Specs/style-guide-ilustrasi.md` | file `.dart` apa pun, `assets/audio/**` |
-| Audio/VO | Asset 2 | `packages/*/assets/audio/**` | file `.dart` apa pun, `assets/images/**` |
-| Video/Marketing | Asset 3 | `marketing/**` | `packages/**` (semua) |
+| Core maintainer | Bramantyo | `packages/core/**`, `.github/**`, `Dockerfile`, `docker-compose.yml`, `melos.yaml` (infra tetap di Bramantyo untuk sekarang) | `packages/app/**`, `packages/feature_*/**`, `marketing/**` |
+| App maintainer | Dev App (baru) | `packages/app/**` | `packages/core/**`, `packages/feature_*/**`, `marketing/**` |
+| Mini-game Developer | Dev 2 | `packages/feature_angka/**` | folder modul lain, `core`, `app` |
+| Mini-game Developer | Dev Warna (baru) | `packages/feature_warna/**` | folder modul lain, `core`, `app` |
+| Mini-game Developer | Dev 3 | `packages/feature_hewan/**` | folder modul lain, `core`, `app` |
+| Mini-game Developer | Dev Musik (baru) | `packages/feature_musik/**` | folder modul lain, `core`, `app` |
+| Mini-game Developer | Dev 4 | `packages/feature_mewarnai/**` | folder modul lain, `core`, `app` |
+| Mini-game Developer | Dev Puzzle (baru) | `packages/feature_puzzle/**` | folder modul lain, `core`, `app` |
+| Testing/Bugfix (lintas-modul) | Dev Testing (baru) | `packages/*/test/**` (semua modul) + boleh fix bug di `packages/**` manapun kalau ada laporan — **wajib** PR terpisah + tag pemilik modul (lihat aturan "bug fix urgent" di bawah) | menambah fitur baru (bukan scope-nya — itu punya pemilik modul masing-masing) |
+| Asset/Design | Asset 1-6 | `packages/*/assets/images/**`, `packages/*/assets/audio/**`, `marketing/**` (fleksibel, tidak dibatasi 1 jenis media — lihat TEAM.md) | file `.dart` apa pun |
 
 **Semua peran** boleh edit (karena ini koordinasi bersama, bukan kode produk):
 - `docs/TASK_BOARD.md` — khusus baris task sendiri (klaim/update status).
@@ -23,7 +26,7 @@ Dokumen ini jawaban konkret untuk "siapa boleh edit apa". Kalau `docs/TEAM.md` b
 
 Normalnya: **minta ke pemegangnya** (chat/koordinasi) atau **buat Issue di GitHub**, biar masuk antrian task pemegang folder itu, bukan diedit langsung.
 
-**Kecuali untuk bug fix kecil yang urgent** — boleh langsung edit folder orang lain kalau perlu (jangan sampai aturan ini menghalangi fix bug cepat). Syaratnya cuma:
+**Kecuali untuk bug fix kecil yang urgent** (ini scope resmi Dev Testing, tapi siapa pun boleh kalau mendesak) — boleh langsung edit folder orang lain. Syaratnya cuma:
 1. PR terpisah (jangan digabung dengan kerjaan modul sendiri).
 2. Tag/mention pemilik folder itu di PR-nya (lihat `docs/TEAM.md`) biar dia tahu & sempat cek, meskipun approval-nya bukan syarat wajib untuk merge.
 3. Tulis di deskripsi PR kenapa fix-nya mendesak / tidak sempat nunggu pemiliknya.
@@ -32,7 +35,7 @@ Ini bukan soal "tidak percaya" — defaultnya tetap 1 orang/1 sesi AI yang paham
 
 ## Kenapa ini aman dari tabrakan — 2 lapis
 
-1. **Struktural**: scope di atas nyaris tidak overlap sama sekali antar peran — modul berbeda = folder berbeda = file berbeda. Secara teknis susah tabrakan walau tidak ada yang memaksa.
+1. **Struktural**: scope di atas nyaris tidak overlap sama sekali antar peran — modul berbeda = folder berbeda = file berbeda, dan sekarang **1 modul = 1 developer** (bukan 2 modul/orang lagi), jadi makin kecil kemungkinan 1 orang kewalahan sampai "nyerobot" kerjaan modul lain. Dev Testing adalah satu-satunya yang scope-nya lintas-modul, dan itu disengaja (perannya memang testing & bugfix, bukan menambah fitur).
 2. **Koordinasi (TASK_BOARD)**: sebelum mulai, klaim task di `docs/TASK_BOARD.md` (lihat `CLAUDE.md` LANGKAH 0). Ini mencegah 2 orang/2 sesi AI kerja **task yang sama** di modul yang sama secara bersamaan.
 
 `.github/CODEOWNERS` tetap ada, tapi fungsinya cuma **auto-assign reviewer** (biar PR ke folder tertentu otomatis minta review ke pemiliknya) — bukan gate yang bisa blok merge. Sengaja tidak dipasang branch protection/CI yang memaksa, supaya bug fix atau perubahan mendesak tidak terhambat proses.

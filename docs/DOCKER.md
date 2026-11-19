@@ -2,7 +2,7 @@
 
 ## Kenapa
 
-Tim ada 7 orang, semua pakai laptop berbeda. Masalah klasik: "di laptop saya `melos bootstrap` jalan, di laptop kamu error" karena versi Flutter/Dart beda. Docker di sini dipakai supaya **semua orang (dan CI) pakai versi Flutter yang sama persis**, tanpa perlu install Flutter SDK manual di tiap laptop.
+Tim ada 15 orang, semua pakai laptop berbeda. Masalah klasik: "di laptop saya `melos bootstrap` jalan, di laptop kamu error" karena versi Flutter/Dart beda. Docker di sini dipakai supaya **semua orang (dan CI) pakai versi Flutter yang sama persis**, tanpa perlu install Flutter SDK manual di tiap laptop.
 
 ## Yang BISA dilakukan lewat Docker
 

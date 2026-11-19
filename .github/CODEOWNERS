@@ -1,20 +1,26 @@
-# Isi dengan GitHub username tiap pemegang modul (lihat docs/TEAM.md)
+# Isi dengan GitHub username tiap pemegang modul (lihat docs/TEAM.md, docs/ROLES.md)
 # Siapa pun yang membuka PR yang menyentuh path ini akan otomatis minta review ke owner-nya.
 
 packages/core/                       @bramantyo
-packages/app/                        @bramantyo
+packages/app/                        @dev-app
 
-packages/feature_angka/              @dev-angka-warna
-packages/feature_warna/              @dev-angka-warna
+packages/feature_angka/              @dev-angka
+packages/feature_warna/              @dev-warna
+packages/feature_hewan/              @dev-hewan
+packages/feature_musik/              @dev-musik
+packages/feature_mewarnai/           @dev-mewarnai
+packages/feature_puzzle/             @dev-puzzle
 
-packages/feature_hewan/              @dev-hewan-musik
-packages/feature_musik/              @dev-hewan-musik
+# Dev Testing lintas-modul, otomatis ke-notify di folder test semua modul.
+packages/*/test/                     @dev-testing
 
-packages/feature_mewarnai/           @dev-mewarnai-puzzle
-packages/feature_puzzle/             @dev-mewarnai-puzzle
+# Infra tetap di Bramantyo untuk sekarang (lihat docs/TEAM.md "role lintas-modul").
+Dockerfile                           @bramantyo
+docker-compose.yml                   @bramantyo
+melos.yaml                           @bramantyo
+.github/workflows/                   @bramantyo
 
-# Asset creator tidak wajib jadi reviewer kode, tapi otomatis ke-notify kalau
-# ada yang mengubah folder asset modul yang mereka isi.
-packages/*/assets/images/            @asset-ilustrasi
-packages/*/assets/audio/             @asset-audio
-marketing/                           @asset-video
+# Asset/design generalist (Asset 1-6), tidak dibatasi 1 jenis media.
+packages/*/assets/images/            @asset-1 @asset-4
+packages/*/assets/audio/             @asset-2 @asset-5
+marketing/                           @asset-3 @asset-6

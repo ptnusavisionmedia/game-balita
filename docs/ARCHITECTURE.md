@@ -2,7 +2,7 @@
 
 ## Kenapa monorepo feature-first?
 
-Tim ada 7 orang, semua dibantu AI (Claude). Masalah paling umum di tim sebesar ini bukan "kodenya salah", tapi **rebutan file dan merge conflict**, plus tiap sesi AI yang harus membaca seluruh codebase untuk paham konteks. Feature-first monorepo menyelesaikan dua masalah itu sekaligus:
+Tim ada 15 orang, semua dibantu AI (Claude). Masalah paling umum di tim sebesar ini bukan "kodenya salah", tapi **rebutan file dan merge conflict**, plus tiap sesi AI yang harus membaca seluruh codebase untuk paham konteks. Feature-first monorepo menyelesaikan dua masalah itu sekaligus:
 
 - Satu mini-game = satu package Dart (`packages/feature_xxx`). Isinya lengkap: UI, logic, asset, test.
 - Developer (dan sesi Claude-nya) yang pegang `feature_angka` **tidak perlu** buka folder `feature_musik` sama sekali.

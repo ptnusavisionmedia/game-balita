@@ -56,14 +56,16 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
 ## Urutan kerja (supaya tidak saling blok)
 
 ```
-Hari 1-2   Job 1 (Bramantyo): AppTheme + ProgressRepository + ParentalGateDialog  ─┐
-                                                                                ├─> keduanya butuh ini
-Hari 1-2   Job 2 (Dev angka): skeleton UI feature_angka (belum wire ke core) ─┘
-Hari 3-4   Job 1 + Job 2 wiring bareng: feature_angka pakai ProgressRepository,
-           AudioService, StarRewardOverlay yang sudah jadi
-Hari 3-5   Job 1: SettingsScreen + navigasi + CI
-Hari 1-5   Job 3-7 (5 dev lain): TIDAK coding fitur — siapkan spek 1 halaman
-           + asset placeholder modul masing-masing (lihat docs/JOBS_BASE_MODEL.md)
+Hari 1-2   Job 1 (Bramantyo): AppTheme + ProgressRepository (sudah selesai) + ParentalGateDialog ─┐
+                                                                                                    ├─> Job 3 butuh ini
+Hari 1-2   Job 3 (Dev 2): skeleton UI feature_angka (belum wire ke core) ────────────────────────┘
+Hari 3-4   Job 1 + Job 3 wiring bareng: feature_angka pakai ProgressRepository,
+           SfxService, StarRewardOverlay yang sudah jadi
+Hari 3-5   Job 2 (Dev App): SettingsScreen + navigasi + ParentalGateDialog wiring
+Hari 1-5   Job 4-8 (5 dev modul lain): TIDAK coding fitur — siapkan spek 1 halaman
+           + asset list modul masing-masing (lihat docs/JOBS_BASE_MODEL.md)
+Hari 1-5   Job 9 (Dev Testing): checklist QA + unit test core, standby test begitu Job 3 demo-able
+Hari 1-5   Job 10-15 (Asset 1-6): style guide → produksi ilustrasi/audio/video feature_angka duluan
 Hari 5     Demo base model ke seluruh tim → kalau Definition of Done lolos,
            lanjut Fase 2 (6 modul coding paralel)
 ```
