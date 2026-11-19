@@ -34,4 +34,5 @@ Lihat [[Decisions Log]] untuk detail & alasan. Ringkasan:
 - [[../docs/DOCKER|Docker]]
 - [[../docs/GIT_WORKFLOW|Cara Kolaborasi Git (pemula)]]
 - [[../docs/TASK_BOARD|Task Board (klaim task di sini)]]
+- [[../docs/ROLES|Peran & batas file (kenapa tidak tabrakan)]]
 - [[../CLAUDE|CLAUDE.md — entry point sesi AI baru]]

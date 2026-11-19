@@ -23,7 +23,7 @@ Kalau ragu task mana yang dimaksud, atau user cuma bilang "lanjut kerja" tanpa n
 
 ## Baca selanjutnya, sesuai kebutuhan task yang diklaim
 
-1. **[docs/TEAM.md](docs/TEAM.md)** — siapa pegang modul/role apa.
+1. **[docs/TEAM.md](docs/TEAM.md)** — siapa pegang modul/role apa. **[docs/ROLES.md](docs/ROLES.md)** — folder/file persis apa yang boleh/tidak boleh kamu sentuh.
 2. **[obsidian-vault/Decisions Log.md](obsidian-vault/Decisions%20Log.md)** — keputusan yang sudah diambil & alasannya. Jangan buka ulang diskusi yang sudah diputuskan tanpa alasan baru.
 3. **[docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md)** — cara branch/commit/PR. Wajib, semua role.
 4. Kalau role developer: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** (aturan dependensi antar modul).
@@ -31,8 +31,10 @@ Kalau ragu task mana yang dimaksud, atau user cuma bilang "lanjut kerja" tanpa n
 
 ## Aturan keras
 
-- **Developer**: jangan edit folder modul yang bukan milikmu (lihat `docs/TEAM.md`), jangan push langsung ke `main` (selalu lewat PR, lihat `docs/GIT_WORKFLOW.md`).
+- **Jangan edit file di luar scope task yang kamu klaim.** Scope persis per peran (folder mana boleh, mana tidak) ada di **[docs/ROLES.md](docs/ROLES.md)** — baca itu kalau ragu. Ini ditegakkan 3 lapis: struktur folder, klaim di TASK_BOARD, dan CI (`scope-check`) yang otomatis gagal kalau 1 PR menyentuh >1 modul `packages/`.
+- **Developer**: jangan edit folder modul yang bukan milikmu (lihat `docs/TEAM.md` + `docs/ROLES.md`), jangan push langsung ke `main` (selalu lewat PR, lihat `docs/GIT_WORKFLOW.md`) — **kecuali** commit yang HANYA mengubah baris status di `docs/TASK_BOARD.md` (klaim/done), itu boleh push langsung ke `main` supaya klaim cepat terlihat orang lain.
 - **Asset creator**: taruh aset di `packages/feature_xxx/assets/images/` atau `assets/audio/` modul yang sesuai (lihat spek di `obsidian-vault/Specs/<modul>.md`), atau di `marketing/` untuk konten promosi — bukan di lokasi lain.
+- Butuh sesuatu di luar scope kamu? Jangan edit langsung — minta ke pemegangnya atau buat Issue (lihat `docs/ROLES.md`).
 - Dependency/library baru → catat alasannya di `docs/LIBRARIES.md` (jangan tambah tanpa catatan, lihat prinsip "jangan tulis kode sendiri kalau ada library lebih optimal" di sana).
 - Keputusan besar/berubah arah → tambah entri **baru** di `obsidian-vault/Decisions Log.md` (jangan edit/hapus entri lama).
 - Fase sekarang: **Base Model** (lihat `docs/PLAN_BASE_MODEL.md`) — jangan mulai coding 6 modul paralel sebelum base model (`feature_angka`) lolos demo.

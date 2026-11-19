@@ -57,6 +57,7 @@ Sesi AI/developer baru: mulai dari [CLAUDE.md](CLAUDE.md) (entry point wajib —
 Baca selanjutnya:
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — kenapa modular, aturan dependensi, cara menambah modul baru
 - [docs/TEAM.md](docs/TEAM.md) — pembagian tim: 4 developer + 3 asset creator
+- [docs/ROLES.md](docs/ROLES.md) — folder/file persis apa yang boleh/tidak boleh disentuh tiap peran, dan kenapa tidak akan tabrakan
 - [docs/TASK_BOARD.md](docs/TASK_BOARD.md) — task mana yang Open/Claimed/Done
 - [docs/AI_WORKFLOW.md](docs/AI_WORKFLOW.md) — cara kerja tim yang semua pakai Claude/AI tanpa saling tabrakan
 - [docs/PLAN_BASE_MODEL.md](docs/PLAN_BASE_MODEL.md) — plan fase sekarang (base model)

@@ -132,13 +132,14 @@ Branch `feature/angka-level-1` boleh dihapus (GitHub biasanya kasih tombol "Dele
 
 ## 5. Aturan supaya kolaborasi 7 orang tetap rapi
 
-1. ❌ **Jangan pernah** `git push` langsung ke `main`. Semua lewat Pull Request, walau kerjaan kecil.
-2. ✅ **1 Pull Request = 1 modul.** Jangan campur perubahan `feature_angka` dan `feature_warna` di PR yang sama.
+1. ❌ **Jangan pernah** `git push` langsung ke `main`, **kecuali** commit yang HANYA mengubah baris status di `docs/TASK_BOARD.md` (klaim/done task — lihat `CLAUDE.md` LANGKAH 0). Semua perubahan lain lewat Pull Request, walau kerjaan kecil.
+2. ✅ **1 Pull Request = 1 modul.** Jangan campur perubahan `feature_angka` dan `feature_warna` di PR yang sama. Ini **dicek otomatis** oleh CI (`scope-check`) — PR yang menyentuh >1 folder `packages/<modul>` sekaligus akan gagal CI.
 3. ✅ **Commit sering, kecil-kecil**, dengan pesan jelas — bukan 1 commit raksasa "update banyak" di akhir minggu.
 4. ✅ Sebelum mulai kerjaan baru, **selalu** `git checkout main && git pull origin main` dulu (Langkah 1) — supaya kamu kerja dari versi terbaru.
-5. ❌ **Jangan edit folder modul orang lain.** Kalau nemu bug di modul orang lain, laporkan (buat Issue di GitHub), jangan edit langsung.
+5. ❌ **Jangan edit folder/file di luar scope kamu.** Scope persis per peran ada di [docs/ROLES.md](ROLES.md) — baca itu kalau ragu. Kalau nemu bug di modul orang lain, laporkan (buat Issue di GitHub), jangan edit langsung.
 6. ✅ Butuh sesuatu dari `core`? Minta ke Bramantyo, jangan copy-paste kode `core` ke modulmu sendiri.
 7. ✅ Jalankan `melos run analyze` sebelum push (lihat [CONTRIBUTING.md](../CONTRIBUTING.md)) — supaya tidak kirim kode yang jelas-jelas error.
+8. ✅ PR kamu otomatis minta review ke pemilik folder terkait ([.github/CODEOWNERS](../.github/CODEOWNERS)) — kalau repo sudah diset branch protection "Require review from Code Owners" (lihat `docs/ROLES.md`), PR **tidak bisa merge** tanpa approval pemilik folder itu, jadi walau kelepasan edit folder orang lain, tidak bisa masuk `main` tanpa izin.
 
 ---
 

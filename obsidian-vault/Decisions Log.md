@@ -71,3 +71,11 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Keputusan**: `CLAUDE.md` diperketat — klaim task di `docs/TASK_BOARD.md` sekarang jadi **langkah pertama mutlak** tiap kali sesi AI/conversation baru dibuka di repo ini, sebelum baca dokumen lain atau mulai kerja. Kalau task belum jelas dari instruksi user, sesi AI **wajib tanya dulu**, tidak boleh menebak. Commit klaim pakai format baku `claim: <nama task> — <nama orang>`, commit selesai `done: <nama task> — <nama orang>`, dan **push duluan** sebelum mulai kerja task-nya.
 
 **Alasan**: sebelumnya "klaim task" cuma salah satu langkah di tengah daftar baca — user minta ini jadi gerbang wajib paling awal, supaya tidak mungkin ada sesi/orang yang mulai kerja tanpa tercatat di board, dan nama di PIC langsung pakai nama asli begitu diketahui (bukan "Dev 1"/"Asset 2" generik terus-terusan).
+
+## 2026-11-19 — docs/ROLES.md + CI scope-check: tabrakan dicegah 3 lapis, bukan cuma aturan tertulis
+
+**Keputusan**: tambah `docs/ROLES.md` yang mendefinisikan **folder/file persis** yang boleh/tidak boleh disentuh tiap peran (bukan cuma "modul mana" seperti di TEAM.md). Tambah `scripts/check_pr_scope.sh` + job `scope-check` di CI yang **otomatis gagal** kalau 1 PR menyentuh lebih dari 1 folder `packages/<modul>`. Juga didokumentasikan: admin repo perlu aktifkan GitHub branch protection "Require review from Code Owners" di Settings → Branches, supaya PR yang menyentuh folder orang lain **tidak bisa merge** tanpa approval pemilik folder itu.
+
+**Pengecualian baru**: commit yang HANYA mengubah baris status di `docs/TASK_BOARD.md` (klaim/done) boleh push langsung ke `main`, supaya klaim task cepat terlihat orang lain — tidak perlu nunggu PR untuk sekadar update status.
+
+**Alasan**: user minta jaminan konkret "tidak tabrakan", bukan cuma janji di dokumen. Jawabannya 3 lapis: (1) struktural — folder per peran nyaris tidak overlap, (2) koordinasi — klaim di TASK_BOARD sebelum kerja, (3) teknis — CODEOWNERS + branch protection + CI scope-check yang benar-benar **menolak** perubahan di luar scope, bukan cuma mengandalkan orang ingat aturan.
