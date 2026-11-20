@@ -50,7 +50,8 @@ Klaim per **bagian** (bukan per job utuh) di `docs/TASK_BOARD.md` kalau mau kerj
 - **Tujuan**: ini bukan kerjaan teknis, tapi keputusan yang masih menggantung (lihat `docs/TEAM.md`).
 - **Keputusan**: **Bramantyo** — rangkap dengan infra/release manager yang sudah dia pegang (export APK, CI). Lihat `obsidian-vault/Decisions Log.md`.
 - **Output**: nama pemegang tercatat di `docs/TEAM.md`.
-- **Belum**: Bramantyo belum menulis draft Privacy Policy/Play Families Policy itu sendiri — ini cuma keputusan siapa yang pegang, bukan dokumennya sudah ada. Draft masih perlu dikerjakan sebelum submit Play Store (lihat Part 8.x untuk koordinasi listing dengan Asset 3).
+- **Draft dokumen**: ditulis di `docs/PRIVACY_POLICY.md` (2026-11-20) — rangkuman: tidak ada data pribadi dikumpulkan/dikirim ke server (semua progres cuma lokal di device lewat `ProgressRepository`/`ConfigFile`), tidak ada SDK pihak ketiga/iklan/IAP (lihat `docs/LIBRARIES.md`), patuh Google Play Families Policy (tidak ada behavioral ads, tidak ada link keluar tanpa `ParentalGateDialog`).
+- **Belum**: (1) isi bagian `[ISI: ...]` kontak di dokumen, (2) **publish ke URL publik** (Play Console wajib link publik, bukan file repo — lihat `docs/TASK_BOARD.md` baris baru "Isi kontak + publish"), (3) review hukum/compliance kalau tim merasa perlu sebelum submit beneran.
 
 ---
 

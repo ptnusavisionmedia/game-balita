@@ -304,3 +304,11 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Konteks**: Farel (anggota tim, commit langsung `f58adf1`) update `docs/JOBS_BASE_MODEL.md` ganti label "Job 7 (Asset 2)" jadi "Job 7 (Farel)" — sesuai aturan `CLAUDE.md` LANGKAH 0 kalau nama asli sudah diketahui, pakai nama asli bukan placeholder generik "Asset 2" terus-terusan.
 
 **Yang disinkronkan** (sesi ini, melanjutkan 1 baris yang Farel ubah): `docs/TEAM.md` (baris #7), `docs/TASK_BOARD.md` (PIC "SFX dasar" + "VO angka 1-5"), `docs/WORK_BREAKDOWN.md` (heading Job 7 + Part 7.3), `docs/PLAN_BASE_MODEL.md` (2 mention). `docs/MASTER_PROMPT.md` **sengaja tidak diubah** — itu template role untuk orang baru pilih saat mulai sesi ("Asset 2 - Audio/VO" di sana adalah nama ROLE, bukan nama orang). Entri Decisions Log lama yang sudah menyebut "Asset 2" **tidak diedit** (append-only, sesuai aturan `CLAUDE.md`).
+
+## 2026-11-20 — Draft Privacy Policy & Play Families Policy ditulis
+
+**Keputusan user**: lanjutkan kerja Bramantyo (Part 1.6) ke langkah berikutnya — tulis draft dokumennya, bukan cuma keputusan siapa yang pegang.
+
+**Isi draft** (`docs/PRIVACY_POLICY.md`): rangkuman jujur apa adanya sesuai kode yang sudah ada — app 100% offline, tidak ada SDK iklan/analytics/login pihak ketiga (dicek silang ke `docs/LIBRARIES.md`, tidak ada yang mengirim data keluar device), tidak ada permission Android khusus (`export_presets.cfg` `permissions/custom_permissions` kosong), progres cuma lokal lewat `ProgressRepository`/`ConfigFile`. Bagian kepatuhan Google Play Families Policy menautkan ke mekanisme yang sudah ada di kode: `ParentalGateDialog` (gate sebelum ke Settings) dan prinsip-prinsip `docs/UI_UX_DESIGN.md` (tidak ada iklan/IAP, tidak ada game-over menghukum, tidak ada media sosial/chat).
+
+**Belum**: dokumen ini **belum dipublikasikan ke URL publik** (field `[ISI: ...]` kontak juga belum diisi) — Google Play Console mensyaratkan link publik yang bisa diakses browser, bukan file di repo GitHub privat. Ditambahkan baris baru di `docs/TASK_BOARD.md` untuk langkah publish ini, PIC tetap Bramantyo.

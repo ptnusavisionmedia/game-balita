@@ -36,7 +36,8 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Riset referensi video + draft konsep promo | Asset | marketing | Open | Asset 3 | | |
 | Draft listing Play Store Console (belum publish) | Asset | marketing | Open | Asset 3 | | koordinasi Bramantyo untuk export APK |
 | Tentukan pemegang Privacy Policy & Play Families Policy | — | compliance | Done | Bramantyo | 2026-11-20 | Keputusan diambil; dokumen Privacy Policy/Play Families Policy itu sendiri belum ditulis — itu task terpisah |
-| Tulis draft Privacy Policy & Play Families Policy | — | compliance | Claimed | Bramantyo | 2026-11-20 | wajib sebelum submit Play Store, lihat docs/WORK_BREAKDOWN.md Part 1.6 |
+| Tulis draft Privacy Policy & Play Families Policy | — | compliance | Done | Bramantyo | 2026-11-20 | Draft di `docs/PRIVACY_POLICY.md` — isi kontak & publish ke URL publik masih Open di baris bawah |
+| Isi kontak + publish `docs/PRIVACY_POLICY.md` ke URL publik (GitHub Pages/situs tim) | — | compliance | Open | Bramantyo | | wajib sebelum submit Play Store (Play Console minta link publik, bukan file repo) |
 
 ## Setelah base model demo lolos
 
