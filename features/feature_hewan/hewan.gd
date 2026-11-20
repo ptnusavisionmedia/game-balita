@@ -19,5 +19,5 @@ func _ready() -> void:
 
 	var back_button := Button.new()
 	back_button.text = "Kembali"
-	back_button.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/Home.tscn"))
+	back_button.pressed.connect(func(): GameFlow.go_home())
 	vbox.add_child(back_button)

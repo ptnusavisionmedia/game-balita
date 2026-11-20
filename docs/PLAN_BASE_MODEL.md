@@ -19,10 +19,13 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
    - `ParentalGateDialog` — gate sebelum masuk Settings: soal tambah sederhana + keypad angka (diganti dari "tahan tombol 3 detik" 2026-11-20, lihat Decisions Log).
    - `AppColors` — token warna satu tempat (supaya 6 mini-game terasa 1 produk).
 
-3. **App shell (`scenes/`)**
-   - Navigasi: Home → Settings, Home → mini-game → balik ke Home (`get_tree().change_scene_to_file(...)`).
+3. **App shell (`scenes/`)** — **update 2026-11-20**, lihat `docs/WORK_BREAKDOWN.md` Part 1.7 & `obsidian-vault/Decisions Log.md`
+   - `Splash.tscn` (logo ~1.2s) → `Home.tscn` (1 tombol "▶ Play" besar di tengah + tombol sekunder "Pilih Game" + ⚙ Settings).
+   - Navigasi dipusatkan lewat autoload `GameFlow` (`core/scripts/game_flow.gd`) — semua pindah scene WAJIB lewat `GameFlow.goto_scene(...)` (fade + debounce), bukan `get_tree().change_scene_to_file(...)` langsung.
+   - "▶ Play" → `GameFlow.start_random_game()` → mode **acak infinite**: main 1 mini-game acak dari yang `implemented`, selesai → lanjut mini-game acak lain (bukan balik Home). "Pilih Game" → grid manual, 1 sesi lalu balik Home.
+   - Tombol darurat 🏠 WAJIB ada di tiap mini-game (selalu terlihat) — jalan keluar kapan saja, penting khusus mode infinite.
    - `Settings.tscn` sederhana: toggle suara on/off, tersimpan lewat `ProgressRepository`.
-   - `ParentalGateDialog` terpasang di tombol Settings.
+   - `ParentalGateDialog` terpasang di tombol Settings (soal tambah sederhana + keypad angka, bukan tahan-tombol — lihat Decisions Log 2026-11-20).
 
 4. **1 mini-game pilot, fungsional penuh: `feature_angka`**
    - 1 level: tampilkan kumpulan objek (1-5), anak tap angka yang benar.

@@ -45,6 +45,24 @@ func _ready() -> void:
 	vbox.add_child(_choices_box)
 
 	_render_question()
+	_add_home_button()
+
+
+## Tombol darurat, selalu terlihat — supaya mode "Play acak infinite" (lihat
+## GameFlow) tidak "menjebak" anak/orang tua harus main terus tanpa jalan
+## keluar. Pola ini wajib ditiru di 5 modul feature_* lain begitu dikerjakan.
+func _add_home_button() -> void:
+	var home_button := Button.new()
+	home_button.text = "🏠"
+	home_button.custom_minimum_size = Vector2(56, 56)
+	home_button.anchor_left = 0.0
+	home_button.anchor_right = 0.0
+	home_button.offset_left = 8.0
+	home_button.offset_right = 64.0
+	home_button.offset_top = 12.0
+	home_button.offset_bottom = 68.0
+	home_button.pressed.connect(func(): GameFlow.go_home())
+	add_child(home_button)
 
 
 func _current_target() -> int:
@@ -105,5 +123,7 @@ func _show_reward() -> void:
 	add_child(overlay)
 	overlay.continued.connect(func():
 		ProgressRepository.record_result("feature_angka", stars)
-		get_tree().change_scene_to_file("res://scenes/Home.tscn")
+		# GameFlow.finish_game_session() — bukan langsung ke Home — supaya
+		# mode "Play acak infinite" lempar ke mini-game lain, bukan mampir Home.
+		GameFlow.finish_game_session()
 	)

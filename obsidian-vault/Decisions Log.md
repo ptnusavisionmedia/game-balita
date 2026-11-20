@@ -246,3 +246,20 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: headless re-import + run `Home.tscn` lolos (`exit 0`), dan dibuka visual via terminal untuk user coba sentuhan asli — **menunggu konfirmasi hasil tesnya** (akan dicatat di entri berikutnya kalau ada temuan).
 
 **Yang diupdate**: `docs/JOBS_BASE_MODEL.md`, `docs/PLAN_BASE_MODEL.md`, `docs/WORK_BREAKDOWN.md` — semua mention "tahan tombol 3 detik" diganti jadi "soal tambah + keypad angka".
+
+## 2026-11-20 — Home di-redesign total: tombol "▶ Play" tengah + mode acak infinite + `GameFlow`
+
+**Konteks**: user konfirmasi "sudah bagus" untuk perubahan `ParentalGateDialog` (entri sebelumnya), lalu minta Home diganti: dari grid 6 tile langsung tampil, jadi 1 tombol "▶ Play" besar di tengah. Ditanya detail perilaku Play lewat AskUserQuestion, user pilih **"Minigame acak infinite"** — selesai 1 sesi, lanjut otomatis ke mini-game acak lain (bukan balik ke Home). User lalu minta seluruh plan terkait (termasuk polish lain) dikerjakan sekaligus: **"kerjakan 1 persatu, secara detail dan menyeluruh"**.
+
+**Implementasi** (detail lengkap di `docs/WORK_BREAKDOWN.md` Part 1.7):
+- Autoload baru `GameFlow` (`core/scripts/game_flow.gd`) — satu sumber kebenaran katalog game (field `implemented` per modul, cuma `feature_angka` yang `true`), navigasi (`goto_scene` dengan fade hitam 0.15s in/out + debounce 600ms anti-klik-ganda), dan mode infinite (`start_random_game`/`start_specific_game`/`finish_game_session`/`go_home`).
+- `scenes/home.gd` ditulis ulang: "▶ Play" tengah (masuk mode acak infinite), "Pilih Game" sekunder (grid manual, tersembunyi default, 1 sesi lalu balik Home), dekorasi background sederhana (lingkaran transparan kode, bukan ilustrasi asli).
+- `scenes/splash.gd` + `Splash.tscn` baru — jadi `run/main_scene`, splash ~1.2s sebelum Home.
+- Tombol darurat 🏠 (selalu terlihat) ditambah di `feature_angka` — **wajib ditiru** di 5 modul lain begitu dikerjakan, karena mode infinite tidak otomatis balik Home.
+- Semua `get_tree().change_scene_to_file(...)` manual (6 `feature_*.gd` + `settings.gd` + reward callback) diganti lewat `GameFlow`.
+
+**Bug ditemukan & diperbaiki**: `GameFlow._ready()` awalnya add_child synchronous ke `get_tree().root` untuk fade layer → error "Parent node is busy setting up children" di SEMUA scene saat headless-verify (tree root masih sibuk instansiasi main scene bersamaan waktu autoload `_ready()` jalan). Fix: pakai `add_child.call_deferred(...)`. Pola ini dicatat sebagai komentar di kode itu sendiri supaya tidak terulang kalau ada autoload lain yang perlu nambah node ke root.
+
+**Diverifikasi**: re-import (`godot --headless --import`) supaya autoload baru terdaftar, lalu semua scene di-run headless (`--quit-after 1`) satu-satu — semua lolos `exit 0` setelah fix bug di atas. App juga dijalankan non-headless (window sungguhan) untuk user coba interaktif, dengan checklist 4 poin (Play → feature_angka, tombol 🏠 darurat, lanjut otomatis setelah reward karena infinite, toggle "Pilih Game"). **Hasil test interaktif ini belum dikonfirmasi user saat entri ini ditulis** — commit/push tetap dilakukan sekarang karena seluruh perubahan sudah headless-verified dan merupakan unit kerja yang lengkap; kalau user melaporkan bug dari test, akan jadi entri/perbaikan baru.
+
+**Diupdate juga**: `docs/ARCHITECTURE.md` (GameFlow ditambah ke daftar autoload), `docs/UI_UX_DESIGN.md` (diagram information architecture ditulis ulang, bullet transisi scene ditambah), `docs/PLAN_BASE_MODEL.md` (scope App shell diupdate), `docs/WORK_BREAKDOWN.md` (Part 1.7 baru, Part 1.4 ditandai superseded), `docs/TASK_BOARD.md` (baris baru, status Done).

@@ -15,16 +15,27 @@ Target pemain: anak **1-5 tahun** (belum/baru bisa baca, motorik halus terbatas)
 
 ## Information architecture
 
+**Update 2026-11-20**: Home sengaja disederhanakan jadi 1 aksi utama ("▶ Play") alih-alih langsung menampilkan grid 6 pilihan — konsisten dengan prinsip #3 di atas. Grid tetap ada tapi jadi opsi sekunder ("Pilih Game", disembunyikan default). Navigasi dipusatkan lewat autoload `GameFlow` (lihat `docs/ARCHITECTURE.md`).
+
 ```
-Splash (logo, auto lanjut ~1.5s)
-  └─ Home (grid 6 ikon mini-game + 1 ikon Settings kecil di pojok)
-       ├─ feature_angka   ──┐
-       ├─ feature_warna     │
-       ├─ feature_hewan     ├─ tiap mini-game: Screen soal → feedback instan →
-       ├─ feature_musik     │   StarRewardOverlay → balik ke Home
-       ├─ feature_mewarnai  │
-       └─ feature_puzzle  ──┘
-       └─ Settings (lewat ParentalGateDialog)
+Splash (logo, auto lanjut ~1.2s)
+  └─ Home (1 tombol "▶ Play" besar di tengah + tombol kecil "Pilih Game" + ⚙ Settings)
+       ├─ ▶ Play → GameFlow.start_random_game() → 1 mini-game ACAK dari yang sudah
+       │   "implemented" (sekarang cuma feature_angka) → mode INFINITE: selesai 1
+       │   sesi → lanjut ke mini-game acak LAIN (bukan balik ke Home) — anak bisa
+       │   main terus tanpa harus kembali ke menu tiap kali.
+       ├─ "Pilih Game" → tampilkan grid 6 tile (manual, GameFlow.start_specific_game) ──┐
+       │    ├─ feature_angka   ──┐                                                     │
+       │    ├─ feature_warna     │                                                     │
+       │    ├─ feature_hewan     ├─ tiap mini-game: Screen soal → feedback instan →    │
+       │    ├─ feature_musik     │   StarRewardOverlay → GameFlow.finish_game_session  │
+       │    ├─ feature_mewarnai  │   (balik Home kalau mode manual, lanjut acak kalau  │
+       │    └─ feature_puzzle  ──┘   mode infinite)                                    │
+       │                                                                                │
+       ├─ 🏠 tombol darurat SELALU terlihat di tiap mini-game — keluar ke Home          │
+       │   kapan saja, penting khusus untuk mode infinite supaya tidak "terjebak" ──────┘
+       └─ Settings (lewat ParentalGateDialog — sekarang soal tambah + keypad, bukan
+            tahan-tombol, lihat Decisions Log)
             └─ toggle suara, (nanti) pilih profil anak
 ```
 
@@ -48,6 +59,7 @@ Semua gestur dasar (tap, drag) pakai node bawaan Godot (`Button.pressed`, `Contr
 - Easing: `Tween` bawaan Godot dengan `Tween.EASE_OUT` + `Tween.TRANS_BACK`/`TRANS_ELASTIC` untuk micro-interaction (kesan "hidup", ramah anak).
 - Durasi pendek: 200-500ms. Anak kecil kehilangan fokus kalau animasi kepanjangan.
 - Reward: confetti (`CPUParticles2D`) + bintang (`StarRewardOverlay.tscn` di `core/scenes/`) — satu komponen dipakai semua modul, konsisten.
+- Transisi antar scene: fade hitam singkat (0.15s in + 0.15s out) via `GameFlow.goto_scene()` — potongan instan terasa kasar untuk anak kecil, dan sekaligus jadi titik debounce anti-klik-ganda (lihat `docs/ARCHITECTURE.md`).
 
 ## Color palette
 

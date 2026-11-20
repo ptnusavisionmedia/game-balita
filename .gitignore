@@ -17,6 +17,10 @@ builds/
 *.pck
 *.exe
 
+# Gradle build cache dari proses export Android (bukan source, jangan commit)
+packages/app/android/.gradle/
+packages/app/android/gradle/wrapper/gradle-wrapper.jar
+
 # Mono/C# (kalau nanti dipakai)
 .mono/
 data_*/

@@ -22,10 +22,23 @@ Klaim per **bagian** (bukan per job utuh) di `docs/TASK_BOARD.md` kalau mau kerj
 - `.github/workflows/ci.yml` ditambah job `export-debug-apk` mengikuti pola resmi `abarichello/godot-ci`, image di-pin ke `barichello/godot-ci:4.7.2` (sama dengan versi lokal yang sudah terverifikasi).
 - **Belum diverifikasi**: belum pernah push & cek apakah job ini sungguhan sukses di GitHub Actions (sesi ini cuma verifikasi export lokal, bukan di CI container Linux) — perlu dicek begitu PR/push berikutnya jalan.
 
-### Part 1.4 — Verifikasi navigasi penuh lewat Home (bukan buka scene langsung)
-- **Tujuan**: pastikan wiring `scenes/home.gd` benar-benar jalan dari pintu masuk sungguhan, bukan cuma `Angka.tscn` berdiri sendiri (yang sudah dites 2026-11-19).
-- **Langkah**: jalankan `godot --path . scenes/Home.tscn` (bukan headless) → klik tile "Angka" → mainkan sampai selesai → pastikan otomatis balik ke Home → klik tile lain, pastikan bisa dibuka juga (meski isinya placeholder).
-- **Selesai kalau**: siklus Home → game → Home berjalan tanpa error, bisa diulang ke modul lain.
+### Part 1.4 — Verifikasi navigasi penuh lewat Home (bukan buka scene langsung) — **UPDATE 2026-11-20, lihat Part 1.7**
+- **Tujuan asal**: pastikan wiring `scenes/home.gd` benar-benar jalan dari pintu masuk sungguhan, bukan cuma `Angka.tscn` berdiri sendiri (yang sudah dites 2026-11-19).
+- Home lama (grid 6 tile langsung tampil, navigasi lewat `get_tree().change_scene_to_file()` manual tiap tempat) **sudah diganti total** oleh Part 1.7 — langkah verifikasi di baris ini sudah tidak relevan persis (sekarang lewat `scenes/Splash.tscn` dulu, lewat `GameFlow`), lihat Part 1.7 untuk versi terbaru.
+
+### Part 1.7 — Redesign Home: tombol "▶ Play" tengah + mode acak infinite + `GameFlow` ✅ SELESAI (2026-11-20), menunggu konfirmasi test interaktif user
+- **Tujuan**: sebelumnya Home langsung tampilkan grid 6 pilihan mini-game (melanggar prinsip "satu aksi utama per layar" di `docs/UI_UX_DESIGN.md`). Diganti jadi 1 tombol utama "▶ Play" yang masuk mode **acak infinite** (main terus pindah mini-game lain tanpa balik ke Home tiap kali), grid 6 tile jadi opsi sekunder "Pilih Game" (manual, 1 sesi lalu balik Home).
+- **Langkah yang dikerjakan**:
+  1. Buat `core/scripts/game_flow.gd` (autoload baru `GameFlow`) — pusat katalog game (`GAMES` const, flag `implemented` per modul), navigasi (`goto_scene` dengan fade + debounce anti-klik-ganda), dan mode infinite (`start_random_game`, `start_specific_game`, `finish_game_session`, `go_home`).
+  2. Daftarkan `GameFlow` di `[autoload]` `project.godot`.
+  3. Tulis ulang `scenes/home.gd`: tombol "▶ Play" besar di tengah (`_on_play_pressed` → `GameFlow.start_random_game()`), tombol sekunder "Pilih Game" (toggle grid, default tersembunyi), dekorasi background sederhana (lingkaran transparan, bukan ilustrasi asli), posisi ⚙ dipindah ke pojok.
+  4. Tambah `scenes/splash.gd` + `scenes/Splash.tscn` — splash kuning ~1.2 detik sebelum Home, jadi `run/main_scene` baru di `project.godot` (sebelumnya `Home.tscn`).
+  5. Tambah tombol darurat 🏠 (selalu terlihat) di `features/feature_angka/angka.gd` — WAJIB ditiru di 5 modul lain begitu dikerjakan, supaya mode infinite tidak "menjebak" anak harus main terus tanpa jalan keluar.
+  6. Ganti semua `get_tree().change_scene_to_file(...)` manual (di `scenes/settings.gd` + 6 `feature_*.gd` + reward callback `feature_angka`) jadi lewat `GameFlow.go_home()` / `GameFlow.finish_game_session()`.
+- **Bug ditemukan & diperbaiki**: `GameFlow._ready()` awalnya `get_tree().root.add_child(fade_layer)` langsung (synchronous) → error "Parent node is busy setting up children" di SEMUA scene saat headless-verify, karena tree root masih sibuk instansiasi main scene bersamaan. Fix: `add_child.call_deferred(fade_layer)`. Lihat `obsidian-vault/Decisions Log.md` 2026-11-20.
+- **Terverifikasi**: semua scene lolos headless (`godot --headless --path . <scene> --quit-after 1`, exit 0) setelah fix di atas. App juga dijalankan non-headless (window sungguhan) untuk sesi ini.
+- **Belum**: konfirmasi hasil test interaktif user (klik Play → masuk feature_angka, tombol 🏠 darurat, lanjut otomatis setelah reward karena mode infinite, toggle grid "Pilih Game") — checklist sudah diberikan ke user, hasil belum dilaporkan balik saat Part ini ditulis.
+- **Selesai kalau**: user konfirmasi 4 poin test di atas berjalan sesuai rancangan (atau bug yang dilaporkan sudah diperbaiki & re-test).
 
 ### Part 1.5 — Verifikasi `ParentalGateDialog` + `Settings` secara sentuhan asli
 - **Tujuan**: `ParentalGateDialog` belum pernah dites klik asli.
