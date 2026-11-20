@@ -18,7 +18,7 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Placeholder scene 5 modul lain (Warna/Hewan/Musik/Mewarnai/Puzzle) | Dev | feature_* | Done | Bramantyo | 2026-11-19 | Cuma tombol "Kembali", isi logic-nya nanti di modul masing-masing |
 | Verifikasi: buka project di Godot Editor/headless, cek semua scene lolos | Dev | base model | Done | Bramantyo | 2026-11-19 | Godot 4.7.2 — semua 8 scene exit 0 headless; export APK/interaksi sentuhan asli masih belum |
 | CI headless validate (`.github/workflows/ci.yml`) | Dev | infra | Done | Bramantyo | 2026-11-19 | binary `godot` + `--quit-after` terverifikasi |
-| CI export job (APK debug) | Dev | infra | Open | Bramantyo | | butuh `export_presets.cfg` + keystore dulu |
+| Part 1.1-1.3 (export template, export_presets.cfg, CI export job) | Dev | infra | Claimed | Bramantyo | 2026-11-20 | lihat docs/WORK_BREAKDOWN.md |
 | Spek + asset list `feature_warna` | Dev | feature_warna | Open | Dev 2 | | |
 | Spek + asset list `feature_hewan` | Dev | feature_hewan | Open | Dev 3 | | |
 | Spek + asset list `feature_musik` | Dev | feature_musik | Open | Dev 3 | | |
