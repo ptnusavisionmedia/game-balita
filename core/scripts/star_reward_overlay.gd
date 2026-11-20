@@ -1,7 +1,9 @@
 extends Control
 class_name StarRewardOverlay
 ## Overlay perayaan di akhir sesi mini-game: confetti + jumlah bintang.
-## Dipakai sama oleh semua `feature_*` supaya "rasa menang"-nya konsisten.
+## Dipakai sama oleh semua `feature_*` supaya rasa keberhasilannya konsisten.
+## Bukan framing "menang/kalah" — tombol "Lanjut" cuma pindah ke mini-game
+## lain (lihat prinsip #4 docs/UI_UX_DESIGN.md).
 ##
 ## Confetti pakai `CPUParticles2D` bawaan Godot (particle system teruji),
 ## bukan animasi partikel buatan sendiri — lihat docs/LIBRARIES.md.

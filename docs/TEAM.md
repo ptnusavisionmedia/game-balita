@@ -32,5 +32,5 @@ Tim 15 orang (9 dev + 6 asset) dirasa terlalu besar untuk base model — banyak 
 
 - **Testing manual di device nyata**: Dev Testing + giliran siapa saja sebelum rilis.
 - **CI/Godot export maintenance**: Bramantyo untuk sekarang (lihat `docs/DOCKER.md`), bisa dialihkan nanti kalau terasa berat.
-- **Privacy Policy & Google Play Families Policy** (wajib sebelum publish ke Play Store, app anak punya aturan ekstra): belum ada pemegang jelas — **harus diputuskan sebelum submit ke Play Store**, lihat `docs/JOBS_BASE_MODEL.md`.
+- **Privacy Policy & Google Play Families Policy** (wajib sebelum publish ke Play Store, app anak punya aturan ekstra): **diputuskan 2026-11-20 — Bramantyo** (rangkap dengan infra/release manager yang sudah dia pegang), lihat `docs/WORK_BREAKDOWN.md` Part 1.6 dan `obsidian-vault/Decisions Log.md`.
 - **Release manager** (export APK, publish listing): Bramantyo + Asset 3, koordinasi bareng.

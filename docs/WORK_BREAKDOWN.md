@@ -46,10 +46,11 @@ Klaim per **bagian** (bukan per job utuh) di `docs/TASK_BOARD.md` kalau mau kerj
 - **Langkah**: dari Home klik "⚙ Pengaturan" → muncul soal → ketik jawaban lewat keypad → klik "✓" → kalau benar otomatis masuk `Settings` → toggle "Suara" → klik "Kembali". Ulangi tapi ketik jawaban SALAH, pastikan soal berganti (bukan macet). Coba juga klik "Batal".
 - **Selesai kalau**: semua interaksi di atas berjalan sesuai rancangan, termasuk kasus jawaban salah & batal.
 
-### Part 1.6 — Keputusan: siapa pegang Privacy Policy & Play Families Policy
+### Part 1.6 — Keputusan: siapa pegang Privacy Policy & Play Families Policy ✅ SELESAI (2026-11-20)
 - **Tujuan**: ini bukan kerjaan teknis, tapi keputusan yang masih menggantung (lihat `docs/TEAM.md`).
-- **Langkah**: diskusi singkat di tim — Bramantyo rangkap, atau didelegasikan ke Asset 3, atau tambah orang baru.
-- **Output**: nama pemegang tercatat di `docs/TEAM.md` (ganti baris "belum ada pemegang jelas").
+- **Keputusan**: **Bramantyo** — rangkap dengan infra/release manager yang sudah dia pegang (export APK, CI). Lihat `obsidian-vault/Decisions Log.md`.
+- **Output**: nama pemegang tercatat di `docs/TEAM.md`.
+- **Belum**: Bramantyo belum menulis draft Privacy Policy/Play Families Policy itu sendiri — ini cuma keputusan siapa yang pegang, bukan dokumennya sudah ada. Draft masih perlu dikerjakan sebelum submit Play Store (lihat Part 8.x untuk koordinasi listing dengan Asset 3).
 
 ---
 

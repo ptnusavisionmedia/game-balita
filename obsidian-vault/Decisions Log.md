@@ -263,3 +263,15 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: re-import (`godot --headless --import`) supaya autoload baru terdaftar, lalu semua scene di-run headless (`--quit-after 1`) satu-satu — semua lolos `exit 0` setelah fix bug di atas. App juga dijalankan non-headless (window sungguhan) untuk user coba interaktif, dengan checklist 4 poin (Play → feature_angka, tombol 🏠 darurat, lanjut otomatis setelah reward karena infinite, toggle "Pilih Game"). **Hasil test interaktif ini belum dikonfirmasi user saat entri ini ditulis** — commit/push tetap dilakukan sekarang karena seluruh perubahan sudah headless-verified dan merupakan unit kerja yang lengkap; kalau user melaporkan bug dari test, akan jadi entri/perbaikan baru.
 
 **Diupdate juga**: `docs/ARCHITECTURE.md` (GameFlow ditambah ke daftar autoload), `docs/UI_UX_DESIGN.md` (diagram information architecture ditulis ulang, bullet transisi scene ditambah), `docs/PLAN_BASE_MODEL.md` (scope App shell diupdate), `docs/WORK_BREAKDOWN.md` (Part 1.7 baru, Part 1.4 ditandai superseded), `docs/TASK_BOARD.md` (baris baru, status Done).
+
+## 2026-11-20 — Privacy Policy & Play Families Policy: Bramantyo pegang
+
+**Keputusan**: `docs/TEAM.md` baris "belum ada pemegang jelas" diisi — **Bramantyo** pegang Privacy Policy & Google Play Families Policy, rangkap dengan infra/release manager yang sudah dia pegang (export APK, CI, koordinasi listing dengan Asset 3). Ditanya ke user lewat AskUserQuestion (opsi: Bramantyo / Asset 3 / orang baru), user pilih Bramantyo.
+
+**Catatan**: ini baru keputusan **siapa pegang**, bukan dokumen Privacy Policy/Play Families Policy itu sendiri — draftnya masih task terpisah (`docs/WORK_BREAKDOWN.md` Part 1.6), wajib ada sebelum submit Play Store.
+
+## 2026-11-20 — Framing akhir sesi: "keberhasilan + pindah game", bukan "menang/kalah"
+
+**Keputusan**: user tegaskan 1 aturan tambahan untuk prinsip #4 (`docs/UI_UX_DESIGN.md`, "tidak ada game over yang menghukum") — akhir 1 sesi mini-game **tidak boleh** dibahasakan sebagai menang/kalah di mana pun (teks UI, komentar kode, nanti SFX/VO). Yang benar: tampilkan **keberhasilan** (bintang + confetti di `StarRewardOverlay`) lalu **perpindahan ke permainan lain** (tombol "Lanjut" → `GameFlow.finish_game_session()`), konsisten dengan mode "Play acak infinite" yang sudah ada (lihat entri 2026-11-20 sebelumnya tentang redesign Home).
+
+**Implementasi**: komentar di `core/scripts/star_reward_overlay.gd` yang sebelumnya bilang `"rasa menang"` diganti jadi "rasa keberhasilan" + catatan eksplisit bukan framing menang/kalah. Tidak ada teks UI yang perlu diubah (overlay sudah netral: bintang + tombol "Lanjut", tidak ada kata "menang"/"kalah" di mana pun sebelumnya) — jadi ini lebih ke **menegaskan aturan untuk modul-modul lain** yang belum dikerjakan (Warna/Hewan/Musik/Mewarnai/Puzzle), supaya developernya nanti tidak menulis "Kamu Menang!"/"Kamu Kalah" waktu bikin reward/fail state sendiri.
