@@ -288,3 +288,13 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: `godot --headless --path . --import` lalu semua 9 scene (`Splash`, `Home`, `Settings`, 6 `feature_*`) di-run headless `--quit-after 1` — semua lolos `exit 0`, tidak ada error baru.
 
 **Belum**: belum dites sentuhan asli di device/emulator Android sungguhan (baru headless) — perlu re-export APK (`docs/WORK_BREAKDOWN.md` Part 1.1-1.3) dan install ulang untuk konfirmasi fix ini benar-benar menyelesaikan laporan user. `ParentalGateDialog` (card ter-center, tumbuh sesuai konten) belum dikasih `ScrollContainer` fallback untuk device super pendek — kalau masih ada laporan keypad kepotong setelah fix ini, itu langkah berikutnya.
+
+## 2026-11-20 — Bug ditemukan & diperbaiki: UI `ParentalGateDialog` ("Mode Orang Tua") kolaps
+
+**Laporan user**: "mode orang tua uinya ancur" — soal tambah + keypad numpuk/berantakan saat dibuka.
+
+**Akar masalah**: `core/scripts/parental_gate_dialog.gd` nge-center kartu (`PanelContainer`) pakai anchor 1 titik (`anchor_left=anchor_top=anchor_right=anchor_bottom=0.5`) tanpa `offset` apa pun. Di Godot, Control baru defaultnya offset `(0,0,0,0)` — jadi rect-nya benar-benar kolaps ke size `(0,0)` di titik tengah, bukan auto-membesar sesuai isi. Semua anak (judul, soal, keypad 3x4, tombol Batal) numpuk di satu titik ber-size nol → tampil "ancur". Ini **pre-existing** dari waktu `ParentalGateDialog` ditulis ulang (ganti dari tahan-tombol ke soal tambah), baru ketahuan sekarang karena test interaktif sebelumnya cuma cover Play/Home/infinite mode, bukan buka Settings.
+
+**Fix**: ganti jadi `CenterContainer` full-rect (`anchor_right/bottom=1.0`) membungkus `PanelContainer` — `CenterContainer` otomatis center-kan child sesuai `minimum_size` aslinya, tanpa perlu hitung offset manual. Pola ini (anchor-titik tanpa offset untuk "center" sebuah Container) dicatat sebagai jebakan umum Godot — kalau nanti ada dialog serupa di modul lain, pakai `CenterContainer`, jangan tiru pola lama.
+
+**Diverifikasi**: headless re-run `scenes/Settings.tscn` & `scenes/Home.tscn` — tidak ada error baru. Belum dites visual sentuhan asli — perlu konfirmasi user begitu dicoba lagi.

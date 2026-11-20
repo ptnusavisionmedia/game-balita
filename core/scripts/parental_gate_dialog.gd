@@ -32,12 +32,18 @@ func _ready() -> void:
 	backdrop.anchor_bottom = 1.0
 	add_child(backdrop)
 
+	# CenterContainer, bukan PanelContainer dianchor ke 1 titik tengah —
+	# anchor titik (0.5/0.5/0.5/0.5) tanpa offset bikin rect-nya kolaps ke
+	# size (0,0), jadi semua isi (soal+keypad) numpuk/ke-collapse ("ancur").
+	# CenterContainer full-rect otomatis center-kan child sesuai minimum
+	# size-nya, tanpa perlu hitung offset manual. Lihat Decisions Log 2026-11-20.
+	var center := CenterContainer.new()
+	center.anchor_right = 1.0
+	center.anchor_bottom = 1.0
+	add_child(center)
+
 	var card := PanelContainer.new()
-	card.anchor_left = 0.5
-	card.anchor_top = 0.5
-	card.anchor_right = 0.5
-	card.anchor_bottom = 0.5
-	add_child(card)
+	center.add_child(card)
 
 	var vbox := VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 12)
