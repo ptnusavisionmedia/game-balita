@@ -21,27 +21,26 @@ config/features=PackedStringArray("4.7")
 
 [display]
 
-; Base resolution desain = HP portrait biasa. Semua ukuran piksel di kode
-; (custom_minimum_size dkk) dihitung relatif ke ini, lalu Godot scale
-; otomatis ke resolusi device asli lewat stretch mode di bawah — supaya
-; 1 kode UI konsisten proporsinya di HP kecil maupun tablet besar, bukan
-; "kececeran"/beda-beda posisi tiap device. Lihat obsidian-vault/Decisions Log.md.
-window/size/viewport_width=720
-window/size/viewport_height=1280
+; Update 2026-11-20: user minta LANDSCAPE (bukan portrait) — supaya lebar,
+; lebih menyesuaikan HP (rotasi landscape) dan tablet. Base resolusi desain
+; 1280x720 (16:9), semua ukuran piksel di kode (custom_minimum_size dkk)
+; dihitung relatif ke ini, lalu Godot scale otomatis ke resolusi device
+; asli lewat stretch mode di bawah — supaya 1 kode UI konsisten
+; proporsinya di HP kecil maupun tablet besar, bukan "kececeran"/beda-beda
+; posisi tiap device. Lihat obsidian-vault/Decisions Log.md.
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/size/mode=0
 
 ; window_width/height_override cuma ngaruh ke UKURAN JENDELA desktop (dev
 ; test di Windows/Mac/Linux) — TIDAK ngaruh ke export Android (device asli
-; selalu pakai resolusi device sendiri). Tanpa ini, window default ikut
-; viewport_width/height (720x1280) yang lebih tinggi dari tinggi layar laptop
-; umum (mis. 1366x768 => working area ~728px tinggi) — Windows jadi klem
-; window ke bentuk nyaris persegi (bukan portrait lagi), kelihatan
-; "miring"/landscape. 405x720 tetap rasio 9:16, muat di layar manapun.
-window/size/window_width_override=405
-window/size/window_height_override=720
+; selalu pakai resolusi device sendiri). 960x540 tetap rasio 16:9, muat
+; nyaman di layar manapun (termasuk laptop 1366x768 yang dipakai testing).
+window/size/window_width_override=960
+window/size/window_height_override=540
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-window/handheld/orientation="portrait"
+window/handheld/orientation="landscape"
 
 [autoload]
 

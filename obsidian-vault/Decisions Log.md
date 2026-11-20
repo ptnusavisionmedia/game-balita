@@ -334,3 +334,13 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Fix**: tambah `window/size/window_width_override=405` + `window/size/window_height_override=720` di `[display]` `project.godot` — field ini **cuma ngaruh ke ukuran jendela desktop** (dev-test di Windows/Mac/Linux), **tidak ngaruh ke export Android** (device asli selalu pakai resolusi device sendiri lewat `window/stretch/mode="canvas_items"` yang sudah ada). 405x720 tetap rasio 9:16 (sama proporsi dengan base desain 720x1280), kecil cukup buat muat di layar manapun tanpa diklem Windows.
 
 **Diverifikasi**: cek ulang `GetWindowRect` setelah fix — window sekarang ~421x759 (portrait proporsional, bukan dipaksa persegi). Headless re-import + re-run `Splash`/`Home`/`Settings`/`Angka` — semua lolos tanpa error.
+
+## 2026-11-20 — Orientasi direvisi: LANDSCAPE, bukan portrait
+
+**Klarifikasi user**: setelah bug window "selalu landscape/miring" di entri sebelumnya (yang ternyata cuma salah ukuran jendela desktop, bukan beneran landscape), user tegaskan maksudnya justru **mau landscape**, bukan portrait — supaya layar lebih lebar dan lebih pas menyesuaikan HP (rotasi) maupun tablet.
+
+**Fix**: `project.godot` `[display]` dibalik — base resolusi desain jadi `1280x720` (16:9 landscape, sebelumnya `720x1280` portrait), `window/handheld/orientation="landscape"` (sebelumnya `"portrait"`), `window_width/height_override` jadi `960x540` (sebelumnya `405x720`) — tetap rasio 16:9, muat nyaman di layar testing 1366x768. `window/stretch/mode="canvas_items"` + `aspect="expand"` tidak berubah (itu yang bikin scaling lintas device tetap konsisten, lihat entri sebelumnya).
+
+**Diverifikasi**: cek ulang `GetWindowRect` — window sekarang ~976x579 (landscape proporsional, tidak diklem Windows). Headless re-import + re-run semua 9 scene (`Splash`, `Home`, `Settings`, 6 `feature_*`) — lolos tanpa error.
+
+**Belum**: belum dites sentuhan asli di device/emulator Android — perlu re-export APK untuk konfirmasi orientasi landscape benar-benar terkunci di device nyata (bukan cuma window desktop). Layout yang ada (semua `VBoxContainer` center full-anchor) belum ditinjau ulang khusus buat proporsi landscape yang lebih lebar & lebih pendek — kalau ada elemen yang terasa terlalu "melar" horizontal atau sempit vertikal pas dites, itu perlu penyesuaian per-scene berikutnya.

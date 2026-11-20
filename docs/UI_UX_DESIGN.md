@@ -13,7 +13,7 @@ Target pemain: anak **1-5 tahun** (belum/baru bisa baca, motorik halus terbatas)
 5. **Feedback instan**: tap → respons visual+audio dalam <150ms — `AudioStreamPlayer` Godot sudah latensi rendah bawaan untuk SFX, lihat [[docs/LIBRARIES.md]].
 6. **Tidak ada elemen yang bisa memicu kejang foto-sensitif**: hindari flashing/strobing lebih cepat dari ~3Hz di animasi apa pun.
 7. **Tidak ada iklan, popup, atau in-app purchase** yang bisa ditekan anak tanpa sengaja. Apa pun yang mengarah keluar app (Settings, dsb) wajib lewat [[docs/PLAN_BASE_MODEL.md|ParentalGateDialog]].
-8. **Orientasi dikunci** (potret atau lanskap, pilih salah satu per modul, konsisten) — anak sering membolak-balik device, rotasi otomatis bikin bingung. **Implementasi 2026-11-20**: `project.godot` `[display]` — portrait dikunci (`window/handheld/orientation`) + `window/stretch/mode="canvas_items"` + `aspect="expand"`, base desain 720x1280, supaya UI (ukuran & posisi tombol) konsisten proporsinya di HP kecil maupun tablet besar, bukan beda-beda per device. Lihat Decisions Log.
+8. **Orientasi dikunci** (potret atau lanskap, pilih salah satu per modul, konsisten) — anak sering membolak-balik device, rotasi otomatis bikin bingung. **Implementasi 2026-11-20, update: LANDSCAPE** (bukan portrait — direvisi user, supaya layar lebih lebar & lebih pas untuk HP maupun tablet): `project.godot` `[display]` — landscape dikunci (`window/handheld/orientation="landscape"`) + `window/stretch/mode="canvas_items"` + `aspect="expand"`, base desain **1280x720**, supaya UI (ukuran & posisi tombol) konsisten proporsinya di HP kecil maupun tablet besar, bukan beda-beda per device. Lihat Decisions Log.
 
 ## Information architecture
 
