@@ -19,7 +19,7 @@ Hampir semua job bisa mulai **bersamaan sekarang** — alasan teknisnya ada di `
 | Job 4 (Dev 4) — spek `feature_mewarnai`+`feature_puzzle` | ✅ Ya | |
 | Job 5 (Dev Testing) — checklist QA | ✅ Ya | Testing interaktif `feature_angka` juga bisa mulai begitu ada device/emulator, tidak nunggu job lain |
 | Job 6 (Asset 1) — style guide + ilustrasi `feature_angka` | ✅ Ya | Spek `feature_angka` sudah ada dari awal |
-| Job 7 (Asset 2) — SFX/VO `feature_angka` | ✅ Ya | |
+| Job 7 (Farel) — SFX/VO `feature_angka` | ✅ Ya | |
 | Job 8 (Asset 3) — video/marketing | ✅ Ya | Memang didesain dari awal "tidak bergantung ke base model" |
 
 ## Job 1 — Bramantyo — `core/` + `scenes/`
