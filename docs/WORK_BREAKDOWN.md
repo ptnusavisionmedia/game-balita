@@ -8,24 +8,19 @@ Klaim per **bagian** (bukan per job utuh) di `docs/TASK_BOARD.md` kalau mau kerj
 
 ## Job 1 — Bramantyo (`core/` + `scenes/`)
 
-### Part 1.1 — Setup Android export template di Godot Editor
-- **Tujuan**: prasyarat teknis sebelum bisa export APK sama sekali.
-- **Langkah**: Godot Editor → menu `Editor` → `Manage Export Templates` → klik `Download and Install` untuk versi `4.7.2.stable` (harus sama persis dengan versi editor).
-- **Output**: template tersimpan di `%APPDATA%\Godot\export_templates\4.7.2.stable\`.
-- **Selesai kalau**: `Project > Export > Add... > Android` tidak muncul warning "template missing".
+### Part 1.1 — Setup Android export template di Godot Editor ✅ SELESAI (2026-11-20)
+- Dikerjakan via terminal (bukan klik GUI): download `Godot_v4.7.2-stable_export_templates.tpz` dari rilis resmi GitHub, extract, pindahkan ke `%APPDATA%\Godot\export_templates\4.7.2.stable\`.
+- **Terverifikasi**: `--export-debug` jalan tanpa warning template missing.
 
-### Part 1.2 — Buat `export_presets.cfg` (Android debug)
-- **Tujuan**: bisa export APK debug dari Editor maupun CI.
-- **Langkah**: `Project > Export > Add... > Android` → isi `Package > Unique Name` (misal `com.gugugaga.bayigugugaga`) → `Keystore` pakai debug keystore default Godot (auto-generate, aman untuk debug) → `Export Path` isi `build/android/app-debug.apk`.
-- **Output**: file `export_presets.cfg` baru di root repo.
-- **Selesai kalau**: klik tombol `Export Project` di dialog itu berhasil menghasilkan `.apk` tanpa error, dan Dev Testing (Job 5) bisa install APK itu ke device Android.
+### Part 1.2 — Buat `export_presets.cfg` (Android debug) ✅ SELESAI (2026-11-20)
+- Ditulis manual (format cocok dengan contoh resmi `abarichello/godot-ci`), `package/unique_name="com.gugugaga.bayigugugaga"`, pakai debug keystore default Godot.
+- **Isu yang ketemu & diperbaiki**: export gagal duluan dengan error "ETC2/ASTC texture compression is required for Android export" — ditambahkan `textures/vram_compression/import_etc2_astc=true` di `[rendering]` `project.godot`.
+- **Terverifikasi SUNGGUHAN**: `godot --headless --export-debug "Android" build/android/app-debug.apk` berhasil, APK ter-sign (~27MB), bukan cuma config ditulis tanpa dicoba.
 - **Catatan keamanan**: debug keystore aman di-commit (bukan untuk rilis Play Store); kalau nanti butuh release keystore asli, **jangan** commit file keystore-nya — simpan di luar repo atau GitHub Secrets (lihat `docs/DOCKER.md`).
 
-### Part 1.3 — Tambah job export APK di CI
-- **Tujuan**: APK debug otomatis ter-build tiap push, tidak manual.
-- **Langkah**: edit `.github/workflows/ci.yml`, tambah job baru mengikuti contoh resmi [abarichello/godot-ci](https://github.com/abarichello/godot-ci/blob/master/.github/workflows/godot-ci.yml) (bagian `export-linux`/export Android), ganti target ke Android.
-- **Output**: `.github/workflows/ci.yml` punya job `export-debug-apk`.
-- **Selesai kalau**: push ke branch mana pun, CI job export sukses, artifact `.apk` bisa didownload dari halaman Actions GitHub.
+### Part 1.3 — Tambah job export APK di CI ✅ DITULIS (2026-11-20), belum diverifikasi jalan di GitHub Actions
+- `.github/workflows/ci.yml` ditambah job `export-debug-apk` mengikuti pola resmi `abarichello/godot-ci`, image di-pin ke `barichello/godot-ci:4.7.2` (sama dengan versi lokal yang sudah terverifikasi).
+- **Belum diverifikasi**: belum pernah push & cek apakah job ini sungguhan sukses di GitHub Actions (sesi ini cuma verifikasi export lokal, bukan di CI container Linux) — perlu dicek begitu PR/push berikutnya jalan.
 
 ### Part 1.4 — Verifikasi navigasi penuh lewat Home (bukan buka scene langsung)
 - **Tujuan**: pastikan wiring `scenes/home.gd` benar-benar jalan dari pintu masuk sungguhan, bukan cuma `Angka.tscn` berdiri sendiri (yang sudah dites 2026-11-19).

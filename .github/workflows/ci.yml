@@ -1,7 +1,11 @@
 # Binary CLI = `godot` (bukan `godot4`) di image barichello/godot-ci — sudah
-# dicek ke contoh resmi repo-nya. Flag `--quit-after` sudah diverifikasi jalan
-# lokal (Godot 4.7.2 Windows) oleh sesi AI — lihat obsidian-vault/Decisions Log.md.
+# dicek ke contoh resmi repo-nya. Flag `--quit-after` dan export APK debug
+# sudah diverifikasi jalan lokal (Godot 4.7.2 Windows) oleh sesi AI — lihat
+# obsidian-vault/Decisions Log.md. Image di-pin ke 4.7.2 (sama dengan lokal).
 name: CI
+
+env:
+  GODOT_VERSION: 4.7.2
 
 on:
   push:
@@ -12,7 +16,7 @@ jobs:
   validate:
     runs-on: ubuntu-24.04
     container:
-      image: barichello/godot-ci:4.3
+      image: barichello/godot-ci:4.7.2
     steps:
       - uses: actions/checkout@v4
 
@@ -26,6 +30,26 @@ jobs:
             godot --headless --path . "$scene" --quit-after 1
           done
 
-      # TODO Bramantyo: tambah job export APK debug begitu export_presets.cfg
-      # dan keystore sudah disiapkan (lihat docs/DOCKER.md, docs/JOBS_BASE_MODEL.md Job 1).
-      # Contoh resmi export headless: https://github.com/abarichello/godot-ci/blob/master/.github/workflows/godot-ci.yml
+  export-debug-apk:
+    runs-on: ubuntu-24.04
+    container:
+      image: barichello/godot-ci:4.7.2
+    needs: validate
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup export templates (bawaan image)
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+
+      - name: Export APK debug
+        run: |
+          mkdir -v -p build/android
+          godot --headless --path . --export-debug "Android" build/android/app-debug.apk
+
+      - name: Upload artifact APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: build/android/app-debug.apk

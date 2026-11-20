@@ -55,7 +55,7 @@ Godot sudah diinstall & dicoba **secara interaktif sungguhan** di sesi ini (buka
 - [ ] Dari **Home** (bukan langsung scene `feature_angka`), navigasi penuh Home → game → balik ke Home — belum dicoba (sesi ini langsung run `Angka.tscn` berdiri sendiri untuk tes cepat).
 - [ ] Toggle suara di Settings beneran mematikan/menyalakan audio (begitu ada SFX asli dari Job 7/Asset 2), dan tersimpan setelah app ditutup-buka lagi.
 - [ ] Masuk Settings harus lewat `ParentalGateDialog` dulu (tahan tombol 3 detik, cek secara sentuhan asli).
-- [ ] Export debug APK (`Project > Export`) berhasil, atau minimal export desktop (Windows/Linux) kalau Android export template belum disetup — butuh `export_presets.cfg` yang belum dibuat.
+- [x] Export debug APK berhasil (`godot --export-debug "Android" build/android/app-debug.apk`) — APK ter-sign, ~27MB. **Belum dicoba install & jalan di device/emulator Android asli** (baru sampai tahap file APK terbentuk).
 - [x] `docs/` dan `obsidian-vault/` ter-update dan ter-push ke `main`.
 
 ## Urutan kerja (supaya tidak saling blok)
