@@ -19,6 +19,20 @@ config/description="Game edukatif untuk anak 1-5 tahun: angka, warna, hewan, mus
 run/main_scene="res://scenes/Splash.tscn"
 config/features=PackedStringArray("4.7")
 
+[display]
+
+; Base resolution desain = HP portrait biasa. Semua ukuran piksel di kode
+; (custom_minimum_size dkk) dihitung relatif ke ini, lalu Godot scale
+; otomatis ke resolusi device asli lewat stretch mode di bawah — supaya
+; 1 kode UI konsisten proporsinya di HP kecil maupun tablet besar, bukan
+; "kececeran"/beda-beda posisi tiap device. Lihat obsidian-vault/Decisions Log.md.
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/size/mode=0
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation="portrait"
+
 [autoload]
 
 ProgressRepository="*res://core/scripts/progress_repository.gd"
