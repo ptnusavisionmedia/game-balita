@@ -14,7 +14,7 @@ Status: jadi contoh pola untuk `feature_warna`, `feature_hewan`, `feature_musik`
 
 ## Kondisi menang / selesai
 
-- Selesai 1 sesi (3-5 soal) → tampilkan `StarRewardOverlay` (jumlah bintang = jumlah jawaban benar) → simpan `GameResult` lewat `core.ProgressRepository` → tombol balik ke Home.
+- Selesai 1 sesi (3-5 soal) → tampilkan `StarRewardOverlay` (confetti + ikon ✓, **tidak** menampilkan jumlah bintang/skor ke anak — lihat `docs/UI_UX_DESIGN.md` prinsip #4) → simpan `GameResult` lewat `core.ProgressRepository` (data internal, bukan ditampilkan) → auto-lanjut lewat `GameFlow.finish_game_session()` (bukan "tombol balik ke Home" manual, lihat `docs/ARCHITECTURE.md`).
 
 ## Feedback
 

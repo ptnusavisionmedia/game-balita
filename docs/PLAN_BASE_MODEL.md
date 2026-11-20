@@ -15,7 +15,7 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
    - Tidak pakai framework state management eksternal — pola node tree + autoload singleton + signal Godot sudah cukup untuk base model.
 
 2. **Scene reusable tambahan di `core/scenes/`**
-   - `StarRewardOverlay` — confetti (`CPUParticles2D`) + bintang saat menang (dipakai semua mini-game nanti).
+   - `StarRewardOverlay` — confetti (`CPUParticles2D`) + ikon ✓, auto-lanjut ~1.8s (dipakai semua mini-game nanti). **Update 2026-11-20**: tidak lagi tampilkan jumlah bintang/skor atau tombol manual — lihat prinsip #4 `docs/UI_UX_DESIGN.md`.
    - `ParentalGateDialog` — gate sebelum masuk Settings: soal tambah sederhana + keypad angka (diganti dari "tahan tombol 3 detik" 2026-11-20, lihat Decisions Log).
    - `AppColors` — token warna satu tempat (supaya 6 mini-game terasa 1 produk).
 

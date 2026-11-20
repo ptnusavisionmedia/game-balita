@@ -312,3 +312,15 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Isi draft** (`docs/PRIVACY_POLICY.md`): rangkuman jujur apa adanya sesuai kode yang sudah ada — app 100% offline, tidak ada SDK iklan/analytics/login pihak ketiga (dicek silang ke `docs/LIBRARIES.md`, tidak ada yang mengirim data keluar device), tidak ada permission Android khusus (`export_presets.cfg` `permissions/custom_permissions` kosong), progres cuma lokal lewat `ProgressRepository`/`ConfigFile`. Bagian kepatuhan Google Play Families Policy menautkan ke mekanisme yang sudah ada di kode: `ParentalGateDialog` (gate sebelum ke Settings) dan prinsip-prinsip `docs/UI_UX_DESIGN.md` (tidak ada iklan/IAP, tidak ada game-over menghukum, tidak ada media sosial/chat).
 
 **Belum**: dokumen ini **belum dipublikasikan ke URL publik** (field `[ISI: ...]` kontak juga belum diisi) — Google Play Console mensyaratkan link publik yang bisa diakses browser, bukan file di repo GitHub privat. Ditambahkan baris baru di `docs/TASK_BOARD.md` untuk langkah publish ini, PIC tetap Bramantyo.
+
+## 2026-11-20 — `StarRewardOverlay`: hapus jumlah bintang + tombol "Lanjut", auto-transisi
+
+**Laporan user**: "jangan berikan lanjut dan dapet bintang berapa, jangan diberikan, tidak ada sistem kalah atau menang" — menegaskan ulang aturan "tidak ada menang/kalah" (entri sebelumnya) ternyata belum tuntas diterapkan: `StarRewardOverlay` masih menampilkan `★★☆` (jumlah bintang) dan tombol teks "Lanjut" yang harus ditekan manual. Walau tidak literal menulis kata "menang"/"kalah", **menampilkan skor/jumlah tetap terasa seperti grading** ke anak — bentuk halus dari sistem menang-kalah yang sudah dilarang.
+
+**Fix**: `core/scripts/star_reward_overlay.gd` ditulis ulang — hapus baris bintang dan tombol "Lanjut" sepenuhnya. Sekarang cuma: confetti + 1 ikon ✓ (animasi scale-in), lalu **otomatis** emit signal `continued` setelah ~1.8 detik tanpa interaksi apa pun dari anak. Parameter `stars_earned` tetap ada di kode (dipakai `ProgressRepository.record_result(...)` buat data internal, calon dashboard progres orang tua nanti) tapi **tidak pernah ditampilkan ke anak**.
+
+**Bug lain ketemu sambil di sini**: `PanelContainer` di overlay lama pakai pola anchor 1-titik tanpa offset (sama seperti bug `ParentalGateDialog` sebelumnya) — sudah tidak relevan karena card-nya dihapus total, tapi kalau butuh container center lagi nanti, pakai `CenterContainer` seperti yang sekarang dipakai buat ikon ✓.
+
+**Diverifikasi**: headless re-import + run `features/feature_angka/Angka.tscn` — lolos tanpa error. Belum dites sentuhan asli (auto-timer 1.8s belum dicoba rasanya kecepatan/kelambatannya di device nyata — bisa disesuaikan kalau user merasa kurang pas).
+
+**Diupdate juga**: `docs/UI_UX_DESIGN.md` prinsip #4, `docs/PLAN_BASE_MODEL.md`, `docs/WORK_BREAKDOWN.md` (QA checklist), `obsidian-vault/Specs/feature_angka.md` — semua mention "bintang"/"tombol Lanjut" di spek disesuaikan.

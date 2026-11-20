@@ -90,7 +90,7 @@ Isi `obsidian-vault/Specs/feature_puzzle.md`: jumlah keping (≤6 untuk level aw
 ## Job 5 — Dev Testing
 
 ### Part 5.1 — Susun `docs/QA_CHECKLIST.md`
-- **Isi minimal**: hit-area ≥64dp tiap tombol, suara kebaca jelas, reward (bintang+confetti) muncul, progres tersimpan setelah app ditutup-buka, device low-end tidak lag/nge-freeze.
+- **Isi minimal**: hit-area ≥64dp tiap tombol, suara kebaca jelas, reward (confetti+ikon ✓, auto-lanjut, **bukan** jumlah bintang/skor — lihat prinsip #4 `docs/UI_UX_DESIGN.md`) muncul, progres tersimpan setelah app ditutup-buka, device low-end tidak lag/nge-freeze.
 
 ### Part 5.2 — Evaluasi addon GUT (Godot Unit Test)
 - **Langkah**: baca [github.com/bitwes/Gut](https://github.com/bitwes/Gut), putuskan perlu dipasang sekarang atau ditunda. Kalau perlu: install via AssetLib di Godot Editor, tulis 1 test contoh untuk `ProgressRepository`.

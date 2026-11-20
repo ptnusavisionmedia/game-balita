@@ -1,22 +1,34 @@
 extends Control
 class_name StarRewardOverlay
-## Overlay perayaan di akhir sesi mini-game: confetti + jumlah bintang.
-## Dipakai sama oleh semua `feature_*` supaya rasa keberhasilannya konsisten.
-## Bukan framing "menang/kalah" — tombol "Lanjut" cuma pindah ke mini-game
-## lain (lihat prinsip #4 docs/UI_UX_DESIGN.md).
+## Overlay perayaan singkat di akhir sesi mini-game: confetti + 1 ikon
+## keberhasilan, lalu **otomatis** lanjut (tidak perlu tombol "Lanjut",
+## tidak ada jumlah bintang/skor ditampilkan).
+##
+## Update 2026-11-20: sebelumnya ada baris bintang (★☆☆) + tombol "Lanjut"
+## — user minta dihapus total, karena menampilkan "dapet berapa" tetap
+## terasa seperti skor/grading (bentuk lain dari menang/kalah). Sekarang
+## cuma perayaan + transisi otomatis, konsisten dengan prinsip #4
+## docs/UI_UX_DESIGN.md ("tidak ada game over yang menghukum" — dan versi
+## sebaliknya, tidak ada "menang" yang dikuantifikasi juga).
+##
+## `stars_earned` TETAP diterima lewat parameter (dipakai `ProgressRepository`
+## buat data progres internal, calon fitur dashboard orang tua nanti) tapi
+## **tidak pernah ditampilkan ke anak** di overlay ini.
 ##
 ## Confetti pakai `CPUParticles2D` bawaan Godot (particle system teruji),
 ## bukan animasi partikel buatan sendiri — lihat docs/LIBRARIES.md.
 
 signal continued
 
+const AUTO_CONTINUE_DELAY_SEC := 1.8
+
 @export var stars_earned: int = 0
-@export var max_stars: int = 3
 
 
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var backdrop := ColorRect.new()
 	backdrop.color = Color(0, 0, 0, 0.4)
@@ -24,35 +36,28 @@ func _ready() -> void:
 	backdrop.anchor_bottom = 1.0
 	add_child(backdrop)
 
-	if stars_earned > 0:
-		_spawn_confetti()
+	_spawn_confetti()
 
-	var card := PanelContainer.new()
-	card.anchor_left = 0.5
-	card.anchor_top = 0.5
-	card.anchor_right = 0.5
-	card.anchor_bottom = 0.5
-	add_child(card)
+	# CenterContainer (bukan anchor 1-titik tanpa offset) supaya ikonnya
+	# tidak kolaps ke size (0,0) — lihat bug yang sama di
+	# parental_gate_dialog.gd, Decisions Log 2026-11-20.
+	var center := CenterContainer.new()
+	center.anchor_right = 1.0
+	center.anchor_bottom = 1.0
+	add_child(center)
 
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 16)
-	card.add_child(vbox)
+	var icon := Label.new()
+	icon.text = "✓"
+	icon.add_theme_font_size_override("font_size", 96)
+	icon.add_theme_color_override("font_color", AppColors.GOLD)
+	center.add_child(icon)
 
-	var stars_row := HBoxContainer.new()
-	stars_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	vbox.add_child(stars_row)
-	for i in range(max_stars):
-		var star := Label.new()
-		star.text = "★" if i < stars_earned else "☆"
-		star.add_theme_font_size_override("font_size", 48)
-		star.add_theme_color_override("font_color", AppColors.GOLD)
-		stars_row.add_child(star)
+	var tween := create_tween()
+	icon.scale = Vector2.ZERO
+	tween.tween_property(icon, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
-	var continue_button := Button.new()
-	continue_button.text = "Lanjut"
-	continue_button.custom_minimum_size = Vector2(120, 64)
-	continue_button.pressed.connect(func(): continued.emit())
-	vbox.add_child(continue_button)
+	await get_tree().create_timer(AUTO_CONTINUE_DELAY_SEC).timeout
+	continued.emit()
 
 
 func _spawn_confetti() -> void:
