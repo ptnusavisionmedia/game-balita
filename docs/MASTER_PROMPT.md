@@ -46,6 +46,10 @@ Task yang mau saya kerjakan sekarang: [isi, atau lihat docs/JOBS_BASE_MODEL.md
 Job 6-8].
 ```
 
+## Contoh terisi
+
+[docs/PROMPT_BRAMANTYO.md](PROMPT_BRAMANTYO.md) — versi terisi penuh (bukan template kosong) untuk Bramantyo mengerjakan sisa Job 1, berdasarkan `docs/WORK_BREAKDOWN.md`. Pakai ini sebagai contoh cara mengisi template di atas untuk role lain.
+
 ## Catatan pemakaian
 
 - Isi bagian `[...]` sesuai dirimu — jangan kirim mentah dengan tanda kurung siku-nya.
