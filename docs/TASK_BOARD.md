@@ -31,8 +31,8 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Ikon vector tile Home (ModuleIcon, placeholder kode) | Dev | scenes | Done | (sesi AI, 2026-11-20) | 2026-11-20 | `core/scripts/module_icon.gd` — generate image AI gagal (butuh plan berbayar), diganti gambar vector |
 | Redesign Home (tombol "▶ Play" tengah, mode acak infinite) + `GameFlow` autoload + Splash + fade transisi + debounce + tombol darurat 🏠 | Dev | scenes/core | Done | (sesi AI, 2026-11-20) | 2026-11-20 | `core/scripts/game_flow.gd` (baru), `scenes/home.gd` (rewrite), `scenes/splash.gd`+`Splash.tscn` (baru), semua `feature_*.gd` ganti ke `GameFlow.go_home()`/`finish_game_session()`. Headless-verified + **test interaktif user: semua 4 poin checklist lolos (2026-11-20)** |
 | Ilustrasi `feature_angka` (1-5 objek, ganti ikon hati placeholder) + app icon/splash draft | Asset | feature_angka | Open | Asset 1 | | ModuleIcon di Home cuma placeholder, bukan pengganti ilustrasi asli ini |
-| SFX dasar (tap/benar/coba-lagi) | Asset | core | Open | Asset 2 | | dipakai via SfxService, format .wav/.ogg |
-| VO angka 1-5 (Bahasa Indonesia) | Asset | feature_angka | Open | Asset 2 | | |
+| SFX dasar (tap/benar/coba-lagi) | Asset | core | Open | Farel | | dipakai via SfxService, format .wav/.ogg |
+| VO angka 1-5 (Bahasa Indonesia) | Asset | feature_angka | Open | Farel | | |
 | Riset referensi video + draft konsep promo | Asset | marketing | Open | Asset 3 | | |
 | Draft listing Play Store Console (belum publish) | Asset | marketing | Open | Asset 3 | | koordinasi Bramantyo untuk export APK |
 | Tentukan pemegang Privacy Policy & Play Families Policy | — | compliance | Done | Bramantyo | 2026-11-20 | Keputusan diambil; dokumen Privacy Policy/Play Families Policy itu sendiri belum ditulis — itu task terpisah |

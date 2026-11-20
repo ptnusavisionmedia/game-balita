@@ -118,7 +118,7 @@ Draft icon aplikasi (gantikan `icon.svg` default Godot) + splash screen sesuai s
 
 ---
 
-## Job 7 — Asset 2 (Audio/VO)
+## Job 7 — Farel (Audio/VO)
 
 ### Part 7.1 — SFX dasar
 Rekam/cari: suara tap, suara benar, suara coba-lagi (ramah anak, bukan nada negatif). Format `.wav`/`.ogg` pendek. Taruh di `features/feature_angka/assets/audio/`.
@@ -127,7 +127,7 @@ Rekam/cari: suara tap, suara benar, suara coba-lagi (ramah anak, bukan nada nega
 Rekam voice-over "satu", "dua", ..., "lima" bahasa Indonesia, nada ceria.
 
 ### Part 7.3 — Integrasi ke kode (koordinasi dengan Dev 2)
-Setelah Part 7.1-7.2 selesai, update `features/feature_angka/angka.gd`: ganti `SfxService.play(null)` jadi `SfxService.play(preload("res://features/feature_angka/assets/audio/<nama_file>"))` — ini **boleh dikerjakan Asset 2 sendiri** (scope `assets/audio/` miliknya) atau koordinasi PR bareng Dev 2 kalau butuh ubah logic pemanggilan.
+Setelah Part 7.1-7.2 selesai, update `features/feature_angka/angka.gd`: ganti `SfxService.play(null)` jadi `SfxService.play(preload("res://features/feature_angka/assets/audio/<nama_file>"))` — ini **boleh dikerjakan Farel sendiri** (scope `assets/audio/` miliknya) atau koordinasi PR bareng Dev 2 kalau butuh ubah logic pemanggilan.
 
 ---
 

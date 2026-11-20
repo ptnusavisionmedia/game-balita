@@ -29,7 +29,7 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
 
 4. **1 mini-game pilot, fungsional penuh: `feature_angka`**
    - 1 level: tampilkan kumpulan objek (1-5), anak tap angka yang benar.
-   - Feedback benar/salah = suara (`SfxService`, placeholder `null` sampai Asset 2 upload file).
+   - Feedback benar/salah = suara (`SfxService`, placeholder `null` sampai Farel upload file).
    - Selesai 1 level → `StarRewardOverlay` → simpan hasil via `ProgressRepository` → balik ke Home.
    - Ini jadi **pola rujukan** buat 5 modul lain di Fase 2.
 
@@ -56,7 +56,7 @@ Godot sudah diinstall & dicoba **secara interaktif sungguhan** di sesi ini (buka
 - [x] `feature_angka`: 1 sesi (4 soal) dimainkan **sungguhan** (klik asli), semua jawaban benar → reward bintang + confetti muncul.
 - [x] Progres tersimpan — `user://progress.cfg` terisi 4 entri `GameResult` nyata dengan timestamp, bukan simulasi.
 - [ ] Dari **Home** (bukan langsung scene `feature_angka`), navigasi penuh Home → game → balik ke Home — belum dicoba (sesi ini langsung run `Angka.tscn` berdiri sendiri untuk tes cepat).
-- [ ] Toggle suara di Settings beneran mematikan/menyalakan audio (begitu ada SFX asli dari Job 7/Asset 2), dan tersimpan setelah app ditutup-buka lagi.
+- [ ] Toggle suara di Settings beneran mematikan/menyalakan audio (begitu ada SFX asli dari Job 7/Farel), dan tersimpan setelah app ditutup-buka lagi.
 - [ ] Masuk Settings harus lewat `ParentalGateDialog` dulu (soal tambah + keypad angka, diganti dari tahan-tombol) — kode sudah lolos headless, **menunggu konfirmasi user** hasil tes sentuhan asli.
 - [x] Export debug APK berhasil (`godot --export-debug "Android" build/android/app-debug.apk`) — APK ter-sign, ~27MB. **Belum dicoba install & jalan di device/emulator Android asli** (baru sampai tahap file APK terbentuk).
 - [x] `docs/` dan `obsidian-vault/` ter-update dan ter-push ke `main`.

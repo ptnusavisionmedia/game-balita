@@ -298,3 +298,9 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Fix**: ganti jadi `CenterContainer` full-rect (`anchor_right/bottom=1.0`) membungkus `PanelContainer` — `CenterContainer` otomatis center-kan child sesuai `minimum_size` aslinya, tanpa perlu hitung offset manual. Pola ini (anchor-titik tanpa offset untuk "center" sebuah Container) dicatat sebagai jebakan umum Godot — kalau nanti ada dialog serupa di modul lain, pakai `CenterContainer`, jangan tiru pola lama.
 
 **Diverifikasi**: headless re-run `scenes/Settings.tscn` & `scenes/Home.tscn` — tidak ada error baru. Belum dites visual sentuhan asli — perlu konfirmasi user begitu dicoba lagi.
+
+## 2026-11-20 — Job 7 (Audio/VO): nama asli "Farel" diketahui, sinkron ke semua dokumen
+
+**Konteks**: Farel (anggota tim, commit langsung `f58adf1`) update `docs/JOBS_BASE_MODEL.md` ganti label "Job 7 (Asset 2)" jadi "Job 7 (Farel)" — sesuai aturan `CLAUDE.md` LANGKAH 0 kalau nama asli sudah diketahui, pakai nama asli bukan placeholder generik "Asset 2" terus-terusan.
+
+**Yang disinkronkan** (sesi ini, melanjutkan 1 baris yang Farel ubah): `docs/TEAM.md` (baris #7), `docs/TASK_BOARD.md` (PIC "SFX dasar" + "VO angka 1-5"), `docs/WORK_BREAKDOWN.md` (heading Job 7 + Part 7.3), `docs/PLAN_BASE_MODEL.md` (2 mention). `docs/MASTER_PROMPT.md` **sengaja tidak diubah** — itu template role untuk orang baru pilih saat mulai sesi ("Asset 2 - Audio/VO" di sana adalah nama ROLE, bukan nama orang). Entri Decisions Log lama yang sudah menyebut "Asset 2" **tidak diedit** (append-only, sesuai aturan `CLAUDE.md`).

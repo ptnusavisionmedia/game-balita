@@ -45,7 +45,7 @@ Modul `feature_angka` jadi **contoh pola** untuk 5 modul lain di Fase 2, jadi di
 
 - [x] UI: tampilkan kumpulan objek (1-5 ikon hati, placeholder), pilihan angka untuk di-tap (`BigRoundButton`).
 - [x] Logic: deteksi tap benar/salah, random urutan soal (4 soal per sesi).
-- [x] Feedback: panggil `SfxService.play(...)` — placeholder `null` sampai Asset 2 upload file (`# TODO Asset 2` di kode).
+- [x] Feedback: panggil `SfxService.play(...)` — placeholder `null` sampai Farel upload file (`# TODO Asset 2` di kode).
 - [x] Selesai sesi → `StarRewardOverlay` → simpan hasil via `ProgressRepository.record_result(...)`.
 - [x] Tombol kembali ke Home.
 
@@ -86,7 +86,7 @@ Peran lintas-modul, kerja tidak nunggu modul tertentu selesai:
 - [ ] App icon & splash screen draft.
 - [ ] Taruh file di `features/feature_angka/assets/images/` — format `.png`/`.svg`.
 
-## Job 7 — Asset 2 (Audio/VO)
+## Job 7 — Farel (Audio/VO)
 
 - [ ] SFX dasar: tap, benar, coba-lagi (lewat `SfxService`, format `.wav`/`.ogg` pendek & ringan — lihat `docs/LIBRARIES.md`).
 - [ ] VO angka 1-5 (bahasa Indonesia, nada ramah anak).
@@ -101,9 +101,9 @@ Tidak bergantung ke base model, bisa jalan dari sekarang:
 - [ ] Draft listing Play Store Console (judul, deskripsi, kategori) — **belum publish**, tunggu APK export dari Bramantyo.
 - [ ] Begitu `feature_angka` demo-able, rekam video demo pertama.
 
-## Belum ada pemegang jelas (lihat docs/TEAM.md "role lintas-modul")
+## Privacy Policy & Google Play Families Policy — ✅ diputuskan 2026-11-20
 
-**Privacy Policy & Google Play Families Policy** — wajib ada sebelum submit ke Play Store (app anak-anak punya aturan ekstra soal ads & data collection). Tim ini sengaja lean (tidak ada headcount "Compliance Officer" terpisah), jadi **harus diputuskan siapa yang pegang** sebelum Fase 2 selesai — bisa dirangkap Bramantyo/Asset 3, atau ditambah orang baru kalau dirasa perlu nanti.
+Wajib ada sebelum submit ke Play Store (app anak-anak punya aturan ekstra soal ads & data collection). **Bramantyo** pegang (rangkap dengan infra/release manager), lihat `docs/TEAM.md` dan `obsidian-vault/Decisions Log.md`. Draft dokumennya sendiri belum ditulis — itu task terpisah, lihat `docs/WORK_BREAKDOWN.md` Part 1.6.
 
 ## Setelah base model demo lolos (Fase 2, belum mulai)
 

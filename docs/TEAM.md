@@ -19,7 +19,7 @@ Tim di-ramping ulang dari 15 orang jadi **8 orang: 5 developer (coding) + 3 asse
 | # | Nama (isi) | Fokus | Tanggung jawab | GitHub username |
 |---|---|---|---|---|
 | 6 | Asset 1 | Ilustrasi | Style guide ilustrasi + produksi gambar `feature_angka` duluan, lanjut modul lain begitu spek siap | `@asset-1` |
-| 7 | Asset 2 | Audio/VO | SFX + VO semua modul, mulai `feature_angka` | `@asset-2` |
+| 7 | Farel | Audio/VO | SFX + VO semua modul, mulai `feature_angka` | `@asset-2` |
 | 8 | Asset 3 | Video/Marketing | Video promo, Play Store listing, upload | `@asset-3` |
 
 Tidak ada lagi Asset 4-6 generalist tambahan (dihapus saat ramping dari 15 ke 8) — Asset 1-3 fleksibel membantu satu sama lain kalau salah satu kebanjiran kerjaan, tapi defaultnya 1 orang pegang 1 jenis media penuh untuk semua 6 modul.
