@@ -29,7 +29,7 @@ Kalau ragu task mana yang dimaksud, atau user cuma bilang "lanjut kerja" tanpa n
 2. **[obsidian-vault/Decisions Log.md](obsidian-vault/Decisions%20Log.md)** — keputusan yang sudah diambil & alasannya. Jangan buka ulang diskusi yang sudah diputuskan tanpa alasan baru.
 3. **[docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md)** — cara branch/commit/PR. Wajib, semua role.
 4. Kalau role developer: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** (aturan dependensi antar modul).
-5. Dokumen pendukung lain: [docs/LIBRARIES.md](docs/LIBRARIES.md), [docs/UI_UX_DESIGN.md](docs/UI_UX_DESIGN.md), [docs/DOCKER.md](docs/DOCKER.md), [docs/PLAN_BASE_MODEL.md](docs/PLAN_BASE_MODEL.md), [docs/JOBS_BASE_MODEL.md](docs/JOBS_BASE_MODEL.md).
+5. Dokumen pendukung lain: [docs/LIBRARIES.md](docs/LIBRARIES.md), [docs/UI_UX_DESIGN.md](docs/UI_UX_DESIGN.md), [docs/DOCKER.md](docs/DOCKER.md), [docs/PLAN_BASE_MODEL.md](docs/PLAN_BASE_MODEL.md), [docs/JOBS_BASE_MODEL.md](docs/JOBS_BASE_MODEL.md), [docs/WORK_BREAKDOWN.md](docs/WORK_BREAKDOWN.md) (langkah detail per bagian job).
 
 ## Aturan keras
 

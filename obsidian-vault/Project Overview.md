@@ -34,6 +34,7 @@ Lihat [[Decisions Log]] untuk detail & alasan lengkap (termasuk histori kenapa s
 - [[../docs/AI_WORKFLOW|Cara kerja tim dengan AI]]
 - [[../docs/PLAN_BASE_MODEL|Plan Base Model]]
 - [[../docs/JOBS_BASE_MODEL|Jobs Base Model]]
+- [[../docs/WORK_BREAKDOWN|Work Breakdown (detail per bagian)]]
 - [[../docs/LIBRARIES|Analisis Libraries]]
 - [[../docs/UI_UX_DESIGN|UI/UX Design & Color Palette]]
 - [[../docs/DOCKER|Docker]]

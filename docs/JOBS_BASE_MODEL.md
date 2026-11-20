@@ -2,7 +2,9 @@
 
 Lihat alasan & scope lengkap di [docs/PLAN_BASE_MODEL.md](PLAN_BASE_MODEL.md). Pemetaan orang mengikuti [docs/TEAM.md](TEAM.md) — nama masih placeholder, ganti saat sudah fix. Tim di-ramping jadi **8 orang (5 dev + 3 asset)** — lihat alasan di `docs/TEAM.md` dan histori perubahan di `obsidian-vault/Decisions Log.md`.
 
-> **Status stack**: Godot 4.7.2 sudah diinstall & semua 8 scene lolos headless tanpa error (2026-11-19). Yang belum dicoba: interaksi sentuhan asli & export APK — lihat Definition of Done di `docs/PLAN_BASE_MODEL.md`.
+> **Status stack**: Godot 4.7.2 sudah diinstall, `feature_angka` sudah **dimainkan sungguhan** (bukan cuma headless) — lihat `obsidian-vault/Decisions Log.md` 2026-11-19/20.
+
+> **Butuh langkah lebih detail per job?** Lihat [docs/WORK_BREAKDOWN.md](WORK_BREAKDOWN.md) — tiap job di bawah dipecah jadi bagian-bagian kecil dengan langkah konkret, input/output, dan kriteria selesai.
 
 ## Bisa paralel atau harus nunggu?
 

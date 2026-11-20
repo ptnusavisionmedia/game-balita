@@ -213,3 +213,11 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: setelah re-import (`--headless --import`, perlu supaya `class_name ModuleIcon` ter-register), `scenes/Home.tscn` lolos headless (`exit 0`) dan dicoba dibuka visual (non-headless) via terminal — user konfirmasi tile-nya muncul dengan warna & ikon yang benar.
 
 **Catatan untuk tim**: ini TETAP placeholder, bukan pengganti Job 6 (Asset 1 — ilustrasi asli). `obsidian-vault/Specs/style-guide-ilustrasi.md` dan ilustrasi final tetap perlu dibuat manusia (atau AI image gen begitu plan-nya di-upgrade) — `ModuleIcon` cuma supaya Home tidak kosong/polos sampai itu selesai.
+
+## 2026-11-20 — Tambah docs/WORK_BREAKDOWN.md: tiap job dipecah jadi bagian detail
+
+**Keputusan**: user minta job di `docs/JOBS_BASE_MODEL.md` dipecah lebih rinci jadi bagian-bagian kecil dengan langkah konkret (bukan cuma checklist bullet umum). Dibuat dokumen baru `docs/WORK_BREAKDOWN.md` (pelengkap, bukan pengganti `JOBS_BASE_MODEL.md`) — tiap Job 1-8 dipecah jadi "Part X.Y" dengan tujuan, langkah, input/output, dan kriteria selesai eksplisit.
+
+**Isi utama**: Part 1.1-1.6 (Bramantyo — setup Android export template, `export_presets.cfg`, CI export job, verifikasi navigasi Home, verifikasi ParentalGateDialog/Settings sentuhan asli, keputusan Privacy Policy), Part 2.x-4.x (spek 5 modul lain), Part 5.x (Dev Testing — QA checklist, evaluasi GUT, test device asli), Part 6.x-7.x (Asset 1/2 — style guide, ilustrasi, SFX/VO, integrasi ke kode), Part 8.x (Asset 3 — riset, storyboard, listing, rekam demo).
+
+**Alasan**: sebagian besar Job 1-2 sudah selesai & terverifikasi (lihat entri sebelumnya), tapi sisa kerjaannya (export APK, verifikasi interaktif Home/Settings, keputusan Privacy Policy) belum punya langkah konkret di mana pun — `WORK_BREAKDOWN.md` mengisi itu supaya siapa pun (manusia atau sesi AI baru) bisa langsung eksekusi tanpa perlu tanya "caranya gimana".
