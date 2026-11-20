@@ -28,7 +28,8 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Test interaktif `feature_angka` di laptop (desktop, bukan device Android) | Dev | feature_angka | Done | (sesi AI + user, 2026-11-19) | 2026-11-19 | 4 soal dijawab benar, reward+confetti muncul, progress.cfg terisi nyata |
 | Test interaktif `feature_angka` di device/emulator Android asli | Dev | feature_angka | Open | Dev Testing | | yang di atas baru di desktop Windows, belum di Android |
 | Style guide ilustrasi | Asset | branding | Open | Asset 1 | | acuan semua modul berikutnya |
-| Ilustrasi `feature_angka` (1-5 objek, ganti ikon hati placeholder) + app icon/splash draft | Asset | feature_angka | Open | Asset 1 | | |
+| Ikon vector tile Home (ModuleIcon, placeholder kode) | Dev | scenes | Done | (sesi AI, 2026-11-20) | 2026-11-20 | `core/scripts/module_icon.gd` — generate image AI gagal (butuh plan berbayar), diganti gambar vector |
+| Ilustrasi `feature_angka` (1-5 objek, ganti ikon hati placeholder) + app icon/splash draft | Asset | feature_angka | Open | Asset 1 | | ModuleIcon di Home cuma placeholder, bukan pengganti ilustrasi asli ini |
 | SFX dasar (tap/benar/coba-lagi) | Asset | core | Open | Asset 2 | | dipakai via SfxService, format .wav/.ogg |
 | VO angka 1-5 (Bahasa Indonesia) | Asset | feature_angka | Open | Asset 2 | | |
 | Riset referensi video + draft konsep promo | Asset | marketing | Open | Asset 3 | | |

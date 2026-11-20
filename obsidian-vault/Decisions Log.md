@@ -201,3 +201,15 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Side-effect**: Godot Editor otomatis menulis ulang `project.godot` saat pertama dibuka (tambah section `[animation]`, ubah `config/features` dari `"4.3"` ke `"4.7"` menyesuaikan versi editor 4.7.2) — ini perilaku normal Godot, bukan perubahan manual, dibiarkan apa adanya.
 
 **Masih belum dicoba**: navigasi lewat `Home.tscn` (sesi ini langsung buka scene `Angka.tscn` berdiri sendiri, bukan lewat tombol di Home), `ParentalGateDialog`/Settings secara sentuhan asli, toggle suara (belum ada SFX asli untuk didengar), export APK, dan testing di device Android asli (baru di desktop Windows).
+
+## 2026-11-20 — Generate image AI GAGAL (butuh plan berbayar), diganti ikon vector lewat kode
+
+**Yang dicoba**: user minta dibuatkan assets (app icon + ikon 6 tile Home). Sesi AI ini punya akses tool generate image (`generate_image_batch`, model `gpt_image_2_6`), sudah dicek estimasi biaya (0.25 kredit/gambar) — tapi **submit gagal semua**: `"Requires basic plan or higher"`. Dicoba juga `use_free_gens: true`, ditolak juga (`"free generations can be spent from the ChatGPT (OpenAI) Higgsfield connector only"`). Jadi generate image AI **tidak tersedia** di akun/plan ini sekarang.
+
+**Keputusan user**: daripada tunggu upgrade plan atau Asset 1 (illustrator asli), bikin placeholder yang lebih baik dari teks polos — **digambar langsung lewat kode Godot** (`draw_circle`/`draw_rect`), gratis & langsung jadi.
+
+**Implementasi**: `core/scripts/module_icon.gd` — `class_name ModuleIcon`, `Control` dengan `_draw()` custom per `kind` (angka/warna/hewan/musik/mewarnai/puzzle), semua bentuk dasar (titik, bulatan warna, muka sederhana, not musik, krayon, grid puzzle) — bukan ilustrasi asli, murni placeholder vektor abstrak. `scenes/home.gd` diupdate: tiap tile sekarang punya warna latar sesuai aksen modul (`docs/UI_UX_DESIGN.md`) + `ModuleIcon` di tengah + label nama di bawah (sebelumnya cuma tombol teks polos).
+
+**Diverifikasi**: setelah re-import (`--headless --import`, perlu supaya `class_name ModuleIcon` ter-register), `scenes/Home.tscn` lolos headless (`exit 0`) dan dicoba dibuka visual (non-headless) via terminal — user konfirmasi tile-nya muncul dengan warna & ikon yang benar.
+
+**Catatan untuk tim**: ini TETAP placeholder, bukan pengganti Job 6 (Asset 1 — ilustrasi asli). `obsidian-vault/Specs/style-guide-ilustrasi.md` dan ilustrasi final tetap perlu dibuat manusia (atau AI image gen begitu plan-nya di-upgrade) — `ModuleIcon` cuma supaya Home tidak kosong/polos sampai itu selesai.
