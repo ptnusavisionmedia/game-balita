@@ -29,6 +29,16 @@ config/features=PackedStringArray("4.7")
 window/size/viewport_width=720
 window/size/viewport_height=1280
 window/size/mode=0
+
+; window_width/height_override cuma ngaruh ke UKURAN JENDELA desktop (dev
+; test di Windows/Mac/Linux) — TIDAK ngaruh ke export Android (device asli
+; selalu pakai resolusi device sendiri). Tanpa ini, window default ikut
+; viewport_width/height (720x1280) yang lebih tinggi dari tinggi layar laptop
+; umum (mis. 1366x768 => working area ~728px tinggi) — Windows jadi klem
+; window ke bentuk nyaris persegi (bukan portrait lagi), kelihatan
+; "miring"/landscape. 405x720 tetap rasio 9:16, muat di layar manapun.
+window/size/window_width_override=405
+window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation="portrait"

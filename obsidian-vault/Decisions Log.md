@@ -324,3 +324,13 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: headless re-import + run `features/feature_angka/Angka.tscn` — lolos tanpa error. Belum dites sentuhan asli (auto-timer 1.8s belum dicoba rasanya kecepatan/kelambatannya di device nyata — bisa disesuaikan kalau user merasa kurang pas).
 
 **Diupdate juga**: `docs/UI_UX_DESIGN.md` prinsip #4, `docs/PLAN_BASE_MODEL.md`, `docs/WORK_BREAKDOWN.md` (QA checklist), `obsidian-vault/Specs/feature_angka.md` — semua mention "bintang"/"tombol Lanjut" di spek disesuaikan.
+
+## 2026-11-20 — Bug ditemukan & diperbaiki: window Windows "selalu landscape/miring" saat dev-test
+
+**Laporan user**: window app saat dites di Windows selalu landscape/miring, bukan portrait, meski `window/handheld/orientation="portrait"` sudah diset.
+
+**Akar masalah**: `window/handheld/orientation` **cuma berlaku untuk Android/handheld**, tidak ngaruh ke bentuk jendela desktop. Bentuk jendela desktop ikut `window/size/viewport_width`/`viewport_height` (720x1280, portrait) **kalau cukup muat** — tapi dicek pakai Win32 `GetWindowRect` API lewat PowerShell, layar laptop testing ini cuma **1366x768** (working area ~728px tinggi). Windows otomatis klem window 1280px tinggi supaya muat ke layar, tapi klem itu **tidak proporsional** (lebar & tinggi diklem independen) → window jadi ~736x788 (nyaris persegi), bukan portrait lagi — makanya terasa "miring"/landscape dibanding bentuk HP yang diharapkan.
+
+**Fix**: tambah `window/size/window_width_override=405` + `window/size/window_height_override=720` di `[display]` `project.godot` — field ini **cuma ngaruh ke ukuran jendela desktop** (dev-test di Windows/Mac/Linux), **tidak ngaruh ke export Android** (device asli selalu pakai resolusi device sendiri lewat `window/stretch/mode="canvas_items"` yang sudah ada). 405x720 tetap rasio 9:16 (sama proporsi dengan base desain 720x1280), kecil cukup buat muat di layar manapun tanpa diklem Windows.
+
+**Diverifikasi**: cek ulang `GetWindowRect` setelah fix — window sekarang ~421x759 (portrait proporsional, bukan dipaksa persegi). Headless re-import + re-run `Splash`/`Home`/`Settings`/`Angka` — semua lolos tanpa error.
