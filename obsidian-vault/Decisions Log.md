@@ -236,3 +236,13 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 3. **Part 1.3 — Job export di CI**: `.github/workflows/ci.yml` ditambah job `export-debug-apk`, image di-pin `barichello/godot-ci:4.7.2` (dicek tag-nya ada via Docker Hub API, sama dengan versi lokal). **Belum diverifikasi jalan sungguhan di GitHub Actions** — baru ditulis ikut pola resmi + terverifikasi lokal di Windows, CI jalan di Linux container, beda environment.
 
 **Kesimpulan**: base model sekarang **punya file APK Android asli**, bukan cuma kode yang lolos headless. Ini maju signifikan dari status sebelumnya. **Belum**: install APK ke device/emulator Android asli dan coba jalan (baru sampai tahap file APK terbentuk & ter-sign), dan verifikasi CI export job di GitHub Actions sungguhan.
+
+## 2026-11-20 — `ParentalGateDialog` diganti total: dari "tahan tombol 3 detik" jadi soal tambah + keypad angka
+
+**Konteks**: user mencoba Part 1.4-1.5 secara interaktif (navigasi Home + gate) — navigasi Home↔game↔Home **berhasil benar**. Untuk parental gate, user minta mekanismenya diganti jadi "seperti pertanyaan" (soal angka, input jawaban) — ditanya detailnya, user pilih: **soal tambah sederhana** ("4 + 5 = ?") dengan **keypad angka di layar** untuk input jawaban, **mengganti sepenuhnya** mekanisme tahan-tombol 3 detik (bukan tambahan).
+
+**Implementasi**: `core/scripts/parental_gate_dialog.gd` ditulis ulang total — hapus `ProgressBar`/hold-timer, ganti jadi: 2 angka acak (2-9) ditampilkan sebagai soal, keypad 0-9 + tombol ⌫ (hapus) + ✓ (konfirmasi) dibangun lewat `GridContainer`, label jawaban yang terupdate tiap digit ditekan. Jawaban salah → **soal baru digenerate** (bukan cuma "coba lagi" soal yang sama) supaya tidak bisa ditembus tebak-tebakan brute force oleh anak. `signal passed`/`cancelled` tetap sama, jadi `scenes/home.gd` tidak perlu diubah sama sekali — bukti manfaat desain signal-based yang sudah dipakai dari awal.
+
+**Diverifikasi**: headless re-import + run `Home.tscn` lolos (`exit 0`), dan dibuka visual via terminal untuk user coba sentuhan asli — **menunggu konfirmasi hasil tesnya** (akan dicatat di entri berikutnya kalau ada temuan).
+
+**Yang diupdate**: `docs/JOBS_BASE_MODEL.md`, `docs/PLAN_BASE_MODEL.md`, `docs/WORK_BREAKDOWN.md` — semua mention "tahan tombol 3 detik" diganti jadi "soal tambah + keypad angka".

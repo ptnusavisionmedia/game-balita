@@ -28,9 +28,10 @@ Klaim per **bagian** (bukan per job utuh) di `docs/TASK_BOARD.md` kalau mau kerj
 - **Selesai kalau**: siklus Home → game → Home berjalan tanpa error, bisa diulang ke modul lain.
 
 ### Part 1.5 — Verifikasi `ParentalGateDialog` + `Settings` secara sentuhan asli
-- **Tujuan**: `ParentalGateDialog` (tahan 3 detik) belum pernah dites klik asli — cuma lolos headless (tidak crash saat load), belum tahu apakah logic tahan-tombolnya kerasa benar.
-- **Langkah**: dari Home klik "⚙ Pengaturan" → tombol "Tahan Di Sini" ditahan (klik-tahan mouse) → progress bar harus naik dalam 3 detik → otomatis masuk `Settings` → toggle "Suara" → klik "Kembali" → pastikan balik ke Home. Ulangi tapi klik "Batal" di gate, pastikan tidak masuk Settings.
-- **Selesai kalau**: semua interaksi di atas berjalan sesuai rancangan, termasuk kasus batal.
+- **Tujuan**: `ParentalGateDialog` belum pernah dites klik asli.
+- **Update 2026-11-20**: mekanisme diganti total dari "tahan tombol 3 detik" jadi **soal tambah sederhana + keypad angka** ("4 + 5 = ?", ketik jawaban lewat tombol 0-9, ⌫ hapus, ✓ konfirmasi) — lebih umum dipakai di app anak, anak kecil belum bisa hitung tapi orang tua bisa. Jawaban salah → soal baru (tidak bisa ditembus coba-coba).
+- **Langkah**: dari Home klik "⚙ Pengaturan" → muncul soal → ketik jawaban lewat keypad → klik "✓" → kalau benar otomatis masuk `Settings` → toggle "Suara" → klik "Kembali". Ulangi tapi ketik jawaban SALAH, pastikan soal berganti (bukan macet). Coba juga klik "Batal".
+- **Selesai kalau**: semua interaksi di atas berjalan sesuai rancangan, termasuk kasus jawaban salah & batal.
 
 ### Part 1.6 — Keputusan: siapa pegang Privacy Policy & Play Families Policy
 - **Tujuan**: ini bukan kerjaan teknis, tapi keputusan yang masih menggantung (lihat `docs/TEAM.md`).

@@ -30,7 +30,7 @@ Jalur kritis base model. Sudah ditulis & lolos headless — cek dulu sebelum nul
 - [x] `StarRewardOverlay` pakai `CPUParticles2D` bawaan Godot — `core/scenes/StarRewardOverlay.tscn` + script.
 - [x] `SfxService` + `AudioService` — autoload singleton, lihat `docs/LIBRARIES.md`.
 - [x] `ProgressRepository` (autoload singleton, `ConfigFile` bawaan Godot) — terdaftar di `[autoload]` `project.godot`.
-- [x] `ParentalGateDialog` (tahan tombol 3 detik) — `core/scenes/ParentalGateDialog.tscn` + script.
+- [x] `ParentalGateDialog` (soal tambah + keypad angka, diganti dari "tahan tombol 3 detik" 2026-11-20) — `core/scenes/ParentalGateDialog.tscn` + script.
 - [x] Wiring navigasi Home ↔ Settings ↔ mini-game — `scenes/home.gd`.
 - [x] `Settings.tscn` (toggle suara, sinkron `SfxService`/`AudioService`) — `scenes/settings.gd`.
 - [x] CI headless validate (`.github/workflows/ci.yml`) — binary `godot` + `--quit-after` terverifikasi.

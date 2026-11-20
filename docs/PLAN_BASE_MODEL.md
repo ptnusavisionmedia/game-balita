@@ -16,7 +16,7 @@ Base model **selesai** kalau 1 mini-game (pilot) bisa dimainkan end-to-end di de
 
 2. **Scene reusable tambahan di `core/scenes/`**
    - `StarRewardOverlay` — confetti (`CPUParticles2D`) + bintang saat menang (dipakai semua mini-game nanti).
-   - `ParentalGateDialog` — gate sederhana sebelum masuk Settings (tahan tombol 3 detik).
+   - `ParentalGateDialog` — gate sebelum masuk Settings: soal tambah sederhana + keypad angka (diganti dari "tahan tombol 3 detik" 2026-11-20, lihat Decisions Log).
    - `AppColors` — token warna satu tempat (supaya 6 mini-game terasa 1 produk).
 
 3. **App shell (`scenes/`)**
@@ -54,7 +54,7 @@ Godot sudah diinstall & dicoba **secara interaktif sungguhan** di sesi ini (buka
 - [x] Progres tersimpan — `user://progress.cfg` terisi 4 entri `GameResult` nyata dengan timestamp, bukan simulasi.
 - [ ] Dari **Home** (bukan langsung scene `feature_angka`), navigasi penuh Home → game → balik ke Home — belum dicoba (sesi ini langsung run `Angka.tscn` berdiri sendiri untuk tes cepat).
 - [ ] Toggle suara di Settings beneran mematikan/menyalakan audio (begitu ada SFX asli dari Job 7/Asset 2), dan tersimpan setelah app ditutup-buka lagi.
-- [ ] Masuk Settings harus lewat `ParentalGateDialog` dulu (tahan tombol 3 detik, cek secara sentuhan asli).
+- [ ] Masuk Settings harus lewat `ParentalGateDialog` dulu (soal tambah + keypad angka, diganti dari tahan-tombol) — kode sudah lolos headless, **menunggu konfirmasi user** hasil tes sentuhan asli.
 - [x] Export debug APK berhasil (`godot --export-debug "Android" build/android/app-debug.apk`) — APK ter-sign, ~27MB. **Belum dicoba install & jalan di device/emulator Android asli** (baru sampai tahap file APK terbentuk).
 - [x] `docs/` dan `obsidian-vault/` ter-update dan ter-push ke `main`.
 
