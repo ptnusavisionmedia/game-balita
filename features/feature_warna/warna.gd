@@ -48,6 +48,9 @@ func _ready() -> void:
 
 	_reference_circle = ColorRect.new()
 	_reference_circle.custom_minimum_size = Vector2(96, 96)
+	# SHRINK_CENTER — tanpa ini VBoxContainer men-stretch ke lebar penuh
+	# layar (bug yang sama dilaporkan user di scenes/home.gd 2026-11-21).
+	_reference_circle.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	vbox.add_child(_reference_circle)
 
 	_reference_label = Label.new()

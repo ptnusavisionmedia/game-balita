@@ -51,6 +51,11 @@ func _ready() -> void:
 	var canvas_size: Dictionary = picture.get("canvas_size", {"w": 360, "h": 360})
 	var canvas := Control.new()
 	canvas.custom_minimum_size = Vector2(canvas_size.get("w", 360), canvas_size.get("h", 360))
+	# SHRINK_CENTER — tanpa ini VBoxContainer men-stretch canvas ke lebar
+	# penuh layar, geser semua area (posisi absolut relatif ke pojok kiri
+	# atas canvas) jadi menempel kiri, bukan di tengah (bug yang sama
+	# dilaporkan user di scenes/home.gd 2026-11-21).
+	canvas.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	vbox.add_child(canvas)
 
 	for area in _areas:

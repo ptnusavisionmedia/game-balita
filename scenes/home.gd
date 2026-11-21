@@ -29,15 +29,23 @@ func _ready() -> void:
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 
+	# size_flags_horizontal = SHRINK_CENTER — tanpa ini, VBoxContainer
+	# men-stretch tiap child ke lebar penuh layar, jadi "▶ Play" (yang
+	# harusnya bulat) melar jadi pil selebar layar (dilaporkan user
+	# 2026-11-21, baru kelihatan jelas setelah GameBackground dipasang).
 	var play_button := BigRoundButton.new()
 	play_button.accent_color = AppColors.SUNSHINE
-	play_button.custom_minimum_size = Vector2(160, 160)
+	play_button.custom_minimum_size = Vector2(180, 180)
+	play_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	play_button.text = "▶ Play"
 	play_button.pressed.connect(_on_play_pressed)
 	vbox.add_child(play_button)
 
 	var choose_button := Button.new()
 	choose_button.text = "Pilih Game"
+	choose_button.custom_minimum_size = Vector2(200, 56)
+	choose_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_style_secondary_button(choose_button)
 	choose_button.pressed.connect(_on_toggle_grid)
 	vbox.add_child(choose_button)
 
@@ -45,6 +53,7 @@ func _ready() -> void:
 	_grid.columns = 2
 	_grid.add_theme_constant_override("h_separation", 16)
 	_grid.add_theme_constant_override("v_separation", 16)
+	_grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_grid.visible = false
 	vbox.add_child(_grid)
 
@@ -62,6 +71,21 @@ func _ready() -> void:
 	settings_button.offset_bottom = 68.0
 	settings_button.pressed.connect(_open_settings)
 	add_child(settings_button)
+
+
+## Tombol sekunder bergaya "outline" — bukan warna solid seperti
+## BigRoundButton/tile, supaya jelas ini aksi kedua (bukan aksi utama
+## "▶ Play"). Sebelumnya pakai tema default Godot (abu-abu gelap polos,
+## tidak kelihatan jelas di atas GameBackground).
+func _style_secondary_button(button: Button) -> void:
+	var style := StyleBoxFlat.new()
+	style.bg_color = AppColors.CREAM
+	style.border_color = AppColors.INK
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(16)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		button.add_theme_stylebox_override(state, style)
+	button.add_theme_color_override("font_color", AppColors.INK)
 
 
 func _make_tile(game: Dictionary) -> Button:

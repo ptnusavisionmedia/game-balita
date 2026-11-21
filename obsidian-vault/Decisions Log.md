@@ -466,3 +466,17 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Juga dikerjakan**: `docs/ASSET_LIST.md` (baru) — konsolidasi SEMUA kebutuhan aset (ilustrasi/SFX/VO) dari 6 `obsidian-vault/Specs/feature_*.md` jadi 1 checklist lintas modul dengan path taruh file, atas permintaan eksplisit user.
 
 **Diverifikasi**: headless re-import + run 10 scene — semua lolos tanpa error. App dijalankan non-headless buat preview.
+
+## 2026-11-21 — Bug layout: tombol melar jadi pil selebar layar (VBoxContainer stretch)
+
+**Laporan user**: screenshot Home menunjukkan "▶ Play" jadi pil raksasa selebar layar, "Pilih Game" jadi bar gelap tanpa gaya menempel di bawahnya tanpa jarak — baru kelihatan jelas setelah `GameBackground` dipasang (sebelumnya background kosong/CREAM menyamarkan masalah ini).
+
+**Akar masalah**: `VBoxContainer` secara default men-stretch tiap child ke LEBAR PENUH container (bukan cuma pakai `custom_minimum_size`-nya) kalau child itu tidak diberi `size_flags_horizontal = SIZE_SHRINK_CENTER`. `play_button` (`BigRoundButton`, harusnya bulat) dan `choose_button` (`Button` polos tema default Godot) di `scenes/home.gd` keduanya kena ini — sudah ada dari awal redesign Home (2026-11-20), cuma baru kelihatan sekarang.
+
+**Dicek silang ke modul lain** — pola yang sama (widget ukuran-tetap langsung jadi child VBoxContainer tanpa `SHRINK_CENTER`) ketemu juga di: `_reference_circle` (`feature_warna`) dan `canvas` (`feature_mewarnai`, container area-area mewarnai) — keduanya diperbaiki sekalian walau belum ada laporan user spesifik buat 2 modul ini (urutan posisi area-area mewarnai relatif ke canvas yang local-positioned akan ikut geser ke kiri kalau canvas-nya melar, bukan cuma "kelihatan aneh" tapi beneran salah posisi).
+
+**Fix**: tambah `size_flags_horizontal = Control.SIZE_SHRINK_CENTER` di 3 tempat (`play_button`, `choose_button`, `_grid` di `home.gd`; `_reference_circle` di `warna.gd`; `canvas` di `mewarnai.gd`). `choose_button` juga diberi stylebox custom (outline, bukan tema default abu-abu gelap Godot yang tidak jelas di atas `GameBackground`).
+
+**Diverifikasi**: headless re-import + run `Home`/`Warna`/`Mewarnai` — lolos tanpa error. **Belum dikonfirmasi** user secara visual.
+
+**Pelajaran**: setiap kali taruh widget ukuran-tetap (bukan `HBoxContainer`/`VBoxContainer` lain) langsung sebagai child `VBoxContainer`/`HBoxContainer`, WAJIB cek apakah perlu `size_flags_horizontal`/`vertical` SHRINK — jangan asumsikan `custom_minimum_size` saja cukup buat menjaga bentuk visual yang dimaksud.
