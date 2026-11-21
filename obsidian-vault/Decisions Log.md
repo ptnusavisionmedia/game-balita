@@ -360,3 +360,13 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 ## 2026-11-21 — Plan tumbuh-kembang disetujui, masuk Task Board
 
 **Keputusan user**: lanjutkan `docs/PLAN_TUMBUH_KEMBANG.md` jadi task nyata. Ditambahkan 5 baris baru di `docs/TASK_BOARD.md` — Fase A (konten kartu, Bramantyo), Fase B (scene `ParentGuide`, Bramantyo), Fase C (audit mandiri per modul, Dev 2-4 + Dev Testing), Fase D (review konten oleh manusia yang paham anak usia dini — PIC belum ditentukan, **wajib** sebelum publish karena bukan nasihat medis), + ilustrasi kartu (opsional, Asset 1). Status di `PLAN_TUMBUH_KEMBANG.md` diubah dari DRAFT jadi DISETUJUI.
+
+## 2026-11-21 — Spek `feature_hewan`: 2 mekanik (Mandiri + Bareng Orang Tua), 1 titik masuk yang menentukan
+
+**Konteks**: user usul ide "tebak hewan dari suara, orang tua bisa buka jawaban dengan klik" (mencontoh pola flashcard umum). Dikoreksi dulu sebelum ditulis spek (lihat diskusi di chat): (1) ini bukan modul ke-11, tapi isi `feature_hewan` yang memang sudah ada slotnya tapi belum pernah ditulis logic-nya; (2) awalnya diusulkan 1 mekanik saja (self-correcting) demi hemat scope, tapi user minta tetap 2 mekanik.
+
+**Keputusan arsitektur buat jalankan 2 mekanik tanpa nambah layar baru ke anak**: fork ditentukan dari **jalur masuk**, bukan dari pertanyaan baru di Home — Home → Play/Pilih Game tetap mekanik Mandiri (self-correcting, pola sama `feature_angka`) seperti modul lain; Settings → "Panduan Orang Tua" → tombol "Mulai main bareng" (baru, bagian dari Fase B `docs/PLAN_TUMBUH_KEMBANG.md`) masuk ke mekanik Bareng Orang Tua (reveal manual, tanpa ✓/✗, orang tua pegang pace). Prinsip #3 UI_UX_DESIGN.md ("satu aksi utama per layar") tetap utuh — anak tidak pernah lihat pilihan mode.
+
+**Konsekuensi teknis**: butuh 1 state baru di `GameFlow` (`guided_mode`, pola sama `infinite_mode`) dan fungsi baru `start_guided_game(...)` — perubahan `core/` pertama yang didorong kebutuhan 1 modul `feature_*` spesifik, bukan dari Bramantyo sendiri. `features/feature_hewan/hewan.gd` baca flag itu, 1 script 2 cabang render, data hewan (6 ekor awal: kucing/anjing/sapi/ayam/kambing/bebek) di 1 file data supaya mudah ditambah tanpa ubah logic.
+
+**Spek lengkap**: `obsidian-vault/Specs/feature_hewan.md`. **Sengaja tidak dijadikan pola default** untuk 5 modul lain — ini keputusan khusus `feature_hewan`, bukan standar baru untuk semua modul.

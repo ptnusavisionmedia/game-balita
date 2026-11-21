@@ -20,7 +20,9 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | CI headless validate (`.github/workflows/ci.yml`) | Dev | infra | Done | Bramantyo | 2026-11-19 | binary `godot` + `--quit-after` terverifikasi |
 | Part 1.1-1.3 (export template, export_presets.cfg, CI export job) | Dev | infra | Done | Bramantyo | 2026-11-20 | APK debug export BERHASIL lokal (app-debug.apk, ~27MB, ter-sign). CI job belum pernah dijalankan sungguhan (cuma ditulis ikut pola resmi) |
 | Spek + asset list `feature_warna` | Dev | feature_warna | Open | Dev 2 | | |
-| Spek + asset list `feature_hewan` | Dev | feature_hewan | Open | Dev 3 | | |
+| Spek `feature_hewan` (2 mekanik: Mandiri + Bareng Orang Tua) | Dev | feature_hewan | Done | (sesi AI + user, 2026-11-21) | 2026-11-21 | `obsidian-vault/Specs/feature_hewan.md` — asset list masih Open di baris bawah |
+| `feature_hewan`: implementasi UI+logic (2 mekanik) + data 6 hewan | Dev | feature_hewan | Open | Dev 3 | | lihat `obsidian-vault/Specs/feature_hewan.md` — butuh koordinasi Bramantyo buat state `GameFlow.guided_mode` (baru) |
+| Asset list `feature_hewan` (6 ilustrasi hewan + 6 SFX suara) | Asset | feature_hewan | Open | Asset 1 + Farel | | lihat tabel Asset di `obsidian-vault/Specs/feature_hewan.md` |
 | Spek + asset list `feature_musik` | Dev | feature_musik | Open | Dev 3 | | |
 | Spek + asset list `feature_mewarnai` | Dev | feature_mewarnai | Open | Dev 4 | | |
 | Spek + asset list `feature_puzzle` | Dev | feature_puzzle | Open | Dev 4 | | |
@@ -39,7 +41,8 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Tulis draft Privacy Policy & Play Families Policy | — | compliance | Done | Bramantyo | 2026-11-20 | Draft di `docs/PRIVACY_POLICY.md` — isi kontak & publish ke URL publik masih Open di baris bawah |
 | Isi kontak + publish `docs/PRIVACY_POLICY.md` ke URL publik (GitHub Pages/situs tim) | — | compliance | Open | Bramantyo | | wajib sebelum submit Play Store (Play Console minta link publik, bukan file repo) |
 | Fitur tumbuh-kembang — Fase A: tulis konten 6 kartu "Panduan Orang Tua" (`core/data/parent_guide.json` atau `.tres`) | Dev | core | Open | Bramantyo | | lihat `docs/PLAN_TUMBUH_KEMBANG.md` bagian 2.1 & 4 — konten dulu, bukan hardcode di scene |
-| Fitur tumbuh-kembang — Fase B: scene `ParentGuide.tscn`+`parent_guide.gd`, akses dari Settings di belakang `ParentalGateDialog` | Dev | scenes/core | Open | Bramantyo | | lihat `docs/PLAN_TUMBUH_KEMBANG.md` bagian 4 — tidak sentuh `GameFlow`/gameplay |
+| Fitur tumbuh-kembang — Fase B: scene `ParentGuide.tscn`+`parent_guide.gd`, akses dari Settings di belakang `ParentalGateDialog` | Dev | scenes/core | Open | Bramantyo | | lihat `docs/PLAN_TUMBUH_KEMBANG.md` bagian 4. **Update 2026-11-21**: scope nambah tombol "Mulai main bareng" (lihat `feature_hewan`) — tidak lagi murni baca-baca, lihat `GameFlow.guided_mode` di baris bawah |
+| `GameFlow`: tambah state `guided_mode` + fungsi `start_guided_game(...)` (dipakai tombol "Mulai main bareng" di `ParentGuide`) | Dev | core | Open | Bramantyo | | pola sama `infinite_mode` yang sudah ada, lihat `obsidian-vault/Specs/feature_hewan.md` bagian "Catatan arsitektur" |
 | Fitur tumbuh-kembang — Fase C: audit "bisa dimainkan tanpa baca" per modul (mulai `feature_angka`) | Dev | feature_* | Open | Dev 2-4 + Dev Testing | | checklist di `docs/PLAN_TUMBUH_KEMBANG.md` bagian 2.2, masuk juga ke `docs/QA_CHECKLIST.md` begitu dibuat |
 | Fitur tumbuh-kembang — Fase D: review isi 6 kartu panduan oleh tim/manusia yang paham anak usia dini sebelum publish | — | compliance/konten | Open | (belum ditentukan) | | wajib, bukan nasihat medis — lihat `docs/PLAN_TUMBUH_KEMBANG.md` bagian 6 |
 | Ilustrasi kartu "Panduan Orang Tua" (opsional, teks dulu boleh) | Asset | branding | Open | Asset 1 | | lihat `docs/PLAN_TUMBUH_KEMBANG.md` bagian 5 |
