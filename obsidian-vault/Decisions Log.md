@@ -344,3 +344,15 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: cek ulang `GetWindowRect` — window sekarang ~976x579 (landscape proporsional, tidak diklem Windows). Headless re-import + re-run semua 9 scene (`Splash`, `Home`, `Settings`, 6 `feature_*`) — lolos tanpa error.
 
 **Belum**: belum dites sentuhan asli di device/emulator Android — perlu re-export APK untuk konfirmasi orientasi landscape benar-benar terkunci di device nyata (bukan cuma window desktop). Layout yang ada (semua `VBoxContainer` center full-anchor) belum ditinjau ulang khusus buat proporsi landscape yang lebih lebar & lebih pendek — kalau ada elemen yang terasa terlalu "melar" horizontal atau sempit vertikal pas dites, itu perlu penyesuaian per-scene berikutnya.
+
+## 2026-11-21 — Plan baru: fitur tumbuh-kembang, "Bareng Orang Tua" vs "Belajar Mandiri"
+
+**Permintaan user**: pelajari teori tumbuh-kembang anak, lalu buat fitur di mana orang tua bisa mengajari atau anak bisa belajar sendiri — plan mendalam, bukan langsung eksekusi.
+
+**Dikerjakan**: riset singkat (WebSearch) 4 teori utama — milestone CDC per usia, Piaget (tahap praoperasional), Erikson (otonomi/inisiatif), Vygotsky (ZPD/scaffolding), Montessori (sensitive periods + auto-edukasi) — lalu ditulis jadi `docs/PLAN_TUMBUH_KEMBANG.md`. Temuan penting: keputusan "tidak ada menang/kalah" & "hapus bintang/skor" yang sudah diambil sebelumnya (entri 2026-11-20) **ternyata selaras dengan teori** (Erikson: usia 1-5 masih bangun rasa percaya diri/otonomi, belum siap konsep menang-kalah yang baru matang kognitifnya ~5 tahun per CDC) — bukan cuma preferensi gaya, ada dasarnya.
+
+**Isi plan**: 2 mode dalam 1 app (bukan 2 app terpisah) — "Bareng Orang Tua" (kartu panduan singkat per modul di Settings, isi scaffolding ala Vygotsky: kalimat contoh buat diucapkan orang tua) dan "Belajar Mandiri" (audit bahwa gameplay yang sudah ada bisa dimainkan tanpa baca teks, ala prinsip self-correcting Montessori). Fasing: A (tulis konten dulu, non-coder-editable) → B (1 scene baru `ParentGuide.tscn`, taruh di belakang Settings/`ParentalGateDialog` yang sudah ada, **tidak sentuh `GameFlow`/gameplay sama sekali**) → C (audit mandiri per modul) → D (review konten oleh manusia yang paham anak usia dini, bukan dianggap final dari 1 sesi riset AI).
+
+**Caveat penting dicatat di dokumen**: ini bukan nasihat medis/klinis, sumber riset level "tips umum" (SimplyPsychology/NAEYC/Montessori Academy/CDC) bukan jurnal akademik, dan dilarang di-overclaim di marketing ("berbasis riset" oke, "disetujui ahli" tidak — kecuali memang direview manusia kompeten).
+
+**Status**: DRAFT, belum ada baris baru di `docs/TASK_BOARD.md` (sengaja menunggu konfirmasi user dulu sebelum jadi task nyata buat tim) — berbeda dari pola dokumen plan sebelumnya yang langsung dieksekusi.
