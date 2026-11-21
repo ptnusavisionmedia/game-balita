@@ -416,3 +416,13 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: headless re-import + run 10 scene (`Splash`, `Home`, `Settings`, `ParentGuide`, 6 `feature_*`) — semua lolos tanpa error. App dijalankan non-headless buat preview user.
 
 **Status proyek**: ini melengkapi seluruh "Fase 2" dari sisi kode — **ke-6 mini-game sekarang semua punya gameplay asli**, bukan placeholder "Kembali" doang. Yang tersisa murni: aset asli (ilustrasi/SFX/VO, semua masih placeholder) dan test interaktif sentuhan asli buat 4 modul terbaru (cuma `feature_angka` yang sudah pernah dites manusia beneran sampai sekarang).
+
+## 2026-11-21 — Bug ditemukan & diperbaiki: keping `feature_puzzle` tidak bisa diklik/drag
+
+**Laporan user**: keping puzzle (kotak warna) tidak bisa diklik atau ditarik sama sekali. Dicek silang dengan `feature_mewarnai` (yang dites user lolos) — bedanya, `mewarnai.gd` pakai `Button.new()` (widget bawaan terbukti jalan), sedangkan `puzzle_piece.gd`/`puzzle_slot.gd` pakai pola BARU: `Control` polos + child `Panel` (buat visual warna) dengan `mouse_filter = IGNORE` di atasnya, ditambah override `_get_drag_data`/`_can_drop_data`/`_drop_data` di root.
+
+**Akar masalah (kemungkinan besar)**: pola "child Panel IGNORE di atas root yang override input" belum pernah dipakai di modul lain — asumsi bahwa event akan "jatuh" ke parent (root) begitu child IGNORE tidak mengklaimnya ternyata tidak reliable buat drag-initiation (`_get_drag_data`), beda dengan klik biasa di `Button`.
+
+**Fix**: ganti total jadi gambar lewat `_draw()` LANGSUNG di root `Control` (pola sama `core/scripts/module_icon.gd` yang sudah terbukti jalan di tile Home) — tidak ada child Panel lagi, jadi tidak ada ambiguitas node mana yang menang hit-test. `puzzle_slot.gd` juga disederhanakan: visual "terisi" langsung di-set dalam `_drop_data()` (hapus method `mark_filled_visual()` terpisah yang sekarang tidak perlu).
+
+**Diverifikasi**: headless re-import + run `Puzzle.tscn` — lolos tanpa error. **Belum dikonfirmasi user** apakah drag sungguhan sekarang jalan — menunggu hasil retest.
