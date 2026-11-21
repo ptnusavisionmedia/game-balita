@@ -12,6 +12,14 @@ const LEAF := Color("#6FCF97")  # benar
 const CORAL := Color("#FF8A65")  # coba lagi (bukan merah)
 const GOLD := Color("#FFD166")  # bintang reward
 
+## Background "langit + rumput" dipakai `GameBackground` di semua layar
+## main game — terinspirasi riset kompetitor (lihat
+## obsidian-vault/Referensi-LucasAndFriends.md): warna sejuk pastel =
+## dekorasi/latar, warna hangat jenuh = elemen interaktif.
+const SKY := Color("#BDEBFB")
+const GRASS := Color("#C3EFA0")
+const GRASS_DARK := Color("#AEE487")
+
 const ACCENT_ANGKA := Color("#4FC3F7")
 const ACCENT_WARNA := Color("#FF8A65")
 const ACCENT_HEWAN := Color("#6FCF97")

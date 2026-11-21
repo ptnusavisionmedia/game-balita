@@ -4,7 +4,7 @@ Target pemain: anak **1-5 tahun** (belum/baru bisa baca, motorik halus terbatas)
 
 ## Prinsip desain (wajib dipatuhi di semua modul)
 
-1. **Hit-area besar**: minimal 64dp — `BigRoundButton` di `core/scripts/big_round_button.gd` sudah set `custom_minimum_size = Vector2(88, 88)` secara default. Jempol anak kecil tidak presisi.
+1. **Hit-area besar**: minimal 64dp, idealnya ≥120px untuk elemen jawaban/pilihan utama (dinaikkan 2026-11-21, ikut rekomendasi riset kompetitor di `obsidian-vault/Referensi-LucasAndFriends.md`) — `BigRoundButton` di `core/scripts/big_round_button.gd` sekarang `custom_minimum_size = Vector2(120, 120)` secara default (sebelumnya 88). Jempol anak kecil tidak presisi.
 2. **Icon/suara dulu, teks belakangan**: anak belum bisa baca. Setiap aksi harus jelas dari gambar/warna/suara saja, teks cuma pelengkap untuk orang tua.
 3. **Satu aksi utama per layar**: tidak ada menu bertingkat, tidak ada dialog konfirmasi untuk aksi dalam game.
 4. **Tidak ada "game over" yang menghukum**: salah jawab = suara ramah "coba lagi" + boleh coba lagi. Tidak ada skor negatif, tidak ada timer yang menekan, tidak ada layar merah besar.
@@ -84,6 +84,11 @@ Prinsip pemilihan warna:
 | `AppColors.ACCENT_MUSIK` | `#B39DDB` | Aksen tile `feature_musik` |
 | `AppColors.ACCENT_MEWARNAI` | `#F48FB1` | Aksen tile `feature_mewarnai` |
 | `AppColors.ACCENT_PUZZLE` | `#4DB6AC` | Aksen tile `feature_puzzle` |
+| `AppColors.SKY` | `#BDEBFB` | Background "langit" — `GameBackground`, dipasang di Home + semua `feature_*` (2026-11-21) |
+| `AppColors.GRASS` | `#C3EFA0` | Background "rumput" — `GameBackground` |
+| `AppColors.GRASS_DARK` | `#AEE487` | Lapisan kedalaman kedua "rumput" — `GameBackground` |
+
+**Prinsip tambahan (2026-11-21, dari `obsidian-vault/Referensi-LucasAndFriends.md`)**: warna sejuk pastel (`SKY`/`GRASS`) = latar/dekorasi, warna hangat jenuh (`SUNSHINE`/aksen modul) = elemen interaktif — anak bisa bedain "ini bisa ditekan" dari kehangatan warnanya tanpa perlu baca.
 
 Implementasi: `core/scripts/app_colors.gd` (class `AppColors`, `class_name` global jadi bisa dipanggil `AppColors.SUNSHINE` dari script mana pun tanpa import). **Jangan** tulis hex warna langsung di scene `feature_*` — selalu lewat `AppColors` dari `core/`, supaya ganti 1 warna cukup di 1 tempat.
 

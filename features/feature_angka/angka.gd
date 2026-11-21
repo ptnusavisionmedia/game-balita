@@ -17,6 +17,7 @@ var _choices_box: HBoxContainer
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
+	add_child(GameBackground.new())
 
 	randomize()
 	for i in range(QUESTIONS_PER_SESSION):

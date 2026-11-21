@@ -26,6 +26,7 @@ var _selected_piece_id: String = ""
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
+	add_child(GameBackground.new())
 
 	var puzzles := _load_puzzles()
 	if puzzles.is_empty():
@@ -62,7 +63,7 @@ func _ready() -> void:
 	for piece in _pieces_data:
 		var id: String = str(piece.get("id", ""))
 		var slot_button := Button.new()
-		slot_button.custom_minimum_size = Vector2(90, 90)
+		slot_button.custom_minimum_size = Vector2(120, 120)
 		_style_slot_empty(slot_button)
 		slot_button.pressed.connect(_on_slot_pressed.bind(id))
 		slots_box.add_child(slot_button)
@@ -81,7 +82,7 @@ func _ready() -> void:
 		var id: String = str(piece.get("id", ""))
 		var color := Color(str(piece.get("color_hex", "#FFFFFF")))
 		var piece_button := Button.new()
-		piece_button.custom_minimum_size = Vector2(80, 80)
+		piece_button.custom_minimum_size = Vector2(110, 110)
 		_style_piece(piece_button, color, false)
 		piece_button.pressed.connect(_on_piece_pressed.bind(id))
 		pieces_box.add_child(piece_button)

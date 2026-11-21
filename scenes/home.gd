@@ -13,13 +13,7 @@ func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
 
-	var bg := ColorRect.new()
-	bg.color = AppColors.CREAM
-	bg.anchor_right = 1.0
-	bg.anchor_bottom = 1.0
-	add_child(bg)
-
-	_add_background_decoration()
+	add_child(GameBackground.new())
 
 	var vbox := VBoxContainer.new()
 	vbox.anchor_right = 1.0
@@ -114,23 +108,6 @@ static func _accent_for(kind: String) -> Color:
 		"mewarnai": return AppColors.ACCENT_MEWARNAI
 		"puzzle": return AppColors.ACCENT_PUZZLE
 		_: return AppColors.SUNSHINE
-
-
-## Dekorasi latar sederhana (bulatan transparan) — bukan ilustrasi asli,
-## cuma supaya Home tidak polos sampai Asset 1 kirim background final.
-func _add_background_decoration() -> void:
-	var deco := Control.new()
-	deco.anchor_right = 1.0
-	deco.anchor_bottom = 1.0
-	deco.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(deco)
-	deco.draw.connect(func():
-		var s := deco.get_size()
-		deco.draw_circle(Vector2(s.x * 0.1, s.y * 0.15), s.x * 0.08, Color(AppColors.ACCENT_ANGKA, 0.2))
-		deco.draw_circle(Vector2(s.x * 0.9, s.y * 0.18), s.x * 0.06, Color(AppColors.ACCENT_WARNA, 0.2))
-		deco.draw_circle(Vector2(s.x * 0.85, s.y * 0.85), s.x * 0.1, Color(AppColors.ACCENT_HEWAN, 0.18))
-		deco.draw_circle(Vector2(s.x * 0.08, s.y * 0.8), s.x * 0.05, Color(AppColors.ACCENT_MEWARNAI, 0.2))
-	)
 
 
 func _on_play_pressed() -> void:

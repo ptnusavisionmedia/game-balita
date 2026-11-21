@@ -34,6 +34,7 @@ var _hint_label: Label
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
+	add_child(GameBackground.new())
 
 	_animals = _load_animal_data()
 	if _animals.is_empty():

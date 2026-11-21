@@ -20,6 +20,7 @@ var _choices_box: HBoxContainer
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
+	add_child(GameBackground.new())
 
 	_colors = _load_color_data()
 	if _colors.is_empty():

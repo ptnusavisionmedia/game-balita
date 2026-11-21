@@ -448,3 +448,21 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diupdate**: `obsidian-vault/Specs/feature_puzzle.md` (mekanik + feedback diupdate total), `docs/UI_UX_DESIGN.md` (tabel interaksi), `obsidian-vault/Project Overview.md`.
 
 **Pelajaran buat modul lain**: kalau nanti ada modul yang "butuh" drag & drop sungguhan (tidak ada di 6 modul sekarang), **jangan asumsikan otomatis beres** cuma karena dokumentasi Godot bilang begitu — test sungguhan dulu di project ini sebelum percaya, karena history-nya 3x gagal berturut-turut untuk kasus yang kelihatannya sepele.
+
+## 2026-11-21 — Riset kompetitor (Lucas & Friends) + visual polish: `GameBackground`, hit-area 120px
+
+**Permintaan user**: "gamenya kurang menarik, coba buat gamenya simpel dan dipahami namun menyenangkan" + minta pelajari dokumen Notion referensi kompetitor "Lucas & Friends" (RV AppStudios) — dianalisis tim lain dengan menjalankan app asli di tablet via ADB.
+
+**Insight utama dari referensi** (disalin lengkap ke `obsidian-vault/Referensi-LucasAndFriends.md`, supaya tidak perlu akses Notion): prinsip warna sejuk=latar/warna hangat=interaktif, target sentuh ≥120px, alur "infinity" (X=lanjut bukan keluar), mode bebas diselingi mini-game bertujuan, parent gate kompetitor pakai kode dieja KATA (bukan digit, pre-reader-proof).
+
+**Validasi penting**: beberapa keputusan yang SUDAH diambil sebelumnya (alur infinite `GameFlow.start_random_game()`, `feature_musik`/`feature_mewarnai` tanpa soal benar/salah, tidak ada status "gagal" terlihat) **ternyata sudah match** pola kompetitor yang terbukti berhasil — bukan cuma asumsi/tebakan desain kita sendiri.
+
+**Dikerjakan (visual polish, pure code, tanpa aset baru)**:
+- `AppColors.SKY`/`GRASS`/`GRASS_DARK` (baru) + `core/scripts/game_background.gd` (`GameBackground`, gambar `_draw()` langit+rumput+matahari, pola sama `ModuleIcon`) — dipasang di Home (gantikan dekorasi lingkaran lama) + **semua 6 `feature_*`** (yang SEBELUMNYA TIDAK PUNYA BACKGROUND SAMA SEKALI — polos warna default kosong Godot, kemungkinan besar salah satu penyebab "kurang menarik").
+- `BigRoundButton` custom_minimum_size 88px → **120px** (ikut rekomendasi riset), keping & slot `feature_puzzle` juga dinaikkan ke 110-120px.
+
+**Belum diadopsi** (dicatat sebagai ide di `Referensi-LucasAndFriends.md`, bukan keputusan): parent gate versi "kode dieja kata" (punya kita baru saja selesai dites, tidak diubah tanpa diminta eksplisit), tombol exit app terpisah, panel kurasi konten orang tua, kontrol durasi main, lapisan koleksi/hadiah ("Toko Kiko" — disebut di sumber tapi perlu klarifikasi user, bukan rencana yang sudah ada di repo ini), maskot karakter (app ini belum punya maskot sama sekali — dicatat sebagai kebutuhan aset baru di `docs/ASSET_LIST.md`).
+
+**Juga dikerjakan**: `docs/ASSET_LIST.md` (baru) — konsolidasi SEMUA kebutuhan aset (ilustrasi/SFX/VO) dari 6 `obsidian-vault/Specs/feature_*.md` jadi 1 checklist lintas modul dengan path taruh file, atas permintaan eksplisit user.
+
+**Diverifikasi**: headless re-import + run 10 scene — semua lolos tanpa error. App dijalankan non-headless buat preview.

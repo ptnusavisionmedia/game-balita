@@ -25,6 +25,7 @@ var _area_buttons: Dictionary = {}
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
+	add_child(GameBackground.new())
 
 	var pictures := _load_pictures()
 	if pictures.is_empty():
