@@ -1,15 +1,26 @@
 extends Control
-## Susun puzzle (drag, snap longgar) — lihat obsidian-vault/Specs/feature_puzzle.md.
-## 3-4 keping untuk level 1 (bukan langsung 6).
+## Susun puzzle — lihat obsidian-vault/Specs/feature_puzzle.md.
+##
+## Update 2026-11-21 (ke-3): mekanik diganti dari drag asli
+## (`Control._get_drag_data`/`_can_drop_data`/`_drop_data`) jadi
+## **tap pilih, lalu tap taruh**. Drag asli Godot ternyata tidak
+## reliable di setup canvas-stretch project ini — 3 percobaan beda
+## (Control+child Panel, Control+`_draw()` manual, ColorRect/Panel)
+## semuanya dilaporkan user area klik/drop-nya tidak sinkron sama yang
+## kelihatan. Tap-pilih-lalu-taruh pakai `Button` biasa (TERBUKTI jalan
+## konsisten di semua modul lain), dan sebenarnya lebih gampang buat
+## motorik anak 1-5 tahun dibanding drag gesture asli — bukan cuma
+## workaround teknis. Lihat Decisions Log 2026-11-21.
 
 const DATA_PATH := "res://features/feature_puzzle/data/puzzle_data.json"
 const StarRewardOverlayScene := preload("res://core/scenes/StarRewardOverlay.tscn")
-const PuzzlePieceScript := preload("res://features/feature_puzzle/puzzle_piece.gd")
-const PuzzleSlotScript := preload("res://features/feature_puzzle/puzzle_slot.gd")
 
 var _pieces_data: Array = []
 var _filled_count: int = 0
-var _pieces: Dictionary = {}
+var _piece_buttons: Dictionary = {}  # id -> {"button": Button, "color": Color}
+var _slot_buttons: Dictionary = {}   # id -> Button
+var _slot_filled: Dictionary = {}    # id -> bool
+var _selected_piece_id: String = ""
 
 
 func _ready() -> void:
@@ -27,7 +38,7 @@ func _ready() -> void:
 	vbox.anchor_right = 1.0
 	vbox.anchor_bottom = 1.0
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	vbox.add_theme_constant_override("separation", 24)
+	vbox.add_theme_constant_override("separation", 20)
 	add_child(vbox)
 
 	var title := Label.new()
@@ -36,20 +47,27 @@ func _ready() -> void:
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 
-	# Slot target (outline kosong), urutan TIDAK sama dengan urutan keping
-	# di bawah supaya anak benar-benar mencocokkan, bukan asal urut.
+	var hint := Label.new()
+	hint.text = "Tap keping warnanya, lalu tap kotak yang cocok."
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(hint)
+
+	# Slot target (outline kosong) — urutan TIDAK sama dengan urutan
+	# keping di bawah supaya anak benar-benar mencocokkan.
 	var slots_box := HBoxContainer.new()
 	slots_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	slots_box.add_theme_constant_override("separation", 12)
 	vbox.add_child(slots_box)
 
 	for piece in _pieces_data:
-		var slot := PuzzleSlotScript.new()
-		slot.custom_minimum_size = Vector2(90, 90)
-		slot.expected_piece_id = str(piece.get("id", ""))
-		slot.expected_color = Color(str(piece.get("color_hex", "#FFFFFF")))
-		slot.piece_dropped.connect(_on_piece_dropped)
-		slots_box.add_child(slot)
+		var id: String = str(piece.get("id", ""))
+		var slot_button := Button.new()
+		slot_button.custom_minimum_size = Vector2(90, 90)
+		_style_slot_empty(slot_button)
+		slot_button.pressed.connect(_on_slot_pressed.bind(id))
+		slots_box.add_child(slot_button)
+		_slot_buttons[id] = slot_button
+		_slot_filled[id] = false
 
 	var pieces_box := HBoxContainer.new()
 	pieces_box.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -60,12 +78,14 @@ func _ready() -> void:
 	var shuffled: Array = _pieces_data.duplicate()
 	shuffled.shuffle()
 	for piece in shuffled:
-		var piece_node := PuzzlePieceScript.new()
-		piece_node.custom_minimum_size = Vector2(80, 80)
-		piece_node.piece_id = str(piece.get("id", ""))
-		piece_node.piece_color = Color(str(piece.get("color_hex", "#FFFFFF")))
-		pieces_box.add_child(piece_node)
-		_pieces[str(piece.get("id", ""))] = piece_node
+		var id: String = str(piece.get("id", ""))
+		var color := Color(str(piece.get("color_hex", "#FFFFFF")))
+		var piece_button := Button.new()
+		piece_button.custom_minimum_size = Vector2(80, 80)
+		_style_piece(piece_button, color, false)
+		piece_button.pressed.connect(_on_piece_pressed.bind(id))
+		pieces_box.add_child(piece_button)
+		_piece_buttons[id] = {"button": piece_button, "color": color}
 
 	_add_home_button()
 
@@ -77,11 +97,60 @@ func _load_puzzles() -> Array:
 	return parsed if parsed is Array else []
 
 
-func _on_piece_dropped(piece_id: String) -> void:
+func _style_piece(button: Button, color: Color, selected: bool) -> void:
+	var style := StyleBoxFlat.new()
+	style.bg_color = color
+	style.set_corner_radius_all(12)
+	if selected:
+		style.border_color = AppColors.GOLD
+		style.set_border_width_all(6)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		button.add_theme_stylebox_override(state, style)
+
+
+func _style_slot_empty(button: Button) -> void:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0)
+	style.border_color = AppColors.INK
+	style.set_border_width_all(3)
+	style.set_corner_radius_all(12)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		button.add_theme_stylebox_override(state, style)
+
+
+func _style_slot_filled(button: Button, color: Color) -> void:
+	var style := StyleBoxFlat.new()
+	style.bg_color = color
+	style.set_corner_radius_all(12)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		button.add_theme_stylebox_override(state, style)
+
+
+## Tap keping = "pilih" (toggle — tap lagi buat batal pilih). Pilih
+## keping lain otomatis ganti pilihan sebelumnya.
+func _on_piece_pressed(piece_id: String) -> void:
+	_selected_piece_id = "" if _selected_piece_id == piece_id else piece_id
+	for id in _piece_buttons.keys():
+		var entry: Dictionary = _piece_buttons[id]
+		_style_piece(entry["button"], entry["color"], id == _selected_piece_id)
+
+
+## Tap slot = "taruh" keping yang sedang dipilih. Keping yang tidak
+## cocok cuma diam saja (tidak ada suara/animasi "salah", lihat spek
+## bagian Feedback). Tap slot tanpa keping terpilih juga tidak
+## ngapa-ngapain.
+func _on_slot_pressed(slot_id: String) -> void:
+	if _selected_piece_id == "" or _slot_filled.get(slot_id, true):
+		return
+	if _selected_piece_id != slot_id:
+		return
+
+	var entry: Dictionary = _piece_buttons[_selected_piece_id]
+	_style_slot_filled(_slot_buttons[slot_id], entry["color"])
+	entry["button"].visible = false
+	_slot_filled[slot_id] = true
 	SfxService.play(null)  # TODO Farel: sfx_correct
-	var piece_node: Control = _pieces.get(piece_id)
-	if piece_node:
-		piece_node.visible = false
+	_selected_piece_id = ""
 
 	_filled_count += 1
 	if _filled_count >= _pieces_data.size():
@@ -89,7 +158,7 @@ func _on_piece_dropped(piece_id: String) -> void:
 
 
 ## Tombol darurat, selalu terlihat — PENTING khusus modul ini karena 1
-## sesi puzzle bisa makan waktu lebih lama dari modul lain (lihat spek).
+## sesi puzzle bisa makan waktu lebih lama dari modul lain.
 func _add_home_button() -> void:
 	var home_button := Button.new()
 	home_button.text = "🏠"

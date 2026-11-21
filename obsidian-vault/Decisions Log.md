@@ -434,3 +434,17 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Fix**: ganti total dari `Control` + `_draw()` manual jadi node bawaan Godot langsung — `puzzle_piece.gd` sekarang `extends ColorRect` (bukan `Control`), `puzzle_slot.gd` sekarang `extends Panel` (pakai `StyleBoxFlat` buat border kosong vs isi warna). Alasan: `ColorRect`/`Panel` sudah dipakai di banyak tempat lain di codebase ini (background Home/Splash, `fade_rect` GameFlow, card `ParentalGateDialog`/`StarRewardOverlay`) dan **terbukti** ukuran visual = ukuran hit-test-nya konsisten — menghindari kemungkinan bug di cara manual `_draw()` menghitung rect vs cara engine menghitung hit-test area buat Control custom.
 
 **Diverifikasi**: headless re-import + run `Puzzle.tscn` — lolos tanpa error. **Menunggu konfirmasi user** apakah area klik sekarang sudah full sesuai ukuran kotak yang terlihat.
+
+## 2026-11-21 — `feature_puzzle` fix ke-3 (final): drag diganti total jadi "tap pilih, tap taruh"
+
+**Laporan user (lanjutan dari 2 fix sebelumnya)**: setelah ganti ke `ColorRect`/`Panel`, masalah SAMA masih muncul — "hit dari box yang dibuat tidak pas". 3 percobaan beda (Control+child Panel, Control+`_draw()`, ColorRect/Panel) semuanya gagal dengan simptom serupa (area klik/drop tidak sinkron dengan yang kelihatan).
+
+**Kesimpulan**: ini bukan soal node type yang dipakai — Godot drag & drop asli (`Control._get_drag_data`/`_can_drop_data`/`_drop_data`) sendiri yang **tidak reliable** di kombinasi setup project ini (`window/stretch/mode="canvas_items"` + orientasi landscape + window size override desktop). Kemungkinan ada mismatch koordinat antara preview drag (digambar di screen-space) vs hit-test drop target (dihitung di canvas-space) yang tidak konsisten — bukan sesuatu yang bisa diperbaiki dengan ganti-ganti node type sambil nebak.
+
+**Fix final**: ganti mekanik total — **tap pilih keping, lalu tap taruh ke slot** — pakai `Button` biasa (bukan drag sama sekali). Ini aman karena `Button.pressed` signal sudah TERBUKTI konsisten jalan di semua modul lain (`feature_angka`, `feature_hewan`, `feature_warna`, `feature_musik`, `feature_mewarnai`) di bawah setup canvas-stretch yang sama — kalau ini juga gagal, berarti masalahnya bukan di drag API tapi sesuatu yang lebih dasar (yang sampai sekarang tidak terjadi). File `puzzle_piece.gd`/`puzzle_slot.gd` **dihapus total** (tidak perlu class terpisah lagi, semua logic di `puzzle.gd` pakai `Button` + `Dictionary` state, pola sama modul lain).
+
+**Kenapa ini bukan cuma workaround**: tap-pilih-lalu-taruh juga **lebih sesuai motorik anak 1-5 tahun** dibanding gesture drag sungguhan (drag butuh kontrol jari lebih halus — tahan, geser presisi, lepas di tempat yang benar — yang belum matang di usia ini). Jadi perubahan ini punya alasan desain, bukan cuma "karena kepepet bug".
+
+**Diupdate**: `obsidian-vault/Specs/feature_puzzle.md` (mekanik + feedback diupdate total), `docs/UI_UX_DESIGN.md` (tabel interaksi), `obsidian-vault/Project Overview.md`.
+
+**Pelajaran buat modul lain**: kalau nanti ada modul yang "butuh" drag & drop sungguhan (tidak ada di 6 modul sekarang), **jangan asumsikan otomatis beres** cuma karena dokumentasi Godot bilang begitu — test sungguhan dulu di project ini sebelum percaya, karena history-nya 3x gagal berturut-turut untuk kasus yang kelihatannya sepele.

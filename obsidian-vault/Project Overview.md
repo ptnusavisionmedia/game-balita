@@ -23,7 +23,7 @@
 | `feature_warna` | ✅ | ✅ **selesai (belum dites interaktif)** | 1 mekanik, tap cocokkan warna, reuse `AppColors`. Placeholder: emoji |
 | `feature_musik` | ✅ | ✅ **selesai (belum dites interaktif)** | Sengaja **tanpa** soal benar/salah — tap bebas 6 nada, selesai di 8 ketukan |
 | `feature_mewarnai` | ✅ | ✅ **selesai (belum dites interaktif)** | Sengaja **tanpa** soal benar/salah — isi 4 area (gambar "Kelinci"), bukan freehand. Placeholder: kotak warna |
-| `feature_puzzle` | ✅ | ✅ **selesai (belum dites interaktif)** | Drag 4 keping, snap longgar (match warna, bukan potongan gambar asli dulu) |
+| `feature_puzzle` | ✅ | ✅ **selesai, dites interaktif — bug drag diperbaiki jadi tap-pilih-taruh** | 4 keping, match warna (bukan potongan gambar asli dulu). Interaksi **bukan drag** — lihat Decisions Log 2026-11-21 |
 
 Semua spek lengkap di `obsidian-vault/Specs/feature_*.md`. **Base model + Fase 2 kode-nya kini SEMUA ada** (headless-verified 10 scene) — yang tersisa murni aset asli (ilustrasi/SFX/VO, semua masih placeholder emoji/kotak warna/`null`) dan test interaktif sentuhan asli untuk 4 modul terbaru (baru `feature_angka` yang sudah dites manusia beneran).
 

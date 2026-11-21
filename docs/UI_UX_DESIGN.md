@@ -52,7 +52,7 @@ Tidak ada layar "kalah"/"ulangi dari awal" yang terpisah — kondisi "belum sele
 | `feature_hewan` | Tap | Tap gambar hewan setelah dengar suaranya |
 | `feature_musik` | Tap (bukan drag) | Tombol nada besar, tidak perlu presisi musikal |
 | `feature_mewarnai` | Drag/tap warna ke area pola | Area target harus besar & bertoleransi (snap longgar) |
-| `feature_puzzle` | Drag | Potongan besar (≤6 keping untuk level awal), snap longgar |
+| `feature_puzzle` | Tap pilih, lalu tap taruh *(bukan drag — diganti 2026-11-21, drag asli Godot tidak reliable di canvas-stretch setup project ini, lihat Decisions Log)* | Potongan besar (≤6 keping untuk level awal) |
 
 Semua gestur dasar (tap, drag) pakai node bawaan Godot (`Button.pressed`, `Control._get_drag_data()`/`_drop_data()`) — sudah optimal, tidak perlu addon gestur tambahan (lihat [[docs/LIBRARIES.md]]).
 
