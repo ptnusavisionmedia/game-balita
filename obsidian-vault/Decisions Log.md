@@ -356,3 +356,7 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Caveat penting dicatat di dokumen**: ini bukan nasihat medis/klinis, sumber riset level "tips umum" (SimplyPsychology/NAEYC/Montessori Academy/CDC) bukan jurnal akademik, dan dilarang di-overclaim di marketing ("berbasis riset" oke, "disetujui ahli" tidak — kecuali memang direview manusia kompeten).
 
 **Status**: DRAFT, belum ada baris baru di `docs/TASK_BOARD.md` (sengaja menunggu konfirmasi user dulu sebelum jadi task nyata buat tim) — berbeda dari pola dokumen plan sebelumnya yang langsung dieksekusi.
+
+## 2026-11-21 — Plan tumbuh-kembang disetujui, masuk Task Board
+
+**Keputusan user**: lanjutkan `docs/PLAN_TUMBUH_KEMBANG.md` jadi task nyata. Ditambahkan 5 baris baru di `docs/TASK_BOARD.md` — Fase A (konten kartu, Bramantyo), Fase B (scene `ParentGuide`, Bramantyo), Fase C (audit mandiri per modul, Dev 2-4 + Dev Testing), Fase D (review konten oleh manusia yang paham anak usia dini — PIC belum ditentukan, **wajib** sebelum publish karena bukan nasihat medis), + ilustrasi kartu (opsional, Asset 1). Status di `PLAN_TUMBUH_KEMBANG.md` diubah dari DRAFT jadi DISETUJUI.

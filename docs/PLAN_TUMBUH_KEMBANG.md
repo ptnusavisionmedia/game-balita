@@ -1,6 +1,6 @@
 # Plan: Fitur Tumbuh Kembang — "Bareng Orang Tua" & "Belajar Mandiri"
 
-Status: **DRAFT PLAN, belum dieksekusi** — menunggu konfirmasi sebelum ditambahkan ke `docs/TASK_BOARD.md` sebagai task nyata. Dokumen ini jawaban atas permintaan: *"pelajari teori tumbuh kembang anak, buat dimana orang tua bisa mengajari atau anak bisa belajar sendiri."*
+Status: **DISETUJUI (2026-11-21)** — sudah ditambahkan ke `docs/TASK_BOARD.md` (Fase A-D + ilustrasi kartu). Dokumen ini jawaban atas permintaan: *"pelajari teori tumbuh kembang anak, buat dimana orang tua bisa mengajari atau anak bisa belajar sendiri."*
 
 Pelengkap `docs/UI_UX_DESIGN.md` (prinsip desain) dan `docs/PLAN_BASE_MODEL.md` (scope base model) — dokumen ini jawab pertanyaan **"kenapa" di balik tiap modul** (dasar ilmiahnya) dan **bagaimana app mendukung 2 cara main**: ditemani orang tua, atau dimainkan sendiri oleh anak.
 

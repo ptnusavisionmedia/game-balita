@@ -38,6 +38,11 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Tentukan pemegang Privacy Policy & Play Families Policy | — | compliance | Done | Bramantyo | 2026-11-20 | Keputusan diambil; dokumen Privacy Policy/Play Families Policy itu sendiri belum ditulis — itu task terpisah |
 | Tulis draft Privacy Policy & Play Families Policy | — | compliance | Done | Bramantyo | 2026-11-20 | Draft di `docs/PRIVACY_POLICY.md` — isi kontak & publish ke URL publik masih Open di baris bawah |
 | Isi kontak + publish `docs/PRIVACY_POLICY.md` ke URL publik (GitHub Pages/situs tim) | — | compliance | Open | Bramantyo | | wajib sebelum submit Play Store (Play Console minta link publik, bukan file repo) |
+| Fitur tumbuh-kembang — Fase A: tulis konten 6 kartu "Panduan Orang Tua" (`core/data/parent_guide.json` atau `.tres`) | Dev | core | Open | Bramantyo | | lihat `docs/PLAN_TUMBUH_KEMBANG.md` bagian 2.1 & 4 — konten dulu, bukan hardcode di scene |
+| Fitur tumbuh-kembang — Fase B: scene `ParentGuide.tscn`+`parent_guide.gd`, akses dari Settings di belakang `ParentalGateDialog` | Dev | scenes/core | Open | Bramantyo | | lihat `docs/PLAN_TUMBUH_KEMBANG.md` bagian 4 — tidak sentuh `GameFlow`/gameplay |
+| Fitur tumbuh-kembang — Fase C: audit "bisa dimainkan tanpa baca" per modul (mulai `feature_angka`) | Dev | feature_* | Open | Dev 2-4 + Dev Testing | | checklist di `docs/PLAN_TUMBUH_KEMBANG.md` bagian 2.2, masuk juga ke `docs/QA_CHECKLIST.md` begitu dibuat |
+| Fitur tumbuh-kembang — Fase D: review isi 6 kartu panduan oleh tim/manusia yang paham anak usia dini sebelum publish | — | compliance/konten | Open | (belum ditentukan) | | wajib, bukan nasihat medis — lihat `docs/PLAN_TUMBUH_KEMBANG.md` bagian 6 |
+| Ilustrasi kartu "Panduan Orang Tua" (opsional, teks dulu boleh) | Asset | branding | Open | Asset 1 | | lihat `docs/PLAN_TUMBUH_KEMBANG.md` bagian 5 |
 
 ## Setelah base model demo lolos
 
