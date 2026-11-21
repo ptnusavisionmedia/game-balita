@@ -1,0 +1,44 @@
+[
+  {
+    "id": "kucing",
+    "name": "Kucing",
+    "sound_desc": "Meong",
+    "placeholder_emoji": "🐱",
+    "sfx": ""
+  },
+  {
+    "id": "anjing",
+    "name": "Anjing",
+    "sound_desc": "Guk guk",
+    "placeholder_emoji": "🐶",
+    "sfx": ""
+  },
+  {
+    "id": "sapi",
+    "name": "Sapi",
+    "sound_desc": "Moo",
+    "placeholder_emoji": "🐮",
+    "sfx": ""
+  },
+  {
+    "id": "ayam",
+    "name": "Ayam",
+    "sound_desc": "Kukuruyuk",
+    "placeholder_emoji": "🐔",
+    "sfx": ""
+  },
+  {
+    "id": "kambing",
+    "name": "Kambing",
+    "sound_desc": "Mbeek",
+    "placeholder_emoji": "🐐",
+    "sfx": ""
+  },
+  {
+    "id": "bebek",
+    "name": "Bebek",
+    "sound_desc": "Kwek kwek",
+    "placeholder_emoji": "🦆",
+    "sfx": ""
+  }
+]

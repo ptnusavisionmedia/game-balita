@@ -370,3 +370,13 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Konsekuensi teknis**: butuh 1 state baru di `GameFlow` (`guided_mode`, pola sama `infinite_mode`) dan fungsi baru `start_guided_game(...)` — perubahan `core/` pertama yang didorong kebutuhan 1 modul `feature_*` spesifik, bukan dari Bramantyo sendiri. `features/feature_hewan/hewan.gd` baca flag itu, 1 script 2 cabang render, data hewan (6 ekor awal: kucing/anjing/sapi/ayam/kambing/bebek) di 1 file data supaya mudah ditambah tanpa ubah logic.
 
 **Spek lengkap**: `obsidian-vault/Specs/feature_hewan.md`. **Sengaja tidak dijadikan pola default** untuk 5 modul lain — ini keputusan khusus `feature_hewan`, bukan standar baru untuk semua modul.
+
+## 2026-11-21 — `feature_hewan` diimplementasikan: 2 mekanik jalan, placeholder aset
+
+**Dikerjakan**: `features/feature_hewan/hewan.gd` ditulis penuh sesuai `obsidian-vault/Specs/feature_hewan.md` — data 6 hewan di `features/feature_hewan/data/hewan_data.json` (bukan hardcode array di `.gd`, supaya Asset/non-coder bisa edit nanti), mekanik Mandiri (dengar suara → pilih 1 dari 3, pola sama `feature_angka`, reuse `StarRewardOverlay`+`ProgressRepository`+`GameFlow.finish_game_session()`), dan mekanik Bareng Orang Tua (gambar disamarkan "？" → tombol "🔊 Dengar Suaranya" + "🔍 Lihat Jawaban" [tanpa tanda benar/salah] + "Hewan Lain →", hint kalimat scaffolding cuma muncul di hewan pertama). Fork 2 mekanik dibaca dari `GameFlow.guided_mode` (state baru, pola sama `infinite_mode`) + `start_guided_game(...)` (belum ada pemanggilnya sampai `ParentGuide.tscn` dibangun di Fase B). `GameFlow.GAMES` baris Hewan diubah `implemented: false → true`, jadi sekarang ikut masuk pool "Play acak".
+
+**Placeholder yang masih perlu diganti** (bukan bug, sengaja — base model harus bisa ditest tanpa aset final): `placeholder_emoji` (🐱🐶🐮🐔🐐🦆) di `hewan_data.json` ganti ilustrasi asli dari Asset 1; `sfx` kosong + semua `SfxService.play(null)` ganti suara asli dari Farel.
+
+**Diverifikasi**: headless re-import + run `Hewan.tscn` 2 kali — sekali dengan `GameFlow.guided_mode` default (`false`, mekanik Mandiri), sekali dipaksa `true` sementara (lalu dikembalikan ke `false`) buat mastiin cabang Bareng Orang Tua juga bebas error. Re-run semua 9 scene lain — semua lolos tanpa error baru. App juga dijalankan non-headless buat preview visual user.
+
+**Belum**: tombol "Mulai main bareng" di `ParentGuide` (scene-nya belum ada, Fase B) — jadi mekanik Bareng Orang Tua untuk sekarang **tidak bisa diakses dari UI manapun**, cuma lewat flag manual kayak di atas. Tidak masalah untuk base model (gameplay-nya sudah siap, tinggal nunggu pintu masuknya), tapi perlu dicatat supaya tidak dikira "sudah selesai sepenuhnya".
