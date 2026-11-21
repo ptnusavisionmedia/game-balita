@@ -426,3 +426,11 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Fix**: ganti total jadi gambar lewat `_draw()` LANGSUNG di root `Control` (pola sama `core/scripts/module_icon.gd` yang sudah terbukti jalan di tile Home) — tidak ada child Panel lagi, jadi tidak ada ambiguitas node mana yang menang hit-test. `puzzle_slot.gd` juga disederhanakan: visual "terisi" langsung di-set dalam `_drop_data()` (hapus method `mark_filled_visual()` terpisah yang sekarang tidak perlu).
 
 **Diverifikasi**: headless re-import + run `Puzzle.tscn` — lolos tanpa error. **Belum dikonfirmasi user** apakah drag sungguhan sekarang jalan — menunggu hasil retest.
+
+## 2026-11-21 — `feature_puzzle` fix ke-2: ganti ke `ColorRect`/`Panel` bawaan
+
+**Laporan user (lanjutan)**: setelah fix ke-1 (`_draw()` manual di root Control), piece JADI bisa diklik, tapi "ada point kecil yang harus diklik baru bisa" meski kotaknya kelihatan besar — area klik tidak sinkron dengan area gambar.
+
+**Fix**: ganti total dari `Control` + `_draw()` manual jadi node bawaan Godot langsung — `puzzle_piece.gd` sekarang `extends ColorRect` (bukan `Control`), `puzzle_slot.gd` sekarang `extends Panel` (pakai `StyleBoxFlat` buat border kosong vs isi warna). Alasan: `ColorRect`/`Panel` sudah dipakai di banyak tempat lain di codebase ini (background Home/Splash, `fade_rect` GameFlow, card `ParentalGateDialog`/`StarRewardOverlay`) dan **terbukti** ukuran visual = ukuran hit-test-nya konsisten — menghindari kemungkinan bug di cara manual `_draw()` menghitung rect vs cara engine menghitung hit-test area buat Control custom.
+
+**Diverifikasi**: headless re-import + run `Puzzle.tscn` — lolos tanpa error. **Menunggu konfirmasi user** apakah area klik sekarang sudah full sesuai ukuran kotak yang terlihat.
