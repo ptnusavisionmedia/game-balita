@@ -11,11 +11,11 @@ extends Node
 ## jadi tidak masuk pool "Play acak". Ganti jadi true begitu modulnya selesai.
 const GAMES := [
 	{"name": "Angka", "kind": "angka", "scene": "res://features/feature_angka/Angka.tscn", "implemented": true},
-	{"name": "Warna", "kind": "warna", "scene": "res://features/feature_warna/Warna.tscn", "implemented": false},
+	{"name": "Warna", "kind": "warna", "scene": "res://features/feature_warna/Warna.tscn", "implemented": true},
 	{"name": "Hewan", "kind": "hewan", "scene": "res://features/feature_hewan/Hewan.tscn", "implemented": true},
-	{"name": "Musik", "kind": "musik", "scene": "res://features/feature_musik/Musik.tscn", "implemented": false},
-	{"name": "Mewarnai", "kind": "mewarnai", "scene": "res://features/feature_mewarnai/Mewarnai.tscn", "implemented": false},
-	{"name": "Puzzle", "kind": "puzzle", "scene": "res://features/feature_puzzle/Puzzle.tscn", "implemented": false},
+	{"name": "Musik", "kind": "musik", "scene": "res://features/feature_musik/Musik.tscn", "implemented": true},
+	{"name": "Mewarnai", "kind": "mewarnai", "scene": "res://features/feature_mewarnai/Mewarnai.tscn", "implemented": true},
+	{"name": "Puzzle", "kind": "puzzle", "scene": "res://features/feature_puzzle/Puzzle.tscn", "implemented": true},
 ]
 
 ## true kalau sesi main sekarang dimulai lewat tombol Play (acak) — dipakai

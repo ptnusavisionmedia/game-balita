@@ -403,3 +403,16 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 - **`feature_puzzle`**: drag 3-4 keping (bukan langsung 6) ke outline, snap longgar, diam (tanpa suara negatif) kalau belum pas. Dicatat sebagai modul paling pas buat scaffolding orang tua (`core/data/parent_guide.json` sudah ada kartunya), tapi **tetap 1 mekanik gameplay** — tidak ikut pola 2-mode `feature_hewan`.
 
 **Status**: 4 spek ini DITULIS, **implementasi kode belum dikerjakan** — ditambahkan sebagai baris Open terpisah per modul di `docs/TASK_BOARD.md` (PIC sesuai `docs/TEAM.md`: Dev 2 untuk warna, Dev 3 untuk musik, Dev 4 untuk mewarnai+puzzle).
+
+## 2026-11-21 — Fase 2 dilanjutkan: 4 modul tersisa diimplementasikan, semua 6 modul kini ada kode
+
+**Dikerjakan**: implementasi penuh `feature_warna`, `feature_musik`, `feature_mewarnai`, `feature_puzzle` sesuai spek masing-masing (ditulis sesi sebelumnya hari ini). Semua `GameFlow.GAMES` baris sekarang `implemented: true` — ke-6 modul masuk pool "Play acak".
+
+- **`feature_warna`**: pola sama `feature_angka` (dengar/lihat acuan → pilih 1 dari 3), 6 warna reuse `AppColors` + emoji placeholder, hex "Merah" sengaja dibuat hangat (`#E57373`) bukan merah murni.
+- **`feature_musik`**: tap bebas 6 tombol nada, **tanpa struktur soal sama sekali** — selesai otomatis di ketukan ke-8 (bukan kuis, sesuai spek).
+- **`feature_mewarnai`**: isi 4 area gambar "Kelinci" (placeholder kotak rounded, bukan ilustrasi asli) pakai palet dari `AppColors` — **sengaja tidak baca data dari `feature_warna`** supaya tidak melanggar aturan "feature_* tidak boleh saling depend" di `docs/ARCHITECTURE.md`, cukup sumber warna yang sama (`AppColors`) dipakai dua-duanya secara independen.
+- **`feature_puzzle`**: drag & drop asli pakai `Control._get_drag_data()`/`_can_drop_data()`/`_drop_data()` bawaan Godot (2 script baru: `puzzle_piece.gd`, `puzzle_slot.gd`) — 4 keping kotak warna polos (match warna sebagai placeholder, bukan potongan gambar asli), snap longgar (area drop = ukuran slot itu sendiri, bukan radius piksel kecil). Keping yang salah taruh cuma diam (ditolak `_can_drop_data`), tidak ada suara/animasi "salah" — modul ini satu-satunya yang pakai drag & drop sungguhan sampai sekarang.
+
+**Diverifikasi**: headless re-import + run 10 scene (`Splash`, `Home`, `Settings`, `ParentGuide`, 6 `feature_*`) — semua lolos tanpa error. App dijalankan non-headless buat preview user.
+
+**Status proyek**: ini melengkapi seluruh "Fase 2" dari sisi kode — **ke-6 mini-game sekarang semua punya gameplay asli**, bukan placeholder "Kembali" doang. Yang tersisa murni: aset asli (ilustrasi/SFX/VO, semua masih placeholder) dan test interaktif sentuhan asli buat 4 modul terbaru (cuma `feature_angka` yang sudah pernah dites manusia beneran sampai sekarang).

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "kuning",
+    "name": "Kuning",
+    "color_hex": "#FFC93C",
+    "placeholder_emoji": "🍋"
+  },
+  {
+    "id": "hijau",
+    "name": "Hijau",
+    "color_hex": "#6FCF97",
+    "placeholder_emoji": "🍃"
+  },
+  {
+    "id": "oranye",
+    "name": "Oranye",
+    "color_hex": "#FF8A65",
+    "placeholder_emoji": "🍊"
+  },
+  {
+    "id": "ungu",
+    "name": "Ungu",
+    "color_hex": "#B39DDB",
+    "placeholder_emoji": "🍇"
+  },
+  {
+    "id": "biru",
+    "name": "Biru",
+    "color_hex": "#4FC3F7",
+    "placeholder_emoji": "🫐"
+  },
+  {
+    "id": "merah",
+    "name": "Merah",
+    "color_hex": "#E57373",
+    "placeholder_emoji": "🍎"
+  }
+]

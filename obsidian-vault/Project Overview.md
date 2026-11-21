@@ -15,17 +15,17 @@
 - **Orientasi: LANDSCAPE** (bukan portrait — direvisi user 2026-11-21), `window/stretch/mode="canvas_items"` + `aspect="expand"` supaya UI konsisten proporsinya di HP & tablet.
 - Tidak ada menang/kalah, tidak ada skor ditampilkan ke anak di mana pun — ini bukan cuma gaya, selaras teori (Erikson: usia 1-5 masih bangun rasa percaya diri; CDC: konsep menang-kalah baru matang kognitif ~5 tahun). Lihat [[Decisions Log]] entri 2026-11-20/21.
 
-### 6 modul mini-game
+### 6 modul mini-game — **SEMUA sudah ada kode, 2026-11-21**
 | Modul | Spek | Kode | Catatan |
 |---|---|---|---|
 | `feature_angka` | ✅ | ✅ **selesai, dites interaktif** | Pilot/pola rujukan. Placeholder: ikon hati (bukan ilustrasi final), SFX `null` |
 | `feature_hewan` | ✅ | ✅ **selesai** | **2 mekanik** (satu-satunya): Mandiri (lewat Home, self-correcting) + Bareng Orang Tua (lewat ParentGuide → "Mulai main bareng", reveal manual tanpa benar/salah). Placeholder: emoji, SFX `null` |
-| `feature_warna` | ✅ | ⬜ Open (Dev 2) | 1 mekanik, tap cocokkan warna, reuse `AppColors` |
-| `feature_musik` | ✅ | ⬜ Open (Dev 3) | Sengaja **tanpa** soal benar/salah — tap bebas 4-6 nada |
-| `feature_mewarnai` | ✅ | ⬜ Open (Dev 4) | Sengaja **tanpa** soal benar/salah — isi 2-4 area, bukan freehand |
-| `feature_puzzle` | ✅ | ⬜ Open (Dev 4) | Drag 3-4 keping (bukan 6), snap longgar |
+| `feature_warna` | ✅ | ✅ **selesai (belum dites interaktif)** | 1 mekanik, tap cocokkan warna, reuse `AppColors`. Placeholder: emoji |
+| `feature_musik` | ✅ | ✅ **selesai (belum dites interaktif)** | Sengaja **tanpa** soal benar/salah — tap bebas 6 nada, selesai di 8 ketukan |
+| `feature_mewarnai` | ✅ | ✅ **selesai (belum dites interaktif)** | Sengaja **tanpa** soal benar/salah — isi 4 area (gambar "Kelinci"), bukan freehand. Placeholder: kotak warna |
+| `feature_puzzle` | ✅ | ✅ **selesai (belum dites interaktif)** | Drag 4 keping, snap longgar (match warna, bukan potongan gambar asli dulu) |
 
-Semua spek lengkap di `obsidian-vault/Specs/feature_*.md`.
+Semua spek lengkap di `obsidian-vault/Specs/feature_*.md`. **Base model + Fase 2 kode-nya kini SEMUA ada** (headless-verified 10 scene) — yang tersisa murni aset asli (ilustrasi/SFX/VO, semua masih placeholder emoji/kotak warna/`null`) dan test interaktif sentuhan asli untuk 4 modul terbaru (baru `feature_angka` yang sudah dites manusia beneran).
 
 ### Fitur tumbuh-kembang (baru, 2026-11-21)
 `docs/PLAN_TUMBUH_KEMBANG.md` — 2 mode dalam 1 app, bukan 2 app:
@@ -40,8 +40,8 @@ Semua spek lengkap di `obsidian-vault/Specs/feature_*.md`.
 - `.gitignore` — gradle build cache (`packages/app/android/.gradle/`) ditambahkan setelah ketahuan ikut mau ke-commit.
 
 ### Belum dikerjakan / terbuka
-- Implementasi kode 4 modul (warna/musik/mewarnai/puzzle) — spek sudah ada, tinggal eksekusi.
-- Semua ilustrasi asli (baru ada 1: ikon vector `ModuleIcon` buat tile Home) & semua SFX/VO asli — semuanya masih placeholder (emoji/`null`).
+- Semua ilustrasi asli (baru ada 1: ikon vector `ModuleIcon` buat tile Home) & semua SFX/VO asli — semuanya masih placeholder (emoji/kotak warna/`null`), lihat baris Asset per modul di `docs/TASK_BOARD.md`.
+- Test interaktif sentuhan asli untuk `feature_warna`/`feature_musik`/`feature_mewarnai`/`feature_puzzle` — kodenya sudah ada & headless-verified, tapi belum pernah dicoba klik/drag sungguhan oleh manusia.
 - Test interaktif di device/emulator Android **asli** (baru di desktop Windows).
 - `docs/QA_CHECKLIST.md` belum dibuat.
 - Nama app final belum diputuskan (masih "Bayi GuguGaga" sementara).

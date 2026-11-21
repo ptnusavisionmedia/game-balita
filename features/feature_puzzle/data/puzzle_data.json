@@ -1,0 +1,12 @@
+[
+  {
+    "picture_id": "bentuk_warna",
+    "picture_name": "Bentuk",
+    "pieces": [
+      { "id": "a", "color_hex": "#FFC93C" },
+      { "id": "b", "color_hex": "#6FCF97" },
+      { "id": "c", "color_hex": "#4FC3F7" },
+      { "id": "d", "color_hex": "#F48FB1" }
+    ]
+  }
+]
