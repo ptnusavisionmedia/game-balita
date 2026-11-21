@@ -19,13 +19,17 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Verifikasi: buka project di Godot Editor/headless, cek semua scene lolos | Dev | base model | Done | Bramantyo | 2026-11-19 | Godot 4.7.2 — semua 8 scene exit 0 headless; export APK/interaksi sentuhan asli masih belum |
 | CI headless validate (`.github/workflows/ci.yml`) | Dev | infra | Done | Bramantyo | 2026-11-19 | binary `godot` + `--quit-after` terverifikasi |
 | Part 1.1-1.3 (export template, export_presets.cfg, CI export job) | Dev | infra | Done | Bramantyo | 2026-11-20 | APK debug export BERHASIL lokal (app-debug.apk, ~27MB, ter-sign). CI job belum pernah dijalankan sungguhan (cuma ditulis ikut pola resmi) |
-| Spek + asset list `feature_warna` | Dev | feature_warna | Open | Dev 2 | | |
+| Spek `feature_warna` (tap, cocokkan warna) | Dev | feature_warna | Done | (sesi AI, 2026-11-21) | 2026-11-21 | `obsidian-vault/Specs/feature_warna.md` — implementasi + asset list masih Open |
+| `feature_warna`: implementasi UI+logic + asset list (6 warna/benda) | Dev | feature_warna | Open | Dev 2 | | lihat `obsidian-vault/Specs/feature_warna.md` |
 | Spek `feature_hewan` (2 mekanik: Mandiri + Bareng Orang Tua) | Dev | feature_hewan | Done | (sesi AI + user, 2026-11-21) | 2026-11-21 | `obsidian-vault/Specs/feature_hewan.md` — asset list masih Open di baris bawah |
 | `feature_hewan`: implementasi UI+logic (2 mekanik) + data 6 hewan | Dev | feature_hewan | Done | (sesi AI, 2026-11-21) | 2026-11-21 | `features/feature_hewan/hewan.gd` + `data/hewan_data.json`. Headless-verified 2 mekanik. **Placeholder**: emoji ganti ilustrasi asli, `SfxService.play(null)` ganti SFX asli — lihat baris asset di bawah |
 | Asset list `feature_hewan` (6 ilustrasi hewan + 6 SFX suara) | Asset | feature_hewan | Open | Asset 1 + Farel | | lihat tabel Asset di `obsidian-vault/Specs/feature_hewan.md` — ganti placeholder emoji/silent di `hewan_data.json` |
-| Spek + asset list `feature_musik` | Dev | feature_musik | Open | Dev 3 | | |
-| Spek + asset list `feature_mewarnai` | Dev | feature_mewarnai | Open | Dev 4 | | |
-| Spek + asset list `feature_puzzle` | Dev | feature_puzzle | Open | Dev 4 | | |
+| Spek `feature_musik` (tap bebas, tanpa soal benar/salah) | Dev | feature_musik | Done | (sesi AI, 2026-11-21) | 2026-11-21 | `obsidian-vault/Specs/feature_musik.md` — implementasi + asset list masih Open |
+| `feature_musik`: implementasi UI+logic + asset list (4-6 nada) | Dev | feature_musik | Open | Dev 3 | | lihat `obsidian-vault/Specs/feature_musik.md` |
+| Spek `feature_mewarnai` (isi area, tanpa soal benar/salah) | Dev | feature_mewarnai | Done | (sesi AI, 2026-11-21) | 2026-11-21 | `obsidian-vault/Specs/feature_mewarnai.md` — implementasi + asset list masih Open |
+| `feature_mewarnai`: implementasi UI+logic + asset list (1-2 gambar area) | Dev | feature_mewarnai | Open | Dev 4 | | lihat `obsidian-vault/Specs/feature_mewarnai.md` |
+| Spek `feature_puzzle` (drag, snap longgar, 3-4 keping) | Dev | feature_puzzle | Done | (sesi AI, 2026-11-21) | 2026-11-21 | `obsidian-vault/Specs/feature_puzzle.md` — implementasi + asset list masih Open |
+| `feature_puzzle`: implementasi UI+logic + asset list (1 gambar 3-4 keping) | Dev | feature_puzzle | Open | Dev 4 | | lihat `obsidian-vault/Specs/feature_puzzle.md` |
 | `docs/QA_CHECKLIST.md` + pertimbangkan addon GUT | Dev | lintas-modul | Open | Dev Testing | | lihat JOBS_BASE_MODEL Job 5 |
 | Test interaktif `feature_angka` di laptop (desktop, bukan device Android) | Dev | feature_angka | Done | (sesi AI + user, 2026-11-19) | 2026-11-19 | 4 soal dijawab benar, reward+confetti muncul, progress.cfg terisi nyata |
 | Test interaktif `feature_angka` di device/emulator Android asli | Dev | feature_angka | Open | Dev Testing | | yang di atas baru di desktop Windows, belum di Android |

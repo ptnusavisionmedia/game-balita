@@ -392,3 +392,14 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: headless re-import + run `ParentGuide.tscn` + 9 scene lain — semua lolos tanpa error. App dijalankan non-headless buat preview user.
 
 **Belum**: Fase C (audit mandiri per modul) & Fase D (review konten oleh manusia yang paham anak usia dini) masih Open di `docs/TASK_BOARD.md` — konten 6 kartu ini draft pertama, bukan final.
+
+## 2026-11-21 — Spek 4 modul tersisa ditulis: `feature_warna`, `feature_musik`, `feature_mewarnai`, `feature_puzzle`
+
+**Dikerjakan**: lengkapi `obsidian-vault/Specs/` buat 4 modul yang masih kosong, dasarnya dari `docs/UI_UX_DESIGN.md` tabel "Pola interaksi per tipe mini-game" + prinsip yang sudah berlaku. Keputusan penting per modul:
+
+- **`feature_warna`**: 1 mekanik (tap, cocokkan warna acuan ke benda — pola sama `feature_angka`), reuse `AppColors` yang sudah ada, 6 warna+benda placeholder (emoji). Dicatat eksplisit: larangan "merah murni" di `docs/UI_UX_DESIGN.md` itu soal warna feedback-salah, **bukan** larangan mengajarkan konsep warna merah itu sendiri.
+- **`feature_musik`**: **sengaja tanpa struktur soal benar/salah** — tap bebas 4-6 tombol nada, selesai setelah 8 ketukan (bukan kuis). Alasan: "tidak perlu presisi musikal" di UI_UX_DESIGN.md secara alami berarti tidak ada target benar/salah untuk musik usia 1-5 tahun.
+- **`feature_mewarnai`**: juga tanpa benar/salah — isi 2-4 area besar dengan warna pilihan sendiri (bukan freehand drawing piksel, itu di luar scope base model, dicatat jelas sebagai batasan prototipe bukan bug). Reuse palet warna dari `feature_warna`.
+- **`feature_puzzle`**: drag 3-4 keping (bukan langsung 6) ke outline, snap longgar, diam (tanpa suara negatif) kalau belum pas. Dicatat sebagai modul paling pas buat scaffolding orang tua (`core/data/parent_guide.json` sudah ada kartunya), tapi **tetap 1 mekanik gameplay** — tidak ikut pola 2-mode `feature_hewan`.
+
+**Status**: 4 spek ini DITULIS, **implementasi kode belum dikerjakan** — ditambahkan sebagai baris Open terpisah per modul di `docs/TASK_BOARD.md` (PIC sesuai `docs/TEAM.md`: Dev 2 untuk warna, Dev 3 untuk musik, Dev 4 untuk mewarnai+puzzle).
