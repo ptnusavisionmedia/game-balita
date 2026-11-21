@@ -18,9 +18,10 @@ features/feature_* ──TIDAK BOLEH saling depend antar feature_* lain──
 ```
 
 `core/` berisi yang benar-benar dipakai bersama saja:
-- **Autoload singleton** (`project.godot` `[autoload]`, dipanggil global lewat nama-nya): `ProgressRepository` (simpan/baca progres & setting suara), `SfxService` (SFX pendek), `AudioService` (musik/VO panjang), `GameFlow` (katalog game + navigasi+fade+debounce + mode "Play acak infinite" — **semua** pindah scene WAJIB lewat `GameFlow.goto_scene(...)`, bukan `get_tree().change_scene_to_file()` langsung).
+- **Autoload singleton** (`project.godot` `[autoload]`, dipanggil global lewat nama-nya): `ProgressRepository` (simpan/baca progres & setting suara), `SfxService` (SFX pendek), `AudioService` (musik/VO panjang), `GameFlow` (katalog game + navigasi+fade+debounce + mode "Play acak infinite" + `guided_mode` untuk modul yang punya mekanik "Bareng Orang Tua" — **semua** pindah scene WAJIB lewat `GameFlow.goto_scene(...)`/`start_guided_game(...)`, bukan `get_tree().change_scene_to_file()` langsung).
 - **Scene reusable** (`core/scenes/`): `BigRoundButton.tscn`, `StarRewardOverlay.tscn`, `ParentalGateDialog.tscn`.
 - **Konstanta/tema** (`core/scripts/app_colors.gd`): palet warna (lihat `docs/UI_UX_DESIGN.md`).
+- **Data konten** (`core/data/`): `parent_guide.json` — isi kartu "Panduan Orang Tua" per modul, dibaca `scenes/parent_guide.gd` (lihat `docs/PLAN_TUMBUH_KEMBANG.md`). `scenes/ParentGuide.tscn` ini scene app-shell baru, sejajar `Home.tscn`/`Settings.tscn`, diakses dari Settings.
 
 Kalau sebuah fitur butuh sesuatu dari `core/` yang belum ada: **tambahkan ke `core/`, jangan copy-paste logic ke tiap feature**. Perubahan di `core/` wajib lewat PR yang di-review Bramantyo (pemegang `core`, lihat `docs/TEAM.md`), karena dia satu-satunya titik yang menyentuh semua modul.
 

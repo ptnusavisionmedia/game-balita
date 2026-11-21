@@ -1,0 +1,68 @@
+[
+  {
+    "kind": "angka",
+    "title": "Berhitung (feature_angka)",
+    "what_learning": "Anak belajar menghitung benda nyata — bukan angka abstrak dulu, karena di usia ini belajar lebih mudah lewat benda yang kelihatan.",
+    "scaffolding_phrases": [
+      "Ada berapa hati, ya? Yuk hitung bareng: satu... dua...",
+      "Coba tunjuk satu-satu sambil ngitung."
+    ],
+    "offline_activity": "Hitung jumlah sendok pas bantu siapin makan.",
+    "guided_scene": ""
+  },
+  {
+    "kind": "warna",
+    "title": "Warna (feature_warna)",
+    "what_learning": "Anak melatih indra lihat buat bedain warna — pas sama masa anak lagi \"peka\" banget sama warna/bentuk di sekitar usia 2.5-6 tahun.",
+    "scaffolding_phrases": [
+      "Yang mana warnanya sama kayak apel?",
+      "Coba cari lagi benda di rumah yang warnanya sama kayak ini."
+    ],
+    "offline_activity": "Pas pakai baju, sebut warnanya bareng-bareng.",
+    "guided_scene": ""
+  },
+  {
+    "kind": "hewan",
+    "title": "Suara Hewan (feature_hewan)",
+    "what_learning": "Anak belajar nama & suara hewan — pas sama masa anak lagi cepat banget nyerap kata-kata baru (sekitar 7 bulan - 3 tahun).",
+    "scaffolding_phrases": [
+      "Ini suaranya siapa? Coba tiru!",
+      "Hewan ini biasanya tinggal di mana, ya?"
+    ],
+    "offline_activity": "Pas lihat hewan asli/di buku, tanya \"ini suaranya gimana?\"",
+    "guided_scene": "res://features/feature_hewan/Hewan.tscn"
+  },
+  {
+    "kind": "musik",
+    "title": "Musik (feature_musik)",
+    "what_learning": "Anak melatih ritme & koordinasi gerak lewat suara/musik sederhana.",
+    "scaffolding_phrases": [
+      "Ayo tepuk tangan ikutin iramanya!",
+      "Coba goyang badan pelan-pelan ikut musiknya."
+    ],
+    "offline_activity": "Nyanyi bareng atau tepuk tangan ikutin lagu favoritnya.",
+    "guided_scene": ""
+  },
+  {
+    "kind": "mewarnai",
+    "title": "Mewarnai (feature_mewarnai)",
+    "what_learning": "Anak melatih motorik halus (gerakan jari/tangan) sambil berekspresi lewat warna.",
+    "scaffolding_phrases": [
+      "Warna apa yang kamu suka buat ini?",
+      "Coba warnai pelan-pelan, nggak usah buru-buru."
+    ],
+    "offline_activity": "Kasih kertas & krayon buat gambar bebas di rumah.",
+    "guided_scene": ""
+  },
+  {
+    "kind": "puzzle",
+    "title": "Puzzle (feature_puzzle)",
+    "what_learning": "Anak melatih kemampuan mikir spasial & menyelesaikan masalah kecil — cocok buat orang tua bantu pas anak mentok dikit (bukan langsung dibantuin penuh).",
+    "scaffolding_phrases": [
+      "Coba potongan yang bentuknya mirip ini dulu.",
+      "Menurutmu ini taruh di mana, ya?"
+    ],
+    "offline_activity": "Mainan susun blok sederhana di rumah juga melatih skill yang sama.",
+    "guided_scene": ""
+  }
+]

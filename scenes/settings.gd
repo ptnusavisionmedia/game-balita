@@ -23,6 +23,11 @@ func _ready() -> void:
 	sound_check.toggled.connect(_on_sound_toggled)
 	vbox.add_child(sound_check)
 
+	var parent_guide_button := Button.new()
+	parent_guide_button.text = "Panduan Orang Tua"
+	parent_guide_button.pressed.connect(func(): GameFlow.goto_scene("res://scenes/ParentGuide.tscn"))
+	vbox.add_child(parent_guide_button)
+
 	var back_button := Button.new()
 	back_button.text = "Kembali"
 	back_button.pressed.connect(func(): GameFlow.go_home())

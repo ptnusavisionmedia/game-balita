@@ -380,3 +380,15 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: headless re-import + run `Hewan.tscn` 2 kali — sekali dengan `GameFlow.guided_mode` default (`false`, mekanik Mandiri), sekali dipaksa `true` sementara (lalu dikembalikan ke `false`) buat mastiin cabang Bareng Orang Tua juga bebas error. Re-run semua 9 scene lain — semua lolos tanpa error baru. App juga dijalankan non-headless buat preview visual user.
 
 **Belum**: tombol "Mulai main bareng" di `ParentGuide` (scene-nya belum ada, Fase B) — jadi mekanik Bareng Orang Tua untuk sekarang **tidak bisa diakses dari UI manapun**, cuma lewat flag manual kayak di atas. Tidak masalah untuk base model (gameplay-nya sudah siap, tinggal nunggu pintu masuknya), tapi perlu dicatat supaya tidak dikira "sudah selesai sepenuhnya".
+
+## 2026-11-21 — `ParentGuide.tscn` dibangun: Fase A+B fitur tumbuh-kembang selesai
+
+**Dikerjakan**: `core/data/parent_guide.json` (Fase A — isi 6 kartu panduan orang tua, satu per modul, format sesuai `docs/PLAN_TUMBUH_KEMBANG.md` bagian 2.1: "lagi belajar apa", kalimat scaffolding, ide lanjutan di luar app) + `scenes/ParentGuide.tscn`/`parent_guide.gd` (Fase B — daftar kartu, tap buka detail, tombol "Mulai main bareng" cuma muncul kalau kartu punya `guided_scene` terisi — sekarang cuma `feature_hewan`). Akses: Settings → "Panduan Orang Tua" (lewat `GameFlow.goto_scene`, sudah di belakang `ParentalGateDialog`).
+
+**Konten**: 1 kalimat generik di atas daftar soal "kenapa tidak ada nilai/menang-kalah" (muncul sekali, bukan diulang per kartu, sesuai desain di plan). Disclaimer "bukan nasihat medis" ditaruh di bawah daftar, bukan diam-diam dihilangkan.
+
+**Layout**: `CenterContainer` + `ScrollContainer` (ukuran minimum 560x520) + `PanelContainer` — pola yang sama dipakai buat hindari bug kolaps `ParentalGateDialog` (anchor titik tanpa offset) sekaligus kasih fallback scroll kalau konten (6 tombol + teks) lebih tinggi dari layar. Konten dirender ulang (`_render_list()`/`_render_detail()`) tiap ganti tampilan, pola sama `angka.gd`.
+
+**Diverifikasi**: headless re-import + run `ParentGuide.tscn` + 9 scene lain — semua lolos tanpa error. App dijalankan non-headless buat preview user.
+
+**Belum**: Fase C (audit mandiri per modul) & Fase D (review konten oleh manusia yang paham anak usia dini) masih Open di `docs/TASK_BOARD.md` — konten 6 kartu ini draft pertama, bukan final.
