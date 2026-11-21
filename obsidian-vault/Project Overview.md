@@ -1,45 +1,70 @@
 # Project Overview
 
-**Nama**: Bayi GuguGaga
-**Apa**: App game edukatif Android (+ iOS/web) untuk anak usia 1-5 tahun — kumpulan mini-game: angka, warna, hewan, musik, mewarnai, puzzle.
-**Target user**: anak 1-5 tahun (main), orang tua (parental gate, settings).
-**Tim**: 8 orang dibantu AI/Claude — 5 developer (Bramantyo pegang core+scenes, 3 dev @ 2 modul `feature_*`, 1 dev testing lintas-modul) + 3 asset/design creator (ilustrasi/audio/video, fleksibel, tidak coding). Lihat [[../docs/TEAM|docs/TEAM.md]].
+**Nama**: Bayi GuguGaga *(working title — belum final, user masih mempertimbangkan nama lain)*
+**Apa**: App game edukatif Android (+ iOS/web) untuk anak usia 1-5 tahun — kumpulan mini-game: angka, warna, hewan, musik, mewarnai, puzzle. Berangkat dari teori tumbuh-kembang anak (CDC milestones, Piaget, Erikson, Vygotsky, Montessori — lihat [[../docs/PLAN_TUMBUH_KEMBANG|docs/PLAN_TUMBUH_KEMBANG.md]]), bukan cuma kumpulan mini-game biasa.
+**Target user**: anak 1-5 tahun (main), orang tua (parental gate, settings, panduan main bareng).
+**Tim**: 8 orang dibantu AI/Claude — 5 developer (Bramantyo pegang core+scenes, Dev 2-4 @ 2 modul `feature_*`, 1 dev testing lintas-modul) + 3 asset/design creator (Asset 1 ilustrasi, Farel audio/VO, Asset 3 video/marketing). Lihat [[../docs/TEAM|docs/TEAM.md]].
 **Repo**: https://github.com/ptnusavisionmedia/game-balita
+**Stack**: Godot 4.7.2 (GDScript) — bukan Flutter/Dart lagi, lihat [[Decisions Log]] untuk histori pergantian.
 
-## Status sekarang (2026-11-19)
+## Status sekarang (2026-11-21)
 
-**Stack diganti dari Flutter/Dart ke Godot 4/GDScript** — base model Flutter sempat selesai & terverifikasi jalan, lalu dihapus total atas permintaan user, ditulis ulang di Godot (lihat [[Decisions Log]] untuk histori lengkap).
+### Fondasi app (selesai, headless-verified)
+- `core/`: `AppColors`, `ProgressRepository` (progres lokal via `ConfigFile`), `SfxService`/`AudioService`, `StarRewardOverlay` (confetti + ikon ✓, **tanpa** jumlah bintang/skor — auto-lanjut, bukan tombol manual), `ParentalGateDialog` (soal tambah + keypad, bukan tahan-tombol), `GameFlow` (autoload pusat navigasi + katalog game + mode acak infinite + `guided_mode`).
+- `scenes/`: `Splash` → `Home` (1 tombol "▶ Play" tengah = mode acak infinite, "Pilih Game" sekunder = manual, ⚙ Settings) → `Settings` (toggle suara + "Panduan Orang Tua") → `ParentGuide` (kartu scaffolding per modul, akses di belakang `ParentalGateDialog`).
+- **Orientasi: LANDSCAPE** (bukan portrait — direvisi user 2026-11-21), `window/stretch/mode="canvas_items"` + `aspect="expand"` supaya UI konsisten proporsinya di HP & tablet.
+- Tidak ada menang/kalah, tidak ada skor ditampilkan ke anak di mana pun — ini bukan cuma gaya, selaras teori (Erikson: usia 1-5 masih bangun rasa percaya diri; CDC: konsep menang-kalah baru matang kognitif ~5 tahun). Lihat [[Decisions Log]] entri 2026-11-20/21.
 
-- [x] Repo + struktur folder Godot (`core/`, `scenes/`, `features/feature_*`) ter-scaffold & ter-push.
-- [x] `core/`: `AppColors`, `ProgressRepository`, `SfxService`/`AudioService`, `StarRewardOverlay` (confetti via `CPUParticles2D`), `ParentalGateDialog` — semua ditulis ulang di GDScript (lihat [[../docs/LIBRARIES|docs/LIBRARIES.md]]).
-- [x] `scenes/Home.tscn` + `Settings.tscn` wiring navigasi + parental gate.
-- [x] `features/feature_angka` (pilot) implementasi penuh.
-- [x] Placeholder scene untuk 5 modul lain (`feature_warna/hewan/musik/mewarnai/puzzle`).
-- [x] **Godot 4.7.2 diinstall & semua 8 scene lolos headless** (exit 0, tanpa error) — 1 bug nyata ketemu & diperbaiki (path script salah di 5 placeholder). Lihat Definition of Done di [[../docs/PLAN_BASE_MODEL|docs/PLAN_BASE_MODEL.md]] untuk yang masih belum (interaksi sentuhan asli, export APK).
-- [x] CI headless validate (`.github/workflows/ci.yml`) — binary & flag terverifikasi lokal, cuma export job (APK) yang belum.
-- [x] Godot ditambahkan ke PATH komputer ini (`godot.bat` + User PATH) supaya sesi Claude Code berikutnya bisa langsung pakai `godot` tanpa path lengkap.
-- [ ] Fase 2 (belum mulai): 5 modul lain coding paralel mengikuti pola dari base model.
+### 6 modul mini-game
+| Modul | Spek | Kode | Catatan |
+|---|---|---|---|
+| `feature_angka` | ✅ | ✅ **selesai, dites interaktif** | Pilot/pola rujukan. Placeholder: ikon hati (bukan ilustrasi final), SFX `null` |
+| `feature_hewan` | ✅ | ✅ **selesai** | **2 mekanik** (satu-satunya): Mandiri (lewat Home, self-correcting) + Bareng Orang Tua (lewat ParentGuide → "Mulai main bareng", reveal manual tanpa benar/salah). Placeholder: emoji, SFX `null` |
+| `feature_warna` | ✅ | ⬜ Open (Dev 2) | 1 mekanik, tap cocokkan warna, reuse `AppColors` |
+| `feature_musik` | ✅ | ⬜ Open (Dev 3) | Sengaja **tanpa** soal benar/salah — tap bebas 4-6 nada |
+| `feature_mewarnai` | ✅ | ⬜ Open (Dev 4) | Sengaja **tanpa** soal benar/salah — isi 2-4 area, bukan freehand |
+| `feature_puzzle` | ✅ | ⬜ Open (Dev 4) | Drag 3-4 keping (bukan 6), snap longgar |
 
-## Keputusan besar
+Semua spek lengkap di `obsidian-vault/Specs/feature_*.md`.
 
-Lihat [[Decisions Log]] untuk detail & alasan lengkap (termasuk histori kenapa sempat pakai Flutter lalu ganti). Ringkasan terkini:
-- Stack: **Godot 4 (GDScript)** — bukan Flutter/Dart lagi.
-- State/persistence: autoload singleton (`ProgressRepository`) + `ConfigFile` bawaan Godot.
-- Pembagian tim: **per fitur/modul**, bukan per layer (FE/BE/QA) — prinsip ini tidak berubah walau stack ganti.
+### Fitur tumbuh-kembang (baru, 2026-11-21)
+`docs/PLAN_TUMBUH_KEMBANG.md` — 2 mode dalam 1 app, bukan 2 app:
+- **Fase A** (konten kartu) ✅ — `core/data/parent_guide.json`, 6 kartu.
+- **Fase B** (scene `ParentGuide`) ✅ — `scenes/ParentGuide.tscn`+`parent_guide.gd`.
+- **Fase C** (audit "bisa dimainkan tanpa baca" per modul) ⬜ Open.
+- **Fase D** (review konten oleh manusia yang paham anak usia dini — **wajib**, bukan nasihat medis) ⬜ Open, PIC belum ditentukan.
+
+### Infra & compliance
+- Export Android debug APK **sudah terbukti jalan** lokal (~27MB, ter-sign) — CI export job ditulis, belum diverifikasi jalan sungguhan di GitHub Actions.
+- `docs/PRIVACY_POLICY.md` — draft ditulis (Bramantyo pegang), **belum** diisi kontak & **belum** dipublikasikan ke URL publik (wajib sebelum submit Play Store).
+- `.gitignore` — gradle build cache (`packages/app/android/.gradle/`) ditambahkan setelah ketahuan ikut mau ke-commit.
+
+### Belum dikerjakan / terbuka
+- Implementasi kode 4 modul (warna/musik/mewarnai/puzzle) — spek sudah ada, tinggal eksekusi.
+- Semua ilustrasi asli (baru ada 1: ikon vector `ModuleIcon` buat tile Home) & semua SFX/VO asli — semuanya masih placeholder (emoji/`null`).
+- Test interaktif di device/emulator Android **asli** (baru di desktop Windows).
+- `docs/QA_CHECKLIST.md` belum dibuat.
+- Nama app final belum diputuskan (masih "Bayi GuguGaga" sementara).
+
+## Keputusan besar (ringkasan — detail lengkap di [[Decisions Log]])
+
+- Stack: Godot 4 (GDScript), bukan Flutter/Dart.
+- Navigasi dipusatkan lewat `GameFlow` autoload — jangan `get_tree().change_scene_to_file()` langsung di mana pun.
+- Pola "anchor 1-titik tanpa offset" buat center container itu **jebakan** (bikin size kolaps ke 0,0) — selalu pakai `CenterContainer`. Ketemu 2x (`ParentalGateDialog`, `StarRewardOverlay` lama), sudah jadi catatan standar.
+- Tidak ada menang/kalah/skor ditampilkan ke anak, di modul apa pun, selamanya — ini prinsip keras, bukan preferensi yang bisa digeser per modul.
+- `feature_hewan` boleh punya 2 mekanik karena memang diminta — **bukan pola default**, modul lain tetap 1 mekanik kecuali ada permintaan serupa.
 
 ## Link cepat
 
 - [[../docs/ARCHITECTURE|Arsitektur]]
 - [[../docs/TEAM|Pembagian tim]]
-- [[../docs/AI_WORKFLOW|Cara kerja tim dengan AI]]
 - [[../docs/PLAN_BASE_MODEL|Plan Base Model]]
+- [[../docs/PLAN_TUMBUH_KEMBANG|Plan Fitur Tumbuh Kembang]]
 - [[../docs/JOBS_BASE_MODEL|Jobs Base Model]]
 - [[../docs/WORK_BREAKDOWN|Work Breakdown (detail per bagian)]]
-- [[../docs/LIBRARIES|Analisis Libraries]]
 - [[../docs/UI_UX_DESIGN|UI/UX Design & Color Palette]]
-- [[../docs/DOCKER|Docker]]
-- [[../docs/MASTER_PROMPT|Master Prompt (tempel sebagai pesan pertama)]]
-- [[../docs/GIT_WORKFLOW|Cara Kolaborasi Git (pemula)]]
+- [[../docs/PRIVACY_POLICY|Privacy Policy (draft)]]
 - [[../docs/TASK_BOARD|Task Board (klaim task di sini)]]
-- [[../docs/ROLES|Peran & batas file (kenapa tidak tabrakan)]]
+- [[../docs/ROLES|Peran & batas file]]
+- [[Specs/feature_angka|Spek feature_angka]] · [[Specs/feature_hewan|feature_hewan]] · [[Specs/feature_warna|feature_warna]] · [[Specs/feature_musik|feature_musik]] · [[Specs/feature_mewarnai|feature_mewarnai]] · [[Specs/feature_puzzle|feature_puzzle]]
 - [[../CLAUDE|CLAUDE.md — entry point sesi AI baru]]
