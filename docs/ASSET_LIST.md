@@ -64,4 +64,4 @@ PIC: **Farel**.
 
 ---
 
-Lihat juga: `docs/TASK_BOARD.md` (status klaim per baris asset), `obsidian-vault/Specs/feature_*.md` (detail konteks tiap kebutuhan), `docs/UI_UX_DESIGN.md` (style/color principles yang harus diikuti semua aset).
+Lihat juga: `docs/TASK_BOARD.md` (status klaim per baris asset), `obsidian-vault/Specs/feature_*.md` (detail konteks tiap kebutuhan), `docs/UI_UX_DESIGN.md` (style/color principles yang harus diikuti semua aset), **`docs/STYLE_GUIDE_ILUSTRASI.md`** (gaya visual detail + prompt siap-pakai buat generate AI untuk tiap aset ilustrasi di atas).

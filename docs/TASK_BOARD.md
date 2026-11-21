@@ -37,7 +37,7 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | `docs/QA_CHECKLIST.md` + pertimbangkan addon GUT | Dev | lintas-modul | Open | Dev Testing | | lihat JOBS_BASE_MODEL Job 5 |
 | Test interaktif `feature_angka` di laptop (desktop, bukan device Android) | Dev | feature_angka | Done | (sesi AI + user, 2026-11-19) | 2026-11-19 | 4 soal dijawab benar, reward+confetti muncul, progress.cfg terisi nyata |
 | Test interaktif `feature_angka` di device/emulator Android asli | Dev | feature_angka | Open | Dev Testing | | yang di atas baru di desktop Windows, belum di Android |
-| Style guide ilustrasi | Asset | branding | Open | Asset 1 | | acuan semua modul berikutnya |
+| Style guide ilustrasi | Asset | branding | Claimed | (draft sesi AI, 2026-11-21) | 2026-11-21 | `docs/STYLE_GUIDE_ILUSTRASI.md` — draft pertama siap pakai generate AI, **wajib direview Asset 1** sebelum dianggap final/Done |
 | Konsolidasi daftar kebutuhan aset (ilustrasi/SFX/VO, 1 checklist lintas modul) | Dev | docs | Done | (sesi AI, 2026-11-21) | 2026-11-21 | `docs/ASSET_LIST.md` — ringkas dari semua `obsidian-vault/Specs/feature_*.md`, termasuk usul maskot baru (belum diputuskan) |
 | Visual polish: `GameBackground` (langit+rumput) di Home+semua `feature_*`, hit-area `BigRoundButton` 88px→120px | Dev | core/scenes | Done | (sesi AI, 2026-11-21) | 2026-11-21 | Terinspirasi `obsidian-vault/Referensi-LucasAndFriends.md`. Headless-verified 10 scene |
 | Ikon vector tile Home (ModuleIcon, placeholder kode) | Dev | scenes | Done | (sesi AI, 2026-11-20) | 2026-11-20 | `core/scripts/module_icon.gd` — generate image AI gagal (butuh plan berbayar), diganti gambar vector |

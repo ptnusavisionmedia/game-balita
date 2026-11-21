@@ -480,3 +480,13 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: headless re-import + run `Home`/`Warna`/`Mewarnai` — lolos tanpa error. **Belum dikonfirmasi** user secara visual.
 
 **Pelajaran**: setiap kali taruh widget ukuran-tetap (bukan `HBoxContainer`/`VBoxContainer` lain) langsung sebagai child `VBoxContainer`/`HBoxContainer`, WAJIB cek apakah perlu `size_flags_horizontal`/`vertical` SHRINK — jangan asumsikan `custom_minimum_size` saja cukup buat menjaga bentuk visual yang dimaksud.
+
+## 2026-11-21 — Style guide ilustrasi ditulis: siap buat generate AI
+
+**Permintaan user**: jelaskan gaya desainnya supaya aset ilustrasi nanti tinggal di-generate AI (bukan cuma daftar "apa"-nya seperti `docs/ASSET_LIST.md`, tapi "bagaimana gaya visualnya" + prompt siap pakai).
+
+**Isi `docs/STYLE_GUIDE_ILUSTRASI.md`**: arah gaya (flat vector, bentuk membulat, proporsi ramah anak, flat shading — bukan realistis/anime), aturan warna wajib (tidak ada merah murni, warna hangat buat objek karena latar sudah diurus `GameBackground`, tabel hex aksen per modul yang sudah ada di kode), spesifikasi teknis file (PNG transparan, kanvas persegi, margin, resolusi minimum), negative prompt generik, lalu **prompt siap-tempel** per kategori aset (6 hewan, 6 benda warna, puzzle, mewarnai, objek hitung, app icon/splash, usulan maskot).
+
+**Catatan penting yang disisipkan** (bukan cuma kasih prompt lalu selesai): 2 kategori aset (`feature_puzzle`, `feature_mewarnai`) **tidak bisa langsung "jadi" dari 1x generate AI** — puzzle butuh dipotong manual jadi 4 keping sama besar, mewarnai butuh di-trace ulang jadi region terpisah (line art AI cuma referensi visual, bukan file game-ready dengan area terpisah). Ini supaya tim tidak kaget nanti kalau hasil AI generate belum langsung bisa dipakai apa adanya untuk 2 modul ini.
+
+**Status**: draft pertama, `docs/TASK_BOARD.md` baris "Style guide ilustrasi" diubah dari Open jadi **Claimed** (bukan Done) — wajib direview Asset 1 dulu sebelum dianggap final, karena ini draft dari sesi AI, bukan keputusan desain visual yang sudah final dari manusia yang berkompeten di bidang ini.
