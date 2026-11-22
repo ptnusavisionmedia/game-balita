@@ -533,3 +533,20 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: headless re-import + run `Home.tscn` — lolos tanpa error. App dijalankan langsung dari `Home.tscn` (bukan `Splash`) buat recheck cepat. **Belum dikonfirmasi** user secara visual.
 
 **Catatan penting**: 3 gambar aset yang sudah ada (background + 2 tombol) KEMUNGKINAN BESAR TIDAK PERLU digenerate ulang — masalahnya murni bug kode (margin 9-slice salah hitung + `expand_mode` kurang), bukan kualitas gambarnya. Disampaikan ke user supaya tidak buang-buang kuota generate ChatGPT buat regenerate yang sebenarnya tidak perlu.
+
+## 2026-11-22 — App resmi diganti nama jadi "Wawa"
+
+**Permintaan user**: ganti nama dari "Bayi GuguGaga", TAPI dengan syarat eksplisit — cari dulu lewat web search apakah nama kandidat sudah dipakai app/brand lain, jangan pakai kalau bentrok.
+
+**Dikerjakan**: cari & cek beberapa kandidat lewat WebSearch sebelum ditawarkan ke user —
+- ❌ **"Kiko"** — ditolak, sudah ada app belajar anak bernama persis itu (`in.axpertz.kiko`) + "PlayKiko" (iOS). Ini sempat jadi usulan awal (nyambung ke "Toko Kiko" di `obsidian-vault/Referensi-LucasAndFriends.md`) tapi gagal cek bentrok.
+- ❌ **"Momo Pintar"**/"Lolo & Kawan-Kawan"** — ditolak: "Lolo" kebentur keras sama keluarga app populer "LooLoo Kids" + "Lola Panda" (banyak judul serupa), "Momo" berisiko asosiasi negatif (Momo Challenge).
+- ✅ **"Riang"**, **"Mekar"**, **"Wawa"**, **"Comel"** — tidak ketemu app/brand kids yang bentrok di pencarian. Ditawarkan ke user, **user pilih "Wawa"** (pendek, gampang diucap anak kecil sendiri).
+
+**Dieksekusi — rename app lengkap** (BUKAN rename folder/repo, cuma nama tampilan app): `project.godot` (`config/name`), `export_presets.cfg` (`package/unique_name` → `com.wawaapp.wawa`, `package/name`), `scenes/home.gd` + `scenes/splash.gd` (title text), `CLAUDE.md`, `README.md`, `docs/MASTER_PROMPT.md`, `docs/PRIVACY_POLICY.md`, `docs/PROMPT_BRAMANTYO.md`, `core/scripts/app_colors.gd` (komentar), `obsidian-vault/Project Overview.md`, `obsidian-vault/README.md`, `obsidian-vault/Referensi-LucasAndFriends.md`. `docs/WORK_BREAKDOWN.md` (Part 1.2, catatan historis package id lama) dikasih catatan tambahan, bukan dihapus. **Entri lama di Decisions Log ini sendiri TIDAK diedit** (append-only, sesuai aturan `CLAUDE.md`) — histori tetap menyebut "Bayi GuguGaga" apa adanya karena itu memang nama app saat kejadian itu terjadi.
+
+**Catatan penting**: pengecekan di atas pakai web search biasa, **bukan** pencarian merek dagang resmi (misal DJKI buat Indonesia) — kalau mau benar-benar aman secara hukum sebelum publish Play Store, tetap perlu dicek lebih formal, bukan dianggap selesai cuma dari ini.
+
+**Sekaligus dikerjakan** (user minta font lebih bagus di pesan sebelumnya): font **Baloo 2** (Google Fonts, SIL OFL) diunduh & dipasang jadi font default seluruh app lewat `project.godot` `[gui] theme/custom_font` — ini realisasi rencana lama yang sudah disebut di `docs/UI_UX_DESIGN.md` sejak base model tapi filenya baru benar-benar ada sekarang.
+
+**Diverifikasi**: headless re-import + run `Splash`/`Home` — lolos tanpa error. App dijalankan ulang buat preview. **Belum dikonfirmasi user** secara visual (nama baru + font baru).

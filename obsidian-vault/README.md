@@ -1,4 +1,4 @@
-# Obsidian Vault — Bayi GuguGaga
+# Obsidian Vault — Wawa
 
 Ini bukan dokumentasi teknis (itu ada di [[../docs/ARCHITECTURE|docs/ARCHITECTURE.md]] dkk). Folder ini khusus untuk **context yang mudah hilang kalau cuma disimpan di kepala/chat**: keputusan, alasan di baliknya, dan progres per orang — supaya siapa pun (termasuk sesi Claude baru) bisa cepat "nyambung" tanpa baca ulang seluruh percakapan lama.
 

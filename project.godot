@@ -14,7 +14,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="Bayi GuguGaga"
+config/name="Wawa"
 config/description="Game edukatif untuk anak 1-5 tahun: angka, warna, hewan, musik, mewarnai, puzzle."
 run/main_scene="res://scenes/Splash.tscn"
 config/features=PackedStringArray("4.7")

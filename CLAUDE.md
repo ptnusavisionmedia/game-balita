@@ -1,4 +1,6 @@
-# Bayi GuguGaga — Panduan untuk AI/siapa pun yang baru mulai sesi di repo ini
+# Wawa — Panduan untuk AI/siapa pun yang baru mulai sesi di repo ini
+
+> **Nama app resmi: "Wawa"** (diputuskan 2026-11-22, ganti dari working title "Bayi GuguGaga" — lihat `obsidian-vault/Decisions Log.md`). Nama folder/repo (`bayi-gugugaga/`) sengaja TIDAK diganti, cuma nama tampilan app-nya.
 
 App game edukatif Android untuk anak 1-5 tahun. Dibangun di **Godot 4 (GDScript)**, struktur feature-first (lihat `obsidian-vault/Decisions Log.md` untuk histori pergantian stack dari Flutter). 8 orang: 5 developer (termasuk 1 dev testing lintas-modul) + 3 asset/design creator (ilustrasi/audio/video, fleksibel — tidak coding).
 

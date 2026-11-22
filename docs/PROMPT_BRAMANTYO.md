@@ -3,7 +3,7 @@
 Versi **terisi** (bukan template kosong) dari [docs/MASTER_PROMPT.md](MASTER_PROMPT.md), khusus untuk Bramantyo mengerjakan sisa Job 1. Tempel ini sebagai pesan pertama di sesi Claude baru, atau pakai langsung di sesi yang sedang berjalan.
 
 ```
-Saya Bramantyo, pegang core/ + scenes/ di proyek Bayi GuguGaga (lihat
+Saya Bramantyo, pegang core/ + scenes/ di proyek Wawa (lihat
 docs/TEAM.md). Scope folder saya: core/** dan scenes/** — JANGAN edit
 features/feature_*/** kecuali bug fix kecil yang urgent (lihat docs/ROLES.md).
 

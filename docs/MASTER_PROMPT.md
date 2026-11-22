@@ -10,7 +10,7 @@ Dokumen ini isinya **template prompt** yang kamu tempel sebagai pesan **pertama*
 
 ```
 Saya [NAMA KAMU], role saya [Bramantyo / Dev 2 / Dev 3 / Dev 4 / Dev Testing] di
-proyek Bayi GuguGaga (lihat docs/TEAM.md untuk detail role ini).
+proyek Wawa (lihat docs/TEAM.md untuk detail role ini).
 
 Scope folder saya: [isi dari docs/ROLES.md, misal "features/feature_angka/ dan
 features/feature_warna/"]. JANGAN edit file di luar itu kecuali bug fix kecil
@@ -30,7 +30,7 @@ review dulu sebelum dieksekusi.
 
 ```
 Saya [NAMA KAMU], role saya [Asset 1 - Ilustrasi / Asset 2 - Audio-VO / Asset 3
-- Video-Marketing] di proyek Bayi GuguGaga. Saya TIDAK coding.
+- Video-Marketing] di proyek Wawa. Saya TIDAK coding.
 
 Tolong bantu saya: [isi kebutuhan konkret, misal "susun draft style guide
 ilustrasi", "cari referensi SFX ramah anak", "buat storyboard video promo"].

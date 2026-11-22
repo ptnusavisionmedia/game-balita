@@ -48,7 +48,7 @@ Splash (4 maskot) → Menu Utama ("Main" ungu besar + "Pilih Mode" biru + tombol
 - Tidak ada kontrol durasi/screen-time di panel manapun.
 - "Hadiah" = galeri koleksi 3-tab (Mainan/Stiker/Stempel) terkunci — lapisan retensi independen dari sesi main.
 
-## Yang sudah diadopsi ke Bayi GuguGaga (2026-11-21)
+## Yang sudah diadopsi ke Wawa (2026-11-21)
 
 - [x] **Prinsip warna**: tambah `AppColors.SKY`/`GRASS`/`GRASS_DARK` + `core/scripts/game_background.gd` (`GameBackground`) — background "langit+rumput" dipasang di Home + 6 `feature_*` (sebelumnya banyak scene gameplay tidak punya background sama sekali, polos warna default kosong).
 - [x] **Target sentuh besar**: `BigRoundButton` dinaikkan dari 88px → 120px, keping/slot `feature_puzzle` dinaikkan ke 110-120px.
@@ -62,5 +62,5 @@ Splash (4 maskot) → Menu Utama ("Main" ungu besar + "Pilih Mode" biru + tombol
 - [ ] Tombol "Keluar Aplikasi" yang benar-benar keluar, terpisah dari navigasi "lanjut" — app kita belum punya exit eksplisit (cuma 🏠 = balik Home). Perlu dipikirkan apakah relevan buat app kita (kompetitor punya alasan: X mereka ambigu, 🏠 kita sudah jelas "bukan keluar app").
 - [ ] Panel kurasi konten orang tua (checkbox pilih kategori yang boleh tampil) — fitur besar, belum ada rencana headcount/scope.
 - [ ] Kontrol durasi/screen-time — peluang diferensiasi, belum masuk roadmap manapun.
-- [ ] Lapisan koleksi/hadiah terpisah dari sesi main — disebut selaras dengan "Toko Kiko" yang katanya sudah direncanakan di proyek/dokumen lain (di luar repo ini) — perlu klarifikasi user apa itu & apakah relevan ke Bayi GuguGaga.
+- [ ] Lapisan koleksi/hadiah terpisah dari sesi main — disebut selaras dengan "Toko Kiko" yang katanya sudah direncanakan di proyek/dokumen lain (di luar repo ini) — perlu klarifikasi user apa itu & apakah relevan ke Wawa.
 - [ ] Maskot karakter — app kita belum punya maskot sama sekali, cuma ikon vektor abstrak (`ModuleIcon`). Ini butuh ilustrasi asli dari Asset 1, bukan sesuatu yang bisa dibuat lewat kode.

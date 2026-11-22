@@ -1,4 +1,6 @@
-# Bayi GuguGaga
+# Wawa
+
+*(nama folder repo `bayi-gugugaga/` sengaja tidak diganti — ini cuma nama tampilan app-nya, diputuskan 2026-11-22. Lihat `obsidian-vault/Decisions Log.md`.)*
 
 Aplikasi permainan edukatif untuk anak usia 1-5 tahun: mengenal angka, warna, bentuk, hewan, musik, mewarnai, dan puzzle sederhana — ringan, aman, dan ramah disentuh anak kecil.
 

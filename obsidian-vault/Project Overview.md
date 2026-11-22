@@ -1,6 +1,6 @@
 # Project Overview
 
-**Nama**: Bayi GuguGaga *(working title — belum final, user masih mempertimbangkan nama lain)*
+**Nama**: Wawa *(diputuskan 2026-11-22, ganti dari working title "Bayi GuguGaga" — dicek dulu lewat web search tidak ada app/brand kids serupa yang bentrok, lihat Decisions Log)*
 **Apa**: App game edukatif Android (+ iOS/web) untuk anak usia 1-5 tahun — kumpulan mini-game: angka, warna, hewan, musik, mewarnai, puzzle. Berangkat dari teori tumbuh-kembang anak (CDC milestones, Piaget, Erikson, Vygotsky, Montessori — lihat [[../docs/PLAN_TUMBUH_KEMBANG|docs/PLAN_TUMBUH_KEMBANG.md]]), bukan cuma kumpulan mini-game biasa.
 **Target user**: anak 1-5 tahun (main), orang tua (parental gate, settings, panduan main bareng).
 **Tim**: 8 orang dibantu AI/Claude — 5 developer (Bramantyo pegang core+scenes, Dev 2-4 @ 2 modul `feature_*`, 1 dev testing lintas-modul) + 3 asset/design creator (Asset 1 ilustrasi, Farel audio/VO, Asset 3 video/marketing). Lihat [[../docs/TEAM|docs/TEAM.md]].
@@ -44,7 +44,6 @@ Semua spek lengkap di `obsidian-vault/Specs/feature_*.md`. **Base model + Fase 2
 - Test interaktif sentuhan asli untuk `feature_warna`/`feature_musik`/`feature_mewarnai`/`feature_puzzle` — kodenya sudah ada & headless-verified, tapi belum pernah dicoba klik/drag sungguhan oleh manusia.
 - Test interaktif di device/emulator Android **asli** (baru di desktop Windows).
 - `docs/QA_CHECKLIST.md` belum dibuat.
-- Nama app final belum diputuskan (masih "Bayi GuguGaga" sementara).
 
 ## Keputusan besar (ringkasan — detail lengkap di [[Decisions Log]])
 

@@ -13,7 +13,7 @@ Klaim per **bagian** (bukan per job utuh) di `docs/TASK_BOARD.md` kalau mau kerj
 - **Terverifikasi**: `--export-debug` jalan tanpa warning template missing.
 
 ### Part 1.2 — Buat `export_presets.cfg` (Android debug) ✅ SELESAI (2026-11-20)
-- Ditulis manual (format cocok dengan contoh resmi `abarichello/godot-ci`), `package/unique_name="com.gugugaga.bayigugugaga"`, pakai debug keystore default Godot.
+- Ditulis manual (format cocok dengan contoh resmi `abarichello/godot-ci`), `package/unique_name="com.gugugaga.bayigugugaga"` (nama saat itu masih "Bayi GuguGaga" — **diganti ke `com.wawaapp.wawa` 2026-11-22** saat app di-rename jadi "Wawa", lihat Decisions Log), pakai debug keystore default Godot.
 - **Isu yang ketemu & diperbaiki**: export gagal duluan dengan error "ETC2/ASTC texture compression is required for Android export" — ditambahkan `textures/vram_compression/import_etc2_astc=true` di `[rendering]` `project.godot`.
 - **Terverifikasi SUNGGUHAN**: `godot --headless --export-debug "Android" build/android/app-debug.apk` berhasil, APK ter-sign (~27MB), bukan cuma config ditulis tanpa dicoba.
 - **Catatan keamanan**: debug keystore aman di-commit (bukan untuk rilis Play Store); kalau nanti butuh release keystore asli, **jangan** commit file keystore-nya — simpan di luar repo atau GitHub Secrets (lihat `docs/DOCKER.md`).

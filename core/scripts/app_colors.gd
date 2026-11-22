@@ -1,6 +1,6 @@
 class_name AppColors
 extends RefCounted
-## Palet warna Bayi GuguGaga. Rasional lengkap (kontras, kenapa bukan merah
+## Palet warna Wawa. Rasional lengkap (kontras, kenapa bukan merah
 ## untuk "coba lagi", dsb) ada di docs/UI_UX_DESIGN.md. Cuma definisi di sini
 ## — tambah warna baru di sini dulu, jangan taruh hex langsung di scene lain.
 

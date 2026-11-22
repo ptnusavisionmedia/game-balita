@@ -1,4 +1,4 @@
-# Privacy Policy — Bayi GuguGaga
+# Privacy Policy — Wawa
 
 Status: **DRAFT**, belum dipublikasikan. PIC: Bramantyo (lihat `docs/TEAM.md`, `obsidian-vault/Decisions Log.md` 2026-11-20).
 
@@ -8,7 +8,7 @@ Status: **DRAFT**, belum dipublikasikan. PIC: Bramantyo (lihat `docs/TEAM.md`, `
 
 ## 1. Ringkasan (bahasa sederhana untuk orang tua)
 
-**Bayi GuguGaga tidak mengumpulkan, menyimpan di server, atau membagikan data pribadi apa pun.** Semua progres permainan disimpan **hanya di device Anda**, tidak pernah dikirim ke internet. Tidak ada akun, tidak ada iklan, tidak ada pembelian dalam aplikasi, tidak ada pelacakan.
+**Wawa tidak mengumpulkan, menyimpan di server, atau membagikan data pribadi apa pun.** Semua progres permainan disimpan **hanya di device Anda**, tidak pernah dikirim ke internet. Tidak ada akun, tidak ada iklan, tidak ada pembelian dalam aplikasi, tidak ada pelacakan.
 
 ## 2. Data apa yang disimpan, dan di mana
 
@@ -44,7 +44,7 @@ Aplikasi ini ditujukan untuk anak usia 1-5 tahun (dengan orang tua sebagai penga
 ## 6. Hak pengguna (orang tua/wali)
 
 Karena tidak ada data yang dikirim ke server mana pun, **tidak ada data untuk diminta dihapus/diekspor dari pihak kami** — semua data ada di device Anda dan sepenuhnya dalam kendali Anda:
-- **Hapus semua data**: uninstall aplikasi, atau Pengaturan Android → Aplikasi → Bayi GuguGaga → Hapus Data.
+- **Hapus semua data**: uninstall aplikasi, atau Pengaturan Android → Aplikasi → Wawa → Hapus Data.
 - **Lihat data**: data cuma berupa angka skor/pengaturan suara, tidak ada data sensitif untuk "dilihat" dalam arti privasi.
 
 ## 7. Perubahan kebijakan ini
