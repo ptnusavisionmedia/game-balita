@@ -6,12 +6,14 @@ Semua baris di bawah **placeholder sekarang** (emoji/kotak warna/`SfxService.pla
 
 ## Status umum
 
+> **Update 2026-11-22**: paket `Wawa_Seluruh_Aset.zip` (user, lewat ChatGPT) sudah diintegrasikan ke seluruh modul — lihat `docs/TASK_BOARD.md` baris per-modul untuk detail & link kode. Tabel di bawah ini (per kategori lama) sekarang historis; baris per-aset yang relevan di `TASK_BOARD.md` adalah sumber kebenaran status terkini.
+
 | Kategori | Sudah ada asli? |
 |---|---|
-| Ilustrasi | ❌ Belum ada sama sekali (semua placeholder emoji/vektor kode) |
-| SFX | ❌ Belum ada sama sekali (semua `null`, senyap) |
-| VO | ❌ Belum ada sama sekali |
-| Musik latar | — (belum direncanakan, lihat Catatan di bawah) |
+| Ilustrasi | ✅ Terpasang semua kategori (hewan/buah/shape-sorter/mewarnai/musik/ikon UI/maskot/app icon-splash/panduan orang tua) — lihat `docs/TASK_BOARD.md` |
+| SFX | ✅ `sfx_correct`/`sfx_try_again`/`sfx_tap` + suara 6 hewan + 6 nada musik terpasang. **Suara hewan masih "draf sintetis bergaya kartun"**, bukan rekaman asli — wajib diuji dengar sebelum rilis |
+| VO | ✅ VO angka 1-5 terpasang (tombol "🔊 Sebutkan" di `feature_angka`). **PERINGATAN: dibuat lewat mesin Flite/CMU SLT bahasa Inggris — bukan rekaman penutur Indonesia**, wajib direview/diganti sebelum rilis |
+| Musik latar (BGM) | — (belum direncanakan, lihat Catatan di bawah — paket aset baru juga tidak menyertakan BGM) |
 
 ---
 
