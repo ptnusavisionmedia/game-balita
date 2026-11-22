@@ -49,9 +49,14 @@ func _ready() -> void:
 	vbox.add_child(_hearts_box)
 
 	var speak_button := Button.new()
-	speak_button.text = "🔊 Sebutkan"
-	speak_button.custom_minimum_size = Vector2(0, 72)
+	speak_button.text = "Sebutkan"
+	var speaker_icon_path := "res://core/assets/images/ui/speaker_on.png"
+	if FileAccess.file_exists(speaker_icon_path):
+		speak_button.icon = load(speaker_icon_path)
+		speak_button.expand_icon = true
+		speak_button.add_theme_constant_override("icon_max_width", 36)
 	speak_button.pressed.connect(_play_current_target_vo)
+	UIStyle.apply_pill_action(speak_button)
 	vbox.add_child(speak_button)
 
 	_choices_box = HBoxContainer.new()
@@ -69,13 +74,13 @@ func _ready() -> void:
 func _add_home_button() -> void:
 	var home_button := Button.new()
 	_apply_home_icon(home_button)
-	home_button.custom_minimum_size = Vector2(72, 72)
+	home_button.custom_minimum_size = Vector2(88, 88)
 	home_button.anchor_left = 0.0
 	home_button.anchor_right = 0.0
 	home_button.offset_left = 8.0
-	home_button.offset_right = 80.0
+	home_button.offset_right = 96.0
 	home_button.offset_top = 12.0
-	home_button.offset_bottom = 84.0
+	home_button.offset_bottom = 100.0
 	home_button.pressed.connect(func(): GameFlow.go_home())
 	add_child(home_button)
 
@@ -84,10 +89,12 @@ func _add_home_button() -> void:
 ## file belum ada. Dipakai 6 modul feature_* (duplikasi disengaja, pola
 ## sama `_add_home_button`, lihat komentarnya).
 func _apply_home_icon(button: Button) -> void:
+	UIStyle.apply_icon_frame(button)
 	var path := "res://core/assets/images/ui/home.png"
 	if FileAccess.file_exists(path):
 		button.icon = load(path)
 		button.expand_icon = true
+		button.add_theme_constant_override("icon_max_width", 48)
 	else:
 		button.text = "🏠"
 

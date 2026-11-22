@@ -95,8 +95,9 @@ func _render_list() -> void:
 	_add_wrapped_label("Catatan: tiap anak berkembang dengan laju berbeda. Kalau ada kekhawatiran, konsultasikan ke dokter anak.", 16)
 
 	var back_button := Button.new()
-	back_button.text = "← Kembali ke Pengaturan"
-	back_button.custom_minimum_size = Vector2(0, 72)
+	back_button.text = "Kembali"
+	_apply_back_icon(back_button)
+	UIStyle.apply_pill_action(back_button)
 	back_button.pressed.connect(func(): GameFlow.goto_scene("res://scenes/Settings.tscn"))
 	_content.add_child(back_button)
 
@@ -123,13 +124,26 @@ func _render_detail(card: Dictionary) -> void:
 	var guided_scene: String = str(card.get("guided_scene", ""))
 	if guided_scene != "":
 		var guided_button := Button.new()
-		guided_button.text = "▶ Mulai main bareng"
-		guided_button.custom_minimum_size = Vector2(0, 72)
+		guided_button.text = "▶ Mulai Main Bareng"
 		guided_button.pressed.connect(func(): GameFlow.start_guided_game(guided_scene))
+		UIStyle.apply_pill_action(guided_button, true)
 		_content.add_child(guided_button)
 
 	var back_button := Button.new()
-	back_button.text = "← Kembali ke daftar"
-	back_button.custom_minimum_size = Vector2(0, 72)
+	back_button.text = "Kembali"
+	_apply_back_icon(back_button)
+	UIStyle.apply_pill_action(back_button)
 	back_button.pressed.connect(_render_list)
 	_content.add_child(back_button)
+
+
+## Ikon panah kembali asli (lihat docs/ASSET_LIST.md) — fallback teks
+## panah kalau file belum ada.
+func _apply_back_icon(button: Button) -> void:
+	var path := "res://core/assets/images/ui/back_arrow.png"
+	if FileAccess.file_exists(path):
+		button.icon = load(path)
+		button.expand_icon = true
+		button.add_theme_constant_override("icon_max_width", 32)
+	else:
+		button.text = "← " + button.text

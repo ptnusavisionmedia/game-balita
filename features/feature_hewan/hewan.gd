@@ -64,13 +64,13 @@ func _load_animal_data() -> Array:
 func _add_home_button() -> void:
 	var home_button := Button.new()
 	_apply_home_icon(home_button)
-	home_button.custom_minimum_size = Vector2(72, 72)
+	home_button.custom_minimum_size = Vector2(88, 88)
 	home_button.anchor_left = 0.0
 	home_button.anchor_right = 0.0
 	home_button.offset_left = 8.0
-	home_button.offset_right = 80.0
+	home_button.offset_right = 96.0
 	home_button.offset_top = 12.0
-	home_button.offset_bottom = 84.0
+	home_button.offset_bottom = 100.0
 	home_button.pressed.connect(func(): GameFlow.go_home())
 	add_child(home_button)
 
@@ -79,10 +79,12 @@ func _add_home_button() -> void:
 ## file belum ada. Dipakai 6 modul feature_* (duplikasi disengaja, pola
 ## sama `_add_home_button`, lihat komentarnya).
 func _apply_home_icon(button: Button) -> void:
+	UIStyle.apply_icon_frame(button)
 	var path := "res://core/assets/images/ui/home.png"
 	if FileAccess.file_exists(path):
 		button.icon = load(path)
 		button.expand_icon = true
+		button.add_theme_constant_override("icon_max_width", 48)
 	else:
 		button.text = "🏠"
 
@@ -112,9 +114,14 @@ func _setup_mandiri() -> void:
 	vbox.add_child(title)
 
 	var play_sound_button := Button.new()
-	play_sound_button.text = "🔊 Dengar Suaranya"
-	play_sound_button.custom_minimum_size = Vector2(0, 72)
+	play_sound_button.text = "Dengar Suaranya"
+	var speaker_icon_path := "res://core/assets/images/ui/speaker_on.png"
+	if FileAccess.file_exists(speaker_icon_path):
+		play_sound_button.icon = load(speaker_icon_path)
+		play_sound_button.expand_icon = true
+		play_sound_button.add_theme_constant_override("icon_max_width", 36)
 	play_sound_button.pressed.connect(_play_current_target_sound)
+	UIStyle.apply_pill_action(play_sound_button)
 	vbox.add_child(play_sound_button)
 
 	_choices_box = HBoxContainer.new()
@@ -251,8 +258,13 @@ func _setup_guided() -> void:
 	vbox.add_child(button_row)
 
 	var play_sound_button := Button.new()
-	play_sound_button.text = "🔊 Dengar Suaranya"
-	play_sound_button.custom_minimum_size = Vector2(0, 72)
+	play_sound_button.text = "Dengar Suaranya"
+	var speaker_icon_path := "res://core/assets/images/ui/speaker_on.png"
+	if FileAccess.file_exists(speaker_icon_path):
+		play_sound_button.icon = load(speaker_icon_path)
+		play_sound_button.expand_icon = true
+		play_sound_button.add_theme_constant_override("icon_max_width", 36)
+	UIStyle.apply_pill_action(play_sound_button)
 	play_sound_button.pressed.connect(func():
 		var animal: Dictionary = _animals[_guided_order[_guided_index]]
 		SfxService.play(_load_sfx(animal.get("sfx", "")))
@@ -268,13 +280,20 @@ func _setup_guided() -> void:
 		reveal_button.text = "Lihat Jawaban"
 	else:
 		reveal_button.text = "🔍 Lihat Jawaban"
-	reveal_button.custom_minimum_size = Vector2(0, 72)
+	UIStyle.apply_pill_action(reveal_button, true)
 	reveal_button.pressed.connect(_on_reveal_pressed)
 	button_row.add_child(reveal_button)
 
 	var next_button := Button.new()
-	next_button.text = "Hewan Lain →"
-	next_button.custom_minimum_size = Vector2(0, 72)
+	var next_icon_path := "res://core/assets/images/ui/next_arrow.png"
+	if FileAccess.file_exists(next_icon_path):
+		next_button.icon = load(next_icon_path)
+		next_button.expand_icon = true
+		next_button.add_theme_constant_override("icon_max_width", 36)
+		next_button.text = "Hewan Lain"
+	else:
+		next_button.text = "Hewan Lain →"
+	UIStyle.apply_pill_action(next_button)
 	next_button.pressed.connect(_on_next_animal_pressed)
 	vbox.add_child(next_button)
 

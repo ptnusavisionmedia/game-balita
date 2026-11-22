@@ -61,12 +61,24 @@ func _ready() -> void:
 	vbox.add_theme_constant_override("separation", 12)
 	card.add_child(vbox)
 
+	# Update 2026-11-22: susunan judul+tutup mengikuti mockup
+	# `previews/09_parental_gate.png` paket Wawa_GUI_HUD_Pack.zip — kunci
+	# orang tua pindah jadi ikon kecil DI DALAM judul (bukan baris sendiri
+	# di atas), ditambah tombol tutup (X) bulat di kanan, gantikan tombol
+	# "Batal" di paling bawah (lebih jelas & konsisten sama pola ParentGuide).
+	var header_row := HBoxContainer.new()
+	vbox.add_child(header_row)
+
+	var title_box := HBoxContainer.new()
+	title_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_box.add_theme_constant_override("separation", 8)
+	header_row.add_child(title_box)
+
 	var lock_icon_path := "res://core/assets/images/ui/parental_lock.png"
 	if FileAccess.file_exists(lock_icon_path):
 		var lock_icon := TextureRect.new()
 		lock_icon.texture = load(lock_icon_path)
-		lock_icon.custom_minimum_size = Vector2(64, 64)
-		lock_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		lock_icon.custom_minimum_size = Vector2(32, 32)
 		# expand_mode = IGNORE_SIZE WAJIB — tanpa ini TextureRect melapor
 		# "minimum size"-nya = ukuran asli file (bisa 1024x1024), bukan
 		# custom_minimum_size di atas (bug sama persis GameBackground
@@ -74,13 +86,25 @@ func _ready() -> void:
 		# nutupin seluruh layar).
 		lock_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		lock_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		vbox.add_child(lock_icon)
+		title_box.add_child(lock_icon)
 
 	var title := Label.new()
-	title.text = "Mode Orang Tua"
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.text = "Untuk Orang Tua"
+	title.add_theme_font_size_override("font_size", 26)
 	title.add_theme_color_override("font_color", AppColors.INK)
-	vbox.add_child(title)
+	title_box.add_child(title)
+
+	var close_button := Button.new()
+	UIStyle.apply_icon_frame(close_button)
+	var close_icon_path := "res://core/assets/images/ui/close_x.png"
+	if FileAccess.file_exists(close_icon_path):
+		close_button.icon = load(close_icon_path)
+		close_button.expand_icon = true
+		close_button.add_theme_constant_override("icon_max_width", 40)
+	else:
+		close_button.text = "✕"
+	close_button.pressed.connect(func(): cancelled.emit())
+	header_row.add_child(close_button)
 
 	_question_label = Label.new()
 	_question_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -107,12 +131,6 @@ func _ready() -> void:
 	keypad.add_child(_make_digit_button(0))
 	keypad.add_child(_make_confirm_button())
 
-	var cancel_button := Button.new()
-	cancel_button.text = "Batal"
-	cancel_button.custom_minimum_size = Vector2(0, 72)
-	cancel_button.pressed.connect(func(): cancelled.emit())
-	vbox.add_child(cancel_button)
-
 	_update_display()
 
 
@@ -127,31 +145,40 @@ func _update_display() -> void:
 	_answer_label.text = _answer_text if _answer_text != "" else "_"
 
 
+## Update 2026-11-22: keypad pakai bingkai bulat `UIStyle.apply_icon_frame`
+## (token `icon.s` 88x88, lihat mockup `previews/09_parental_gate.png`) +
+## font digit dibesarkan ke 40px (token "Digit keypad" di
+## docs/STYLE_GUIDE_GUI_HUD.md / GUI_HUD_SPEC paket).
 func _make_digit_button(d: int) -> Button:
 	var button := Button.new()
+	UIStyle.apply_icon_frame(button)
+	UIStyle.apply_ink_text_color(button)
 	button.text = str(d)
-	button.custom_minimum_size = Vector2(72, 72)
+	button.add_theme_font_size_override("font_size", 40)
 	button.pressed.connect(_on_digit_pressed.bind(d))
 	return button
 
 
 func _make_backspace_button() -> Button:
 	var button := Button.new()
-	button.text = "⌫"
-	button.custom_minimum_size = Vector2(72, 72)
+	UIStyle.apply_icon_frame(button)
+	UIStyle.apply_ink_text_color(button)
+	button.text = "Hapus"
+	button.add_theme_font_size_override("font_size", 16)
 	button.pressed.connect(_on_backspace_pressed)
 	return button
 
 
 func _make_confirm_button() -> Button:
 	var button := Button.new()
+	UIStyle.apply_icon_frame(button)
 	var checkmark_path := "res://core/assets/images/ui/checkmark.png"
 	if FileAccess.file_exists(checkmark_path):
 		button.icon = load(checkmark_path)
 		button.expand_icon = true
+		button.add_theme_constant_override("icon_max_width", 40)
 	else:
 		button.text = "✓"
-	button.custom_minimum_size = Vector2(72, 72)
 	button.pressed.connect(_on_confirm_pressed)
 	return button
 

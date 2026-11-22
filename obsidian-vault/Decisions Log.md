@@ -669,3 +669,75 @@ tombol baru ini akan ikut ter-scale sama persis seperti yang lama.
 **Belum disentuh (sengaja)**: `BigRoundButton` tetap 120×120 (sudah
 cukup besar, prinsip touch-target anak sudah terpenuhi sejak riset
 kompetitor 2026-11-21) — cuma font size teksnya yang naik (28→34).
+
+## 2026-11-22 — Redesain GUI/HUD pakai paket Wawa_GUI_HUD_Pack.zip
+
+**Permintaan user**: redesain tampilan pakai aset baru di
+`Wawa_GUI_HUD_Pack.zip` (hasil generate ChatGPT dari prompt
+`docs/STYLE_GUIDE_GUI_HUD.md`) — paket ini juga menyertakan
+`docs/GUI_HUD_SPEC.md` (token ukuran mengunci `icon.s = 88x88`, bukan 72
+seperti yang sempat dipasang sebelumnya) dan 12 mockup PNG/SVG per layar
+di `previews/` sebagai acuan visual konkret.
+
+**Dikerjakan** (headless-verified semua scene setelah, exit bersih):
+- **Aset baru disalin**: `core/assets/images/gui/` (pill_action_cream/
+  accent, button_circle_neutral, progress_dot_filled/empty) dan 4 ikon UI
+  tambahan (`back_arrow`, `close_x`, `info`, `next_arrow`). File yang
+  sudah ada sebelumnya di paket (home_background, button_primary/
+  secondary, maskot, dll — disebut README paket "disalin tanpa
+  perubahan") TIDAK disalin ulang, biar tidak menimpa tanpa perlu.
+- **`core/scripts/ui_style.gd` (baru, class `UIStyle`)**: helper
+  reusable — `apply_pill_action()` (tombol pil 280x93 + fix
+  font_hover_color), `apply_icon_frame()` (bingkai bulat 88x88),
+  `apply_ink_text_color()` (dipindah dari `scenes/home.gd`, cuma
+  duplikat 2 tombol sebelumnya). Ditaruh di `core/scripts/` (bukan
+  `feature_*`) — posisi sama dengan `AppColors`/`BigRoundButton`, BUKAN
+  pelanggaran aturan "feature tidak boleh depend feature lain".
+- **`scenes/home.gd`**: gear Settings pakai bingkai bulat; **kartu Pilih
+  Game dirombak total** dari kotak kecil 120x120 warna solid + teks
+  putih, jadi kartu krem besar 340x220 (border warna aksen, ikon modul
+  96px, nama modul di dalam "chip" pil warna aksen) — ikut
+  `previews/02_pilih_game.png`. Grid 2 kolom → 3 kolom.
+- **`scenes/settings.gd`**: dirombak total jadi 1 kartu krem berisi baris
+  "Suara" (toggle pil, teks "Aktif"/"Nonaktif" ganti-ganti sesuai state)
+  dan "Panduan Orang Tua" (pil + ikon info), plus tombol kembali bulat
+  pojok kiri atas — ikut `previews/10_pengaturan.png`.
+- **`core/scripts/parental_gate_dialog.gd`**: tombol "Batal" di bawah
+  DIHAPUS, diganti tombol tutup (X) bulat di pojok kanan atas judul —
+  ikut `previews/09_parental_gate.png`. Keypad (digit/hapus/konfirmasi)
+  dipindah dari kotak 72x72 ke bingkai bulat 88x88, font digit naik ke
+  40px, backspace ganti teks "Hapus" (dari glyph ⌫).
+- **6 modul feature_***: tombol 🏠 darurat naik dari 72x72→88x88
+  (ikut token resmi paket) + dikasih bingkai bulat; tombol aksi generik
+  ("Dengar Suaranya", "Lihat Jawaban", "Hewan Lain", "Sebutkan", tombol
+  Panduan Orang Tua/Kembali) dipindah dari tombol default Godot ke
+  `UIStyle.apply_pill_action()` + ikon terkait (speaker/next_arrow/
+  back_arrow) kalau filenya ada.
+
+**Catatan penting — bug class yang HARUS selalu diingat ke depannya**:
+setiap kali `Button.icon` di-set, WAJIB sekalian set `expand_icon = true`
+(+ `icon_max_width` kalau tombolnya lebar fleksibel) — SATU KALI LAGI
+lupa di `scenes/settings.gd` (`_sound_button`) bikin ikon speaker
+raksasa nutupin seluruh layar Settings (dilaporkan user, sudah
+diperbaiki sore ini sebelum redesain ini dikerjakan). Pola yang benar
+sudah dijadikan standar di `UIStyle.apply_pill_action()`/
+`apply_icon_frame()` supaya tidak keulang lagi secara manual di tiap
+file.
+
+**Script class baru butuh 1 langkah ekstra**: `class_name` baru
+(`UIStyle`) TIDAK langsung dikenali headless run biasa
+(`--quit-after`) — perlu 1x `godot --headless --editor --path . --quit-after N`
+(mode editor penuh, bukan cuma jalanin game) supaya Godot registrasi
+`global_script_class_cache.cfg`-nya dulu. Kalau nanti nambah
+`class_name` baru lagi dan headless test tiba-tiba bilang "Identifier
+tidak declared", ini penyebabnya, bukan typo kode.
+
+**Belum dikerjakan** (scope sengaja dibatasi, bukan di semua 12 mockup
+persis 1:1): kartu opak di belakang konten `feature_angka` (hati di
+dalam kotak krem seperti `previews/03_angka.png`) belum dipasang di
+modul manapun; `close_x`/`info`/progress dot cuma dipakai di 2 tempat
+(ParentalGateDialog, Settings) — belum ada per-screen speaker-toggle di
+HUD gameplay seperti yang tampak di mockup (itu fitur baru, bukan cuma
+reskin, perlu keputusan terpisah); animasi gerak (§6 GUI_HUD_SPEC: press
+bounce, pop-in, idle maskot) belum diimplementasikan — masih di
+`docs/STYLE_GUIDE_GUI_HUD.md` sebagai panduan, bukan kode jalan.
