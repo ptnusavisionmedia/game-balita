@@ -1,0 +1,123 @@
+{
+  "id": "flower",
+  "title": "Bunga",
+  "canvas": {
+    "width": 1024,
+    "height": 1024
+  },
+  "coordinate_space": "SVG viewBox pixels; origin at top-left; left/right refer to image coordinates",
+  "original_vector_art": true,
+  "app_integration_verified": false,
+  "region_count": 4,
+  "regions": [
+    {
+      "id": "blossom",
+      "label": "Mahkota bunga",
+      "path": "M 696 378 C 696 383.447 697.102 388.639 698.77 394.34 C 700.438 400.042 703.328 405.873 706.007 412.209 C 708.686 418.544 712.254 425.342 714.844 432.352 C 717.435 439.362 720.237 446.952 721.551 454.27 C 722.866 461.589 723.593 469.311 722.732 476.266 C 721.87 483.221 719.76 490.15 716.382 496 C 713.004 501.85 708.059 507.142 702.466 511.366 C 696.874 515.59 689.824 518.821 682.828 521.342 C 675.832 523.863 667.859 525.231 660.492 526.492 C 653.126 527.754 645.455 528.063 638.629 528.911 C 631.803 529.758 625.308 530.171 619.536 531.577 C 613.764 532.984 608.717 534.625 604 537.349 C 599.283 540.072 595.338 543.622 591.234 547.918 C 587.13 552.213 583.525 557.632 579.378 563.119 C 575.231 568.607 571.128 575.096 566.352 580.844 C 561.576 586.593 556.405 592.814 550.724 597.612 C 545.042 602.41 538.719 606.901 532.265 609.632 C 525.811 612.363 518.755 614 512 614 C 505.245 614 498.189 612.363 491.735 609.632 C 485.281 606.901 478.958 602.41 473.276 597.612 C 467.595 592.814 462.424 586.593 457.648 580.844 C 452.872 575.096 448.769 568.607 444.622 563.119 C 440.475 557.632 436.87 552.213 432.766 547.918 C 428.662 543.622 424.717 540.072 420 537.349 C 415.283 534.625 410.236 532.984 404.464 531.577 C 398.692 530.171 392.197 529.758 385.371 528.911 C 378.545 528.063 370.874 527.754 363.508 526.492 C 356.141 525.231 348.168 523.863 341.172 521.342 C 334.176 518.821 327.126 515.59 321.534 511.366 C 315.941 507.142 310.996 501.85 307.618 496 C 304.24 490.15 302.13 483.221 301.268 476.266 C 300.407 469.311 301.134 461.589 302.449 454.27 C 303.763 446.952 306.565 439.362 309.156 432.352 C 311.746 425.342 315.314 418.544 317.993 412.209 C 320.672 405.873 323.562 400.042 325.23 394.34 C 326.898 388.639 328 383.447 328 378 C 328 372.553 326.898 367.361 325.23 361.66 C 323.562 355.958 320.672 350.127 317.993 343.791 C 315.314 337.456 311.746 330.658 309.156 323.648 C 306.565 316.638 303.763 309.048 302.449 301.73 C 301.134 294.411 300.407 286.689 301.268 279.734 C 302.13 272.779 304.24 265.85 307.618 260 C 310.996 254.15 315.941 248.858 321.534 244.634 C 327.126 240.41 334.176 237.179 341.172 234.658 C 348.168 232.137 356.141 230.769 363.508 229.508 C 370.874 228.246 378.545 227.937 385.371 227.089 C 392.197 226.242 398.692 225.829 404.464 224.423 C 410.236 223.016 415.283 221.375 420 218.651 C 424.717 215.928 428.662 212.378 432.766 208.082 C 436.87 203.787 440.475 198.368 444.622 192.881 C 448.769 187.393 452.872 180.904 457.648 175.156 C 462.424 169.407 467.595 163.186 473.276 158.388 C 478.958 153.59 485.281 149.099 491.735 146.368 C 498.189 143.637 505.245 142 512 142 C 518.755 142 525.811 143.637 532.265 146.368 C 538.719 149.099 545.042 153.59 550.724 158.388 C 556.405 163.186 561.576 169.407 566.352 175.156 C 571.128 180.904 575.231 187.393 579.378 192.881 C 583.525 198.368 587.13 203.787 591.234 208.082 C 595.338 212.378 599.283 215.928 604 218.651 C 608.717 221.375 613.764 223.016 619.536 224.423 C 625.308 225.829 631.803 226.242 638.629 227.089 C 645.455 227.937 653.126 228.246 660.492 229.508 C 667.859 230.769 675.832 232.137 682.828 234.658 C 689.824 237.179 696.874 240.41 702.466 244.634 C 708.059 248.858 713.004 254.15 716.382 260 C 719.76 265.85 721.87 272.779 722.732 279.734 C 723.593 286.689 722.866 294.411 721.551 301.73 C 720.237 309.048 717.435 316.638 714.844 323.648 C 712.254 330.658 708.686 337.456 706.007 343.791 C 703.328 350.127 700.438 355.958 698.77 361.66 C 697.102 367.361 696 372.553 696 378 Z M 598 378 C 598 425.496 559.496 464 512 464 C 464.504 464 426 425.496 426 378 C 426 330.504 464.504 292 512 292 C 559.496 292 598 330.504 598 378 Z",
+      "fill_rule": "evenodd",
+      "mask_svg": "mask_blossom.svg",
+      "mask_png": "mask_blossom.png",
+      "preview_color": "#F6A7C5",
+      "bbox_alpha": [
+        300,
+        142,
+        724,
+        614
+      ],
+      "note": "One continuous compound region with a center hole; use evenodd fill rule.",
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 115146,
+        "visible_pixel_area": 117576,
+        "boundary_pixels": 1820,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    },
+    {
+      "id": "center",
+      "label": "Pusat bunga",
+      "path": "M 594 378 C 594 423.287 557.287 460 512 460 C 466.713 460 430 423.287 430 378 C 430 332.713 466.713 296 512 296 C 557.287 296 594 332.713 594 378 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_center.svg",
+      "mask_png": "mask_center.png",
+      "preview_color": "#FFD461",
+      "bbox_alpha": [
+        430,
+        296,
+        594,
+        460
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 20800,
+        "visible_pixel_area": 21408,
+        "boundary_pixels": 460,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    },
+    {
+      "id": "left_leaf",
+      "label": "Daun kiri pada gambar",
+      "path": "M 488 742 C 430 662 315 635 258 685 C 270 754 352 808 431 782 C 461 772 480 756 488 742 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_left_leaf.svg",
+      "mask_png": "mask_left_leaf.png",
+      "preview_color": "#8AD3A0",
+      "bbox_alpha": [
+        258,
+        659,
+        488,
+        789
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 20010,
+        "visible_pixel_area": 20678,
+        "boundary_pixels": 492,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    },
+    {
+      "id": "right_leaf",
+      "label": "Daun kanan pada gambar",
+      "path": "M 536 793 C 585 708 706 680 766 722 C 747 796 667 848 596 834 C 567 828 547 811 536 793 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_right_leaf.svg",
+      "mask_png": "mask_right_leaf.png",
+      "preview_color": "#B5DEA0",
+      "bbox_alpha": [
+        536,
+        702,
+        766,
+        837
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 20197,
+        "visible_pixel_area": 20871,
+        "boundary_pixels": 497,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    }
+  ],
+  "lineart_overlay_png": "flower_lineart.png",
+  "lineart_overlay_svg": "flower_lineart.svg",
+  "details_overlay_png": "flower_details.png",
+  "details_overlay_svg": "flower_details.svg",
+  "regions_svg": "flower_regions.svg",
+  "stroke": "#332A25",
+  "stroke_width": 20,
+  "composition": "Draw four tinted mask layers at (0,0), then the lineart overlay at (0,0). The lineart already includes the details; do not draw details twice.",
+  "hit_test": "Map the pointer to 1024x1024 canvas coordinates and test region mask alpha. Alpha >= 128 is a recommended interaction threshold.",
+  "validation": {
+    "overlapping_pixels_at_any_nonzero_alpha": 0,
+    "all_region_boundaries_covered_by_lineart": true,
+    "all_masks_rgba_1024_square": true,
+    "all_visible_mask_rgb_white": true,
+    "rasterizer": "CairoSVG 2.9.1"
+  }
+}

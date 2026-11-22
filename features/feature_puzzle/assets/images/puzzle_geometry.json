@@ -1,0 +1,84 @@
+{
+  "canvas": {
+    "width": 1024,
+    "height": 1024
+  },
+  "coordinate_space": "SVG viewBox pixels; origin at top-left",
+  "original_vector_art": true,
+  "app_integration_verified": false,
+  "note": "Each solid and its slot share the exact same silhouette path. Slots are fully transparent inside.",
+  "shapes": [
+    {
+      "id": "square",
+      "path": "M 220 144 H 804 Q 880 144 880 220 V 804 Q 880 880 804 880 H 220 Q 144 880 144 804 V 220 Q 144 144 220 144 Z",
+      "fill_rule": "nonzero",
+      "fill": "#FF8A65",
+      "stroke": "#5B3A29",
+      "stroke_width": 20,
+      "solid_svg": "shape_square.svg",
+      "solid_png": "shape_square.png",
+      "slot_svg": "slot_square.svg",
+      "slot_png": "slot_square.png",
+      "bbox_alpha": [
+        134,
+        134,
+        890,
+        890
+      ],
+      "checks": {
+        "same_silhouette_path": true,
+        "same_alpha_bbox": true,
+        "slot_center_transparent": true,
+        "solid_center_opaque": true
+      }
+    },
+    {
+      "id": "circle",
+      "path": "M 880 512 C 880 715.241 715.241 880 512 880 C 308.759 880 144 715.241 144 512 C 144 308.759 308.759 144 512 144 C 715.241 144 880 308.759 880 512 Z",
+      "fill_rule": "nonzero",
+      "fill": "#64B5E8",
+      "stroke": "#5B3A29",
+      "stroke_width": 20,
+      "solid_svg": "shape_circle.svg",
+      "solid_png": "shape_circle.png",
+      "slot_svg": "slot_circle.svg",
+      "slot_png": "slot_circle.png",
+      "bbox_alpha": [
+        134,
+        134,
+        890,
+        890
+      ],
+      "checks": {
+        "same_silhouette_path": true,
+        "same_alpha_bbox": true,
+        "slot_center_transparent": true,
+        "solid_center_opaque": true
+      }
+    },
+    {
+      "id": "triangle",
+      "path": "M 488 176 Q 512 128 536 176 L 850 804 Q 886 876 806 876 H 218 Q 138 876 174 804 Z",
+      "fill_rule": "nonzero",
+      "fill": "#FFD461",
+      "stroke": "#5B3A29",
+      "stroke_width": 20,
+      "solid_svg": "shape_triangle.svg",
+      "solid_png": "shape_triangle.png",
+      "slot_svg": "slot_triangle.svg",
+      "slot_png": "slot_triangle.png",
+      "bbox_alpha": [
+        152,
+        142,
+        872,
+        886
+      ],
+      "checks": {
+        "same_silhouette_path": true,
+        "same_alpha_bbox": true,
+        "slot_center_transparent": true,
+        "solid_center_opaque": true
+      }
+    }
+  ]
+}

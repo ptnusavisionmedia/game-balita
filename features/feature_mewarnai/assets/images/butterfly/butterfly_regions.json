@@ -1,0 +1,122 @@
+{
+  "id": "butterfly",
+  "title": "Kupu-kupu",
+  "canvas": {
+    "width": 1024,
+    "height": 1024
+  },
+  "coordinate_space": "SVG viewBox pixels; origin at top-left; left/right refer to image coordinates",
+  "original_vector_art": true,
+  "app_integration_verified": false,
+  "region_count": 4,
+  "regions": [
+    {
+      "id": "upper_left_wing",
+      "label": "Sayap kiri atas pada gambar",
+      "path": "M 494 504 C 444 334 328 189 225 177 C 165 170 133 213 143 279 C 156 383 265 507 420 563 C 459 577 485 556 494 504 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_upper_left_wing.svg",
+      "mask_png": "mask_upper_left_wing.png",
+      "preview_color": "#C1AAE8",
+      "bbox_alpha": [
+        141,
+        176,
+        494,
+        568
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 79283,
+        "visible_pixel_area": 80688,
+        "boundary_pixels": 979,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    },
+    {
+      "id": "upper_right_wing",
+      "label": "Sayap kanan atas pada gambar",
+      "path": "M 530 504 C 580 334 696 189 799 177 C 859 170 891 213 881 279 C 868 383 759 507 604 563 C 565 577 539 556 530 504 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_upper_right_wing.svg",
+      "mask_png": "mask_upper_right_wing.png",
+      "preview_color": "#F3A7C4",
+      "bbox_alpha": [
+        530,
+        176,
+        883,
+        568
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 79283,
+        "visible_pixel_area": 80687,
+        "boundary_pixels": 979,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    },
+    {
+      "id": "lower_left_wing",
+      "label": "Sayap kiri bawah pada gambar",
+      "path": "M 478 590 C 400 565 304 595 250 667 C 207 724 214 794 262 834 C 314 876 389 844 438 776 C 474 727 489 648 478 590 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_lower_left_wing.svg",
+      "mask_png": "mask_lower_left_wing.png",
+      "preview_color": "#FFD47D",
+      "bbox_alpha": [
+        221,
+        581,
+        482,
+        853
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 51641,
+        "visible_pixel_area": 52646,
+        "boundary_pixels": 762,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    },
+    {
+      "id": "lower_right_wing",
+      "label": "Sayap kanan bawah pada gambar",
+      "path": "M 546 590 C 624 565 720 595 774 667 C 817 724 810 794 762 834 C 710 876 635 844 586 776 C 550 727 535 648 546 590 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_lower_right_wing.svg",
+      "mask_png": "mask_lower_right_wing.png",
+      "preview_color": "#8BD2D0",
+      "bbox_alpha": [
+        542,
+        581,
+        803,
+        853
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 51641,
+        "visible_pixel_area": 52647,
+        "boundary_pixels": 762,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    }
+  ],
+  "lineart_overlay_png": "butterfly_lineart.png",
+  "lineart_overlay_svg": "butterfly_lineart.svg",
+  "details_overlay_png": "butterfly_details.png",
+  "details_overlay_svg": "butterfly_details.svg",
+  "regions_svg": "butterfly_regions.svg",
+  "stroke": "#332A25",
+  "stroke_width": 20,
+  "composition": "Draw four tinted mask layers at (0,0), then the lineart overlay at (0,0). The lineart already includes the details; do not draw details twice.",
+  "hit_test": "Map the pointer to 1024x1024 canvas coordinates and test region mask alpha. Alpha >= 128 is a recommended interaction threshold.",
+  "validation": {
+    "overlapping_pixels_at_any_nonzero_alpha": 0,
+    "all_region_boundaries_covered_by_lineart": true,
+    "all_masks_rgba_1024_square": true,
+    "all_visible_mask_rgb_white": true,
+    "rasterizer": "CairoSVG 2.9.1"
+  }
+}

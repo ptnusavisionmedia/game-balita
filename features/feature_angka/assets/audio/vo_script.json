@@ -1,0 +1,38 @@
+{
+  "language": "id-ID",
+  "recording_direction": "Ucapkan setiap angka sekali dengan ramah, jelas, tempo sedang, tanpa musik dan tanpa kalimat tambahan. Penutur Bahasa Indonesia perlu menilai pelafalan sebelum rilis.",
+  "synthetic_draft_engine": "Flite / cmu_us_slt via explicit phones",
+  "human_recording": false,
+  "items": [
+    {
+      "number": 1,
+      "text": "satu",
+      "phones": "s aa t uw",
+      "file": "vo_01_satu.wav"
+    },
+    {
+      "number": 2,
+      "text": "dua",
+      "phones": "d uw aa",
+      "file": "vo_02_dua.wav"
+    },
+    {
+      "number": 3,
+      "text": "tiga",
+      "phones": "t iy g aa",
+      "file": "vo_03_tiga.wav"
+    },
+    {
+      "number": 4,
+      "text": "empat",
+      "phones": "ax m p aa t",
+      "file": "vo_04_empat.wav"
+    },
+    {
+      "number": 5,
+      "text": "lima",
+      "phones": "l iy m aa",
+      "file": "vo_05_lima.wav"
+    }
+  ]
+}

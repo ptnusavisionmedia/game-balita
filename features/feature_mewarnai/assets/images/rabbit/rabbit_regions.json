@@ -1,0 +1,122 @@
+{
+  "id": "rabbit",
+  "title": "Kelinci",
+  "canvas": {
+    "width": 1024,
+    "height": 1024
+  },
+  "coordinate_space": "SVG viewBox pixels; origin at top-left; left/right refer to image coordinates",
+  "original_vector_art": true,
+  "app_integration_verified": false,
+  "region_count": 4,
+  "regions": [
+    {
+      "id": "left_ear",
+      "label": "Telinga kiri pada gambar",
+      "path": "M 424 332 C 388 314 345 215 352 160 C 356 131 377 120 397 139 C 431 170 462 271 454 312 C 451 328 439 336 424 332 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_left_ear.svg",
+      "mask_png": "mask_left_ear.png",
+      "preview_color": "#F7B3C8",
+      "bbox_alpha": [
+        351,
+        129,
+        456,
+        333
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 13168,
+        "visible_pixel_area": 13744,
+        "boundary_pixels": 443,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    },
+    {
+      "id": "right_ear",
+      "label": "Telinga kanan pada gambar",
+      "path": "M 600 332 C 636 314 679 215 672 160 C 668 131 647 120 627 139 C 593 170 562 271 570 312 C 573 328 585 336 600 332 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_right_ear.svg",
+      "mask_png": "mask_right_ear.png",
+      "preview_color": "#F7B3C8",
+      "bbox_alpha": [
+        568,
+        129,
+        673,
+        333
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 13168,
+        "visible_pixel_area": 13743,
+        "boundary_pixels": 443,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    },
+    {
+      "id": "head",
+      "label": "Kepala",
+      "path": "M 420 345 C 375 345 330 373 311 416 C 283 482 301 552 354 587 C 391 612 451 624 512 624 C 573 624 633 612 670 587 C 723 552 741 482 713 416 C 694 373 649 345 604 345 C 560 338 464 338 420 345 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_head.svg",
+      "mask_png": "mask_head.png",
+      "preview_color": "#FFE8BD",
+      "bbox_alpha": [
+        297,
+        339,
+        727,
+        624
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 101569,
+        "visible_pixel_area": 102906,
+        "boundary_pixels": 1086,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    },
+    {
+      "id": "body",
+      "label": "Badan",
+      "path": "M 354 591 C 391 616 451 628 512 628 C 573 628 633 616 670 591 C 681 637 702 719 701 784 C 700 850 660 886 594 886 L 430 886 C 364 886 324 850 323 784 C 322 719 343 637 354 591 Z",
+      "fill_rule": "nonzero",
+      "mask_svg": "mask_body.svg",
+      "mask_png": "mask_body.png",
+      "preview_color": "#FFCD91",
+      "bbox_alpha": [
+        323,
+        591,
+        701,
+        886
+      ],
+      "validation": {
+        "closed_path": true,
+        "opaque_pixel_area": 94127,
+        "visible_pixel_area": 95317,
+        "boundary_pixels": 1170,
+        "boundary_pixels_without_lineart": 0,
+        "white_rgb_on_all_visible_mask_pixels": true
+      }
+    }
+  ],
+  "lineart_overlay_png": "rabbit_lineart.png",
+  "lineart_overlay_svg": "rabbit_lineart.svg",
+  "details_overlay_png": "rabbit_details.png",
+  "details_overlay_svg": "rabbit_details.svg",
+  "regions_svg": "rabbit_regions.svg",
+  "stroke": "#332A25",
+  "stroke_width": 20,
+  "composition": "Draw four tinted mask layers at (0,0), then the lineart overlay at (0,0). The lineart already includes the details; do not draw details twice.",
+  "hit_test": "Map the pointer to 1024x1024 canvas coordinates and test region mask alpha. Alpha >= 128 is a recommended interaction threshold.",
+  "validation": {
+    "overlapping_pixels_at_any_nonzero_alpha": 0,
+    "all_region_boundaries_covered_by_lineart": true,
+    "all_masks_rgba_1024_square": true,
+    "all_visible_mask_rgb_white": true,
+    "rasterizer": "CairoSVG 2.9.1"
+  }
+}
