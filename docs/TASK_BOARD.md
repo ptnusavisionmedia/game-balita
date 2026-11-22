@@ -63,6 +63,9 @@ Tidak diurutkan per tanggal — diurutkan per modul/area. Tambah baris baru kala
 | Ilustrasi kartu "Panduan Orang Tua" (opsional, teks dulu boleh) | Asset | branding | Open | Asset 1 | | lihat `docs/PLAN_TUMBUH_KEMBANG.md` bagian 5 |
 | Rename app: "Bayi GuguGaga" → "Wawa" (nama final, sudah dicek bersih dari app/brand serupa) | Dev | branding | Done | (user + sesi AI, 2026-11-22) | 2026-11-22 | `project.godot`, `export_presets.cfg` (package id baru `com.wawaapp.wawa`), semua docs + `scenes/home.gd`/`splash.gd`. Nama folder repo `bayi-gugugaga/` TIDAK diganti |
 | Font app: pasang Baloo 2 (Google Fonts) jadi font default seluruh app | Dev | core | Done | (sesi AI, 2026-11-22) | 2026-11-22 | `core/assets/fonts/Baloo2.ttf` + `project.godot` `[gui] theme/custom_font` — rencana lama di `docs/UI_UX_DESIGN.md` yang baru benar-benar dieksekusi |
+| Besarkan semua teks & tombol (balita tidak baca teks kecil) | Dev | lintas-modul | Done | (sesi AI, 2026-11-22) | 2026-11-22 | `theme/default_font_size=22` + font judul/tombol naik di semua scene, lihat Decisions Log |
+| Style guide GUI/HUD (token ukuran, prompt aset, panduan animasi) | — | docs | Done | (sesi AI, 2026-11-22) | 2026-11-22 | `docs/STYLE_GUIDE_GUI_HUD.md` |
+| Redesain GUI/HUD pakai `Wawa_GUI_HUD_Pack.zip` (Home/Pilih Game/Settings/ParentalGateDialog + tombol pil/bulat generik) | Asset+Dev | lintas-modul | Done | (user via ChatGPT + sesi AI, 2026-11-22) | 2026-11-22 | `core/scripts/ui_style.gd` (baru). Belum semua 12 mockup paket diikuti 1:1 (kartu opak di konten HUD, animasi §6, per-screen speaker toggle belum) — lihat Decisions Log untuk detail belum dikerjakan |
 
 ## Setelah base model demo lolos
 
