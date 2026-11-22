@@ -11,6 +11,25 @@ const _NOTE_COLORS := [
 	Color("#D1C4E9"), Color("#8E7CC3"), Color("#A48AD4"),
 ]
 
+## Bilah xilofon + nada asli (lihat docs/ASSET_LIST.md #10) — urutan
+## do-re-mi-fa-sol-la, pasangan gambar/audio 1:1 sesuai README paket aset.
+const _NOTE_IMAGES := [
+	"res://features/feature_musik/assets/images/bilah_01_do.png",
+	"res://features/feature_musik/assets/images/bilah_02_re.png",
+	"res://features/feature_musik/assets/images/bilah_03_mi.png",
+	"res://features/feature_musik/assets/images/bilah_04_fa.png",
+	"res://features/feature_musik/assets/images/bilah_05_sol.png",
+	"res://features/feature_musik/assets/images/bilah_06_la.png",
+]
+const _NOTE_SOUNDS := [
+	"res://features/feature_musik/assets/audio/nada_01_do.wav",
+	"res://features/feature_musik/assets/audio/nada_02_re.wav",
+	"res://features/feature_musik/assets/audio/nada_03_mi.wav",
+	"res://features/feature_musik/assets/audio/nada_04_fa.wav",
+	"res://features/feature_musik/assets/audio/nada_05_sol.wav",
+	"res://features/feature_musik/assets/audio/nada_06_la.wav",
+]
+
 var _tap_count: int = 0
 
 
@@ -40,7 +59,12 @@ func _ready() -> void:
 	for i in range(_NOTE_COLORS.size()):
 		var button := BigRoundButton.new()
 		button.accent_color = _NOTE_COLORS[i]
-		button.text = "♪"
+		if FileAccess.file_exists(_NOTE_IMAGES[i]):
+			button.icon = load(_NOTE_IMAGES[i])
+			button.expand_icon = true
+			button.add_theme_constant_override("icon_max_width", 84)
+		else:
+			button.text = "♪"
 		button.pressed.connect(_on_note_pressed.bind(i))
 		notes_box.add_child(button)
 
@@ -65,7 +89,8 @@ func _add_home_button() -> void:
 ## Tidak ada "benar/salah" di sini — tap mana pun selalu valid, cuma
 ## keluar nada + animasi. Lihat obsidian-vault/Specs/feature_musik.md.
 func _on_note_pressed(note_index: int) -> void:
-	SfxService.play(null)  # TODO Farel: nada_<note_index>.mp3 belum ada
+	var path: String = _NOTE_SOUNDS[note_index]
+	SfxService.play(load(path) if FileAccess.file_exists(path) else null)
 	_tap_count += 1
 	if _tap_count >= TOTAL_TAPS_TO_FINISH:
 		_show_reward()

@@ -2,43 +2,49 @@
   {
     "id": "kucing",
     "name": "Kucing",
-    "sound_desc": "Meong",
+    "sound_desc": "meong",
     "placeholder_emoji": "🐱",
-    "sfx": ""
+    "image": "res://features/feature_hewan/assets/images/kucing.png",
+    "sfx": "res://features/feature_hewan/assets/audio/kucing.wav"
   },
   {
     "id": "anjing",
     "name": "Anjing",
-    "sound_desc": "Guk guk",
+    "sound_desc": "guk guk",
     "placeholder_emoji": "🐶",
-    "sfx": ""
+    "image": "res://features/feature_hewan/assets/images/anjing.png",
+    "sfx": "res://features/feature_hewan/assets/audio/anjing.wav"
   },
   {
     "id": "sapi",
     "name": "Sapi",
-    "sound_desc": "Moo",
+    "sound_desc": "moo",
     "placeholder_emoji": "🐮",
-    "sfx": ""
+    "image": "res://features/feature_hewan/assets/images/sapi.png",
+    "sfx": "res://features/feature_hewan/assets/audio/sapi.wav"
   },
   {
     "id": "ayam",
     "name": "Ayam",
-    "sound_desc": "Kukuruyuk",
+    "sound_desc": "kukuruyuk",
     "placeholder_emoji": "🐔",
-    "sfx": ""
+    "image": "res://features/feature_hewan/assets/images/ayam.png",
+    "sfx": "res://features/feature_hewan/assets/audio/ayam.wav"
   },
   {
     "id": "kambing",
     "name": "Kambing",
-    "sound_desc": "Mbeek",
+    "sound_desc": "mbeek",
     "placeholder_emoji": "🐐",
-    "sfx": ""
+    "image": "res://features/feature_hewan/assets/images/kambing.png",
+    "sfx": "res://features/feature_hewan/assets/audio/kambing.wav"
   },
   {
     "id": "bebek",
     "name": "Bebek",
-    "sound_desc": "Kwek kwek",
+    "sound_desc": "kwek kwek",
     "placeholder_emoji": "🦆",
-    "sfx": ""
+    "image": "res://features/feature_hewan/assets/images/bebek.png",
+    "sfx": "res://features/feature_hewan/assets/audio/bebek.wav"
   }
 ]

@@ -5,6 +5,14 @@ extends Control
 
 const QUESTIONS_PER_SESSION := 4
 const StarRewardOverlayScene := preload("res://core/scenes/StarRewardOverlay.tscn")
+const HEART_IMAGE_PATH := "res://features/feature_angka/assets/images/hati.png"
+const VO_PATHS := [
+	"res://features/feature_angka/assets/audio/vo_01_satu.wav",
+	"res://features/feature_angka/assets/audio/vo_02_dua.wav",
+	"res://features/feature_angka/assets/audio/vo_03_tiga.wav",
+	"res://features/feature_angka/assets/audio/vo_04_empat.wav",
+	"res://features/feature_angka/assets/audio/vo_05_lima.wav",
+]
 
 var _targets: Array[int] = []
 var _question_index: int = 0
@@ -39,6 +47,12 @@ func _ready() -> void:
 	_hearts_box = HBoxContainer.new()
 	_hearts_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	vbox.add_child(_hearts_box)
+
+	var speak_button := Button.new()
+	speak_button.text = "🔊 Sebutkan"
+	speak_button.custom_minimum_size = Vector2(0, 56)
+	speak_button.pressed.connect(_play_current_target_vo)
+	vbox.add_child(speak_button)
 
 	_choices_box = HBoxContainer.new()
 	_choices_box.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -87,12 +101,20 @@ func _render_question() -> void:
 		child.queue_free()
 
 	var target := _current_target()
+	var has_heart_image := FileAccess.file_exists(HEART_IMAGE_PATH)
 	for i in range(target):
-		var heart := Label.new()
-		heart.text = "♥"
-		heart.add_theme_font_size_override("font_size", 40)
-		heart.add_theme_color_override("font_color", AppColors.CORAL)
-		_hearts_box.add_child(heart)
+		if has_heart_image:
+			var heart_image := TextureRect.new()
+			heart_image.texture = load(HEART_IMAGE_PATH)
+			heart_image.custom_minimum_size = Vector2(48, 48)
+			heart_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			_hearts_box.add_child(heart_image)
+		else:
+			var heart := Label.new()
+			heart.text = "♥"
+			heart.add_theme_font_size_override("font_size", 40)
+			heart.add_theme_color_override("font_color", AppColors.CORAL)
+			_hearts_box.add_child(heart)
 
 	for choice in _choices_for(target):
 		var button := BigRoundButton.new()
@@ -102,10 +124,16 @@ func _render_question() -> void:
 		_choices_box.add_child(button)
 
 
+func _play_current_target_vo() -> void:
+	var target := _current_target()
+	var path: String = VO_PATHS[target - 1] if target >= 1 and target <= VO_PATHS.size() else ""
+	if path != "" and FileAccess.file_exists(path):
+		SfxService.play(load(path))
+
+
 func _on_choice_pressed(choice: int) -> void:
 	if choice == _current_target():
-		# TODO Asset 2: isi dengan AudioStream SFX "benar" begitu file-nya ada.
-		SfxService.play(null)
+		SfxService.play(load("res://core/assets/audio/sfx_correct.wav"))
 		_correct_count += 1
 		if _question_index + 1 >= _targets.size():
 			_show_reward()
@@ -113,8 +141,7 @@ func _on_choice_pressed(choice: int) -> void:
 			_question_index += 1
 			_render_question()
 	else:
-		# TODO Asset 2: isi dengan AudioStream SFX "coba lagi" begitu file-nya ada.
-		SfxService.play(null)
+		SfxService.play(load("res://core/assets/audio/sfx_try_again.wav"))
 
 
 func _show_reward() -> void:

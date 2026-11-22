@@ -27,6 +27,7 @@ var _guided_order: Array = []
 var _guided_index: int = 0
 var _revealed: bool = false
 var _reveal_icon: Label
+var _reveal_image: TextureRect
 var _reveal_name: Label
 var _hint_label: Label
 
@@ -117,10 +118,16 @@ func _current_target() -> Dictionary:
 
 
 func _play_current_target_sound() -> void:
-	# TODO Farel: SFX per hewan belum ada (hewan_data.json "sfx" masih "").
-	# SfxService.play(null) no-op aman — logic tebak tetap bisa ditest,
-	# cuma belum ada suara sungguhan sampai file-nya diisi.
-	SfxService.play(null)
+	SfxService.play(_load_sfx(_current_target().get("sfx", "")))
+
+
+## Suara hewan (draf sintetis, lihat docs/ASSET_LIST.md) sengaja dimuat
+## lewat `load()` langsung (bukan preload) karena path-nya datang dari
+## JSON data, bukan konstanta yang diketahui saat compile.
+func _load_sfx(path: String) -> AudioStream:
+	if path == "" or not FileAccess.file_exists(path):
+		return null
+	return load(path)
 
 
 func _choice_indices_for(target_index: int) -> Array:
@@ -145,16 +152,29 @@ func _render_mandiri_question() -> void:
 		var animal: Dictionary = _animals[idx]
 		var button := BigRoundButton.new()
 		button.accent_color = AppColors.ACCENT_HEWAN
-		# Placeholder visual: emoji, sampai ilustrasi asli dari Asset 1 ada
-		# (lihat obsidian-vault/Specs/feature_hewan.md bagian Asset).
-		button.text = "%s\n%s" % [animal.get("placeholder_emoji", "?"), animal.get("name", "?")]
+		_apply_animal_icon(button, animal)
 		button.pressed.connect(_on_choice_pressed.bind(idx))
 		_choices_box.add_child(button)
 
 
+## Pasang ilustrasi asli dari paket aset (fallback ke emoji kalau file
+## belum ada) — `Button.icon` bawaan Godot, bukan `BigRoundButton` baru.
+func _apply_animal_icon(button: Button, animal: Dictionary) -> void:
+	var image_path: String = animal.get("image", "")
+	if image_path != "" and FileAccess.file_exists(image_path):
+		button.icon = load(image_path)
+		button.expand_icon = true
+		button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		button.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
+		button.add_theme_constant_override("icon_max_width", 72)
+		button.text = animal.get("name", "?")
+	else:
+		button.text = "%s\n%s" % [animal.get("placeholder_emoji", "?"), animal.get("name", "?")]
+
+
 func _on_choice_pressed(chosen_index: int) -> void:
 	if chosen_index == _targets[_question_index]:
-		SfxService.play(null)  # TODO Farel: sfx_correct
+		SfxService.play(load("res://core/assets/audio/sfx_correct.wav"))
 		_correct_count += 1
 		if _question_index + 1 >= _targets.size():
 			_show_reward(_correct_count)
@@ -162,7 +182,7 @@ func _on_choice_pressed(chosen_index: int) -> void:
 			_question_index += 1
 			_render_mandiri_question()
 	else:
-		SfxService.play(null)  # TODO Farel: sfx_try_again
+		SfxService.play(load("res://core/assets/audio/sfx_try_again.wav"))
 
 
 # ---------------------------------------------------------------------------
@@ -200,6 +220,13 @@ func _setup_guided() -> void:
 	_reveal_icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(_reveal_icon)
 
+	_reveal_image = TextureRect.new()
+	_reveal_image.custom_minimum_size = Vector2(160, 160)
+	_reveal_image.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_reveal_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_reveal_image.visible = false
+	vbox.add_child(_reveal_image)
+
 	_reveal_name = Label.new()
 	_reveal_name.add_theme_font_size_override("font_size", 24)
 	_reveal_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -214,7 +241,8 @@ func _setup_guided() -> void:
 	play_sound_button.text = "🔊 Dengar Suaranya"
 	play_sound_button.custom_minimum_size = Vector2(0, 64)
 	play_sound_button.pressed.connect(func():
-		SfxService.play(null)  # TODO Farel: sfx per hewan belum ada
+		var animal: Dictionary = _animals[_guided_order[_guided_index]]
+		SfxService.play(_load_sfx(animal.get("sfx", "")))
 	)
 	button_row.add_child(play_sound_button)
 
@@ -238,11 +266,20 @@ func _render_guided_current(revealed: bool) -> void:
 	_revealed = revealed
 	if revealed:
 		var animal: Dictionary = _animals[_guided_order[_guided_index]]
-		_reveal_icon.text = animal.get("placeholder_emoji", "?")
+		var image_path: String = animal.get("image", "")
+		if image_path != "" and FileAccess.file_exists(image_path):
+			_reveal_image.texture = load(image_path)
+			_reveal_image.visible = true
+			_reveal_icon.visible = false
+		else:
+			_reveal_icon.text = animal.get("placeholder_emoji", "?")
+			_reveal_icon.visible = true
+			_reveal_image.visible = false
 		_reveal_name.text = animal.get("name", "?")
 	else:
-		# Disamarkan — placeholder "?" sampai ada ilustrasi asli yang bisa
-		# diberi efek blur/silhouette sungguhan (Asset 1).
+		# Disamarkan — silhouette "?" sampai tap "Lihat Jawaban".
+		_reveal_image.visible = false
+		_reveal_icon.visible = true
 		_reveal_icon.text = "？"
 		_reveal_name.text = ""
 	# Petunjuk cuma muncul di hewan pertama, supaya tidak mengganggu
@@ -253,7 +290,8 @@ func _render_guided_current(revealed: bool) -> void:
 func _on_reveal_pressed() -> void:
 	# TIDAK ADA skor/tanda benar-salah di sini — cuma menampilkan jawaban,
 	# bukan menilai tebakan anak (lihat prinsip #4 docs/UI_UX_DESIGN.md).
-	SfxService.play(null)  # TODO Farel: putar ulang sfx hewan ini
+	var animal: Dictionary = _animals[_guided_order[_guided_index]]
+	SfxService.play(_load_sfx(animal.get("sfx", "")))
 	_render_guided_current(true)
 
 

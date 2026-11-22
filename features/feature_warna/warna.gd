@@ -117,15 +117,21 @@ func _render_question() -> void:
 		var color_data: Dictionary = _colors[idx]
 		var button := BigRoundButton.new()
 		button.accent_color = Color(color_data.get("color_hex", "#FFFFFF"))
-		# Placeholder visual: emoji, sampai ilustrasi asli dari Asset 1 ada.
-		button.text = color_data.get("placeholder_emoji", "?")
+		var image_path: String = color_data.get("image", "")
+		if image_path != "" and FileAccess.file_exists(image_path):
+			button.icon = load(image_path)
+			button.expand_icon = true
+			button.add_theme_constant_override("icon_max_width", 84)
+		else:
+			# Placeholder visual: emoji, sampai ilustrasi asli ada.
+			button.text = color_data.get("placeholder_emoji", "?")
 		button.pressed.connect(_on_choice_pressed.bind(idx))
 		_choices_box.add_child(button)
 
 
 func _on_choice_pressed(chosen_index: int) -> void:
 	if chosen_index == _targets[_question_index]:
-		SfxService.play(null)  # TODO Farel: sfx_correct
+		SfxService.play(load("res://core/assets/audio/sfx_correct.wav"))
 		_correct_count += 1
 		if _question_index + 1 >= _targets.size():
 			_show_reward()
@@ -133,7 +139,7 @@ func _on_choice_pressed(chosen_index: int) -> void:
 			_question_index += 1
 			_render_question()
 	else:
-		SfxService.play(null)  # TODO Farel: sfx_try_again
+		SfxService.play(load("res://core/assets/audio/sfx_try_again.wav"))
 
 
 func _show_reward() -> void:
