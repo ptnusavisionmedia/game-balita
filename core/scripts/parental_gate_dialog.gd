@@ -43,6 +43,18 @@ func _ready() -> void:
 	add_child(center)
 
 	var card := PanelContainer.new()
+	# Fix bug 2026-11-22 (dilaporkan user, screenshot): `PanelContainer`
+	# tanpa stylebox eksplisit pakai panel tema default Godot yang nyaris
+	# transparan — teks/tombol Home di belakang bocor tembus, bikin
+	# dialog susah dibaca. Kasih background solid + border eksplisit,
+	# sama pola kartu di scenes/parent_guide.gd.
+	var card_style := StyleBoxFlat.new()
+	card_style.bg_color = AppColors.CREAM
+	card_style.border_color = AppColors.INK
+	card_style.set_border_width_all(3)
+	card_style.set_corner_radius_all(20)
+	card_style.set_content_margin_all(20)
+	card.add_theme_stylebox_override("panel", card_style)
 	center.add_child(card)
 
 	var vbox := VBoxContainer.new()
@@ -67,11 +79,13 @@ func _ready() -> void:
 	var title := Label.new()
 	title.text = "Mode Orang Tua"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_color_override("font_color", AppColors.INK)
 	vbox.add_child(title)
 
 	_question_label = Label.new()
 	_question_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_question_label.add_theme_font_size_override("font_size", 28)
+	_question_label.add_theme_color_override("font_color", AppColors.INK)
 	vbox.add_child(_question_label)
 
 	_answer_label = Label.new()

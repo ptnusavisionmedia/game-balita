@@ -587,3 +587,49 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Keputusan eksplisit — TIDAK dipasang**: aset `core/assets/images/rewards/` (star_filled/star_empty/medal/trophy) DIBAWA masuk ke repo (siapa tahu dipakai nanti) tapi **sengaja tidak disambungkan ke UI apa pun** — app ini sengaja tanpa skor/bintang yang ditampilkan ke anak (keputusan 2026-11-20 di atas), jadi memasangnya tanpa diminta eksplisit akan bertentangan dengan prinsip yang sudah disepakati. Perlu keputusan baru yang jelas (misal: cuma buat dashboard progres orang tua, bukan ditampilkan ke anak) sebelum dipakai.
 
 **Belum dikerjakan / masih Open**: review pendengaran SFX hewan + VO angka oleh penutur Bahasa Indonesia sebelum rilis (lihat README paket + baris baru `docs/TASK_BOARD.md`); verifikasi visual/sentuh langsung di Godot editor atau device untuk `feature_mewarnai` (mask-click) dan `feature_puzzle` (shape-sorter) — baru headless-verified, belum dites interaktif user; keputusan penempatan lanjutan maskot pose netral/berbicara; ekspor ikon launcher Android (adaptive icon) di `export_presets.cfg` masih belum disentuh, app icon yang dipasang baru untuk editor/desktop.
+
+## 2026-11-22 — Bug ikon kunci raksasa (fix) + style guide GUI/HUD baru
+
+**Bug dilaporkan user** (screenshot): ikon `parental_lock.png` di
+`ParentalGateDialog` tampil RAKSASA, menutupi hampir seluruh layar Home di
+belakangnya. **Penyebab**: `TextureRect` tanpa `expand_mode =
+EXPAND_IGNORE_SIZE` melaporkan "minimum size"-nya = ukuran asli file
+gambar (bisa 1024×1024), mengabaikan `custom_minimum_size` yang di-set di
+kode — bug KELAS SAMA yang sudah pernah dialami `GameBackground` (lihat
+entri 2026-11-22 sebelumnya soal "bg tidak full dipakai"), cuma arah
+sebaliknya (kebesaran, bukan kekecilan/terpotong). **Diperbaiki** di 5
+`TextureRect` ikon berdiri sendiri yang luput dari fix sebelumnya:
+`parental_gate_dialog.gd` (kunci), `hewan.gd` (reveal jawaban),
+`splash.gd` (maskot), `star_reward_overlay.gd` (maskot merayakan),
+`angka.gd` (ikon hati).
+
+**Sekalian ditemukan & diperbaiki** (kelihatan jelas setelah ikon kunci
+dikecilkan ke ukuran benar): `ParentalGateDialog`-nya `PanelContainer`
+TIDAK punya `stylebox` eksplisit — background-nya nyaris transparan, teks
+Home di belakang bocor tembus bikin dialog susah dibaca. Dikasih
+`StyleBoxFlat` solid (krem + border, `set_content_margin_all`) + warna
+teks judul/soal eksplisit (`AppColors.INK`), supaya tidak bergantung ke
+tema default Godot lagi.
+
+**Permintaan user berikutnya**: minta saran desain HUD/GUI profesional —
+audit, sistem ukuran tombol/ikon konsisten, panduan animasi (mana yang
+butuh aset mana yang cukup kode), dan daftar prompt lengkap buat
+digenerate lewat ChatGPT, karena chrome UI di luar `BigRoundButton`/pill
+Home masih pakai tombol default Godot yang generik.
+
+**Dikerjakan**: `docs/STYLE_GUIDE_GUI_HUD.md` (baru) — pelengkap
+`docs/STYLE_GUIDE_ILUSTRASI.md` yang sudah ada (itu khusus ilustrasi dunia
+game, ini khusus chrome UI). Isinya: audit temuan, tabel token ukuran
+(`icon.xs/s/m/l`, `pill.primary/secondary/action`), 3 prinsip "jangan
+generate yang tidak perlu" (panel SELALU code-drawn, JANGAN minta
+spritesheet maskot multi-frame — kelemahan konsistensi karakter generator
+gambar-tunggal, JANGAN minta "versi tablet" terpisah — `canvas_items`
+stretch sudah handle, cukup generate di resolusi sumber lebih besar),
+tabel animasi (hampir semua bisa Tween, tidak perlu aset baru), dan
+prompt siap-pakai untuk kategori BARU (`pill.action` generik pengganti
+tombol default, ikon bulat kosong buat `BigRoundButton`, 4 ikon nav
+tambahan: back/close/next/info, progress dot non-numerik).
+
+**Belum dieksekusi**: semua prompt di atas baru dokumentasi — menunggu
+user generate via ChatGPT lagi (pola sama paket aset sebelumnya) sebelum
+ada perubahan kode lanjutan (kecuali bug fix di atas yang sudah jalan).
