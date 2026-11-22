@@ -1,12 +1,29 @@
 [
   {
-    "picture_id": "bentuk_warna",
+    "picture_id": "bentuk_dasar",
     "picture_name": "Bentuk",
     "pieces": [
-      { "id": "a", "color_hex": "#FFC93C" },
-      { "id": "b", "color_hex": "#6FCF97" },
-      { "id": "c", "color_hex": "#4FC3F7" },
-      { "id": "d", "color_hex": "#F48FB1" }
+      {
+        "id": "persegi",
+        "name": "Persegi",
+        "color_hex": "#FFC93C",
+        "shape_image": "res://features/feature_puzzle/assets/images/shape_square.png",
+        "slot_image": "res://features/feature_puzzle/assets/images/slot_square.png"
+      },
+      {
+        "id": "lingkaran",
+        "name": "Lingkaran",
+        "color_hex": "#4FC3F7",
+        "shape_image": "res://features/feature_puzzle/assets/images/shape_circle.png",
+        "slot_image": "res://features/feature_puzzle/assets/images/slot_circle.png"
+      },
+      {
+        "id": "segitiga",
+        "name": "Segitiga",
+        "color_hex": "#F48FB1",
+        "shape_image": "res://features/feature_puzzle/assets/images/shape_triangle.png",
+        "slot_image": "res://features/feature_puzzle/assets/images/slot_triangle.png"
+      }
     ]
   }
 ]

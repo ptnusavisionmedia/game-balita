@@ -2,12 +2,37 @@
   {
     "picture_id": "kelinci",
     "picture_name": "Kelinci",
-    "canvas_size": { "w": 360, "h": 360 },
+    "canvas_size": { "w": 420, "h": 420 },
+    "lineart": "res://features/feature_mewarnai/assets/images/rabbit/rabbit_lineart.png",
     "areas": [
-      { "id": "telinga_kiri", "rect": { "x": 90, "y": 10, "w": 60, "h": 100 } },
-      { "id": "telinga_kanan", "rect": { "x": 210, "y": 10, "w": 60, "h": 100 } },
-      { "id": "kepala", "rect": { "x": 80, "y": 90, "w": 200, "h": 130 } },
-      { "id": "badan", "rect": { "x": 60, "y": 200, "w": 240, "h": 150 } }
+      { "id": "telinga_kiri", "name": "Telinga kiri", "mask": "res://features/feature_mewarnai/assets/images/rabbit/mask_left_ear.png" },
+      { "id": "telinga_kanan", "name": "Telinga kanan", "mask": "res://features/feature_mewarnai/assets/images/rabbit/mask_right_ear.png" },
+      { "id": "kepala", "name": "Kepala", "mask": "res://features/feature_mewarnai/assets/images/rabbit/mask_head.png" },
+      { "id": "badan", "name": "Badan", "mask": "res://features/feature_mewarnai/assets/images/rabbit/mask_body.png" }
+    ]
+  },
+  {
+    "picture_id": "bunga",
+    "picture_name": "Bunga",
+    "canvas_size": { "w": 420, "h": 420 },
+    "lineart": "res://features/feature_mewarnai/assets/images/flower/flower_lineart.png",
+    "areas": [
+      { "id": "mahkota", "name": "Mahkota", "mask": "res://features/feature_mewarnai/assets/images/flower/mask_blossom.png" },
+      { "id": "tengah", "name": "Tengah bunga", "mask": "res://features/feature_mewarnai/assets/images/flower/mask_center.png" },
+      { "id": "daun_kiri", "name": "Daun kiri", "mask": "res://features/feature_mewarnai/assets/images/flower/mask_left_leaf.png" },
+      { "id": "daun_kanan", "name": "Daun kanan", "mask": "res://features/feature_mewarnai/assets/images/flower/mask_right_leaf.png" }
+    ]
+  },
+  {
+    "picture_id": "kupu_kupu",
+    "picture_name": "Kupu-Kupu",
+    "canvas_size": { "w": 420, "h": 420 },
+    "lineart": "res://features/feature_mewarnai/assets/images/butterfly/butterfly_lineart.png",
+    "areas": [
+      { "id": "sayap_atas_kiri", "name": "Sayap atas kiri", "mask": "res://features/feature_mewarnai/assets/images/butterfly/mask_upper_left_wing.png" },
+      { "id": "sayap_atas_kanan", "name": "Sayap atas kanan", "mask": "res://features/feature_mewarnai/assets/images/butterfly/mask_upper_right_wing.png" },
+      { "id": "sayap_bawah_kiri", "name": "Sayap bawah kiri", "mask": "res://features/feature_mewarnai/assets/images/butterfly/mask_lower_left_wing.png" },
+      { "id": "sayap_bawah_kanan", "name": "Sayap bawah kanan", "mask": "res://features/feature_mewarnai/assets/images/butterfly/mask_lower_right_wing.png" }
     ]
   }
 ]

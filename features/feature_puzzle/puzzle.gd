@@ -21,6 +21,7 @@ var _piece_buttons: Dictionary = {}  # id -> {"button": Button, "color": Color}
 var _slot_buttons: Dictionary = {}   # id -> Button
 var _slot_filled: Dictionary = {}    # id -> bool
 var _selected_piece_id: String = ""
+var _has_shape_images: bool = false
 
 
 func _ready() -> void:
@@ -34,6 +35,8 @@ func _ready() -> void:
 		return
 	var puzzle: Dictionary = puzzles[0]
 	_pieces_data = puzzle.get("pieces", [])
+	_has_shape_images = not _pieces_data.is_empty() \
+		and FileAccess.file_exists(str(_pieces_data[0].get("shape_image", "")))
 
 	var vbox := VBoxContainer.new()
 	vbox.anchor_right = 1.0
@@ -65,6 +68,7 @@ func _ready() -> void:
 		var slot_button := Button.new()
 		slot_button.custom_minimum_size = Vector2(120, 120)
 		_style_slot_empty(slot_button)
+		_set_button_shape_icon(slot_button, piece.get("slot_image", ""), "")
 		slot_button.pressed.connect(_on_slot_pressed.bind(id))
 		slots_box.add_child(slot_button)
 		_slot_buttons[id] = slot_button
@@ -84,9 +88,10 @@ func _ready() -> void:
 		var piece_button := Button.new()
 		piece_button.custom_minimum_size = Vector2(110, 110)
 		_style_piece(piece_button, color, false)
+		_set_button_shape_icon(piece_button, piece.get("shape_image", ""), str(piece.get("name", "")))
 		piece_button.pressed.connect(_on_piece_pressed.bind(id))
 		pieces_box.add_child(piece_button)
-		_piece_buttons[id] = {"button": piece_button, "color": color}
+		_piece_buttons[id] = {"button": piece_button, "color": color, "shape_image": piece.get("shape_image", "")}
 
 	_add_home_button()
 
@@ -98,9 +103,11 @@ func _load_puzzles() -> Array:
 	return parsed if parsed is Array else []
 
 
+## Fallback kalau gambar shape-sorter asli belum ada: kotak warna polos
+## (gaya lama). Dengan gambar, warna cuma kepake di border seleksi.
 func _style_piece(button: Button, color: Color, selected: bool) -> void:
 	var style := StyleBoxFlat.new()
-	style.bg_color = color
+	style.bg_color = color if not _has_shape_images else Color(0, 0, 0, 0)
 	style.set_corner_radius_all(12)
 	if selected:
 		style.border_color = AppColors.GOLD
@@ -121,10 +128,25 @@ func _style_slot_empty(button: Button) -> void:
 
 func _style_slot_filled(button: Button, color: Color) -> void:
 	var style := StyleBoxFlat.new()
-	style.bg_color = color
+	style.bg_color = color if not _has_shape_images else Color(0, 0, 0, 0)
+	style.border_color = AppColors.LEAF
+	style.set_border_width_all(4)
 	style.set_corner_radius_all(12)
 	for state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(state, style)
+
+
+## Pasang ilustrasi shape-sorter asli (lihat docs/ASSET_LIST.md #6) kalau
+## filenya ada; kalau belum, biarkan kotak warna polos (gaya lama) yang
+## dipasang `_style_piece`/`_style_slot_empty`.
+func _set_button_shape_icon(button: Button, image_path, fallback_text: String) -> void:
+	var path := str(image_path)
+	if path != "" and FileAccess.file_exists(path):
+		button.icon = load(path)
+		button.expand_icon = true
+		button.add_theme_constant_override("icon_max_width", 88)
+	elif fallback_text != "":
+		button.text = fallback_text
 
 
 ## Tap keping = "pilih" (toggle — tap lagi buat batal pilih). Pilih
@@ -147,10 +169,12 @@ func _on_slot_pressed(slot_id: String) -> void:
 		return
 
 	var entry: Dictionary = _piece_buttons[_selected_piece_id]
-	_style_slot_filled(_slot_buttons[slot_id], entry["color"])
+	var slot_button: Button = _slot_buttons[slot_id]
+	_style_slot_filled(slot_button, entry["color"])
+	_set_button_shape_icon(slot_button, entry.get("shape_image", ""), "")
 	entry["button"].visible = false
 	_slot_filled[slot_id] = true
-	SfxService.play(null)  # TODO Farel: sfx_correct
+	SfxService.play(load("res://core/assets/audio/sfx_correct.wav"))
 	_selected_piece_id = ""
 
 	_filled_count += 1

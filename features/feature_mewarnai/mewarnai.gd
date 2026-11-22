@@ -6,6 +6,16 @@ extends Control
 ## Palet warna sengaja pakai AppColors (bukan data file terpisah) supaya
 ## konsisten dengan feature_warna tanpa feature_* saling depend satu sama
 ## lain (lihat docs/ARCHITECTURE.md "Aturan dependensi").
+##
+## Update 2026-11-22: dipasang ilustrasi asli (lineart + mask per area,
+## lihat docs/ASSET_LIST.md #4 & docs/PRECISION_ASSETS.md) — ganti dari
+## kotak abu-abu posisi manual. Area jadi `TextureButton` yang texture-nya
+## = mask PNG itu sendiri: `modulate` mewarnai area (mask putih di atas
+## alpha transparan, jadi `modulate` = warna cat langsung kelihatan di
+## bentuk aslinya, bukan kotak), dan `texture_click_mask` (dibuat dari
+## alpha mask saat runtime) bikin hit-area PAS ikut bentuk, bukan kotak
+## bounding. Lineart digambar di atas semua area (mouse_filter=IGNORE,
+## supaya klik tetap tembus ke area di bawahnya).
 
 const DATA_PATH := "res://features/feature_mewarnai/data/mewarnai_data.json"
 const StarRewardOverlayScene := preload("res://core/scenes/StarRewardOverlay.tscn")
@@ -20,6 +30,7 @@ var _areas: Array = []
 var _filled_ids: Dictionary = {}
 var _active_color: Color
 var _area_buttons: Dictionary = {}
+var _uses_mask_art: bool = false
 
 
 func _ready() -> void:
@@ -31,9 +42,11 @@ func _ready() -> void:
 	if pictures.is_empty():
 		push_warning("feature_mewarnai: mewarnai_data.json kosong/gagal dibaca — modul tidak bisa jalan.")
 		return
-	var picture: Dictionary = pictures[0]
+	randomize()
+	var picture: Dictionary = pictures[randi() % pictures.size()]
 	_areas = picture.get("areas", [])
 	_active_color = _palette[0]
+	_uses_mask_art = not _areas.is_empty() and FileAccess.file_exists(str(_areas[0].get("mask", "")))
 
 	var vbox := VBoxContainer.new()
 	vbox.anchor_right = 1.0
@@ -58,10 +71,27 @@ func _ready() -> void:
 	canvas.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	vbox.add_child(canvas)
 
-	for area in _areas:
-		var button := _make_area_button(area)
-		canvas.add_child(button)
-		_area_buttons[area.get("id", "")] = button
+	if _uses_mask_art:
+		for area in _areas:
+			var button := _make_mask_area_button(area, canvas.custom_minimum_size)
+			canvas.add_child(button)
+			_area_buttons[area.get("id", "")] = button
+		var lineart_path: String = picture.get("lineart", "")
+		if lineart_path != "" and FileAccess.file_exists(lineart_path):
+			var lineart := TextureRect.new()
+			lineart.texture = load(lineart_path)
+			lineart.anchor_right = 1.0
+			lineart.anchor_bottom = 1.0
+			lineart.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			lineart.stretch_mode = TextureRect.STRETCH_SCALE
+			lineart.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			canvas.add_child(lineart)
+	else:
+		# Fallback kotak abu-abu posisi manual, kalau data belum punya mask.
+		for area in _areas:
+			var button := _make_rect_area_button(area)
+			canvas.add_child(button)
+			_area_buttons[area.get("id", "")] = button
 
 	var palette_box := HBoxContainer.new()
 	palette_box.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -81,12 +111,38 @@ func _load_pictures() -> Array:
 	return parsed if parsed is Array else []
 
 
-func _make_area_button(area: Dictionary) -> Button:
+## Area ilustrasi asli: 1 `TextureButton` per area, texture = mask PNG-nya
+## sendiri (putih di atas alpha transparan). `modulate` mewarnai bentuknya
+## langsung (bukan kotak bounding), `texture_click_mask` dari alpha mask
+## bikin hit-area ikut bentuk aslinya juga.
+func _make_mask_area_button(area: Dictionary, canvas_size: Vector2) -> TextureButton:
+	var mask_texture: Texture2D = load(str(area.get("mask", "")))
+	var button := TextureButton.new()
+	button.texture_normal = mask_texture
+	button.ignore_texture_size = true
+	button.stretch_mode = TextureButton.STRETCH_SCALE
+	button.anchor_right = 1.0
+	button.anchor_bottom = 1.0
+	button.modulate = UNFILLED_COLOR
+	button.texture_click_mask = _make_click_mask(mask_texture)
+	button.pressed.connect(_on_area_pressed.bind(area.get("id", "")))
+	return button
+
+
+func _make_click_mask(texture: Texture2D) -> BitMap:
+	var bitmap := BitMap.new()
+	bitmap.create_from_image_alpha(texture.get_image())
+	return bitmap
+
+
+## Fallback lama (kotak posisi manual) — dipakai kalau `mewarnai_data.json`
+## belum punya field "mask" (misal data custom tanpa ilustrasi asli).
+func _make_rect_area_button(area: Dictionary) -> Button:
 	var rect: Dictionary = area.get("rect", {})
 	var button := Button.new()
 	button.position = Vector2(rect.get("x", 0), rect.get("y", 0))
 	button.size = Vector2(rect.get("w", 50), rect.get("h", 50))
-	_set_button_color(button, UNFILLED_COLOR)
+	_set_rect_button_color(button, UNFILLED_COLOR)
 	button.pressed.connect(_on_area_pressed.bind(area.get("id", "")))
 	return button
 
@@ -103,7 +159,7 @@ func _make_palette_swatch(color: Color) -> Button:
 	return swatch
 
 
-func _set_button_color(button: Button, color: Color) -> void:
+func _set_rect_button_color(button: Button, color: Color) -> void:
 	var style := StyleBoxFlat.new()
 	style.bg_color = color
 	style.set_corner_radius_all(16)
@@ -114,11 +170,14 @@ func _set_button_color(button: Button, color: Color) -> void:
 ## Tidak ada "benar/salah" — tap area mana pun, warna apa pun, selalu
 ## valid. Cuma dihitung "sudah pernah diisi" buat tahu sesi selesai.
 func _on_area_pressed(area_id: String) -> void:
-	var button: Button = _area_buttons.get(area_id)
+	var button: Control = _area_buttons.get(area_id)
 	if button == null:
 		return
-	_set_button_color(button, _active_color)
-	SfxService.play(null)  # TODO Farel: sfx_tap netral
+	if _uses_mask_art:
+		button.modulate = _active_color
+	else:
+		_set_rect_button_color(button, _active_color)
+	SfxService.play(load("res://core/assets/audio/sfx_tap.wav"))
 
 	if not _filled_ids.has(area_id):
 		_filled_ids[area_id] = true
