@@ -56,6 +56,13 @@ func _render_sound_button() -> void:
 	var path := on_path if _sound_button.button_pressed else off_path
 	if FileAccess.file_exists(path):
 		_sound_button.icon = load(path)
+		# Fix bug 2026-11-22 (dilaporkan user, screenshot): tanpa
+		# `expand_icon` + `icon_max_width`, `Button.icon` digambar di
+		# UKURAN ASLI FILE (bisa 512-1024px), bukan di-scale ke ukuran
+		# tombol — bikin ikon raksasa nutupin seluruh layar Settings. Pola
+		# yang sama juga WAJIB dipakai di setiap `Button.icon` lain.
+		_sound_button.expand_icon = true
+		_sound_button.add_theme_constant_override("icon_max_width", 64)
 		_sound_button.text = "Suara"
 	else:
 		_sound_button.text = "🔊 Suara" if _sound_button.button_pressed else "🔇 Suara"

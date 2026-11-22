@@ -263,6 +263,8 @@ func _setup_guided() -> void:
 	var reveal_icon_path := "res://core/assets/images/ui/reveal.png"
 	if FileAccess.file_exists(reveal_icon_path):
 		reveal_button.icon = load(reveal_icon_path)
+		reveal_button.expand_icon = true
+		reveal_button.add_theme_constant_override("icon_max_width", 48)
 		reveal_button.text = "Lihat Jawaban"
 	else:
 		reveal_button.text = "🔍 Lihat Jawaban"
