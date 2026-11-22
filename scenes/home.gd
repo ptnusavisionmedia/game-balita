@@ -45,7 +45,7 @@ func _ready() -> void:
 	play_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	play_button.text = "▶ Play"
 	play_button.add_theme_font_size_override("font_size", 32)
-	play_button.add_theme_color_override("font_color", AppColors.INK)
+	_apply_ink_text_color(play_button)
 	_apply_texture_button_style(play_button, "res://core/assets/images/button_primary.png")
 	play_button.pressed.connect(_on_play_pressed)
 	vbox.add_child(play_button)
@@ -55,7 +55,7 @@ func _ready() -> void:
 	choose_button.custom_minimum_size = Vector2(342, 114)  # rasio 3:1, sama persis gambar sumber
 	choose_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	choose_button.add_theme_font_size_override("font_size", 20)
-	choose_button.add_theme_color_override("font_color", AppColors.INK)
+	_apply_ink_text_color(choose_button)
 	_apply_texture_button_style(choose_button, "res://core/assets/images/button_secondary.png")
 	choose_button.pressed.connect(_on_toggle_grid)
 	vbox.add_child(choose_button)
@@ -101,6 +101,17 @@ func _ready() -> void:
 ## dilaporkan user). Diganti jadi stretch utuh TANPA margin sama sekali
 ## — aman selama `custom_minimum_size` tombol dibuat SAMA RASIO dengan
 ## gambar sumber (2172x724 = rasio 3:1), jadi ikut di-set di pemanggil.
+## Fix bug 2026-11-22 (dilaporkan user, screenshot tombol "Pilih Game"):
+## tombol dengan background terang (`button_primary.png`/`button_secondary.png`)
+## cuma di-override "font_color"-nya (state normal) — font_hover_color
+## bawaan tema default Godot TETAP putih, jadi teks hilang begitu di-hover
+## (putih di atas kapsul krem/kuning terang). Set semua state warna font
+## sekaligus supaya konsisten di normal/hover/pressed/focus.
+func _apply_ink_text_color(button: Button) -> void:
+	for state in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+		button.add_theme_color_override(state, AppColors.INK)
+
+
 func _apply_texture_button_style(button: Button, texture_path: String) -> void:
 	var style := StyleBoxTexture.new()
 	style.texture = load(texture_path)
