@@ -519,3 +519,17 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Diverifikasi**: headless re-import + run 10 scene (`Home` + `Splash` + `Settings` + `ParentGuide` + 6 `feature_*`) — semua lolos tanpa error (perubahan `GameBackground` berdampak ke semua scene, bukan cuma Home). App dijalankan non-headless buat preview user.
 
 **Status**: `docs/ASSET_LIST.md` baris 7b & 7c diubah dari Open jadi ✅ Selesai — ini aset asli PERTAMA yang benar-benar terpasang di app ini sejak awal base model.
+
+## 2026-11-22 — Bug fix: tombol gepeng/ber-lipatan + background tidak full + font default diganti
+
+**Laporan user** (screenshot Home): "Assets hancur" — tombol "▶ Play"/"Pilih Game" jadi oval gepeng dengan garis lipatan kelihatan, background langit terlalu dominan (rumput nyaris hilang di bawah layar), teks pakai font default Godot yang terasa polos.
+
+**Akar masalah #1 (tombol)**: `StyleBoxTexture.texture_margin_*` yang di-set kemarin (150/150/40/40) itu salah perhitungan — kombinasi margin segitu dengan ukuran tombol yang dipilih menghasilkan stretch tidak proporsional (kelihatan sebagai lipatan/seam). **Fix**: hapus semua `texture_margin_*` (jadi 0, stretch utuh tanpa 9-slice) — aman selama `custom_minimum_size` tombol PERSIS rasio 3:1 sama seperti gambar sumber (2172x724), karena stretch uniform di rasio yang sama = tidak ada distorsi sama sekali. `choose_button` dirapikan ke `342x114` (sebelumnya `340x113`, meleset dikit dari 3:1 persis).
+
+**Akar masalah #2 (background)**: `TextureRect` dengan `stretch_mode = STRETCH_KEEP_ASPECT_COVERED` TIDAK bekerja seperti diharapkan tanpa `expand_mode = EXPAND_IGNORE_SIZE` — defaultnya (`EXPAND_KEEP_SIZE`) bikin node melapor ukuran minimumnya = ukuran asli gambar (1672x941), jadi yang kelihatan cuma bagian kiri-atas gambar nyaris 1:1 piksel (kebanyakan langit, rumput ke-crop habis di bawah batas layar). **Fix**: tambah `texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE` sebelum `stretch_mode`.
+
+**Permintaan user (font)**: ganti font default yang "polos" — ternyata ini sudah DIRENCANAKAN dari awal base model (`docs/UI_UX_DESIGN.md` sudah sebut "Tipografi: Baloo 2") tapi **file font-nya belum pernah benar-benar diunduh**, cuma rencana di dokumen. Diunduh sekarang: `Baloo2[wght].ttf` (variable font, SIL Open Font License, dari repo resmi `google/fonts`) → `core/assets/fonts/Baloo2.ttf` + lisensi `Baloo2-OFL.txt`. Dipasang jadi font default SELURUH app lewat 1 baris `project.godot` `[gui] theme/custom_font` — bukan di-set manual per Label/Button satu-satu.
+
+**Diverifikasi**: headless re-import + run `Home.tscn` — lolos tanpa error. App dijalankan langsung dari `Home.tscn` (bukan `Splash`) buat recheck cepat. **Belum dikonfirmasi** user secara visual.
+
+**Catatan penting**: 3 gambar aset yang sudah ada (background + 2 tombol) KEMUNGKINAN BESAR TIDAK PERLU digenerate ulang — masalahnya murni bug kode (margin 9-slice salah hitung + `expand_mode` kurang), bukan kualitas gambarnya. Disampaikan ke user supaya tidak buang-buang kuota generate ChatGPT buat regenerate yang sebenarnya tidak perlu.

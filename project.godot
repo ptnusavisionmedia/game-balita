@@ -42,6 +42,17 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation="landscape"
 
+[gui]
+
+; Font "Baloo 2" (Google Fonts, SIL Open Font License — lihat
+; core/assets/fonts/Baloo2-OFL.txt) dipasang jadi font default SELURUH
+; app lewat 1 baris ini — bukan di-set manual per Label/Button. Ini
+; yang sudah direncanakan dari awal di docs/UI_UX_DESIGN.md ("Tipografi:
+; Baloo 2") tapi file-nya baru benar-benar diunduh & dipasang 2026-11-22
+; (sebelumnya cuma rencana, semua teks masih pakai font default Godot
+; yang terasa polos/tidak sesuai gaya game anak — dilaporkan user).
+theme/custom_font="res://core/assets/fonts/Baloo2.ttf"
+
 [autoload]
 
 ProgressRepository="*res://core/scripts/progress_repository.gd"

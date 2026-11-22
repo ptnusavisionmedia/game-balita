@@ -52,7 +52,7 @@ func _ready() -> void:
 
 	var choose_button := Button.new()
 	choose_button.text = "Pilih Game"
-	choose_button.custom_minimum_size = Vector2(340, 113)
+	choose_button.custom_minimum_size = Vector2(342, 114)  # rasio 3:1, sama persis gambar sumber
 	choose_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	choose_button.add_theme_font_size_override("font_size", 20)
 	choose_button.add_theme_color_override("font_color", AppColors.INK)
@@ -89,22 +89,16 @@ func _ready() -> void:
 ## Godot (`Button.text`) di atasnya, BUKAN ter-bake di gambar, supaya 1
 ## gambar bisa dipakai ulang untuk teks apa pun & ukuran berapa pun
 ## (lihat docs/STYLE_GUIDE_ILUSTRASI.md 5.7b).
+##
+## Update 2026-11-22 (fix bug): percobaan pertama pakai `texture_margin_*`
+## (9-slice) dengan angka dikira-kira — hasilnya tombol gepeng oval +
+## ada "lipatan" kelihatan (salah hitung margin vs ukuran tombol,
+## dilaporkan user). Diganti jadi stretch utuh TANPA margin sama sekali
+## — aman selama `custom_minimum_size` tombol dibuat SAMA RASIO dengan
+## gambar sumber (2172x724 = rasio 3:1), jadi ikut di-set di pemanggil.
 func _apply_texture_button_style(button: Button, texture_path: String) -> void:
 	var style := StyleBoxTexture.new()
 	style.texture = load(texture_path)
-	# Gambar sumber 2172x724 (rasio 3:1). `texture_margin_*` dalam piksel
-	# TEKSTUR ASLI (bukan ukuran tombol di layar) — kalau diset sebesar
-	# radius ujung kapsul yang sesungguhnya (~362px), 2x margin itu lebih
-	# lebar dari tombol kita sendiri (480px) dan malah bikin error/
-	# overlap. Dipilih angka lebih kecil yang aman (tidak melebihi
-	# separuh lebar tombol) — ujung kapsul MUNGKIN sedikit kurang bulat
-	# sempurna dibanding aslinya, ini trade-off yang disengaja. Kalau
-	# kelihatan kepotong/gepeng pas dites, kecilkan lagi angka ini atau
-	# perbesar `custom_minimum_size` tombolnya.
-	style.texture_margin_left = 150
-	style.texture_margin_right = 150
-	style.texture_margin_top = 40
-	style.texture_margin_bottom = 40
 	for state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(state, style)
 

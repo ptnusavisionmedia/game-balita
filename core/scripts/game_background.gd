@@ -27,6 +27,13 @@ func _ready() -> void:
 	texture_rect.texture = BACKGROUND_TEXTURE
 	texture_rect.anchor_right = 1.0
 	texture_rect.anchor_bottom = 1.0
+	# expand_mode = IGNORE_SIZE WAJIB di sini — tanpa ini, TextureRect
+	# melapor "minimum size"-nya = ukuran asli gambar (1672x941), jadi
+	# yang kelihatan cuma bagian kiri-atas gambar hampir 1:1 piksel
+	# (kebanyakan langit, rumputnya nyaris hilang di bawah batas layar)
+	# — bukan di-scale buat nutup seluruh layar. Bug ini dilaporkan user
+	# 2026-11-22 ("bg tidak full dipakai"). Lihat Decisions Log.
+	texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	texture_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(texture_rect)
