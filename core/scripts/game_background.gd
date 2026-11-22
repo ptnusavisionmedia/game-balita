@@ -1,33 +1,32 @@
 extends Control
 class_name GameBackground
-## Background "langit + rumput" 2-nada + matahari — dipakai di Home dan
-## semua `feature_*`, gantikan latar polos/kosong yang sebelumnya cuma
-## warna default kosong di sebagian besar mini-game (salah satu alasan
-## "game kurang menarik" yang dilaporkan user 2026-11-21).
+## Background Home + semua `feature_*`.
 ##
-## Terinspirasi riset kompetitor (lihat
-## obsidian-vault/Referensi-LucasAndFriends.md): warna sejuk pastel buat
-## latar/dekorasi, warna hangat jenuh (`AppColors.SUNSHINE`/aksen modul)
-## buat elemen interaktif — anak bisa bedain "ini bisa ditekan" dari
-## kehangatan warnanya tanpa perlu baca. Murni gambar vektor lewat
-## `_draw()` (pola sama `ModuleIcon`), tidak perlu ilustrasi baru.
+## Update 2026-11-22: diganti dari versi code-drawn (langit+rumput+
+## matahari lewat `_draw()`) jadi **ilustrasi asli** — digenerate user
+## sendiri lewat ChatGPT, pakai prompt dari
+## `docs/STYLE_GUIDE_ILUSTRASI.md` bagian 5.7b, ditaruh di
+## `core/assets/images/home_background.png`. Lihat Decisions Log.
+##
+## `STRETCH_KEEP_ASPECT_COVERED` + `clip_contents` — gambar sumber (16:9)
+## nyaris sama rasio dengan base desain 1280x720, tapi device nyata bisa
+## beda rasio (HP vs tablet) — mode ini jamin TIDAK PERNAH distorsi
+## (gambar diperbesar proporsional lalu dipotong tepinya kalau perlu),
+## bukan di-stretch paksa jadi gepeng/melar.
+
+const BACKGROUND_TEXTURE := preload("res://core/assets/images/home_background.png")
+
 
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	resized.connect(queue_redraw)
+	clip_contents = true
 
-
-func _draw() -> void:
-	var s := size
-	if s.x <= 0 or s.y <= 0:
-		return
-
-	var sky_height := s.y * 0.62
-	draw_rect(Rect2(Vector2.ZERO, Vector2(s.x, sky_height)), AppColors.SKY)
-	draw_rect(Rect2(Vector2(0, sky_height), Vector2(s.x, s.y - sky_height)), AppColors.GRASS)
-	draw_rect(Rect2(Vector2(0, sky_height + (s.y - sky_height) * 0.4), Vector2(s.x, (s.y - sky_height) * 0.6)), AppColors.GRASS_DARK)
-
-	# Matahari sederhana, pojok kanan atas — dekorasi, bukan interaktif.
-	draw_circle(Vector2(s.x * 0.88, s.y * 0.14), s.x * 0.045, AppColors.SUNSHINE)
+	var texture_rect := TextureRect.new()
+	texture_rect.texture = BACKGROUND_TEXTURE
+	texture_rect.anchor_right = 1.0
+	texture_rect.anchor_bottom = 1.0
+	texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	texture_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(texture_rect)

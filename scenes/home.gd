@@ -30,22 +30,33 @@ func _ready() -> void:
 	vbox.add_child(title)
 
 	# size_flags_horizontal = SHRINK_CENTER — tanpa ini, VBoxContainer
-	# men-stretch tiap child ke lebar penuh layar, jadi "▶ Play" (yang
-	# harusnya bulat) melar jadi pil selebar layar (dilaporkan user
+	# men-stretch tiap child ke lebar penuh layar (dilaporkan user
 	# 2026-11-21, baru kelihatan jelas setelah GameBackground dipasang).
-	var play_button := BigRoundButton.new()
-	play_button.accent_color = AppColors.SUNSHINE
-	play_button.custom_minimum_size = Vector2(180, 180)
+	#
+	# Update 2026-11-22: "▶ Play"/"Pilih Game" sekarang pakai ilustrasi
+	# asli (`button_primary.png`/`button_secondary.png`, digenerate user
+	# lewat ChatGPT) lewat `StyleBoxTexture` — bukan `BigRoundButton`
+	# warna solid lagi. `texture_margin_*` = teknik 9-slice Godot: cuma
+	# bagian tengah yang lurus di-stretch, ujung bulatnya tetap utuh
+	# berapa pun lebar tombolnya (lihat docs/STYLE_GUIDE_ILUSTRASI.md 5.7b
+	# soal kenapa gambar sengaja dibuat kosong tanpa teks ter-bake).
+	var play_button := Button.new()
+	play_button.custom_minimum_size = Vector2(480, 160)
 	play_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	play_button.text = "▶ Play"
+	play_button.add_theme_font_size_override("font_size", 32)
+	play_button.add_theme_color_override("font_color", AppColors.INK)
+	_apply_texture_button_style(play_button, "res://core/assets/images/button_primary.png")
 	play_button.pressed.connect(_on_play_pressed)
 	vbox.add_child(play_button)
 
 	var choose_button := Button.new()
 	choose_button.text = "Pilih Game"
-	choose_button.custom_minimum_size = Vector2(200, 56)
+	choose_button.custom_minimum_size = Vector2(340, 113)
 	choose_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	_style_secondary_button(choose_button)
+	choose_button.add_theme_font_size_override("font_size", 20)
+	choose_button.add_theme_color_override("font_color", AppColors.INK)
+	_apply_texture_button_style(choose_button, "res://core/assets/images/button_secondary.png")
 	choose_button.pressed.connect(_on_toggle_grid)
 	vbox.add_child(choose_button)
 
@@ -73,19 +84,29 @@ func _ready() -> void:
 	add_child(settings_button)
 
 
-## Tombol sekunder bergaya "outline" — bukan warna solid seperti
-## BigRoundButton/tile, supaya jelas ini aksi kedua (bukan aksi utama
-## "▶ Play"). Sebelumnya pakai tema default Godot (abu-abu gelap polos,
-## tidak kelihatan jelas di atas GameBackground).
-func _style_secondary_button(button: Button) -> void:
-	var style := StyleBoxFlat.new()
-	style.bg_color = AppColors.CREAM
-	style.border_color = AppColors.INK
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(16)
+## Pasang gambar pil (`button_primary.png`/`button_secondary.png`) jadi
+## background tombol via `StyleBoxTexture` — teksnya tetap dirender
+## Godot (`Button.text`) di atasnya, BUKAN ter-bake di gambar, supaya 1
+## gambar bisa dipakai ulang untuk teks apa pun & ukuran berapa pun
+## (lihat docs/STYLE_GUIDE_ILUSTRASI.md 5.7b).
+func _apply_texture_button_style(button: Button, texture_path: String) -> void:
+	var style := StyleBoxTexture.new()
+	style.texture = load(texture_path)
+	# Gambar sumber 2172x724 (rasio 3:1). `texture_margin_*` dalam piksel
+	# TEKSTUR ASLI (bukan ukuran tombol di layar) — kalau diset sebesar
+	# radius ujung kapsul yang sesungguhnya (~362px), 2x margin itu lebih
+	# lebar dari tombol kita sendiri (480px) dan malah bikin error/
+	# overlap. Dipilih angka lebih kecil yang aman (tidak melebihi
+	# separuh lebar tombol) — ujung kapsul MUNGKIN sedikit kurang bulat
+	# sempurna dibanding aslinya, ini trade-off yang disengaja. Kalau
+	# kelihatan kepotong/gepeng pas dites, kecilkan lagi angka ini atau
+	# perbesar `custom_minimum_size` tombolnya.
+	style.texture_margin_left = 150
+	style.texture_margin_right = 150
+	style.texture_margin_top = 40
+	style.texture_margin_bottom = 40
 	for state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(state, style)
-	button.add_theme_color_override("font_color", AppColors.INK)
 
 
 func _make_tile(game: Dictionary) -> Button:

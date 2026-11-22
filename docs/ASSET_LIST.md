@@ -28,8 +28,8 @@ PIC: **Asset 1**. Format: `.png` (transparan) atau `.svg` (Godot rasterize otoma
 | 5 | +1-2 gambar lain buat `feature_mewarnai` (opsional, setelah "Kelinci" jalan) | 1-2 set | — (tambahan) | sama seperti di atas |
 | 6 | 1 gambar dipecah 4 keping puzzle (potongan asli, bukan kotak warna) | 1 set (4 potongan) | Kotak warna polos di `feature_puzzle` | `features/feature_puzzle/assets/images/` |
 | 7 | App icon + splash screen draft | 1 set | Logo teks default di `Splash.tscn` | `assets/` (root, lihat koordinasi Bramantyo export) |
-| 7b | Background Home (langit+rumput+matahari versi ilustrasi asli) | 1 | `core/scripts/game_background.gd` (`GameBackground`, code-drawn) | `core/assets/images/` — **butuh task kode tambahan** buat pasang di atas `GameBackground` atau gantikan sepenuhnya |
-| 7c | Tombol "Play" + "Pilih Game" (desain pill/kapsul reusable, lihat `docs/STYLE_GUIDE_ILUSTRASI.md` 5.7b) | 2 (primer+sekunder) | Stylebox kode polos di `scenes/home.gd` | `core/assets/images/` — **butuh implementasi `NinePatchRect`** (9-slice), bukan cuma taruh file |
+| 7b | Background Home (langit+rumput+matahari versi ilustrasi asli) | 1 | ✅ **Selesai** (2026-11-22) — digenerate user lewat ChatGPT, dipasang di `core/scripts/game_background.gd` via `TextureRect` | `core/assets/images/home_background.png` |
+| 7c | Tombol "Play" + "Pilih Game" (desain pill/kapsul reusable) | 2 (primer+sekunder) | ✅ **Selesai** (2026-11-22) — digenerate user lewat ChatGPT, dipasang di `scenes/home.gd` via `StyleBoxTexture` | `core/assets/images/button_primary.png` + `button_secondary.png` |
 | 8 | **Maskot karakter** (baru — usul dari riset kompetitor, lihat `obsidian-vault/Referensi-LucasAndFriends.md`) | min. 1 karakter, idealnya beberapa pose (netral/senang/bicara) | Tidak ada sekarang — app ini **belum punya maskot sama sekali** | TBD, kemungkinan `core/assets/images/` (dipakai lintas modul) |
 | 9 | (Opsional) Ilustrasi kartu "Panduan Orang Tua" | 6 | Teks polos di `ParentGuide.tscn` | TBD, kemungkinan `core/assets/images/` |
 

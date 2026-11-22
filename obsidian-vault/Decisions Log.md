@@ -504,3 +504,18 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Ditambahkan juga** ke `docs/ASSET_LIST.md`: baris 7b (background Home ilustrasi asli) & 7c (tombol pill reusable) — keduanya butuh **task kode tambahan** setelah file ada (pasang `NinePatchRect`, bukan cuma taruh file gambar), dicatat eksplisit supaya tidak dikira "tinggal taruh file selesai".
 
 **Belum**: file gambar sungguhan belum ada (masih prompt doang) — generate manual oleh tim lewat tool AI mereka sendiri, atau tunggu akun ini di-upgrade kalau user mau coba generate dari sesi ini lagi nanti.
+
+## 2026-11-22 — Aset ilustrasi asli Home terpasang (background + tombol)
+
+**Dikerjakan user**: generate 3 gambar lewat ChatGPT sendiri (di luar sesi ini, akses generate AI dari sesi ini masih diblokir — lihat entri sebelumnya) pakai prompt dari `docs/STYLE_GUIDE_ILUSTRASI.md` 5.7b, hasilnya ditaruh di folder Downloads: "Langit Ceria dan Bukit Hijau" (background 1672x941), "Tombol kapsul kuning cerah" (tombol primer 2172x724), "Tombol game kapsul krem berbingkai amber" (tombol sekunder 2172x724).
+
+**Dipindahkan & diintegrasikan**: file disalin ke `core/assets/images/` (`home_background.png`, `button_primary.png`, `button_secondary.png`) — folder baru, aset pertama yang benar-benar "asli" di app ini (sebelumnya semua placeholder emoji/kode).
+
+- `core/scripts/game_background.gd` (`GameBackground`) — diganti total dari `_draw()` code-drawn jadi `TextureRect` + `home_background.png`, pakai `STRETCH_KEEP_ASPECT_COVERED` + `clip_contents=true` (gambar sumber nyaris 16:9 sama dengan base desain, tapi mode ini jamin tidak akan distorsi di device dengan rasio beda, cuma crop tepi kalau perlu).
+- `scenes/home.gd` — `play_button`/`choose_button` ganti dari `BigRoundButton`/stylebox-flat jadi `Button` biasa + `StyleBoxTexture` (9-slice) pakai `button_primary.png`/`button_secondary.png`. Teks ("▶ Play"/"Pilih Game") TETAP dirender Godot (`Button.text`), bukan ter-bake di gambar — sesuai desain "reusable" yang diminta user sebelumnya.
+
+**Catatan jujur soal margin 9-slice**: ukuran ujung kapsul di gambar asli (~362px radius dari tinggi 724px) lebih besar dari lebar tombol kita sendiri (480px) — kalau `texture_margin_*` diset sebesar radius asli, 2 sisi margin itu sendiri sudah melebihi lebar tombol (bikin broken/overlap). Dipilih `texture_margin_left/right=150`, `top/bottom=40` sebagai kompromi aman (tidak melebihi separuh lebar tombol) — konsekuensinya ujung kapsul MUNGKIN tidak sebulat sempurna gambar aslinya. **Belum dites visual** — kalau kelihatan kepotong/gepeng pas dicek, tinggal kecilkan angka margin atau perbesar ukuran tombolnya, dicatat jelas di komentar kode.
+
+**Diverifikasi**: headless re-import + run 10 scene (`Home` + `Splash` + `Settings` + `ParentGuide` + 6 `feature_*`) — semua lolos tanpa error (perubahan `GameBackground` berdampak ke semua scene, bukan cuma Home). App dijalankan non-headless buat preview user.
+
+**Status**: `docs/ASSET_LIST.md` baris 7b & 7c diubah dari Open jadi ✅ Selesai — ini aset asli PERTAMA yang benar-benar terpasang di app ini sejak awal base model.
