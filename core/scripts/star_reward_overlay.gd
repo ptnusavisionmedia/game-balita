@@ -46,11 +46,25 @@ func _ready() -> void:
 	center.anchor_bottom = 1.0
 	add_child(center)
 
-	var icon := Label.new()
-	icon.text = "✓"
-	icon.add_theme_font_size_override("font_size", 96)
-	icon.add_theme_color_override("font_color", AppColors.GOLD)
-	center.add_child(icon)
+	# Update 2026-11-22: pakai maskot "Wawa" pose merayakan (lihat
+	# docs/ASSET_LIST.md #8) kalau filenya ada — fallback tanda ✓ polos
+	# kalau belum. TETAP bukan skor/bintang, cuma ganti ikon perayaan.
+	var mascot_path := "res://core/assets/images/mascot/wawa_merayakan.png"
+	var icon: Control
+	if FileAccess.file_exists(mascot_path):
+		var mascot_icon := TextureRect.new()
+		mascot_icon.texture = load(mascot_path)
+		mascot_icon.custom_minimum_size = Vector2(220, 220)
+		mascot_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		center.add_child(mascot_icon)
+		icon = mascot_icon
+	else:
+		var checkmark := Label.new()
+		checkmark.text = "✓"
+		checkmark.add_theme_font_size_override("font_size", 96)
+		checkmark.add_theme_color_override("font_color", AppColors.GOLD)
+		center.add_child(checkmark)
+		icon = checkmark
 
 	var tween := create_tween()
 	icon.scale = Vector2.ZERO

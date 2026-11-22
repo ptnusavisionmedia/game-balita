@@ -49,6 +49,15 @@ func _ready() -> void:
 	vbox.add_theme_constant_override("separation", 12)
 	card.add_child(vbox)
 
+	var lock_icon_path := "res://core/assets/images/ui/parental_lock.png"
+	if FileAccess.file_exists(lock_icon_path):
+		var lock_icon := TextureRect.new()
+		lock_icon.texture = load(lock_icon_path)
+		lock_icon.custom_minimum_size = Vector2(56, 56)
+		lock_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		lock_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		vbox.add_child(lock_icon)
+
 	var title := Label.new()
 	title.text = "Mode Orang Tua"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -115,7 +124,12 @@ func _make_backspace_button() -> Button:
 
 func _make_confirm_button() -> Button:
 	var button := Button.new()
-	button.text = "✓"
+	var checkmark_path := "res://core/assets/images/ui/checkmark.png"
+	if FileAccess.file_exists(checkmark_path):
+		button.icon = load(checkmark_path)
+		button.expand_icon = true
+	else:
+		button.text = "✓"
 	button.custom_minimum_size = Vector2(56, 56)
 	button.pressed.connect(_on_confirm_pressed)
 	return button

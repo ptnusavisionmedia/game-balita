@@ -72,7 +72,12 @@ func _ready() -> void:
 		_grid.add_child(_make_tile(game))
 
 	var settings_button := Button.new()
-	settings_button.text = "⚙"
+	var settings_icon_path := "res://core/assets/images/ui/settings.png"
+	if FileAccess.file_exists(settings_icon_path):
+		settings_button.icon = load(settings_icon_path)
+		settings_button.expand_icon = true
+	else:
+		settings_button.text = "⚙"
 	settings_button.custom_minimum_size = Vector2(56, 56)
 	settings_button.anchor_left = 1.0
 	settings_button.anchor_right = 1.0

@@ -74,7 +74,7 @@ func _ready() -> void:
 ## Tombol darurat, selalu terlihat — pola wajib dari feature_angka.
 func _add_home_button() -> void:
 	var home_button := Button.new()
-	home_button.text = "🏠"
+	_apply_home_icon(home_button)
 	home_button.custom_minimum_size = Vector2(56, 56)
 	home_button.anchor_left = 0.0
 	home_button.anchor_right = 0.0
@@ -84,6 +84,18 @@ func _add_home_button() -> void:
 	home_button.offset_bottom = 68.0
 	home_button.pressed.connect(func(): GameFlow.go_home())
 	add_child(home_button)
+
+
+## Ikon rumah asli (lihat docs/ASSET_LIST.md #11) — fallback emoji kalau
+## file belum ada. Dipakai 6 modul feature_* (duplikasi disengaja, pola
+## sama `_add_home_button`, lihat komentarnya).
+func _apply_home_icon(button: Button) -> void:
+	var path := "res://core/assets/images/ui/home.png"
+	if FileAccess.file_exists(path):
+		button.icon = load(path)
+		button.expand_icon = true
+	else:
+		button.text = "🏠"
 
 
 ## Tidak ada "benar/salah" di sini — tap mana pun selalu valid, cuma

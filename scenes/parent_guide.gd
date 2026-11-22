@@ -84,6 +84,11 @@ func _render_list() -> void:
 		var button := Button.new()
 		button.text = str(card.get("title", "?"))
 		button.custom_minimum_size = Vector2(0, 56)
+		var icon_path := "res://core/assets/images/parent_guide/panduan_%s.png" % str(card.get("kind", ""))
+		if FileAccess.file_exists(icon_path):
+			button.icon = load(icon_path)
+			button.expand_icon = true
+			button.add_theme_constant_override("icon_max_width", 48)
 		button.pressed.connect(_render_detail.bind(card))
 		_content.add_child(button)
 

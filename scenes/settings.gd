@@ -2,6 +2,9 @@ extends Control
 ## Satu-satunya layar untuk orang tua: toggle suara. Diakses lewat
 ## ParentalGateDialog dulu — lihat home.gd.
 
+var _sound_button: Button
+
+
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
@@ -17,11 +20,13 @@ func _ready() -> void:
 	title.add_theme_font_size_override("font_size", 28)
 	vbox.add_child(title)
 
-	var sound_check := CheckBox.new()
-	sound_check.text = "Suara"
-	sound_check.button_pressed = ProgressRepository.sound_enabled
-	sound_check.toggled.connect(_on_sound_toggled)
-	vbox.add_child(sound_check)
+	_sound_button = Button.new()
+	_sound_button.custom_minimum_size = Vector2(0, 56)
+	_sound_button.toggle_mode = true
+	_sound_button.button_pressed = ProgressRepository.sound_enabled
+	_render_sound_button()
+	_sound_button.toggled.connect(_on_sound_toggled)
+	vbox.add_child(_sound_button)
 
 	var parent_guide_button := Button.new()
 	parent_guide_button.text = "Panduan Orang Tua"
@@ -38,3 +43,17 @@ func _on_sound_toggled(value: bool) -> void:
 	ProgressRepository.set_sound_enabled(value)
 	SfxService.muted = not value
 	AudioService.muted = not value
+	_render_sound_button()
+
+
+## Ikon speaker on/off asli (lihat docs/ASSET_LIST.md #11) — fallback teks
+## kalau file belum ada.
+func _render_sound_button() -> void:
+	var on_path := "res://core/assets/images/ui/speaker_on.png"
+	var off_path := "res://core/assets/images/ui/speaker_off.png"
+	var path := on_path if _sound_button.button_pressed else off_path
+	if FileAccess.file_exists(path):
+		_sound_button.icon = load(path)
+		_sound_button.text = "Suara"
+	else:
+		_sound_button.text = "🔊 Suara" if _sound_button.button_pressed else "🔇 Suara"
