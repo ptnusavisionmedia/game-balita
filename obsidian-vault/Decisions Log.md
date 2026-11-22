@@ -550,3 +550,18 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Sekaligus dikerjakan** (user minta font lebih bagus di pesan sebelumnya): font **Baloo 2** (Google Fonts, SIL OFL) diunduh & dipasang jadi font default seluruh app lewat `project.godot` `[gui] theme/custom_font` — ini realisasi rencana lama yang sudah disebut di `docs/UI_UX_DESIGN.md` sejak base model tapi filenya baru benar-benar ada sekarang.
 
 **Diverifikasi**: headless re-import + run `Splash`/`Home` — lolos tanpa error. App dijalankan ulang buat preview. **Belum dikonfirmasi user** secara visual (nama baru + font baru).
+
+## 2026-11-22 — Prompt aset lengkap untuk SEMUA kategori, beberapa konsep direvisi
+
+**Permintaan user**: daftar prompt lengkap buat semua aset game (hewan, tombol khusus, nada piano sederhana, buah-buahan, bentuk kotak/segitiga/lingkaran ala shape-sorter, UI settings & lainnya) — digenerate user sendiri lewat ChatGPT.
+
+**Revisi konsep yang muncul dari permintaan ini** (bukan cuma tambah prompt, ada keputusan desain baru):
+- **`feature_warna`**: diseragamkan jadi 1 kategori "buah-buahan" murni (apel, pisang, jeruk, anggur, melon, blueberry) — sebelumnya campuran buah+daun (lemon/daun/jeruk/anggur/blueberry/apel). `features/feature_warna/data/warna_data.json` placeholder emoji diupdate sekalian (kuning: 🍋→🍌, hijau: 🍃→🍈) supaya konsisten di aplikasi SEKARANG, bukan cuma di dokumentasi.
+- **`feature_puzzle`**: konsep diganti dari "1 gambar dipotong 4 keping" jadi **shape-sorter** (kotak/lingkaran/segitiga solid + versi outline kosong buat slot) — lebih sesuai mekanik tap-pilih-taruh yang sudah ada (match bentuk/warna, bukan potongan gambar). Belum diupdate ke `obsidian-vault/Specs/feature_puzzle.md` — masih ide/prompt dulu, spek diupdate kalau konsep ini jadi dieksekusi di kode.
+- **`feature_musik`**: diputuskan pakai gaya "toy xylophone" (bilah lonceng mainan warna-warni), BUKAN piano key hitam-putih realistis — alasan: piano asli netral (hitam/putih) bertentangan sama prinsip "warna hangat jenuh = interaktif" yang sudah jadi aturan sejak riset kompetitor 2026-11-21.
+- **Maskot "Wawa"**: sekarang punya NAMA (app resmi "Wawa", diputuskan sebelumnya hari ini) — prompt maskot diupdate pakai nama itu, bukan generik lagi.
+- **Baru**: ikon UI (gear/home/speaker/magnifying-glass/checkmark/padlock) buat ganti emoji unicode yang sekarang dipakai di banyak tombol (🏠🔊🔍✓⚙) — dicatat eksplisit butuh task kode tambahan (`Button.text` emoji → `Button.icon`/`TextureRect`), bukan cuma taruh file gambar.
+
+**Dikerjakan**: semua prompt ditambahkan ke `docs/STYLE_GUIDE_ILUSTRASI.md` (bagian 5.2 direvisi, 5.7 diupdate nama maskot, 5.8-5.10 baru: shape-sorter, xylophone, ikon UI) + `docs/ASSET_LIST.md` (baris baru #10 nada musik, #11 ikon UI, baris #3/#6/#8 direvisi sesuai konsep baru di atas).
+
+**Status**: semua ini masih PROMPT, belum ada file gambar sungguhan untuk kategori baru ini (beda dari background+tombol Home yang sudah selesai). Perubahan konsep `feature_puzzle`/`feature_warna`/`feature_musik` juga baru di level dokumentasi/data-placeholder, BELUM ada perubahan kode gameplay yang mengikuti (misal `feature_puzzle` masih pakai kode warna polos, belum benar-benar jadi shape kotak/lingkaran/segitiga — itu nunggu aset + keputusan eksekusi kalau user minta lanjut).

@@ -23,17 +23,19 @@ PIC: **Asset 1**. Format: `.png` (transparan) atau `.svg` (Godot rasterize otoma
 |---|---|---|---|---|
 | 1 | Objek hitung (buah/mainan, 1-5 biji bisa digambar sebagai 1 ikon diulang) | 1 ikon dasar | Ikon hati di `feature_angka` | `features/feature_angka/assets/images/` |
 | 2 | Hewan: kucing, anjing, sapi, ayam, kambing, bebek | 6 | Emoji di `hewan_data.json` | `features/feature_hewan/assets/images/` |
-| 3 | Benda untuk belajar warna (apel, lemon, daun, jeruk, anggur, blueberry — atau pilihan lain Asset 1) | 6 | Emoji di `warna_data.json` | `features/feature_warna/assets/images/` |
+| 3 | Buah-buahan untuk belajar warna (apel, pisang, jeruk, anggur, melon, blueberry — direvisi 2026-11-22, 1 kategori "buah" konsisten) | 6 | Emoji di `warna_data.json` | `features/feature_warna/assets/images/` |
 | 4 | Gambar "Kelinci" dipecah 4 area (telinga kiri/kanan, kepala, badan) — AREA-nya, bukan cuma 1 gambar utuh, karena tiap area harus bisa diwarnai terpisah | 1 set (4 potongan area/mask) | Kotak rounded abu-abu di `feature_mewarnai` | `features/feature_mewarnai/assets/images/` |
 | 5 | +1-2 gambar lain buat `feature_mewarnai` (opsional, setelah "Kelinci" jalan) | 1-2 set | — (tambahan) | sama seperti di atas |
-| 6 | 1 gambar dipecah 4 keping puzzle (potongan asli, bukan kotak warna) | 1 set (4 potongan) | Kotak warna polos di `feature_puzzle` | `features/feature_puzzle/assets/images/` |
-| 7 | App icon + splash screen draft | 1 set | Logo teks default di `Splash.tscn` | `assets/` (root, lihat koordinasi Bramantyo export) |
+| 6 | **Direvisi 2026-11-22**: bentuk geometris gaya shape-sorter (kotak/lingkaran/segitiga solid + versi outline kosong buat slot) — bukan lagi "1 gambar dipotong 4 keping" | 3 keping solid + 3 outline slot | Kotak warna polos di `feature_puzzle` | `features/feature_puzzle/assets/images/` |
+| 7 | App icon + splash screen draft | 1 set | Logo teks "Wawa" default di `Splash.tscn` | `assets/` (root, lihat koordinasi Bramantyo export) |
 | 7b | Background Home (langit+rumput+matahari versi ilustrasi asli) | 1 | ✅ **Selesai** (2026-11-22) — digenerate user lewat ChatGPT, dipasang di `core/scripts/game_background.gd` via `TextureRect` | `core/assets/images/home_background.png` |
 | 7c | Tombol "Play" + "Pilih Game" (desain pill/kapsul reusable) | 2 (primer+sekunder) | ✅ **Selesai** (2026-11-22) — digenerate user lewat ChatGPT, dipasang di `scenes/home.gd` via `StyleBoxTexture` | `core/assets/images/button_primary.png` + `button_secondary.png` |
-| 8 | **Maskot karakter** (baru — usul dari riset kompetitor, lihat `obsidian-vault/Referensi-LucasAndFriends.md`) | min. 1 karakter, idealnya beberapa pose (netral/senang/bicara) | Tidak ada sekarang — app ini **belum punya maskot sama sekali** | TBD, kemungkinan `core/assets/images/` (dipakai lintas modul) |
+| 8 | **Maskot karakter "Wawa"** (nama app resmi 2026-11-22) | min. 1 karakter, idealnya beberapa pose (netral/senang/bicara) | Tidak ada sekarang — app ini **belum punya maskot sama sekali** | TBD, kemungkinan `core/assets/images/` (dipakai lintas modul) |
 | 9 | (Opsional) Ilustrasi kartu "Panduan Orang Tua" | 6 | Teks polos di `ParentGuide.tscn` | TBD, kemungkinan `core/assets/images/` |
+| 10 | Nada musik gaya "toy xylophone" (bukan piano key realistis) | 6 (1 per warna) | Lingkaran polos + "♪" di `musik.gd` | `features/feature_musik/assets/images/` |
+| 11 | Ikon UI: gear (settings), home, speaker on/off, magnifying glass, checkmark, padlock | 7 | Emoji unicode (🏠🔊🔍✓⚙) tersebar di banyak scene | `core/assets/images/` — **butuh task kode tambahan** (ganti `Button.text` emoji jadi `Button.icon`/`TextureRect`) |
 
-**Catatan khusus #4 & #6**: beda dari ilustrasi lain yang "1 gambar = 1 file", ini butuh gambar yang **sudah dipikirkan pembagian area/potongannya** dari awal (bukan 1 gambar utuh yang baru dipotong belakangan) — koordinasi dulu sama Dev 4 (pemegang `feature_mewarnai`+`feature_puzzle`) soal bentuk & jumlah area/potongan sebelum mulai gambar, lihat `obsidian-vault/Specs/feature_mewarnai.md` & `feature_puzzle.md`.
+**Catatan khusus #4 & #6**: beda dari ilustrasi lain yang "1 gambar = 1 file", ini butuh gambar yang **sudah dipikirkan pembagian area/potongannya** dari awal (bukan 1 gambar utuh yang baru dipotong belakangan) — koordinasi dulu sama Dev 4 (pemegang `feature_mewarnai`+`feature_puzzle`) soal bentuk & jumlah area/potongan sebelum mulai gambar, lihat `obsidian-vault/Specs/feature_mewarnai.md` & `feature_puzzle.md` (puzzle sekarang jadi shape-sorter, bukan potong gambar — update spek kalau konsep ini dipakai).
 
 ## 2. SFX (efek suara pendek)
 
@@ -62,7 +64,7 @@ PIC: **Farel**.
 ## 4. Yang BELUM direncanakan sama sekali (perlu keputusan dulu, bukan langsung dikerjakan)
 
 - **Musik latar (BGM)** — tidak ada di spek manapun sampai sekarang. `AudioService` (autoload) sudah ada infrastrukturnya (terpisah dari `SfxService`), tapi belum ada keputusan mau pakai BGM atau tidak.
-- **Maskot karakter** (lihat baris #8 di atas) — baru usulan dari riset kompetitor, bukan keputusan final. Kalau mau dikerjakan, perlu dipikirkan dulu: nama, gaya visual, dipakai di mana saja (Splash? Home? reward overlay?) — ini keputusan desain, bukan cuma "gambar aja".
+- **Maskot karakter "Wawa"** (lihat baris #8 di atas) — namanya sudah ada (app resmi bernama Wawa, 2026-11-22), tapi gaya visual final & di mana saja dipakai (Splash? Home? reward overlay?) masih perlu diputuskan setelah 1 karakter dasar digenerate & direview.
 
 ---
 

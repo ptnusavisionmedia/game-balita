@@ -3,13 +3,13 @@
     "id": "kuning",
     "name": "Kuning",
     "color_hex": "#FFC93C",
-    "placeholder_emoji": "🍋"
+    "placeholder_emoji": "🍌"
   },
   {
     "id": "hijau",
     "name": "Hijau",
     "color_hex": "#6FCF97",
-    "placeholder_emoji": "🍃"
+    "placeholder_emoji": "🍈"
   },
   {
     "id": "oranye",

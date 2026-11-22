@@ -63,14 +63,16 @@ Prompt ditulis Bahasa Inggris (lebih konsisten hasilnya di kebanyakan tool AI im
 5. *"...a cute cartoon goat standing, friendly smiling face, white and brown fur, small horns, big round eyes"*
 6. *"...a cute cartoon duck standing, friendly smiling face, yellow feathers, orange beak, big round eyes"*
 
-### 5.2 Benda untuk belajar warna (`feature_warna`) — 6 benda
+### 5.2 Buah-buahan untuk belajar warna (`feature_warna`) — 6 buah, direvisi 2026-11-22 (konsisten 1 kategori "buah", bukan campuran benda)
 
-1. *"...a single red apple, warm red-coral color, simple shiny highlight"* (merah hangat, bukan merah sirine)
-2. *"...a single yellow lemon, bright warm yellow"*
-3. *"...a single green leaf, fresh green color, simple vein detail"*
-4. *"...a single orange, warm orange color, simple leaf on top"*
-5. *"...a bunch of purple grapes, warm purple color, simple grape cluster shape"*
-6. *"...a single blueberry, deep warm blue-purple color"*
+1. *"...a single red apple, warm red-coral color, simple shiny highlight, small green leaf on top"* (merah hangat, bukan merah sirine)
+2. *"...a single yellow banana, bright warm yellow, slight curve shape"*
+3. *"...a single orange, warm orange color, small green leaf on top"*
+4. *"...a bunch of purple grapes, warm purple color, simple cluster shape"*
+5. *"...a green melon slice, fresh green rind with light green inside, simple seeds"*
+6. *"...a single blueberry, deep warm blue-purple color, small shiny highlight"*
+
+Ganti juga `placeholder_emoji` di `features/feature_warna/data/warna_data.json` begitu file asli ada (sekarang masih 🍋🍃🍊🍇🫐🍎 campuran, akan diseragamkan jadi buah semua).
 
 ### 5.3 Puzzle (`feature_puzzle`) — 1 gambar untuk dipecah 4 keping
 
@@ -112,11 +114,50 @@ Akses generate AI dari sesi ini masih diblokir ("Requires basic plan or higher",
 
 **Kenapa "reusable"/responsive penting** (sesuai permintaan user): tombol **jangan** digambar sebagai 1 ukuran tetap dengan teks ter-bake di dalamnya — teks ("▶ Play", "Pilih Game") tetap dirender terpisah oleh Godot (`Label`/`Button.text`) di ATAS gambar ini. Desain pill/kapsul dengan "ujung bulat + badan tengah lurus" supaya nanti bisa dipasang sebagai **`NinePatchRect`** (9-slice) di Godot — 1 gambar kecil bisa di-stretch jadi tombol lebar berapa pun (menyesuaikan teks "▶ Play" vs "Pilih Game" yang beda panjang, atau beda ukuran layar HP/tablet) tanpa distorsi di bagian ujung bulatnya. Begitu file-nya ada, implementasi `NinePatchRect` ini task kode terpisah (bukan cuma taruh file gambar), catat sebagai task baru di `docs/TASK_BOARD.md` kalau sudah mau dikerjakan.
 
-### 5.7 Maskot karakter (usulan baru, BELUM diputuskan — lihat `obsidian-vault/Referensi-LucasAndFriends.md`)
+### 5.7 Maskot karakter — "Wawa" (nama app resmi 2026-11-22, lihat Decisions Log)
 
-*"...a cute round friendly mascot character, bright warm yellow-orange color, big round eyes, simple smiling expression, soft rounded body with no arms/legs detail OR simple stubby arms and legs, standing pose, children's educational app mascot style"*
+> *"...a cute round friendly mascot character named Wawa, bright warm yellow-orange color, big round sparkly eyes, simple happy smiling expression, small stubby arms and legs, chubby soft body, standing pose, children's educational app mascot style"*
 
-**Catatan**: ini baru ide, belum ada keputusan nama/kepribadian/dipakai di mana saja (Splash? Home? reward overlay?). Kalau mau lanjut, perlu 1 keputusan desain dulu sebelum generate banyak pose — generate 1 karakter dasar dulu, review, baru putuskan pose tambahan apa saja yang dibutuhkan.
+Pose tambahan (generate 1 dulu, review, baru lanjut — pakai referensi gaya yang sama lewat "same character, but..."):
+- *"...same mascot character, waving one arm hello, one leg slightly lifted, cheerful pose"*
+- *"...same mascot character, arms raised up celebrating, confetti-style joyful pose"*
+
+**Belum diputuskan**: dipakai di mana saja (Splash? Home? reward overlay/`StarRewardOverlay`?) — itu keputusan desain terpisah setelah karakter dasarnya ada.
+
+### 5.8 Bentuk geometris (`feature_puzzle` — direvisi jadi gaya shape-sorter, 2026-11-22)
+
+Keping solid (gaya balok kayu mainan):
+- *"...a single thick solid square shape, warm red-coral color, like a wooden toy block, slightly rounded corners"*
+- *"...a single thick solid circle shape, warm blue color, like a wooden toy block"*
+- *"...a single thick solid triangle shape, warm yellow color, like a wooden toy block, rounded corners"*
+
+Outline slot kosong (buat papan target):
+- *"...a square outline shape only, no fill, thick outline on transparent background, like an empty shape-sorter slot"*
+- *"...a circle outline shape only, no fill, thick outline on transparent background, like an empty shape-sorter slot"*
+- *"...a triangle outline shape only, no fill, thick outline on transparent background, like an empty shape-sorter slot"*
+
+**Catatan**: ini revisi konsep dari spek awal "potong 1 gambar jadi 4 keping" — lebih simpel & sesuai mekanik tap-pilih-taruh yang sudah ada (`features/feature_puzzle/puzzle.gd`, match warna/bentuk, bukan potongan gambar). Update `obsidian-vault/Specs/feature_puzzle.md` kalau konsep ini jadi dipakai.
+
+### 5.9 Nada musik (`feature_musik`) — toy xylophone, bukan piano keys realistis
+
+Piano key hitam-putih realistis **tidak dipakai** — bertentangan dengan prinsip "warna hangat jenuh buat interaktif" (piano asli hitam/putih netral). Gaya "toy xylophone"/bilah lonceng mainan lebih sesuai:
+
+- *"...a single colorful toy xylophone bar/key, purple color, chunky rounded rectangle shape, slight glossy highlight"*
+- 5 variasi warna lain (ungu lebih gelap, pink-ungu, lavender, biru-ungu periwinkle, violet lembut) — generate pakai "same toy xylophone bar style, [warna]" biar 1 keluarga visual.
+
+### 5.10 Ikon UI (Settings & lainnya, 2026-11-22) — ganti emoji placeholder di kode
+
+Kode saat ini pakai emoji unicode (🏠🔊🔍✓⚙) sebagai placeholder ikon tombol — bisa diganti ilustrasi asli konsisten gaya:
+
+- *"...a simple gear/cog icon for a settings button, warm orange color"*
+- *"...a simple house icon for a home button, warm yellow color"*
+- *"...a simple speaker icon with sound waves, for a 'play sound' button, warm teal color"*
+- *"...a simple speaker icon with an X or slash, for a 'mute' button, soft gray color"*
+- *"...a simple magnifying glass icon, for a 'reveal answer' button, warm amber color"*
+- *"...a simple checkmark icon, rounded and chunky, warm green color"*
+- *"...a simple padlock icon, for a parental-gate button, warm brown-gold color"*
+
+**Catatan**: mengganti emoji ini jadi gambar PNG butuh task kode tambahan (ganti `Button.text = "🏠"` jadi `TextureRect`/`Button.icon`) — bukan cuma taruh file, catat sebagai task terpisah di `docs/TASK_BOARD.md` kalau mau dikerjakan.
 
 ---
 
