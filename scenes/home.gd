@@ -33,20 +33,30 @@ func _ready() -> void:
 	# men-stretch tiap child ke lebar penuh layar (dilaporkan user
 	# 2026-11-21, baru kelihatan jelas setelah GameBackground dipasang).
 	#
-	# Update 2026-11-22: "▶ Play"/"Pilih Game" sekarang pakai ilustrasi
-	# asli (`button_primary.png`/`button_secondary.png`, digenerate user
-	# lewat ChatGPT) lewat `StyleBoxTexture` — bukan `BigRoundButton`
-	# warna solid lagi. `texture_margin_*` = teknik 9-slice Godot: cuma
-	# bagian tengah yang lurus di-stretch, ujung bulatnya tetap utuh
-	# berapa pun lebar tombolnya (lihat docs/STYLE_GUIDE_ILUSTRASI.md 5.7b
-	# soal kenapa gambar sengaja dibuat kosong tanpa teks ter-bake).
+	# Update 2026-11-22 (redesain ke-2, atas permintaan user): "Play"
+	# BUKAN pil bertuliskan "▶ Play" lagi — jadi LINGKARAN besar isinya
+	# cuma tanda "▶" tanpa teks sama sekali (ikon = aksi, sesuai prinsip
+	# anak belum baca). Pakai `StyleBoxFlat` solid (bukan gambar pil
+	# `button_primary.png` yang sekarang nganggur di repo — rasionya 3:1,
+	# tidak cocok dipotong jadi lingkaran tanpa gambar baru) supaya tetap
+	# tajam di ukuran berapa pun & konsisten sama pola `BigRoundButton`.
 	var play_button := Button.new()
-	play_button.custom_minimum_size = Vector2(480, 160)
+	const PLAY_DIAMETER := 220.0
+	play_button.custom_minimum_size = Vector2(PLAY_DIAMETER, PLAY_DIAMETER)
 	play_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	play_button.text = "▶ Play"
-	play_button.add_theme_font_size_override("font_size", 38)
-	UIStyle.apply_ink_text_color(play_button)
-	_apply_texture_button_style(play_button, "res://core/assets/images/button_primary.png")
+	play_button.text = "▶"
+	play_button.add_theme_font_size_override("font_size", 80)
+	play_button.add_theme_color_override("font_color", AppColors.INK)
+	play_button.add_theme_color_override("font_hover_color", AppColors.INK)
+	play_button.add_theme_color_override("font_pressed_color", AppColors.INK)
+	play_button.add_theme_color_override("font_focus_color", AppColors.INK)
+	var play_style := StyleBoxFlat.new()
+	play_style.bg_color = AppColors.SUNSHINE
+	play_style.border_color = AppColors.INK
+	play_style.set_border_width_all(4)
+	play_style.set_corner_radius_all(int(PLAY_DIAMETER / 2.0))
+	for state in ["normal", "hover", "pressed", "focus"]:
+		play_button.add_theme_stylebox_override(state, play_style)
 	play_button.pressed.connect(_on_play_pressed)
 	vbox.add_child(play_button)
 
@@ -71,21 +81,30 @@ func _ready() -> void:
 	for game in GameFlow.GAMES:
 		_grid.add_child(_make_tile(game))
 
+	# Update 2026-11-22 (redesain ke-2): gear Settings pindah dari pojok
+	# kanan atas ke BAWAH tengah layar (atas permintaan user) — "agak
+	# besar cuman jangan terlalu besar" → 96x96 (naik dari 88, bukan
+	# lompat ke ukuran Play yang 220).
 	var settings_button := Button.new()
-	UIStyle.apply_icon_frame(settings_button)
+	UIStyle.apply_icon_frame(settings_button, 96.0)
 	var settings_icon_path := "res://core/assets/images/ui/settings.png"
 	if FileAccess.file_exists(settings_icon_path):
 		settings_button.icon = load(settings_icon_path)
 		settings_button.expand_icon = true
-		settings_button.add_theme_constant_override("icon_max_width", 48)
+		settings_button.add_theme_constant_override("icon_max_width", 52)
 	else:
 		settings_button.text = "⚙"
+	# Pojok kanan BAWAH (bukan tengah bawah) — supaya tidak ketiban grid
+	# "Pilih Game" (3x2 kartu 340x220) begitu grid itu dibuka, karena
+	# `vbox` isinya center-aligned vertikal (bisa melebar ke bawah).
 	settings_button.anchor_left = 1.0
 	settings_button.anchor_right = 1.0
-	settings_button.offset_left = -96.0
+	settings_button.anchor_top = 1.0
+	settings_button.anchor_bottom = 1.0
+	settings_button.offset_left = -104.0
 	settings_button.offset_right = -8.0
-	settings_button.offset_top = 12.0
-	settings_button.offset_bottom = 100.0
+	settings_button.offset_top = -104.0
+	settings_button.offset_bottom = -8.0
 	settings_button.pressed.connect(_open_settings)
 	add_child(settings_button)
 

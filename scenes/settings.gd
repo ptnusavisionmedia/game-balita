@@ -42,7 +42,7 @@ func _ready() -> void:
 
 	var title := Label.new()
 	title.text = "Pengaturan"
-	title.add_theme_font_size_override("font_size", 36)
+	title.add_theme_font_size_override("font_size", 42)
 	title.add_theme_color_override("font_color", AppColors.INK)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
@@ -53,14 +53,14 @@ func _ready() -> void:
 	card_style.bg_color = AppColors.CREAM
 	card_style.border_color = AppColors.SUNSHINE
 	card_style.set_border_width_all(3)
-	card_style.set_corner_radius_all(20)
-	card_style.set_content_margin_all(28)
+	card_style.set_corner_radius_all(24)
+	card_style.set_content_margin_all(36)
 	card.add_theme_stylebox_override("panel", card_style)
 	vbox.add_child(card)
 
 	var card_box := VBoxContainer.new()
-	card_box.custom_minimum_size = Vector2(760, 0)
-	card_box.add_theme_constant_override("separation", 20)
+	card_box.custom_minimum_size = Vector2(840, 0)
+	card_box.add_theme_constant_override("separation", 24)
 	card.add_child(card_box)
 
 	_sound_button = Button.new()
@@ -103,16 +103,18 @@ func _make_setting_row(label_text: String, subtitle_text: String, action_button:
 
 	var label := Label.new()
 	label.text = label_text
-	label.add_theme_font_size_override("font_size", 26)
+	label.add_theme_font_size_override("font_size", 30)
 	label.add_theme_color_override("font_color", AppColors.INK)
 	text_box.add_child(label)
 
 	var subtitle := Label.new()
 	subtitle.text = subtitle_text
-	subtitle.add_theme_font_size_override("font_size", 20)
+	subtitle.add_theme_font_size_override("font_size", 22)
 	subtitle.add_theme_color_override("font_color", AppColors.INK)
+	subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD
 	text_box.add_child(subtitle)
 
+	action_button.add_theme_font_size_override("font_size", 24)
 	row.add_child(action_button)
 	return row
 

@@ -52,13 +52,13 @@ func _ready() -> void:
 	card_style.bg_color = AppColors.CREAM
 	card_style.border_color = AppColors.INK
 	card_style.set_border_width_all(3)
-	card_style.set_corner_radius_all(20)
-	card_style.set_content_margin_all(20)
+	card_style.set_corner_radius_all(24)
+	card_style.set_content_margin_all(28)
 	card.add_theme_stylebox_override("panel", card_style)
 	center.add_child(card)
 
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 12)
+	vbox.add_theme_constant_override("separation", 18)
 	card.add_child(vbox)
 
 	# Update 2026-11-22: susunan judul+tutup mengikuti mockup
@@ -78,7 +78,7 @@ func _ready() -> void:
 	if FileAccess.file_exists(lock_icon_path):
 		var lock_icon := TextureRect.new()
 		lock_icon.texture = load(lock_icon_path)
-		lock_icon.custom_minimum_size = Vector2(32, 32)
+		lock_icon.custom_minimum_size = Vector2(36, 36)
 		# expand_mode = IGNORE_SIZE WAJIB — tanpa ini TextureRect melapor
 		# "minimum size"-nya = ukuran asli file (bisa 1024x1024), bukan
 		# custom_minimum_size di atas (bug sama persis GameBackground
@@ -90,17 +90,17 @@ func _ready() -> void:
 
 	var title := Label.new()
 	title.text = "Untuk Orang Tua"
-	title.add_theme_font_size_override("font_size", 26)
+	title.add_theme_font_size_override("font_size", 30)
 	title.add_theme_color_override("font_color", AppColors.INK)
 	title_box.add_child(title)
 
 	var close_button := Button.new()
-	UIStyle.apply_icon_frame(close_button)
+	UIStyle.apply_icon_frame(close_button, 72.0)
 	var close_icon_path := "res://core/assets/images/ui/close_x.png"
 	if FileAccess.file_exists(close_icon_path):
 		close_button.icon = load(close_icon_path)
 		close_button.expand_icon = true
-		close_button.add_theme_constant_override("icon_max_width", 40)
+		close_button.add_theme_constant_override("icon_max_width", 36)
 	else:
 		close_button.text = "✕"
 	close_button.pressed.connect(func(): cancelled.emit())
@@ -108,21 +108,21 @@ func _ready() -> void:
 
 	_question_label = Label.new()
 	_question_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_question_label.add_theme_font_size_override("font_size", 34)
+	_question_label.add_theme_font_size_override("font_size", 40)
 	_question_label.add_theme_color_override("font_color", AppColors.INK)
 	vbox.add_child(_question_label)
 
 	_answer_label = Label.new()
 	_answer_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_answer_label.add_theme_font_size_override("font_size", 30)
+	_answer_label.add_theme_font_size_override("font_size", 34)
 	_answer_label.add_theme_color_override("font_color", AppColors.ACCENT_ANGKA)
-	_answer_label.custom_minimum_size = Vector2(0, 36)
+	_answer_label.custom_minimum_size = Vector2(0, 40)
 	vbox.add_child(_answer_label)
 
 	var keypad := GridContainer.new()
 	keypad.columns = 3
-	keypad.add_theme_constant_override("h_separation", 8)
-	keypad.add_theme_constant_override("v_separation", 8)
+	keypad.add_theme_constant_override("h_separation", 14)
+	keypad.add_theme_constant_override("v_separation", 14)
 	vbox.add_child(keypad)
 
 	for i in range(1, 10):
@@ -149,34 +149,40 @@ func _update_display() -> void:
 ## (token `icon.s` 88x88, lihat mockup `previews/09_parental_gate.png`) +
 ## font digit dibesarkan ke 40px (token "Digit keypad" di
 ## docs/STYLE_GUIDE_GUI_HUD.md / GUI_HUD_SPEC paket).
+## Update 2026-11-22 (redesain ke-2, "text terlalu kecil" dilaporkan
+## user): bingkai naik dari 88→100, font digit 40→46 — kartu otomatis
+## ikut melebar (CenterContainer+GridContainer menyesuaikan ke minimum
+## size anak-anaknya), jadi dialog tidak lagi sempit-memanjang.
+const KEYPAD_DIAMETER := 100.0
+
 func _make_digit_button(d: int) -> Button:
 	var button := Button.new()
-	UIStyle.apply_icon_frame(button)
+	UIStyle.apply_icon_frame(button, KEYPAD_DIAMETER)
 	UIStyle.apply_ink_text_color(button)
 	button.text = str(d)
-	button.add_theme_font_size_override("font_size", 40)
+	button.add_theme_font_size_override("font_size", 46)
 	button.pressed.connect(_on_digit_pressed.bind(d))
 	return button
 
 
 func _make_backspace_button() -> Button:
 	var button := Button.new()
-	UIStyle.apply_icon_frame(button)
+	UIStyle.apply_icon_frame(button, KEYPAD_DIAMETER)
 	UIStyle.apply_ink_text_color(button)
 	button.text = "Hapus"
-	button.add_theme_font_size_override("font_size", 16)
+	button.add_theme_font_size_override("font_size", 20)
 	button.pressed.connect(_on_backspace_pressed)
 	return button
 
 
 func _make_confirm_button() -> Button:
 	var button := Button.new()
-	UIStyle.apply_icon_frame(button)
+	UIStyle.apply_icon_frame(button, KEYPAD_DIAMETER)
 	var checkmark_path := "res://core/assets/images/ui/checkmark.png"
 	if FileAccess.file_exists(checkmark_path):
 		button.icon = load(checkmark_path)
 		button.expand_icon = true
-		button.add_theme_constant_override("icon_max_width", 40)
+		button.add_theme_constant_override("icon_max_width", 48)
 	else:
 		button.text = "✓"
 	button.pressed.connect(_on_confirm_pressed)

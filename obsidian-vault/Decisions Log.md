@@ -741,3 +741,35 @@ HUD gameplay seperti yang tampak di mockup (itu fitur baru, bukan cuma
 reskin, perlu keputusan terpisah); animasi gerak (§6 GUI_HUD_SPEC: press
 bounce, pop-in, idle maskot) belum diimplementasikan — masih di
 `docs/STYLE_GUIDE_GUI_HUD.md` sebagai panduan, bukan kode jalan.
+
+## 2026-11-22 — Perbaikan presisi setelah redesain GUI/HUD (ronde 2)
+
+**Feedback user dari screenshot hasil redesain sebelumnya**: placement
+tidak presisi, teks masih terlalu kecil, Settings kurang jelas, dan 2
+permintaan desain baru untuk Home — tombol Play jadi LINGKARAN BESAR
+isinya cuma tanda "▶" (TANPA teks "Play" sama sekali), dan gear Settings
+pindah dari pojok kanan atas ke BAWAH layar, ukurannya naik sedikit
+("agak besar cuman jangan terlalu besar").
+
+**Dikerjakan** (headless-verified):
+- `scenes/home.gd`: tombol Play BUKAN pil gambar `button_primary.png`
+  lagi (gambar itu rasio 3:1, tidak cocok jadi lingkaran tanpa gambar
+  baru) — diganti `StyleBoxFlat` solid SUNSHINE berbentuk lingkaran
+  sempurna (`corner_radius = diameter/2`), diameter 220px, isi cuma
+  glyph "▶" font 80px, TANPA label teks. Gear Settings pindah ke pojok
+  kanan BAWAH (bukan tengah-bawah — supaya tidak ketiban grid "Pilih
+  Game" 3x2 kartu kalau grid itu dibuka), naik dari 88→96px.
+- `core/scripts/parental_gate_dialog.gd`: keypad naik dari 88→100px
+  (konstanta `KEYPAD_DIAMETER`), font digit 40→46, judul 26→30, soal
+  34→40, kotak jawaban 30→34, tombol tutup (X) naik ke 72px, margin
+  kartu 20→28 + separation 12→18 — kartu otomatis lebih lebar & longgar
+  (bukan sempit-memanjang seperti sebelumnya).
+- `scenes/settings.gd`: judul 36→42, label baris 26→30, subjudul 20→24
+  (+ autowrap), font teks tombol pil di-set eksplisit 24 (sebelumnya
+  ikut default 22), kartu melebar 760→840px + margin 28→36.
+
+**Catatan**: `core/assets/images/button_primary.png` (pil kuning Home)
+sekarang NGANGGUR — tidak dipakai di mana pun lagi sejak Play jadi
+lingkaran code-drawn. Dibiarkan di repo (bukan dihapus, siapa tahu
+dipakai ulang buat elemen pil lain nanti), tapi dicatat di sini supaya
+jelas kenapa asetnya ada tapi tidak ke-referensi dari kode manapun.
