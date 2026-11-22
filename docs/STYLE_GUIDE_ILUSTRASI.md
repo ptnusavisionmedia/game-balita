@@ -94,6 +94,24 @@ Prompt ditulis Bahasa Inggris (lebih konsisten hasilnya di kebanyakan tool AI im
 
 *"...app icon, a smiling sun character with simple rounded rays, warm yellow/orange gradient within flat-shading limits, centered, bold and recognizable at small size"*
 
+### 5.7b Menu utama / Home (2026-11-22 — percobaan generate AI diblokir, lihat Decisions Log)
+
+Akses generate AI dari sesi ini masih diblokir ("Requires basic plan or higher", sama seperti kendala 2026-11-19/20). Prompt di bawah ini **siap ditempel manual** ke tool AI image (Midjourney/ChatGPT/Ideogram/dll) oleh tim.
+
+**Background Home** (1 gambar, landscape):
+
+> *"Flat vector cartoon illustration, children's educational mobile game main menu background, wide landscape scene: soft pastel blue sky at top with a few fluffy rounded clouds, warm smiling cartoon sun in upper corner with simple rounded rays, two-tone fresh green rolling grass hills at bottom with small simple flowers, bright cheerful colors, rounded friendly shapes, thick consistent outlines, flat soft shading, no gradients that look realistic, no photorealism, no text, no characters in the center (keep center area relatively open and uncluttered for UI buttons to be placed on top), toy-like charming art style similar to Duolingo ABC or Khan Academy Kids, vibrant but not neon"* — aspect ratio **16:9**.
+
+**Tombol utama "Play"** (reusable, bukan gambar sekali pakai — lihat catatan di bawah):
+
+> *"Flat vector cartoon game UI button asset, wide rounded pill / capsule shape banner, warm saturated yellow-orange gradient within flat shading limits, thick cute dark outline, glossy soft highlight on top edge, small flat drop shadow underneath, flat straight stretchable middle section with rounded end caps (like a mobile game 'Play' button background), completely empty inside with no text or icon, isolated on transparent background, children's educational app style, not realistic, no 3D render"* — aspect ratio **3:1**.
+
+**Tombol sekunder "Pilih Game"** (keluarga visual sama, varian lebih kalem):
+
+> *"Flat vector cartoon game UI button asset, wide rounded pill / capsule shape banner, same style and outline thickness as a matching primary button but in a secondary/lighter variant: soft cream white fill with a warm colored outline border, subtle flat shading, small flat drop shadow underneath, flat straight stretchable middle section with rounded end caps, completely empty inside with no text or icon, isolated on transparent background, children's educational app style, not realistic, no 3D render"* — aspect ratio **3:1**.
+
+**Kenapa "reusable"/responsive penting** (sesuai permintaan user): tombol **jangan** digambar sebagai 1 ukuran tetap dengan teks ter-bake di dalamnya — teks ("▶ Play", "Pilih Game") tetap dirender terpisah oleh Godot (`Label`/`Button.text`) di ATAS gambar ini. Desain pill/kapsul dengan "ujung bulat + badan tengah lurus" supaya nanti bisa dipasang sebagai **`NinePatchRect`** (9-slice) di Godot — 1 gambar kecil bisa di-stretch jadi tombol lebar berapa pun (menyesuaikan teks "▶ Play" vs "Pilih Game" yang beda panjang, atau beda ukuran layar HP/tablet) tanpa distorsi di bagian ujung bulatnya. Begitu file-nya ada, implementasi `NinePatchRect` ini task kode terpisah (bukan cuma taruh file gambar), catat sebagai task baru di `docs/TASK_BOARD.md` kalau sudah mau dikerjakan.
+
 ### 5.7 Maskot karakter (usulan baru, BELUM diputuskan — lihat `obsidian-vault/Referensi-LucasAndFriends.md`)
 
 *"...a cute round friendly mascot character, bright warm yellow-orange color, big round eyes, simple smiling expression, soft rounded body with no arms/legs detail OR simple stubby arms and legs, standing pose, children's educational app mascot style"*

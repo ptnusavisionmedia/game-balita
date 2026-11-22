@@ -490,3 +490,17 @@ Append-only. Jangan edit/hapus entri lama — kalau keputusan berubah, tambah en
 **Catatan penting yang disisipkan** (bukan cuma kasih prompt lalu selesai): 2 kategori aset (`feature_puzzle`, `feature_mewarnai`) **tidak bisa langsung "jadi" dari 1x generate AI** — puzzle butuh dipotong manual jadi 4 keping sama besar, mewarnai butuh di-trace ulang jadi region terpisah (line art AI cuma referensi visual, bukan file game-ready dengan area terpisah). Ini supaya tim tidak kaget nanti kalau hasil AI generate belum langsung bisa dipakai apa adanya untuk 2 modul ini.
 
 **Status**: draft pertama, `docs/TASK_BOARD.md` baris "Style guide ilustrasi" diubah dari Open jadi **Claimed** (bukan Done) — wajib direview Asset 1 dulu sebelum dianggap final, karena ini draft dari sesi AI, bukan keputusan desain visual yang sudah final dari manusia yang berkompeten di bidang ini.
+
+## 2026-11-22 — Percobaan generate AI untuk aset Home diblokir lagi (sama seperti 2026-11-19/20)
+
+**Permintaan user**: generate aset gambar buat menu utama (Home) — background + tombol, gaya kartun bagus tapi tidak realistis, dan tombolnya didesain reusable/responsive.
+
+**Dicoba**: `estimate_image_cost` berhasil (0.75 kredit buat test prompt) — sempat kelihatan seperti akan jalan — tapi `generate_image_batch` (3 request: background + tombol primer + tombol sekunder) DAN `generate_image` tunggal **sama-sama gagal** dengan error `"Requires basic plan or higher"`. Ini kendala yang SAMA seperti yang sudah tercatat 2026-11-19/20 (lihat entri lama) — akun ini masih belum punya plan berbayar yang dibutuhkan, belum berubah.
+
+**Keputusan user** (ditanya lewat AskUserQuestion): pilih opsi **"Beri prompt siap pakai"** — bukan upgrade plan, bukan lanjut code-drawn dulu.
+
+**Dikerjakan**: tambah bagian "5.7b Menu utama / Home" di `docs/STYLE_GUIDE_ILUSTRASI.md` — 3 prompt siap tempel (background landscape, tombol "Play" primer, tombol "Pilih Game" sekunder), semua didesain sebagai **pill/kapsul kosong tanpa teks ter-bake** (teks tetap dirender Godot `Label`/`Button.text` di atasnya) dengan bentuk "ujung bulat + badan lurus" supaya nanti bisa dipasang sebagai `NinePatchRect` (9-slice) — ini yang dimaksud user soal "reusable/responsive": 1 gambar kecil bisa di-stretch jadi tombol lebar berapa pun tanpa distorsi, menyesuaikan panjang teks beda atau ukuran layar beda.
+
+**Ditambahkan juga** ke `docs/ASSET_LIST.md`: baris 7b (background Home ilustrasi asli) & 7c (tombol pill reusable) — keduanya butuh **task kode tambahan** setelah file ada (pasang `NinePatchRect`, bukan cuma taruh file gambar), dicatat eksplisit supaya tidak dikira "tinggal taruh file selesai".
+
+**Belum**: file gambar sungguhan belum ada (masih prompt doang) — generate manual oleh tim lewat tool AI mereka sendiri, atau tunggu akun ini di-upgrade kalau user mau coba generate dari sesi ini lagi nanti.
