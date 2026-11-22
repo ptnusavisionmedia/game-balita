@@ -38,7 +38,7 @@ func _ready() -> void:
 	center.add_child(panel)
 
 	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(560, 520)
+	scroll.custom_minimum_size = Vector2(620, 560)
 	panel.add_child(scroll)
 
 	_content = VBoxContainer.new()
@@ -60,11 +60,11 @@ func _clear_content() -> void:
 		child.queue_free()
 
 
-func _add_wrapped_label(text: String, font_size: int = 16) -> void:
+func _add_wrapped_label(text: String, font_size: int = 20) -> void:
 	var label := Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD
-	label.custom_minimum_size = Vector2(480, 0)
+	label.custom_minimum_size = Vector2(520, 0)
 	label.add_theme_font_size_override("font_size", font_size)
 	_content.add_child(label)
 
@@ -74,7 +74,7 @@ func _render_list() -> void:
 
 	var title := Label.new()
 	title.text = "Panduan Orang Tua"
-	title.add_theme_font_size_override("font_size", 26)
+	title.add_theme_font_size_override("font_size", 32)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(title)
 
@@ -83,7 +83,7 @@ func _render_list() -> void:
 	for card in _cards:
 		var button := Button.new()
 		button.text = str(card.get("title", "?"))
-		button.custom_minimum_size = Vector2(0, 56)
+		button.custom_minimum_size = Vector2(0, 72)
 		var icon_path := "res://core/assets/images/parent_guide/panduan_%s.png" % str(card.get("kind", ""))
 		if FileAccess.file_exists(icon_path):
 			button.icon = load(icon_path)
@@ -92,11 +92,11 @@ func _render_list() -> void:
 		button.pressed.connect(_render_detail.bind(card))
 		_content.add_child(button)
 
-	_add_wrapped_label("Catatan: tiap anak berkembang dengan laju berbeda. Kalau ada kekhawatiran, konsultasikan ke dokter anak.", 13)
+	_add_wrapped_label("Catatan: tiap anak berkembang dengan laju berbeda. Kalau ada kekhawatiran, konsultasikan ke dokter anak.", 16)
 
 	var back_button := Button.new()
 	back_button.text = "← Kembali ke Pengaturan"
-	back_button.custom_minimum_size = Vector2(0, 56)
+	back_button.custom_minimum_size = Vector2(0, 72)
 	back_button.pressed.connect(func(): GameFlow.goto_scene("res://scenes/Settings.tscn"))
 	_content.add_child(back_button)
 
@@ -106,7 +106,7 @@ func _render_detail(card: Dictionary) -> void:
 
 	var title := Label.new()
 	title.text = str(card.get("title", "?"))
-	title.add_theme_font_size_override("font_size", 24)
+	title.add_theme_font_size_override("font_size", 30)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(title)
 
@@ -124,12 +124,12 @@ func _render_detail(card: Dictionary) -> void:
 	if guided_scene != "":
 		var guided_button := Button.new()
 		guided_button.text = "▶ Mulai main bareng"
-		guided_button.custom_minimum_size = Vector2(0, 56)
+		guided_button.custom_minimum_size = Vector2(0, 72)
 		guided_button.pressed.connect(func(): GameFlow.start_guided_game(guided_scene))
 		_content.add_child(guided_button)
 
 	var back_button := Button.new()
 	back_button.text = "← Kembali ke daftar"
-	back_button.custom_minimum_size = Vector2(0, 56)
+	back_button.custom_minimum_size = Vector2(0, 72)
 	back_button.pressed.connect(_render_list)
 	_content.add_child(back_button)

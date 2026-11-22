@@ -64,13 +64,13 @@ func _load_animal_data() -> Array:
 func _add_home_button() -> void:
 	var home_button := Button.new()
 	_apply_home_icon(home_button)
-	home_button.custom_minimum_size = Vector2(56, 56)
+	home_button.custom_minimum_size = Vector2(72, 72)
 	home_button.anchor_left = 0.0
 	home_button.anchor_right = 0.0
 	home_button.offset_left = 8.0
-	home_button.offset_right = 64.0
+	home_button.offset_right = 80.0
 	home_button.offset_top = 12.0
-	home_button.offset_bottom = 68.0
+	home_button.offset_bottom = 84.0
 	home_button.pressed.connect(func(): GameFlow.go_home())
 	add_child(home_button)
 
@@ -107,13 +107,13 @@ func _setup_mandiri() -> void:
 
 	var title := Label.new()
 	title.text = "Suara Siapa Ini?"
-	title.add_theme_font_size_override("font_size", 28)
+	title.add_theme_font_size_override("font_size", 34)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 
 	var play_sound_button := Button.new()
 	play_sound_button.text = "🔊 Dengar Suaranya"
-	play_sound_button.custom_minimum_size = Vector2(0, 64)
+	play_sound_button.custom_minimum_size = Vector2(0, 72)
 	play_sound_button.pressed.connect(_play_current_target_sound)
 	vbox.add_child(play_sound_button)
 
@@ -215,7 +215,7 @@ func _setup_guided() -> void:
 
 	var title := Label.new()
 	title.text = "Tebak Suara Hewan"
-	title.add_theme_font_size_override("font_size", 28)
+	title.add_theme_font_size_override("font_size", 34)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 
@@ -241,7 +241,7 @@ func _setup_guided() -> void:
 	vbox.add_child(_reveal_image)
 
 	_reveal_name = Label.new()
-	_reveal_name.add_theme_font_size_override("font_size", 24)
+	_reveal_name.add_theme_font_size_override("font_size", 28)
 	_reveal_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(_reveal_name)
 
@@ -252,7 +252,7 @@ func _setup_guided() -> void:
 
 	var play_sound_button := Button.new()
 	play_sound_button.text = "🔊 Dengar Suaranya"
-	play_sound_button.custom_minimum_size = Vector2(0, 64)
+	play_sound_button.custom_minimum_size = Vector2(0, 72)
 	play_sound_button.pressed.connect(func():
 		var animal: Dictionary = _animals[_guided_order[_guided_index]]
 		SfxService.play(_load_sfx(animal.get("sfx", "")))
@@ -266,13 +266,13 @@ func _setup_guided() -> void:
 		reveal_button.text = "Lihat Jawaban"
 	else:
 		reveal_button.text = "🔍 Lihat Jawaban"
-	reveal_button.custom_minimum_size = Vector2(0, 64)
+	reveal_button.custom_minimum_size = Vector2(0, 72)
 	reveal_button.pressed.connect(_on_reveal_pressed)
 	button_row.add_child(reveal_button)
 
 	var next_button := Button.new()
 	next_button.text = "Hewan Lain →"
-	next_button.custom_minimum_size = Vector2(0, 64)
+	next_button.custom_minimum_size = Vector2(0, 72)
 	next_button.pressed.connect(_on_next_animal_pressed)
 	vbox.add_child(next_button)
 

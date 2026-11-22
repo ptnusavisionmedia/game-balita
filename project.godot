@@ -62,6 +62,15 @@ window/handheld/orientation="landscape"
 ; yang terasa polos/tidak sesuai gaya game anak — dilaporkan user).
 theme/custom_font="res://core/assets/fonts/Baloo2.ttf"
 
+; Update 2026-11-22: user minta semua teks/tombol dibesarkan — balita
+; tidak seharusnya lihat teks kecil (ini app anak, bukan app dewasa).
+; `default_font_size` ini jadi baseline buat SEMUA Label/Button yang
+; TIDAK punya `add_theme_font_size_override` eksplisit di kode (sebelumnya
+; diam-diam pakai ukuran default Godot ~16px, kekecilan). Font size yang
+; sudah eksplisit di kode (judul 28→34 dkk) dibesarkan terpisah per file,
+; lihat obsidian-vault/Decisions Log.md.
+theme/default_font_size=22
+
 [autoload]
 
 ProgressRepository="*res://core/scripts/progress_repository.gd"

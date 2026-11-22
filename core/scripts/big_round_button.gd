@@ -11,7 +11,7 @@ class_name BigRoundButton
 func _ready() -> void:
 	custom_minimum_size = Vector2(120, 120)
 	add_theme_color_override("font_color", Color.WHITE)
-	add_theme_font_size_override("font_size", 28)
+	add_theme_font_size_override("font_size", 34)
 
 	var style := StyleBoxFlat.new()
 	style.bg_color = accent_color

@@ -17,11 +17,11 @@ func _ready() -> void:
 
 	var title := Label.new()
 	title.text = "Pengaturan"
-	title.add_theme_font_size_override("font_size", 28)
+	title.add_theme_font_size_override("font_size", 34)
 	vbox.add_child(title)
 
 	_sound_button = Button.new()
-	_sound_button.custom_minimum_size = Vector2(0, 56)
+	_sound_button.custom_minimum_size = Vector2(0, 72)
 	_sound_button.toggle_mode = true
 	_sound_button.button_pressed = ProgressRepository.sound_enabled
 	_render_sound_button()
@@ -30,11 +30,13 @@ func _ready() -> void:
 
 	var parent_guide_button := Button.new()
 	parent_guide_button.text = "Panduan Orang Tua"
+	parent_guide_button.custom_minimum_size = Vector2(0, 72)
 	parent_guide_button.pressed.connect(func(): GameFlow.goto_scene("res://scenes/ParentGuide.tscn"))
 	vbox.add_child(parent_guide_button)
 
 	var back_button := Button.new()
 	back_button.text = "Kembali"
+	back_button.custom_minimum_size = Vector2(0, 72)
 	back_button.pressed.connect(func(): GameFlow.go_home())
 	vbox.add_child(back_button)
 

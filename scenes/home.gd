@@ -24,7 +24,7 @@ func _ready() -> void:
 
 	var title := Label.new()
 	title.text = "Wawa"
-	title.add_theme_font_size_override("font_size", 32)
+	title.add_theme_font_size_override("font_size", 40)
 	title.add_theme_color_override("font_color", AppColors.INK)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
@@ -44,7 +44,7 @@ func _ready() -> void:
 	play_button.custom_minimum_size = Vector2(480, 160)
 	play_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	play_button.text = "▶ Play"
-	play_button.add_theme_font_size_override("font_size", 32)
+	play_button.add_theme_font_size_override("font_size", 38)
 	_apply_ink_text_color(play_button)
 	_apply_texture_button_style(play_button, "res://core/assets/images/button_primary.png")
 	play_button.pressed.connect(_on_play_pressed)
@@ -54,7 +54,7 @@ func _ready() -> void:
 	choose_button.text = "Pilih Game"
 	choose_button.custom_minimum_size = Vector2(342, 114)  # rasio 3:1, sama persis gambar sumber
 	choose_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	choose_button.add_theme_font_size_override("font_size", 20)
+	choose_button.add_theme_font_size_override("font_size", 26)
 	_apply_ink_text_color(choose_button)
 	_apply_texture_button_style(choose_button, "res://core/assets/images/button_secondary.png")
 	choose_button.pressed.connect(_on_toggle_grid)
@@ -78,13 +78,13 @@ func _ready() -> void:
 		settings_button.expand_icon = true
 	else:
 		settings_button.text = "⚙"
-	settings_button.custom_minimum_size = Vector2(56, 56)
+	settings_button.custom_minimum_size = Vector2(72, 72)
 	settings_button.anchor_left = 1.0
 	settings_button.anchor_right = 1.0
-	settings_button.offset_left = -64.0
+	settings_button.offset_left = -80.0
 	settings_button.offset_right = -8.0
 	settings_button.offset_top = 12.0
-	settings_button.offset_bottom = 68.0
+	settings_button.offset_bottom = 84.0
 	settings_button.pressed.connect(_open_settings)
 	add_child(settings_button)
 

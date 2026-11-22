@@ -633,3 +633,39 @@ tambahan: back/close/next/info, progress dot non-numerik).
 **Belum dieksekusi**: semua prompt di atas baru dokumentasi — menunggu
 user generate via ChatGPT lagi (pola sama paket aset sebelumnya) sebelum
 ada perubahan kode lanjutan (kecuali bug fix di atas yang sudah jalan).
+
+## 2026-11-22 — Besarkan semua teks & tombol (prinsip: balita tidak baca teks kecil)
+
+**Permintaan user**: besarkan tombol/teks di seluruh app supaya lebih
+mudah dibaca — eksplisit disebut "ini app balita, balita tidak seharusnya
+lihat teks kecil", tapi tetap harus responsif (bukan hardcode 1 ukuran
+yang pecah di device lain).
+
+**Kenapa aman buat "tetap responsif"**: `project.godot` sudah pakai
+`window/stretch/mode="canvas_items"` sejak awal — semua ukuran piksel di
+kode (font size, `custom_minimum_size`) dihitung relatif ke base desain
+1280×720, lalu Godot scale proporsional ke resolusi device asli. Jadi
+menaikkan angka dasar di kode TIDAK mengorbankan responsivitas, teks/
+tombol baru ini akan ikut ter-scale sama persis seperti yang lama.
+
+**Dikerjakan**:
+- `project.godot`: tambah `[gui] theme/default_font_size=22` — baseline
+  baru buat SEMUA Label/Button yang sebelumnya diam-diam pakai ukuran
+  default Godot (~16px, kekecilan), tanpa perlu sentuh tiap file.
+- Semua judul mini-game (28→34), judul Home (32→40), judul Splash
+  (40→48), judul Settings/ParentGuide (28/26/24→34/32/30), label acuan
+  warna/nama hewan (22-24→28), teks tombol Play/Pilih Game (32/20→38/26).
+- Semua tombol kecil dibesarkan: ikon darurat 🏠 di 6 modul + gear
+  Settings (56×56→72×72, termasuk hitung ulang offset anchor-nya supaya
+  tetap di pojok yang sama), tombol aksi teks (Dengar Suaranya/Lihat
+  Jawaban/Hewan Lain/Sebutkan/toggle suara/Panduan Orang Tua/Kembali/
+  Batal, semua ~56-64px→72px tinggi), keypad `ParentalGateDialog`
+  (56×56→72×72), swatch palet warna mewarnai (56×56→64×64), ikon kunci
+  orang tua (56×56→64×64).
+- `scenes/parent_guide.gd`: lebar wrap teks dinaikkan (480→520px), font
+  wrapped label (16/13→20/16), panel scroll dibesarkan (560×520→620×560)
+  biar muat teks yang lebih besar tanpa kepotong.
+
+**Belum disentuh (sengaja)**: `BigRoundButton` tetap 120×120 (sudah
+cukup besar, prinsip touch-target anak sudah terpenuhi sejak riset
+kompetitor 2026-11-21) — cuma font size teksnya yang naik (28→34).

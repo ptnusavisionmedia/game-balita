@@ -47,7 +47,7 @@ func _ready() -> void:
 
 	var title := Label.new()
 	title.text = "Susun %s" % str(puzzle.get("picture_name", "Gambar"))
-	title.add_theme_font_size_override("font_size", 28)
+	title.add_theme_font_size_override("font_size", 34)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 
@@ -187,13 +187,13 @@ func _on_slot_pressed(slot_id: String) -> void:
 func _add_home_button() -> void:
 	var home_button := Button.new()
 	_apply_home_icon(home_button)
-	home_button.custom_minimum_size = Vector2(56, 56)
+	home_button.custom_minimum_size = Vector2(72, 72)
 	home_button.anchor_left = 0.0
 	home_button.anchor_right = 0.0
 	home_button.offset_left = 8.0
-	home_button.offset_right = 64.0
+	home_button.offset_right = 80.0
 	home_button.offset_top = 12.0
-	home_button.offset_bottom = 68.0
+	home_button.offset_bottom = 84.0
 	home_button.pressed.connect(func(): GameFlow.go_home())
 	add_child(home_button)
 

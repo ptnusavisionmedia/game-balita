@@ -57,7 +57,7 @@ func _ready() -> void:
 
 	var title := Label.new()
 	title.text = "Warnai %s" % picture.get("picture_name", "Gambar")
-	title.add_theme_font_size_override("font_size", 28)
+	title.add_theme_font_size_override("font_size", 34)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 
@@ -149,7 +149,7 @@ func _make_rect_area_button(area: Dictionary) -> Button:
 
 func _make_palette_swatch(color: Color) -> Button:
 	var swatch := Button.new()
-	swatch.custom_minimum_size = Vector2(56, 56)
+	swatch.custom_minimum_size = Vector2(64, 64)
 	var style := StyleBoxFlat.new()
 	style.bg_color = color
 	style.set_corner_radius_all(999)
@@ -189,13 +189,13 @@ func _on_area_pressed(area_id: String) -> void:
 func _add_home_button() -> void:
 	var home_button := Button.new()
 	_apply_home_icon(home_button)
-	home_button.custom_minimum_size = Vector2(56, 56)
+	home_button.custom_minimum_size = Vector2(72, 72)
 	home_button.anchor_left = 0.0
 	home_button.anchor_right = 0.0
 	home_button.offset_left = 8.0
-	home_button.offset_right = 64.0
+	home_button.offset_right = 80.0
 	home_button.offset_top = 12.0
-	home_button.offset_bottom = 68.0
+	home_button.offset_bottom = 84.0
 	home_button.pressed.connect(func(): GameFlow.go_home())
 	add_child(home_button)
 

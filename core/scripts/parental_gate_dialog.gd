@@ -65,7 +65,7 @@ func _ready() -> void:
 	if FileAccess.file_exists(lock_icon_path):
 		var lock_icon := TextureRect.new()
 		lock_icon.texture = load(lock_icon_path)
-		lock_icon.custom_minimum_size = Vector2(56, 56)
+		lock_icon.custom_minimum_size = Vector2(64, 64)
 		lock_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		# expand_mode = IGNORE_SIZE WAJIB — tanpa ini TextureRect melapor
 		# "minimum size"-nya = ukuran asli file (bisa 1024x1024), bukan
@@ -84,13 +84,13 @@ func _ready() -> void:
 
 	_question_label = Label.new()
 	_question_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_question_label.add_theme_font_size_override("font_size", 28)
+	_question_label.add_theme_font_size_override("font_size", 34)
 	_question_label.add_theme_color_override("font_color", AppColors.INK)
 	vbox.add_child(_question_label)
 
 	_answer_label = Label.new()
 	_answer_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_answer_label.add_theme_font_size_override("font_size", 24)
+	_answer_label.add_theme_font_size_override("font_size", 30)
 	_answer_label.add_theme_color_override("font_color", AppColors.ACCENT_ANGKA)
 	_answer_label.custom_minimum_size = Vector2(0, 36)
 	vbox.add_child(_answer_label)
@@ -109,6 +109,7 @@ func _ready() -> void:
 
 	var cancel_button := Button.new()
 	cancel_button.text = "Batal"
+	cancel_button.custom_minimum_size = Vector2(0, 72)
 	cancel_button.pressed.connect(func(): cancelled.emit())
 	vbox.add_child(cancel_button)
 
@@ -129,7 +130,7 @@ func _update_display() -> void:
 func _make_digit_button(d: int) -> Button:
 	var button := Button.new()
 	button.text = str(d)
-	button.custom_minimum_size = Vector2(56, 56)
+	button.custom_minimum_size = Vector2(72, 72)
 	button.pressed.connect(_on_digit_pressed.bind(d))
 	return button
 
@@ -137,7 +138,7 @@ func _make_digit_button(d: int) -> Button:
 func _make_backspace_button() -> Button:
 	var button := Button.new()
 	button.text = "⌫"
-	button.custom_minimum_size = Vector2(56, 56)
+	button.custom_minimum_size = Vector2(72, 72)
 	button.pressed.connect(_on_backspace_pressed)
 	return button
 
@@ -150,7 +151,7 @@ func _make_confirm_button() -> Button:
 		button.expand_icon = true
 	else:
 		button.text = "✓"
-	button.custom_minimum_size = Vector2(56, 56)
+	button.custom_minimum_size = Vector2(72, 72)
 	button.pressed.connect(_on_confirm_pressed)
 	return button
 
