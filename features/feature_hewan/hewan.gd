@@ -235,6 +235,7 @@ func _setup_guided() -> void:
 	_reveal_image = TextureRect.new()
 	_reveal_image.custom_minimum_size = Vector2(160, 160)
 	_reveal_image.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_reveal_image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_reveal_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_reveal_image.visible = false
 	vbox.add_child(_reveal_image)

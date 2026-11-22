@@ -30,6 +30,7 @@ func _ready() -> void:
 		mascot.texture = load(mascot_path)
 		mascot.custom_minimum_size = Vector2(240, 240)
 		mascot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		mascot.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		mascot.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		vbox.add_child(mascot)
 

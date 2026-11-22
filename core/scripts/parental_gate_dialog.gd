@@ -55,6 +55,12 @@ func _ready() -> void:
 		lock_icon.texture = load(lock_icon_path)
 		lock_icon.custom_minimum_size = Vector2(56, 56)
 		lock_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		# expand_mode = IGNORE_SIZE WAJIB — tanpa ini TextureRect melapor
+		# "minimum size"-nya = ukuran asli file (bisa 1024x1024), bukan
+		# custom_minimum_size di atas (bug sama persis GameBackground
+		# 2026-11-22, dilaporkan user lagi di sini: ikon kunci jadi raksasa
+		# nutupin seluruh layar).
+		lock_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		lock_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		vbox.add_child(lock_icon)
 

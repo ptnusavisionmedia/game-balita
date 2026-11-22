@@ -119,6 +119,7 @@ func _render_question() -> void:
 			var heart_image := TextureRect.new()
 			heart_image.texture = load(HEART_IMAGE_PATH)
 			heart_image.custom_minimum_size = Vector2(48, 48)
+			heart_image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			heart_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			_hearts_box.add_child(heart_image)
 		else:

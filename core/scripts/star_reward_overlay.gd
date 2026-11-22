@@ -55,6 +55,7 @@ func _ready() -> void:
 		var mascot_icon := TextureRect.new()
 		mascot_icon.texture = load(mascot_path)
 		mascot_icon.custom_minimum_size = Vector2(220, 220)
+		mascot_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		mascot_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		center.add_child(mascot_icon)
 		icon = mascot_icon
