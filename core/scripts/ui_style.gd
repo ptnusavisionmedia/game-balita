@@ -49,8 +49,21 @@ static func apply_pill_action(button: Button, accent: bool = false) -> void:
 ## ikon (home darurat, gear settings, panah kembali, tutup dialog).
 ## Dipanggil SEBELUM set `button.icon`/`expand_icon` sendiri oleh caller
 ## (fungsi ini cuma urus background + ukuran, bukan ikonnya).
+##
+## Fix bug 2026-11-26 (dilaporkan user, screenshot GameModes): ikon panah
+## kembali kelihatan "keluar dari lingkaran" — bukan `expand_icon`/
+## `icon_max_width` (sudah benar), tapi default `Button.icon_alignment`
+## Godot 4 adalah LEFT (bukan CENTER kayak teks), jadi tombol ikon-saja
+## (tanpa teks) kegeser ikonnya ke sisi kiri area konten, bukan di
+## tengah lingkaran — kelihatan jelas di ikon panjang (panah), nyaris
+## tak kelihatan di ikon simetris (rumah/gear/centang) jadi lolos tanpa
+## dilaporkan sebelumnya. Paksa CENTER di sini supaya semua tombol ikon
+## bulat yang pakai helper ini otomatis kena fix-nya, bukan cuma panah.
 static func apply_icon_frame(button: Button, diameter: float = ICON_S_SIZE) -> void:
 	button.custom_minimum_size = Vector2(diameter, diameter)
+	button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	button.vertical_icon_alignment = VERTICAL_ALIGNMENT_CENTER
+	button.alignment = HORIZONTAL_ALIGNMENT_CENTER
 	if FileAccess.file_exists(CIRCLE_FRAME):
 		var style := StyleBoxTexture.new()
 		style.texture = load(CIRCLE_FRAME)
