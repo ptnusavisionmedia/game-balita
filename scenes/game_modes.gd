@@ -54,6 +54,16 @@ func _ready() -> void:
 	outer.anchor_bottom = 1.0
 	outer.alignment = BoxContainer.ALIGNMENT_CENTER
 	outer.add_theme_constant_override("separation", 24)
+	# Bug 2026-11-26 (dilaporkan user, screenshot): tombol back pojok kiri
+	# atas TIDAK BISA DIKLIK — `outer` full-rect (anchor 0,0,1,1) di-add
+	# SETELAH `back_button`, jadi di atasnya di z-order; default
+	# `mouse_filter = STOP` bikin `outer` "menelan" klik di area kosong
+	# (termasuk pojok kiri atas tempat back_button ada) SEBELUM sempat
+	# jatuh ke sibling sebelumnya. Kartu di dalam `outer` tetap bisa
+	# diklik normal (anak node selalu dicek duluan lewat rekursi), yang
+	# diperbaiki cuma area kosong `outer` sendiri supaya tembus ke
+	# back_button di baliknya.
+	outer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(outer)
 
 	var title := Label.new()

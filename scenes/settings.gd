@@ -38,6 +38,12 @@ func _ready() -> void:
 	vbox.anchor_bottom = 1.0
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	vbox.add_theme_constant_override("separation", 24)
+	# Bug class sama persis GameModes (lihat scenes/game_modes.gd,
+	# Decisions Log 2026-11-26): `vbox` full-rect di-add SETELAH
+	# `back_button`, default `mouse_filter = STOP` bikin area kosongnya
+	# "menelan" klik di pojok kiri atas sebelum sempat jatuh ke
+	# back_button di baliknya.
+	vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(vbox)
 
 	var title := Label.new()
