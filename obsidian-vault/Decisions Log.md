@@ -773,3 +773,49 @@ sekarang NGANGGUR — tidak dipakai di mana pun lagi sejak Play jadi
 lingkaran code-drawn. Dibiarkan di repo (bukan dihapus, siapa tahu
 dipakai ulang buat elemen pil lain nanti), tapi dicatat di sini supaya
 jelas kenapa asetnya ada tapi tidak ke-referensi dari kode manapun.
+
+## 2026-11-26 — "Pilih Game" jadi "Gamemodes": 4 kartu tema, bukan 1 grid
+
+**Permintaan user**: bertindak sebagai game developer profesional, realisasikan
+ide — "Pilih Game" diganti "Gamemodes" isinya 4 flashcard vertikal 4 tema,
+WAJIB salah satunya "belajar bersama orang tua" (orang tua ajar anak nebak
+suara/gambar hewan dll, berbasis teori tumbuh kembang).
+
+**Keputusan desain (4 tema, bukan 4 modul baru — tetap 6 mini-game yang
+sudah ada, cuma 4 CARA MASUK yang berbeda filosofi)**:
+1. **Main Sendiri** — grid manual 6 modul (persis grid lama yang dulu
+   langsung di Home), dipindah ke sini. Rasional: usia 3-5 tahun mulai
+   butuh otonomi memilih sendiri (self-directed play).
+2. **Bareng Orang Tua** — jalan pintas langsung ke `ParentGuide.tscn` yang
+   SUDAH ADA (kartu scaffolding per modul + "Mulai Main Bareng" ke mekanik
+   Bareng Orang Tua `feature_hewan` — nebak suara & gambar hewan, PERSIS
+   yang diminta user). Sengaja TANPA `ParentalGateDialog` di jalur ini
+   (gate itu buat lindungi Settings dari anak klak-klik sendiri, bukan
+   buat konten ini — di mode ini orang tua diasumsikan sedang duduk
+   bareng anak). Rasional: scaffolding Vygotsky (Zone of Proximal
+   Development) — anak belajar lebih cepat lewat interaksi aktif orang
+   dewasa dibanding main sendirian.
+3. **Jelajah Kreatif** — random di antara Mewarnai/Puzzle saja (bukan
+   dari 6 modul seperti Play di Home) — 2 modul yang sengaja tanpa
+   benar/salah. Rasional: pentingnya unstructured/open-ended play buat
+   ekspresi & motorik halus.
+4. **Tantangan Harian** — pick 1 modul deterministik dari hari-ke-berapa
+   dalam tahun (bukan `randi()`), jadi SAMA sepanjang hari ini, ganti
+   besok. Rasional: rutinitas yang konsisten/terprediksi penting buat
+   anak kecil (predictability di tumbuh kembang usia dini) — beda dari
+   Play di Home yang acak tiap tap.
+
+**Dikerjakan** (headless-verified semua scene):
+- `scenes/game_modes.gd` + `GameModes.tscn` (baru) — 4 kartu lebar
+  (badge emoji bulat warna aksen + judul + 1 baris deskripsi), grid 6
+  modul (dipindah dari `home.gd`) toggle di bawah kartu "Main Sendiri".
+- `scenes/home.gd` — tombol "Pilih Game" → "Gamemodes", navigasi ke
+  scene baru (bukan toggle grid inline lagi); kode grid lama
+  (`_make_tile`/`_accent_for`/`_on_toggle_grid`/`_on_tile_pressed`)
+  dihapus dari sini (duplikatnya sekarang di `game_modes.gd`).
+
+**Catatan**: tidak ada modul baru ("tebak suara", "tebak gambar hewan")
+yang dibuat dari nol — itu sudah ada di `feature_hewan` (mekanik Bareng
+Orang Tua) sejak sebelumnya, cuma aksesnya dulu tersembunyi di balik
+Settings → ParentalGateDialog → ParentGuide. Sekarang jadi salah satu
+dari 4 pilihan utama di Gamemodes, lebih kelihatan.
