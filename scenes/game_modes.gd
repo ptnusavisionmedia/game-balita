@@ -49,49 +49,50 @@ func _ready() -> void:
 	back_button.pressed.connect(func(): GameFlow.go_home())
 	add_child(back_button)
 
-	var center := CenterContainer.new()
-	center.anchor_right = 1.0
-	center.anchor_bottom = 1.0
-	add_child(center)
-
-	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(720, 620)
-	center.add_child(scroll)
-
-	var vbox := VBoxContainer.new()
-	vbox.custom_minimum_size = Vector2(700, 0)
-	vbox.add_theme_constant_override("separation", 20)
-	scroll.add_child(vbox)
+	var outer := VBoxContainer.new()
+	outer.anchor_right = 1.0
+	outer.anchor_bottom = 1.0
+	outer.alignment = BoxContainer.ALIGNMENT_CENTER
+	outer.add_theme_constant_override("separation", 24)
+	add_child(outer)
 
 	var title := Label.new()
 	title.text = "Mode Permainan"
 	title.add_theme_font_size_override("font_size", 38)
 	title.add_theme_color_override("font_color", AppColors.INK)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(title)
+	outer.add_child(title)
 
-	vbox.add_child(_make_mode_card(
+	# Update 2026-11-26 (atas permintaan user): 4 kartu BERJAJAR HORIZONTAL
+	# (flashcard, bukan ditumpuk vertikal) — badge di atas, judul+deskripsi
+	# di bawah, supaya pas dibaca sebagai "4 pilihan sejajar", bukan daftar.
+	var cards_row := HBoxContainer.new()
+	cards_row.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	cards_row.add_theme_constant_override("separation", 20)
+	outer.add_child(cards_row)
+
+	cards_row.add_child(_make_mode_card(
 		"🧒", AppColors.SUNSHINE,
 		"Main Sendiri",
 		"Anak pilih sendiri mau main apa dari 6 permainan.",
 		_on_main_sendiri_pressed
 	))
 
-	vbox.add_child(_make_mode_card(
+	cards_row.add_child(_make_mode_card(
 		"🤝", AppColors.LEAF,
 		"Bareng Orang Tua",
 		"Orang tua ajak anak nebak suara & gambar sambil ngobrol bareng.",
 		_on_bareng_orang_tua_pressed
 	))
 
-	vbox.add_child(_make_mode_card(
+	cards_row.add_child(_make_mode_card(
 		"🎨", AppColors.ACCENT_MEWARNAI,
 		"Jelajah Kreatif",
 		"Mewarnai & puzzle bebas — nggak ada benar/salah, cuma eksplor.",
 		_on_jelajah_kreatif_pressed
 	))
 
-	vbox.add_child(_make_mode_card(
+	cards_row.add_child(_make_mode_card(
 		"⭐", AppColors.ACCENT_MUSIK,
 		"Tantangan Harian",
 		"1 permainan pilihan hari ini — sama sepanjang hari, ganti besok.",
@@ -100,8 +101,9 @@ func _ready() -> void:
 
 	_module_grid_wrapper = VBoxContainer.new()
 	_module_grid_wrapper.visible = false
+	_module_grid_wrapper.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_module_grid_wrapper.add_theme_constant_override("separation", 12)
-	vbox.add_child(_module_grid_wrapper)
+	outer.add_child(_module_grid_wrapper)
 
 	var grid_label := Label.new()
 	grid_label.text = "Pilih permainan:"
@@ -121,66 +123,65 @@ func _ready() -> void:
 		_module_grid.add_child(_make_module_tile(game))
 
 
-## 1 kartu tema: badge emoji bulat warna aksen di kiri + judul & 1 baris
-## deskripsi di kanan, seluruh kartu jadi 1 tombol. Pola "kartu lebar" ini
-## beda dari `_make_tile` di home.gd (kartu persegi per modul) — supaya
-## 4 tema kelihatan beda level dari 6 modul di dalamnya.
+## 1 kartu tema bergaya "flashcard" tegak: badge emoji bulat warna aksen
+## di atas, judul + 1-2 baris deskripsi di bawah, seluruh kartu jadi 1
+## tombol. 4 kartu ini dijajar HORIZONTAL (lihat `cards_row` di `_ready`)
+## — beda dari `_make_module_tile` (kartu persegi per modul di dalam
+## grid "Main Sendiri") supaya 4 tema kelihatan beda level dari 6 modul.
 func _make_mode_card(emoji: String, accent: Color, title_text: String, subtitle_text: String, callback: Callable) -> Button:
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(0, 140)
+	button.custom_minimum_size = Vector2(280, 320)
 	button.pressed.connect(callback)
 
 	var style := StyleBoxFlat.new()
 	style.bg_color = AppColors.CREAM
 	style.border_color = accent
 	style.set_border_width_all(4)
-	style.border_width_left = 14
+	style.border_width_top = 14
 	style.set_corner_radius_all(20)
 	style.set_content_margin_all(20)
 	for state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(state, style)
 
-	var row := HBoxContainer.new()
-	row.anchor_right = 1.0
-	row.anchor_bottom = 1.0
-	row.add_theme_constant_override("separation", 24)
-	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	button.add_child(row)
+	var column := VBoxContainer.new()
+	column.anchor_right = 1.0
+	column.anchor_bottom = 1.0
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	column.add_theme_constant_override("separation", 16)
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	button.add_child(column)
 
 	var badge := PanelContainer.new()
-	badge.custom_minimum_size = Vector2(88, 88)
-	badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	badge.custom_minimum_size = Vector2(96, 96)
+	badge.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	var badge_style := StyleBoxFlat.new()
 	badge_style.bg_color = accent
 	badge_style.set_corner_radius_all(999)
 	badge.add_theme_stylebox_override("panel", badge_style)
-	row.add_child(badge)
+	column.add_child(badge)
 
 	var badge_label := Label.new()
 	badge_label.text = emoji
-	badge_label.add_theme_font_size_override("font_size", 42)
+	badge_label.add_theme_font_size_override("font_size", 46)
 	badge_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	badge_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	badge.add_child(badge_label)
 
-	var text_box := VBoxContainer.new()
-	text_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	text_box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	text_box.add_theme_constant_override("separation", 6)
-	row.add_child(text_box)
-
 	var title_label := Label.new()
 	title_label.text = title_text
-	title_label.add_theme_font_size_override("font_size", 30)
+	title_label.add_theme_font_size_override("font_size", 26)
 	title_label.add_theme_color_override("font_color", AppColors.INK)
-	text_box.add_child(title_label)
+	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(title_label)
 
 	var subtitle_label := Label.new()
 	subtitle_label.text = subtitle_text
-	subtitle_label.add_theme_font_size_override("font_size", 20)
+	subtitle_label.custom_minimum_size = Vector2(232, 0)
+	subtitle_label.add_theme_font_size_override("font_size", 18)
 	subtitle_label.add_theme_color_override("font_color", AppColors.INK)
+	subtitle_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	subtitle_label.autowrap_mode = TextServer.AUTOWRAP_WORD
-	text_box.add_child(subtitle_label)
+	column.add_child(subtitle_label)
 
 	return button
 
