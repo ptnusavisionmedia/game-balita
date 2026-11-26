@@ -819,3 +819,39 @@ yang dibuat dari nol — itu sudah ada di `feature_hewan` (mekanik Bareng
 Orang Tua) sejak sebelumnya, cuma aksesnya dulu tersembunyi di balik
 Settings → ParentalGateDialog → ParentGuide. Sekarang jadi salah satu
 dari 4 pilihan utama di Gamemodes, lebih kelihatan.
+
+## 2026-11-26 — Tier usia "Sentuh & Dengar" (1-2 tahun) vs Gamemodes (3-5 tahun)
+
+**Konteks**: user minta pemikiran kritis soal app ramah usia 1-5 tahun.
+Masalah inti: 1-2 tahun belum punya kontrol motorik/pemahaman buat
+navigasi menu atau pilihan (grid 6 modul, 4 kartu Gamemodes, dst) —
+semua itu didesain buat 3-5 tahun yang sudah paham konsep "pilih".
+Daripada bikin 1 UI generik buat semua umur, dipecah jadi 2 tier
+eksplisit yang dipilih ORANG TUA di Settings (bukan dideteksi otomatis).
+
+**Tier baru — "Sentuh & Dengar" (`scenes/touch_and_listen.gd` +
+`TouchAndListen.tscn`)**:
+- Full-layar, NOL menu/navigasi/grid, NOL kemungkinan "salah". Tap di
+  MANA SAJA di layar → gambar (hewan/nada musik, daur ulang aset yang
+  sudah ada, BUKAN aset baru) muncul pop-bounce di titik tap + bunyi
+  langsung — sebab-akibat sederhana, satu-satunya mekanik yang cocok
+  umur ini.
+- Tiap 5 tap, maskot Wawa muncul merayakan sebentar — reaksi hangat
+  berkala, BUKAN reward/skor (anak tetap tidak pernah lihat angka).
+- Satu-satunya jalan keluar: gear kecil TRANSPARAN (opacity 0.35, 56px
+  — sengaja lebih kecil & samar dari gear Settings normal) pojok kanan
+  bawah, tetap di belakang `ParentalGateDialog` yang sama.
+- Teknis: pakai `_unhandled_input` (bukan `_gui_input`) buat deteksi tap
+  di mana saja — tombol gear (Button biasa) otomatis "accept" klik-nya
+  sendiri duluan, jadi tap di gear TIDAK nyasar jadi spawn gambar juga.
+
+**Routing**: `ProgressRepository.toddler_mode` (baru, persisten lewat
+`ConfigFile` sama kayak `sound_enabled`) — diset lewat toggle baru
+"Mode Usia Anak" di `scenes/settings.gd`. `scenes/splash.gd` baca flag
+ini buat lempar ke `TouchAndListen` vs `Home` setelah splash. Tombol
+back di Settings juga disesuaikan: kalau `toddler_mode` aktif, "kembali"
+balik ke `TouchAndListen`, bukan Home/Gamemodes.
+
+**Catatan**: tier 3-5 tahun (Home → Gamemodes → 6 modul, grid/kuis/dll)
+TIDAK diubah sama sekali — murni nambah 1 tier baru + 1 toggle, bukan
+reskin yang sudah ada.

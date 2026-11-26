@@ -9,6 +9,14 @@ extends Node
 const SAVE_PATH := "user://progress.cfg"
 
 var sound_enabled: bool = true
+
+## Update 2026-11-26: tier "Sentuh & Dengar" buat usia 1-2 tahun (lihat
+## scenes/touch_and_listen.gd + Decisions Log 2026-11-26) — kalau true,
+## `splash.gd` lempar langsung ke situ, BUKAN ke Home/Gamemodes/6 modul
+## (yang didesain buat usia 3-5 tahun yang sudah paham pilihan/menu).
+## Diset orang tua lewat Settings, di belakang `ParentalGateDialog`.
+var toddler_mode: bool = false
+
 var _results: Array = []  # Array[Dictionary]: {game_id, completed_at, stars_earned}
 
 
@@ -22,18 +30,25 @@ func _load() -> void:
 	if err != OK:
 		return  # belum ada save sebelumnya, pakai default
 	sound_enabled = cfg.get_value("settings", "sound_enabled", true)
+	toddler_mode = cfg.get_value("settings", "toddler_mode", false)
 	_results = cfg.get_value("results", "list", [])
 
 
 func _save() -> void:
 	var cfg := ConfigFile.new()
 	cfg.set_value("settings", "sound_enabled", sound_enabled)
+	cfg.set_value("settings", "toddler_mode", toddler_mode)
 	cfg.set_value("results", "list", _results)
 	cfg.save(SAVE_PATH)
 
 
 func set_sound_enabled(value: bool) -> void:
 	sound_enabled = value
+	_save()
+
+
+func set_toddler_mode(value: bool) -> void:
+	toddler_mode = value
 	_save()
 
 

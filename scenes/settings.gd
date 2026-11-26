@@ -8,6 +8,7 @@ extends Control
 ## tombol polos ditumpuk seperti sebelumnya.
 
 var _sound_button: Button
+var _age_mode_button: Button
 
 
 func _ready() -> void:
@@ -30,7 +31,16 @@ func _ready() -> void:
 	back_button.offset_right = 96.0
 	back_button.offset_top = 12.0
 	back_button.offset_bottom = 100.0
-	back_button.pressed.connect(func(): GameFlow.go_home())
+	# Update 2026-11-26: kalau "Mode Usia Anak" lagi diset ke 1-2 Tahun,
+	# "kembali" dari Settings harus balik ke `TouchAndListen` (bukan
+	# Home/Gamemodes yang didesain buat 3-5 tahun) — lihat
+	# scenes/touch_and_listen.gd & Decisions Log 2026-11-26.
+	back_button.pressed.connect(func():
+		if ProgressRepository.toddler_mode:
+			GameFlow.goto_scene("res://scenes/TouchAndListen.tscn")
+		else:
+			GameFlow.go_home()
+	)
 	add_child(back_button)
 
 	var vbox := VBoxContainer.new()
@@ -78,8 +88,22 @@ func _ready() -> void:
 	))
 	_render_sound_button()
 
-	var divider := HSeparator.new()
-	card_box.add_child(divider)
+	card_box.add_child(HSeparator.new())
+
+	# Update 2026-11-26: "Mode Usia Anak" — pilih tier 1-2 Tahun ("Sentuh &
+	# Dengar", nol navigasi/menu, lihat scenes/touch_and_listen.gd) vs 3-5
+	# Tahun (Home/Gamemodes normal yang sudah ada). Lihat Decisions Log
+	# 2026-11-26 untuk alasan 2 tier ini perlu ada.
+	_age_mode_button = Button.new()
+	_age_mode_button.toggle_mode = true
+	_age_mode_button.button_pressed = ProgressRepository.toddler_mode
+	_age_mode_button.toggled.connect(_on_age_mode_toggled)
+	card_box.add_child(_make_setting_row(
+		"Mode Usia Anak", "Sesuaikan tampilan dengan usia anak", _age_mode_button
+	))
+	_render_age_mode_button()
+
+	card_box.add_child(HSeparator.new())
 
 	var parent_guide_button := Button.new()
 	parent_guide_button.text = "Buka Panduan"
@@ -146,3 +170,17 @@ func _render_sound_button() -> void:
 		_sound_button.add_theme_constant_override("icon_max_width", 36)
 	_sound_button.text = "Aktif" if is_on else "Nonaktif"
 	UIStyle.apply_pill_action(_sound_button, is_on)
+
+
+func _on_age_mode_toggled(value: bool) -> void:
+	ProgressRepository.set_toddler_mode(value)
+	_render_age_mode_button()
+
+
+## Teks tombol tampilkan tier aktif ("1-2 Tahun"/"3-5 Tahun") — bukan
+## cuma on/off generik, supaya jelas efeknya buat orang tua yang belum
+## pernah lihat mode ini sebelumnya.
+func _render_age_mode_button() -> void:
+	var is_toddler := _age_mode_button.button_pressed
+	_age_mode_button.text = "1-2 Tahun" if is_toddler else "3-5 Tahun"
+	UIStyle.apply_pill_action(_age_mode_button, is_toddler)

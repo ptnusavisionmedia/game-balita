@@ -42,4 +42,11 @@ func _ready() -> void:
 	vbox.add_child(title)
 
 	await get_tree().create_timer(1.2).timeout
-	GameFlow.goto_scene("res://scenes/Home.tscn")
+	# Update 2026-11-26: "Mode Usia Anak" (ProgressRepository.toddler_mode,
+	# diset di Settings) — 1-2 tahun lempar langsung ke tier "Sentuh &
+	# Dengar" (scenes/touch_and_listen.gd), lewati Home/Gamemodes sama
+	# sekali (keduanya didesain buat usia 3-5 yang sudah paham menu).
+	if ProgressRepository.toddler_mode:
+		GameFlow.goto_scene("res://scenes/TouchAndListen.tscn")
+	else:
+		GameFlow.goto_scene("res://scenes/Home.tscn")
