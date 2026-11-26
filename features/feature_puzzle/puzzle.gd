@@ -1,27 +1,44 @@
 extends Control
 ## Susun puzzle — lihat obsidian-vault/Specs/feature_puzzle.md.
 ##
-## Update 2026-11-21 (ke-3): mekanik diganti dari drag asli
-## (`Control._get_drag_data`/`_can_drop_data`/`_drop_data`) jadi
-## **tap pilih, lalu tap taruh**. Drag asli Godot ternyata tidak
-## reliable di setup canvas-stretch project ini — 3 percobaan beda
-## (Control+child Panel, Control+`_draw()` manual, ColorRect/Panel)
-## semuanya dilaporkan user area klik/drop-nya tidak sinkron sama yang
-## kelihatan. Tap-pilih-lalu-taruh pakai `Button` biasa (TERBUKTI jalan
-## konsisten di semua modul lain), dan sebenarnya lebih gampang buat
-## motorik anak 1-5 tahun dibanding drag gesture asli — bukan cuma
-## workaround teknis. Lihat Decisions Log 2026-11-21.
+## Update 2026-11-26 (ke-4): BALIK ke drag-and-drop asli, atas permintaan
+## user ("gak bisa ditekan dan digeser, hanya bisa diklik ... padahal kan
+## seperti balok"). 3 percobaan sebelumnya (2026-11-21, lihat Decisions
+## Log) pakai API drag BAWAAN Godot (`Control._get_drag_data`/
+## `_can_drop_data`/`_drop_data`) — API itu render "drag preview" lewat
+## `Viewport`/layer terpisah yang posisinya di-drive dari koordinat OS
+## MENTAH, TIDAK otomatis ikut transform stretch `canvas_items` proyek
+## ini, jadi preview & area drop gampang meleset begitu window/device
+## beda rasio dari kanvas desain 1280x720 — itu yang bikin 3 percobaan
+## sebelumnya gagal terus.
+##
+## Pendekatan kali ini TIDAK pakai API itu sama sekali: keping (`Button`
+## biasa) digerakkan manual lewat `_input()` level root, set
+## `global_position` dari `event.position` langsung — koordinat event
+## mouse/touch Godot SUDAH otomatis dalam ruang kanvas yang sama dengan
+## `global_position` Control (bukan pixel layar OS mentah), jadi tetap
+## akurat berapa pun stretch/device-nya. Pola geometri (freed dari
+## container, pakai `global_position`) sama kayak `scenes/touch_and_listen.gd`
+## yang terbukti akurat di semua ukuran.
 
 const DATA_PATH := "res://features/feature_puzzle/data/puzzle_data.json"
 const StarRewardOverlayScene := preload("res://core/scenes/StarRewardOverlay.tscn")
 
+## Jarak pusat-ke-pusat keping↔slot dianggap "cocok" saat dilepas —
+## longgar (bukan butuh presisi penuh) karena motorik drag anak 1-5
+## tahun belum presisi, lihat prinsip sama di docs/UI_UX_DESIGN.md.
+const DROP_MATCH_RADIUS := 80.0
+
 var _pieces_data: Array = []
 var _filled_count: int = 0
-var _piece_buttons: Dictionary = {}  # id -> {"button": Button, "color": Color}
+var _piece_buttons: Dictionary = {}  # id -> {"button": Button, "color": Color, "shape_image": String}
 var _slot_buttons: Dictionary = {}   # id -> Button
 var _slot_filled: Dictionary = {}    # id -> bool
-var _selected_piece_id: String = ""
+var _piece_home_pos: Dictionary = {}  # id -> Vector2 (global_position awal, buat "pegas balik" kalau salah taruh)
 var _has_shape_images: bool = false
+
+var _dragging_id: String = ""
+var _drag_grab_offset: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
@@ -52,12 +69,13 @@ func _ready() -> void:
 	vbox.add_child(title)
 
 	var hint := Label.new()
-	hint.text = "Tap keping warnanya, lalu tap kotak yang cocok."
+	hint.text = "Geser keping warnanya ke kotak yang cocok."
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(hint)
 
 	# Slot target (outline kosong) — urutan TIDAK sama dengan urutan
-	# keping di bawah supaya anak benar-benar mencocokkan.
+	# keping di bawah supaya anak benar-benar mencocokkan. Slot TETAP di
+	# dalam container (tidak di-drag), cuma jadi target geometri.
 	var slots_box := HBoxContainer.new()
 	slots_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	slots_box.add_theme_constant_override("separation", 12)
@@ -67,9 +85,9 @@ func _ready() -> void:
 		var id: String = str(piece.get("id", ""))
 		var slot_button := Button.new()
 		slot_button.custom_minimum_size = Vector2(120, 120)
+		slot_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_style_slot_empty(slot_button)
 		_set_button_shape_icon(slot_button, piece.get("slot_image", ""), "")
-		slot_button.pressed.connect(_on_slot_pressed.bind(id))
 		slots_box.add_child(slot_button)
 		_slot_buttons[id] = slot_button
 		_slot_filled[id] = false
@@ -87,13 +105,30 @@ func _ready() -> void:
 		var color := Color(str(piece.get("color_hex", "#FFFFFF")))
 		var piece_button := Button.new()
 		piece_button.custom_minimum_size = Vector2(110, 110)
+		piece_button.mouse_filter = Control.MOUSE_FILTER_IGNORE  # digerakkan manual lewat _input, bukan klik Button
 		_style_piece(piece_button, color, false)
 		_set_button_shape_icon(piece_button, piece.get("shape_image", ""), str(piece.get("name", "")))
-		piece_button.pressed.connect(_on_piece_pressed.bind(id))
 		pieces_box.add_child(piece_button)
 		_piece_buttons[id] = {"button": piece_button, "color": color, "shape_image": piece.get("shape_image", "")}
 
 	_add_home_button()
+
+	# Tunggu 1 frame supaya `pieces_box` (HBoxContainer) selesai hitung
+	# posisi awal tiap keping (rapi berjajar-tengah), BARU dilepas dari
+	# container jadi child langsung `self` — supaya setelahnya bebas
+	# digeser ke mana saja tanpa dipaksa container balik ke posisi rapinya.
+	await get_tree().process_frame
+	_free_pieces_from_container()
+
+
+func _free_pieces_from_container() -> void:
+	for id in _piece_buttons.keys():
+		var btn: Button = _piece_buttons[id]["button"]
+		var gpos: Vector2 = btn.global_position
+		btn.get_parent().remove_child(btn)
+		add_child(btn)
+		btn.global_position = gpos
+		_piece_home_pos[id] = gpos
 
 
 func _load_puzzles() -> Array:
@@ -149,33 +184,91 @@ func _set_button_shape_icon(button: Button, image_path, fallback_text: String) -
 		button.text = fallback_text
 
 
-## Tap keping = "pilih" (toggle — tap lagi buat batal pilih). Pilih
-## keping lain otomatis ganti pilihan sebelumnya.
-func _on_piece_pressed(piece_id: String) -> void:
-	_selected_piece_id = "" if _selected_piece_id == piece_id else piece_id
+## Drag manual — lihat catatan panjang di kepala file kenapa BUKAN pakai
+## `_get_drag_data`/`_drop_data` bawaan Godot. `_input` (bukan
+## `_gui_input`/`_unhandled_input`) dipakai supaya tetap kebaca walau
+## jari/kursor ada di atas keping/slot Button lain (semua Button di sini
+## `mouse_filter = IGNORE`, jadi tidak ada yang "menelan" event duluan,
+## tapi `_input` dipilih juga biar konsisten pola sama `touch_and_listen.gd`).
+func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			_try_start_drag(event.position)
+		else:
+			_end_drag()
+	elif event is InputEventScreenDrag:
+		if _dragging_id != "":
+			_update_drag(event.position)
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_try_start_drag(event.position)
+		else:
+			_end_drag()
+	elif event is InputEventMouseMotion:
+		if _dragging_id != "":
+			_update_drag(event.position)
+
+
+func _try_start_drag(pos: Vector2) -> void:
 	for id in _piece_buttons.keys():
-		var entry: Dictionary = _piece_buttons[id]
-		_style_piece(entry["button"], entry["color"], id == _selected_piece_id)
+		if _slot_filled.get(id, false):
+			continue  # sudah terpasang, tidak bisa digeser lagi
+		var btn: Button = _piece_buttons[id]["button"]
+		if btn.get_global_rect().has_point(pos):
+			_dragging_id = id
+			_drag_grab_offset = pos - btn.global_position
+			move_child(btn, get_child_count() - 1)  # naikkan ke paling depan selagi digeser
+			_style_piece(btn, _piece_buttons[id]["color"], true)
+			return
 
 
-## Tap slot = "taruh" keping yang sedang dipilih. Keping yang tidak
-## cocok cuma diam saja (tidak ada suara/animasi "salah", lihat spek
-## bagian Feedback). Tap slot tanpa keping terpilih juga tidak
-## ngapa-ngapain.
-func _on_slot_pressed(slot_id: String) -> void:
-	if _selected_piece_id == "" or _slot_filled.get(slot_id, true):
+func _update_drag(pos: Vector2) -> void:
+	var btn: Button = _piece_buttons[_dragging_id]["button"]
+	btn.global_position = pos - _drag_grab_offset
+
+
+func _end_drag() -> void:
+	if _dragging_id == "":
 		return
-	if _selected_piece_id != slot_id:
-		return
+	var id := _dragging_id
+	_dragging_id = ""
 
-	var entry: Dictionary = _piece_buttons[_selected_piece_id]
-	var slot_button: Button = _slot_buttons[slot_id]
-	_style_slot_filled(slot_button, entry["color"])
-	_set_button_shape_icon(slot_button, entry.get("shape_image", ""), "")
-	entry["button"].visible = false
-	_slot_filled[slot_id] = true
+	var entry: Dictionary = _piece_buttons[id]
+	var btn: Button = entry["button"]
+	var slot_button: Button = _slot_buttons[id]
+	var piece_center: Vector2 = btn.global_position + btn.size / 2.0
+	var slot_center: Vector2 = slot_button.global_position + slot_button.size / 2.0
+
+	if not _slot_filled.get(id, false) and piece_center.distance_to(slot_center) <= DROP_MATCH_RADIUS:
+		_place_piece(id)
+	else:
+		_style_piece(btn, entry["color"], false)
+		var tween := create_tween()
+		tween.tween_property(btn, "global_position", _piece_home_pos[id], 0.25) \
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+## Keping "nempel" ke slot yang cocok — animasi geser cepat ke posisi
+## slot, baru disembunyikan & slot ditandai terisi. Tidak ada suara/
+## animasi "salah" buat keping yang tidak cocok (lihat spek bagian
+## Feedback) — itu sudah ditangani di `_end_drag` (diam, pegas balik).
+func _place_piece(id: String) -> void:
+	var entry: Dictionary = _piece_buttons[id]
+	var btn: Button = entry["button"]
+	var slot_button: Button = _slot_buttons[id]
+
+	_style_piece(btn, entry["color"], false)
+	_slot_filled[id] = true
+
+	var tween := create_tween()
+	tween.tween_property(btn, "global_position", slot_button.global_position, 0.15)
+	tween.tween_callback(func():
+		_style_slot_filled(slot_button, entry["color"])
+		_set_button_shape_icon(slot_button, entry.get("shape_image", ""), "")
+		btn.visible = false
+	)
+
 	SfxService.play(load("res://core/assets/audio/sfx_correct.wav"))
-	_selected_piece_id = ""
 
 	_filled_count += 1
 	if _filled_count >= _pieces_data.size():

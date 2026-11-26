@@ -855,3 +855,52 @@ balik ke `TouchAndListen`, bukan Home/Gamemodes.
 **Catatan**: tier 3-5 tahun (Home → Gamemodes → 6 modul, grid/kuis/dll)
 TIDAK diubah sama sekali — murni nambah 1 tier baru + 1 toggle, bukan
 reskin yang sudah ada.
+
+## 2026-11-26 — feature_puzzle balik ke drag-and-drop (tap-pilih-taruh diganti lagi)
+
+**Permintaan user langsung** (bukan laporan bug): "gak bisa ditekan dan
+digeser, hanya bisa diklik lalu klik tempatnya, padahal kan seperti
+balok" — user mau keping bisa DISERET pakai jari, bukan 2-step
+tap-pilih-lalu-tap-taruh yang dipakai sejak 2026-11-21 (ke-3).
+
+**Kenapa dulu diganti ke tap** (2026-11-21): 3 percobaan drag PAKAI API
+BAWAAN Godot (`Control._get_drag_data`/`_can_drop_data`/`_drop_data`)
+semuanya gagal — area klik/drop tidak sinkron sama yang kelihatan di
+layar, karena API itu render "drag preview" lewat jalur koordinat OS
+layar MENTAH yang tidak otomatis ikut transform stretch `canvas_items`
+proyek ini.
+
+**Kenapa dicoba lagi sekarang & kenapa kali ini beda**: BUKAN pakai API
+bawaan itu lagi. Drag digerakkan manual: root `puzzle.gd` dengerin
+`_input()` level scene (pola sama `touch_and_listen.gd` yang sudah
+terbukti akurat), lalu keping (`Button`, `mouse_filter = IGNORE` biar
+tidak ikut proses klik GUI biasa) di-reposisi langsung lewat
+`global_position` dari `event.position` tiap frame selagi ditekan.
+Koordinat `event.position`/`global_position` Control SUDAH otomatis
+konsisten satu sama lain di ruang kanvas yang sama (beda dari drag
+preview API bawaan yang terpisah dari transform itu) — ini akar kenapa
+3 percobaan sebelumnya meleset, dan kenapa pendekatan baru ini harusnya
+tidak kena masalah yang sama.
+
+**Mekanik baru**: tekan keping → terangkat (border emas, naik ke
+depan) → geser → lepas. Lepas dekat (radius 80px, longgar) slot yang
+cocok → keping "nempel" (animasi tween ke posisi slot) + slot terisi.
+Lepas di tempat lain → keping pegas balik ke posisi awal (tween
+`TRANS_BACK`), diam saja tanpa suara negatif — sama prinsip "tidak ada
+feedback salah" kayak sebelumnya.
+
+**Dikerjakan** (headless-verified `Puzzle.tscn`):
+- `features/feature_puzzle/puzzle.gd` — ditulis ulang total bagian
+  interaksi (`_input`, `_try_start_drag`, `_update_drag`, `_end_drag`,
+  `_place_piece`, `_free_pieces_from_container`), styling/data loading
+  TIDAK berubah.
+- `obsidian-vault/Specs/feature_puzzle.md` — bagian interaksi/feedback
+  diupdate menyesuaikan (bukan dihapus riwayatnya, cuma ditambah
+  update terbaru).
+
+**Catatan buat PIC modul ini kalau mau lanjutkan**: kalau drag ini
+ternyata MASIH meleset di device/resolusi nyata (belum dites di luar
+Godot editor desktop sesi ini), kemungkinan besar bukan API bawaan
+Godot lagi yang jadi biang masalah (sudah dihindari), tapi cek dulu
+`DROP_MATCH_RADIUS` (80px, mungkin perlu disesuaikan ke ukuran
+layar/kepadatan piksel device asli) sebelum coba pendekatan lain.
