@@ -1041,3 +1041,40 @@ tanpa validasi".
 
 **Diverifikasi**: `godot --headless --import` + run `GameModes.tscn` —
 lolos tanpa error baru.
+
+## 2026-11-28 — Pilot dikonfirmasi, pola diperluas ke Home & Settings (+ di-refactor jadi helper reusable)
+
+User konfirmasi pilot GameModes (entri di atas) secara visual lewat
+Godot interaktif ("sudah bagus"). Lanjut perluas pola "tema ikut
+diwarnai" ke Home & Settings, sesuai catatan "belum diputuskan" di
+entri sebelumnya.
+
+**Refactor dulu, sebelum duplikasi ke-3**: kode `title_chip`/`stage`
+yang tadinya inline di `game_modes.gd` dipindah jadi 2 static helper
+baru di `core/scripts/ui_style.gd`:
+- `UIStyle.make_title_chip(text, font_size)` — pil judul (bg `CREAM`,
+  border `SUNSHINE`).
+- `UIStyle.make_stage_panel(tint)` — panel tint lembut di belakang
+  konten utama (`tint` default `SUNSHINE` buat layar hub; modul
+  `feature_*` nanti bisa pakai `AppColors.ACCENT_<MODUL>` masing-masing
+  kalau pola ini mau dipakai di sana juga).
+
+`game_modes.gd` di-refactor pakai 2 helper ini (perilaku sama, cuma
+hilangkan ~30 baris duplikasi).
+
+**Home** (`scenes/home.gd`): judul "Wawa" → `make_title_chip`. Tombol
+Play (lingkaran "▶") + "Gamemodes" dipindah ke dalam `make_stage_panel`
+(lewat 1 `stage_box` VBoxContainer baru) — jadi 1 kesatuan visual, sama
+seperti 4 kartu mode di GameModes duduk di atas panggungnya. Tombol
+Settings (pojok kanan bawah) SENGAJA TIDAK dimasukkan ke stage — dia
+utility corner button, bukan bagian alur konten utama.
+
+**Settings** (`scenes/settings.gd`): judul "Pengaturan" → `make_title_chip`
+saja. `card` (`PanelContainer` CREAM+border SUNSHINE) yang sudah ada
+sejak redesain 2026-11-22 SUDAH berfungsi sebagai "panggung" — tidak
+perlu `make_stage_panel` tambahan di sini, cuma judulnya yang belum
+mengikuti pola pil.
+
+**Diverifikasi**: `godot --headless --import` + run `Home.tscn`,
+`GameModes.tscn`, `Settings.tscn` — ketiganya lolos tanpa error/warning
+baru.

@@ -24,12 +24,20 @@ func _ready() -> void:
 	vbox.add_theme_constant_override("separation", 20)
 	add_child(vbox)
 
-	var title := Label.new()
-	title.text = "Wawa"
-	title.add_theme_font_size_override("font_size", 40)
-	title.add_theme_color_override("font_color", AppColors.INK)
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(title)
+	# Update 2026-11-28 ("tema ikut diwarnai", lihat obsidian-vault/
+	# Decisions Log.md & scenes/game_modes.gd): judul jadi banner pil +
+	# Play/Gamemodes didudukkan di atas 1 "panggung" tint SUNSHINE, pola
+	# yang sama dipakai di GameModes — supaya Home & GameModes kerasa 1
+	# bahasa visual, bukan masing-masing gaya sendiri.
+	vbox.add_child(UIStyle.make_title_chip("Wawa", 40))
+
+	var stage := UIStyle.make_stage_panel()
+	vbox.add_child(stage)
+
+	var stage_box := VBoxContainer.new()
+	stage_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	stage_box.add_theme_constant_override("separation", 20)
+	stage.add_child(stage_box)
 
 	# size_flags_horizontal = SHRINK_CENTER — tanpa ini, VBoxContainer
 	# men-stretch tiap child ke lebar penuh layar (dilaporkan user
@@ -61,7 +69,7 @@ func _ready() -> void:
 		play_button.add_theme_stylebox_override(state, play_style)
 	play_button.pressed.connect(_on_play_pressed)
 	UIStyle.add_press_bounce(play_button)
-	vbox.add_child(play_button)
+	stage_box.add_child(play_button)
 
 	# Update 2026-11-26: "Pilih Game" (grid 6 modul langsung di Home) diganti
 	# jadi "Gamemodes" — pindah ke scene sendiri `GameModes.tscn` dengan 4
@@ -77,7 +85,7 @@ func _ready() -> void:
 	_apply_texture_button_style(choose_button, "res://core/assets/images/button_secondary.png")
 	choose_button.pressed.connect(func(): GameFlow.goto_scene("res://scenes/GameModes.tscn"))
 	UIStyle.add_press_bounce(choose_button)
-	vbox.add_child(choose_button)
+	stage_box.add_child(choose_button)
 
 	# Update 2026-11-22 (redesain ke-2): gear Settings pindah dari pojok
 	# kanan atas ke BAWAH tengah layar (atas permintaan user) — "agak

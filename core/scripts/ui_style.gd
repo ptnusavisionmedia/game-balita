@@ -87,6 +87,54 @@ static func make_fully_clickable(root: Control) -> void:
 			make_fully_clickable(child)
 
 
+## "Tema ikut diwarnai" (riset komposisi warna Pinterest, lihat Decisions
+## Log 2026-11-28) — dipakai lintas layar (GameModes, Home, Settings) biar
+## 1 bahasa visual konsisten, bukan masing-masing bikin gaya sendiri.
+## Pil judul: bg CREAM + border SUNSHINE, menggantikan Label polos.
+static func make_title_chip(text: String, font_size: int = 34) -> PanelContainer:
+	var chip := PanelContainer.new()
+	chip.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var style := StyleBoxFlat.new()
+	style.bg_color = AppColors.CREAM
+	style.border_color = AppColors.SUNSHINE
+	style.set_border_width_all(4)
+	style.set_corner_radius_all(999)
+	style.content_margin_left = 32
+	style.content_margin_right = 32
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	style.shadow_size = 10
+	style.shadow_color = Color(0, 0, 0, 0.15)
+	style.shadow_offset = Vector2(0, 4)
+	chip.add_theme_stylebox_override("panel", style)
+
+	var label := Label.new()
+	label.text = text
+	label.add_theme_font_size_override("font_size", font_size)
+	label.add_theme_color_override("font_color", AppColors.INK)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	chip.add_child(label)
+	return chip
+
+
+## "Panggung" tint lembut di belakang konten utama layar (kartu/tombol) —
+## pasangan `make_title_chip`, bikin konten terasa 1 kesatuan tema, bukan
+## chrome berwarna di atas background netral. `tint` default `SUNSHINE`
+## (tema umum, dipakai Home/GameModes); modul `feature_*` pakai
+## `AppColors.ACCENT_<MODUL>` masing-masing biar senada sama `GameBackground.tint_color`-nya.
+static func make_stage_panel(tint: Color = AppColors.SUNSHINE) -> PanelContainer:
+	var stage := PanelContainer.new()
+	stage.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var style := StyleBoxFlat.new()
+	style.bg_color = AppColors.CREAM.lerp(tint, 0.12)
+	style.border_color = tint
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(32)
+	style.set_content_margin_all(20)
+	stage.add_theme_stylebox_override("panel", style)
+	return stage
+
+
 ## Feedback tekan "juicy" ala game (bukan cuma ganti warna StyleBox
 ## seperti tombol web) — kartu/tombol mengecil sedikit saat ditekan,
 ## lalu lenting balik begitu dilepas. `pivot_offset` WAJIB di tengah

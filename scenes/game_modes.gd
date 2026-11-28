@@ -70,38 +70,13 @@ func _ready() -> void:
 	# polos) + 4 kartu didudukkan di atas 1 "panggung" hangat (tint SUNSHINE
 	# tipis), supaya layar ini kerasa 1 unit visual yang utuh, bukan
 	# sekadar kartu ditaruh di atas gambar langit-rumput generik.
-	var title_chip := PanelContainer.new()
-	title_chip.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var title_chip_style := StyleBoxFlat.new()
-	title_chip_style.bg_color = AppColors.CREAM
-	title_chip_style.border_color = AppColors.SUNSHINE
-	title_chip_style.set_border_width_all(4)
-	title_chip_style.set_corner_radius_all(999)
-	title_chip_style.content_margin_left = 32
-	title_chip_style.content_margin_right = 32
-	title_chip_style.content_margin_top = 10
-	title_chip_style.content_margin_bottom = 10
-	title_chip_style.shadow_size = 10
-	title_chip_style.shadow_color = Color(0, 0, 0, 0.15)
-	title_chip_style.shadow_offset = Vector2(0, 4)
-	title_chip.add_theme_stylebox_override("panel", title_chip_style)
-	outer.add_child(title_chip)
+	#
+	# Update 2026-11-28 (lanjutan, dikonfirmasi user): pilot ini jadi pola
+	# tetap `UIStyle.make_title_chip`/`make_stage_panel`, dipakai ulang di
+	# Home & Settings juga — lihat scenes/home.gd, scenes/settings.gd.
+	outer.add_child(UIStyle.make_title_chip("Mode Permainan"))
 
-	var title := Label.new()
-	title.text = "Mode Permainan"
-	title.add_theme_font_size_override("font_size", 34)
-	title.add_theme_color_override("font_color", AppColors.INK)
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title_chip.add_child(title)
-
-	var stage := PanelContainer.new()
-	stage.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var stage_style := StyleBoxFlat.new()
-	stage_style.bg_color = AppColors.CREAM.lerp(AppColors.SUNSHINE, 0.12)
-	stage_style.border_color = AppColors.SUNSHINE
-	stage_style.set_border_width_all(2)
-	stage_style.set_corner_radius_all(32)
-	stage_style.set_content_margin_all(20)
+	var stage := UIStyle.make_stage_panel()
 	outer.add_child(stage)
 
 	# Update 2026-11-26 (atas permintaan user): 4 kartu BERJAJAR HORIZONTAL

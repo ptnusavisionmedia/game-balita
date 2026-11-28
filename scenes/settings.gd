@@ -56,12 +56,13 @@ func _ready() -> void:
 	vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(vbox)
 
-	var title := Label.new()
-	title.text = "Pengaturan"
-	title.add_theme_font_size_override("font_size", 42)
-	title.add_theme_color_override("font_color", AppColors.INK)
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(title)
+	# Update 2026-11-28 ("tema ikut diwarnai", lihat obsidian-vault/
+	# Decisions Log.md & scenes/game_modes.gd/home.gd): judul jadi banner
+	# pil — pola yang sama dipakai Home & GameModes. `card` di bawah ini
+	# sudah berfungsi sebagai "panggung" (sudah CREAM+border SUNSHINE sejak
+	# redesain 2026-11-22), jadi tidak perlu `UIStyle.make_stage_panel()`
+	# tambahan di sini — isinya sudah sesuai pola.
+	vbox.add_child(UIStyle.make_title_chip("Pengaturan", 42))
 
 	var card := PanelContainer.new()
 	card.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
