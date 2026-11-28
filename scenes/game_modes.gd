@@ -82,28 +82,28 @@ func _ready() -> void:
 	outer.add_child(cards_row)
 
 	cards_row.add_child(_make_mode_card(
-		"🧒", AppColors.SUNSHINE,
+		"res://core/assets/images/gui/mode_main_sendiri.png", "🧒", AppColors.SUNSHINE,
 		"Main Sendiri",
 		"Anak pilih sendiri mau main apa dari 6 permainan.",
 		_on_main_sendiri_pressed
 	))
 
 	cards_row.add_child(_make_mode_card(
-		"🤝", AppColors.LEAF,
+		"res://core/assets/images/gui/mode_bareng_ortu.png", "🤝", AppColors.LEAF,
 		"Bareng Orang Tua",
 		"Orang tua ajak anak nebak suara & gambar sambil ngobrol bareng.",
 		_on_bareng_orang_tua_pressed
 	))
 
 	cards_row.add_child(_make_mode_card(
-		"🎨", AppColors.ACCENT_MEWARNAI,
+		"res://core/assets/images/gui/mode_jelajah_kreatif.png", "🎨", AppColors.ACCENT_MEWARNAI,
 		"Jelajah Kreatif",
 		"Mewarnai & puzzle bebas — nggak ada benar/salah, cuma eksplor.",
 		_on_jelajah_kreatif_pressed
 	))
 
 	cards_row.add_child(_make_mode_card(
-		"⭐", AppColors.ACCENT_MUSIK,
+		"res://core/assets/images/gui/mode_tantangan_harian.png", "⭐", AppColors.ACCENT_MUSIK,
 		"Tantangan Harian",
 		"1 permainan pilihan hari ini — sama sepanjang hari, ganti besok.",
 		_on_tantangan_harian_pressed
@@ -133,12 +133,14 @@ func _ready() -> void:
 		_module_grid.add_child(_make_module_tile(game))
 
 
-## 1 kartu tema bergaya "flashcard" tegak: badge emoji bulat warna aksen
-## di atas, judul + 1-2 baris deskripsi di bawah, seluruh kartu jadi 1
-## tombol. 4 kartu ini dijajar HORIZONTAL (lihat `cards_row` di `_ready`)
-## — beda dari `_make_module_tile` (kartu persegi per modul di dalam
-## grid "Main Sendiri") supaya 4 tema kelihatan beda level dari 6 modul.
-func _make_mode_card(emoji: String, accent: Color, title_text: String, subtitle_text: String, callback: Callable) -> Button:
+## 1 kartu tema bergaya "flashcard" tegak: badge bulat warna aksen di
+## atas (ikon gambar asli dari ChatGPT kalau filenya ada — lihat
+## Decisions Log 2026-11-26, fallback emoji kalau belum), judul + 1-2
+## baris deskripsi di bawah, seluruh kartu jadi 1 tombol. 4 kartu ini
+## dijajar HORIZONTAL (lihat `cards_row` di `_ready`) — beda dari
+## `_make_module_tile` (kartu persegi per modul di dalam grid "Main
+## Sendiri") supaya 4 tema kelihatan beda level dari 6 modul.
+func _make_mode_card(icon_path: String, emoji: String, accent: Color, title_text: String, subtitle_text: String, callback: Callable) -> Button:
 	var button := Button.new()
 	button.custom_minimum_size = Vector2(280, 320)
 	button.pressed.connect(callback)
@@ -161,8 +163,9 @@ func _make_mode_card(emoji: String, accent: Color, title_text: String, subtitle_
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_child(column)
 
+	const BADGE_DIAMETER := 96.0
 	var badge := PanelContainer.new()
-	badge.custom_minimum_size = Vector2(96, 96)
+	badge.custom_minimum_size = Vector2(BADGE_DIAMETER, BADGE_DIAMETER)
 	badge.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	var badge_style := StyleBoxFlat.new()
 	badge_style.bg_color = accent
@@ -170,12 +173,32 @@ func _make_mode_card(emoji: String, accent: Color, title_text: String, subtitle_
 	badge.add_theme_stylebox_override("panel", badge_style)
 	column.add_child(badge)
 
-	var badge_label := Label.new()
-	badge_label.text = emoji
-	badge_label.add_theme_font_size_override("font_size", 46)
-	badge_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	badge_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	badge.add_child(badge_label)
+	if FileAccess.file_exists(icon_path):
+		# CenterContainer wajib di antara badge (PanelContainer, child-nya
+		# otomatis di-stretch penuh) dan ikon (ukuran TETAP lebih kecil dari
+		# badge) — tanpa ini ikon ikut diregangkan penuh ke ukuran badge.
+		var icon_center := CenterContainer.new()
+		icon_center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		badge.add_child(icon_center)
+
+		# Ikon digambar lebih kecil dari diameter badge (≈72% — muat utuh
+		# di dalam lingkaran meski file gambarnya kanvas PERSEGI) supaya
+		# sudut gambar persegi tidak mencuat keluar dari badge BULAT.
+		var icon_size := BADGE_DIAMETER * 0.72
+		var icon_rect := TextureRect.new()
+		icon_rect.texture = load(icon_path)
+		icon_rect.custom_minimum_size = Vector2(icon_size, icon_size)
+		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		icon_center.add_child(icon_rect)
+	else:
+		var badge_label := Label.new()
+		badge_label.text = emoji
+		badge_label.add_theme_font_size_override("font_size", 46)
+		badge_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		badge_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		badge.add_child(badge_label)
 
 	var title_label := Label.new()
 	title_label.text = title_text
