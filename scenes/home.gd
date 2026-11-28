@@ -24,20 +24,31 @@ func _ready() -> void:
 	vbox.add_theme_constant_override("separation", 20)
 	add_child(vbox)
 
-	# Update 2026-11-28 ("tema ikut diwarnai", lihat obsidian-vault/
-	# Decisions Log.md & scenes/game_modes.gd): judul jadi banner pil +
-	# Play/Gamemodes didudukkan di atas 1 "panggung" tint SUNSHINE, pola
-	# yang sama dipakai di GameModes — supaya Home & GameModes kerasa 1
-	# bahasa visual, bukan masing-masing gaya sendiri.
-	vbox.add_child(UIStyle.make_title_chip("Wawa", 40))
+	# Update 2026-11-28 (percobaan "panggung" tint SUNSHINE di belakang
+	# Play/Gamemodes DITOLAK user — screenshot terlihat seperti kotak form
+	# polos, bukan elemen game): dicabut lagi. Home sekarang TIDAK pakai
+	# panel background sama sekali — cuma banner judul (dengan maskot kecil
+	# di sampingnya, lihat di bawah) + tombol, langsung di atas
+	# `GameBackground`, sama seperti sebelum pilot "tema ikut diwarnai"
+	# dicoba. Pola `make_stage_panel` TETAP dipakai di GameModes (sudah
+	# dikonfirmasi cocok di sana — beda konteks, 4 kartu butuh 1 wadah
+	# visual, 2 tombol besar di Home tidak).
+	var title_row := HBoxContainer.new()
+	title_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	title_row.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	title_row.add_theme_constant_override("separation", 10)
+	vbox.add_child(title_row)
 
-	var stage := UIStyle.make_stage_panel()
-	vbox.add_child(stage)
+	var mascot_path := "res://core/assets/images/mascot/wawa_melambai.png"
+	if FileAccess.file_exists(mascot_path):
+		var mascot := TextureRect.new()
+		mascot.texture = load(mascot_path)
+		mascot.custom_minimum_size = Vector2(56, 56)
+		mascot.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		mascot.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		title_row.add_child(mascot)
 
-	var stage_box := VBoxContainer.new()
-	stage_box.alignment = BoxContainer.ALIGNMENT_CENTER
-	stage_box.add_theme_constant_override("separation", 20)
-	stage.add_child(stage_box)
+	title_row.add_child(UIStyle.make_title_chip("Wawa", 40))
 
 	# size_flags_horizontal = SHRINK_CENTER — tanpa ini, VBoxContainer
 	# men-stretch tiap child ke lebar penuh layar (dilaporkan user
@@ -60,24 +71,36 @@ func _ready() -> void:
 	play_button.add_theme_color_override("font_hover_color", AppColors.INK)
 	play_button.add_theme_color_override("font_pressed_color", AppColors.INK)
 	play_button.add_theme_color_override("font_focus_color", AppColors.INK)
+	# Update 2026-11-28 (dilaporkan user: "polos"): border diperbesar 4→6 +
+	# shadow ditambah supaya terasa "terangkat" (pola sama kartu GameModes),
+	# + UIStyle.add_glossy_sheen (highlight kaca di sepertiga atas) biar
+	# terasa tombol 3D/jelly, bukan lingkaran warna solid flat.
 	var play_style := StyleBoxFlat.new()
 	play_style.bg_color = AppColors.SUNSHINE
 	play_style.border_color = AppColors.INK
-	play_style.set_border_width_all(4)
+	play_style.set_border_width_all(6)
 	play_style.set_corner_radius_all(int(PLAY_DIAMETER / 2.0))
+	play_style.shadow_size = 16
+	play_style.shadow_color = Color(0, 0, 0, 0.22)
+	play_style.shadow_offset = Vector2(0, 8)
 	for state in ["normal", "hover", "pressed", "focus"]:
 		play_button.add_theme_stylebox_override(state, play_style)
 	play_button.pressed.connect(_on_play_pressed)
 	UIStyle.add_press_bounce(play_button)
-	stage_box.add_child(play_button)
+	UIStyle.add_glossy_sheen(play_button, PLAY_DIAMETER / 2.0, 0.44)
+	vbox.add_child(play_button)
 
 	# Update 2026-11-26: "Pilih Game" (grid 6 modul langsung di Home) diganti
 	# jadi "Gamemodes" — pindah ke scene sendiri `GameModes.tscn` dengan 4
 	# kartu tema (Main Sendiri/Bareng Orang Tua/Jelajah Kreatif/Tantangan
 	# Harian), bukan cuma grid pilih manual. Lihat scenes/game_modes.gd &
 	# obsidian-vault/Decisions Log.md 2026-11-26.
+	# Update 2026-11-28 (dilaporkan user: "polos"): tambah emoji game
+	# controller di depan teks — pola paling murah (tanpa generate asset
+	# baru) buat kasih identitas visual "ini tombol ke mode permainan",
+	# bukan cuma label teks kosong di atas pil.
 	var choose_button := Button.new()
-	choose_button.text = "Gamemodes"
+	choose_button.text = "🎮  Gamemodes"
 	choose_button.custom_minimum_size = Vector2(342, 114)  # rasio 3:1, sama persis gambar sumber
 	choose_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	choose_button.add_theme_font_size_override("font_size", 26)
@@ -85,7 +108,7 @@ func _ready() -> void:
 	_apply_texture_button_style(choose_button, "res://core/assets/images/button_secondary.png")
 	choose_button.pressed.connect(func(): GameFlow.goto_scene("res://scenes/GameModes.tscn"))
 	UIStyle.add_press_bounce(choose_button)
-	stage_box.add_child(choose_button)
+	vbox.add_child(choose_button)
 
 	# Update 2026-11-22 (redesain ke-2): gear Settings pindah dari pojok
 	# kanan atas ke BAWAH tengah layar (atas permintaan user) — "agak

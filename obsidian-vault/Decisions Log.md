@@ -1078,3 +1078,44 @@ mengikuti pola pil.
 **Diverifikasi**: `godot --headless --import` + run `Home.tscn`,
 `GameModes.tscn`, `Settings.tscn` — ketiganya lolos tanpa error/warning
 baru.
+
+## 2026-11-28 — Panggung Home DICABUT (feedback user langsung dari screenshot), tombol Play/Gamemodes di-redesign code-only, generate asset logo/tombol baru TERBLOKIR (kredit habis)
+
+User kirim screenshot hasil entri sebelumnya: panggung tint SUNSHINE di
+belakang Play+Gamemodes di Home dinilai JELEK — "jangan diberikan seperti
+itu, jangan diberikan background", kesannya kotak form polos, bukan
+elemen game. **Dicabut dari Home** (`scenes/home.gd` balik tanpa
+`UIStyle.make_stage_panel()` sama sekali, langsung di atas
+`GameBackground` lagi). `make_stage_panel` TETAP dipakai di GameModes —
+itu sudah dikonfirmasi cocok sebelumnya (beda konteks: 4 kartu kecil
+butuh 1 wadah visual supaya tidak kelihatan berantakan, 2 tombol besar
+Home tidak butuh itu).
+
+User juga minta redesign Play & Gamemodes "jangan polos", pakai asset
+generate ChatGPT + cari referensi dulu. **Dicoba generate 3 aset baru**
+(tombol Play bulat glossy, tombol Gamemodes pil + ikon controller
+baked-in, logo judul "Wawa" + maskot) lewat image-gen MCP — **GAGAL,
+akun habis kredit** (`nano_banana_2`/`gpt_image_2_6` sama-sama ditolak:
+"Out of credits on free plan"/"Requires basic plan"). User belum
+dikasih tahu soal top-up kredit sebelum sesi ini lanjut — ini keputusan
+ADA BIAYA UANG, bukan sesuatu yang boleh diputuskan sepihak oleh AI
+(lihat aturan keras "pembelian/pembayaran perlu izin eksplisit").
+
+**Fallback sementara (code-only, TANPA generate aset baru) yang
+DIKERJAKAN**: `UIStyle.add_glossy_sheen()` — highlight kaca/jelly
+semi-transparan di sepertiga atas tombol (StyleBoxFlat putih alpha 0.3,
+radius ikut radius tombol), dipasang di Play. Border Play 4→6px + shadow
+ditambah. Gamemodes dapat emoji "🎮" di depan teks (bukan ikon gambar
+baru) sebagai penanda visual murah. Judul "Wawa" dikasih maskot
+`wawa_melambai.png` (ASET YANG SUDAH ADA, bukan baru) di sampingnya
+sebagai logo sementara — BUKAN logo asli hasil generate yang diminta
+user, cuma pendekatan interim pakai aset yang sudah dibayar/ada.
+
+**Belum selesai, perlu keputusan user**: logo judul "Wawa" hasil
+GENERATE (bukan maskot+pil teks biasa) dan tombol Play/Gamemodes versi
+ilustrasi asli (bukan StyleBoxFlat+sheen code-only) BELUM BISA dikerjakan
+sampai user top-up kredit akun image-gen — ini ditawarkan ke user,
+BUKAN dieksekusi otomatis.
+
+**Diverifikasi**: `godot --headless --import` + run `Home.tscn` — lolos
+tanpa error/warning baru.

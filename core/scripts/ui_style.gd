@@ -135,6 +135,28 @@ static func make_stage_panel(tint: Color = AppColors.SUNSHINE) -> PanelContainer
 	return stage
 
 
+## Highlight "glossy" di sepertiga atas tombol (ala jelly/kaca) — alternatif
+## CODE-ONLY (tanpa generate asset baru) buat tombol yang kelihatan "polos"
+## (dilaporkan user 2026-11-28 soal tombol Play & Gamemodes di Home).
+## `corner_radius` harus ikut radius tombol aslinya (diameter/2 buat
+## lingkaran, tinggi/2 buat pil) supaya sheen menyatu rapi di sudut atas.
+static func add_glossy_sheen(button: Button, corner_radius: float, height_ratio: float = 0.42) -> void:
+	var sheen := PanelContainer.new()
+	sheen.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	sheen.anchor_left = 0.07
+	sheen.anchor_right = 0.93
+	sheen.anchor_top = 0.08
+	sheen.anchor_bottom = height_ratio
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(1, 1, 1, 0.3)
+	style.corner_radius_top_left = int(corner_radius)
+	style.corner_radius_top_right = int(corner_radius)
+	style.corner_radius_bottom_left = 0
+	style.corner_radius_bottom_right = 0
+	sheen.add_theme_stylebox_override("panel", style)
+	button.add_child(sheen)
+
+
 ## Feedback tekan "juicy" ala game (bukan cuma ganti warna StyleBox
 ## seperti tombol web) — kartu/tombol mengecil sedikit saat ditekan,
 ## lalu lenting balik begitu dilepas. `pivot_offset` WAJIB di tengah
