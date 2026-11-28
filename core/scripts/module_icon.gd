@@ -13,6 +13,11 @@ class_name ModuleIcon
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(72, 72)
+	# Fix bug class 2026-11-28 (lihat UIStyle.make_fully_clickable): dipakai
+	# selalu sebagai child dekoratif di dalam Button (_make_module_tile),
+	# tidak pernah perlu nerima klik sendiri — tanpa ini default STOP
+	# bikin area ikon 96x96 di kartu modul mati, tidak bisa diklik.
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 func _draw() -> void:

@@ -60,6 +60,7 @@ func _ready() -> void:
 	for state in ["normal", "hover", "pressed", "focus"]:
 		play_button.add_theme_stylebox_override(state, play_style)
 	play_button.pressed.connect(_on_play_pressed)
+	UIStyle.add_press_bounce(play_button)
 	vbox.add_child(play_button)
 
 	# Update 2026-11-26: "Pilih Game" (grid 6 modul langsung di Home) diganti
@@ -75,6 +76,7 @@ func _ready() -> void:
 	UIStyle.apply_ink_text_color(choose_button)
 	_apply_texture_button_style(choose_button, "res://core/assets/images/button_secondary.png")
 	choose_button.pressed.connect(func(): GameFlow.goto_scene("res://scenes/GameModes.tscn"))
+	UIStyle.add_press_bounce(choose_button)
 	vbox.add_child(choose_button)
 
 	# Update 2026-11-22 (redesain ke-2): gear Settings pindah dari pojok

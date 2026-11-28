@@ -924,3 +924,59 @@ kepotong dari lingkaran, gejala sama persis "keluar lingkaran" yang
 dilaporkan user sebelumnya di tombol back, cuma kali ini di gameplay
 inti. Fix: tambah 3 baris `icon_alignment`/`vertical_icon_alignment`/
 `alignment` CENTER di `_ready()`. Headless-verified 6 modul.
+
+---
+
+## 2026-11-28 — Bug class baru: hitbox mati (`mouse_filter`), modal overlay (bukan reflow), fix awan snap
+
+Atas laporan user (screenshot + deskripsi langsung): "hitbox kadang
+sangat kecil/tidak pas", "kartu hambar seperti website", "tombol
+function malah mengeser UI, bukan page pop up/page baru", + bug lama
+awan background kadang "sangat besar tiba-tiba bergeser". Plan lengkap
+disetujui user dulu sebelum eksekusi (lihat riwayat chat 2026-11-28).
+
+**Bug class baru ditemukan (root cause, bukan tebakan)**: child Control
+dekoratif (`PanelContainer` badge, `ModuleIcon` custom-draw) di DALAM
+sebuah `Button` composite yang TIDAK di-set `mouse_filter = IGNORE`
+"menelan" klik duluan (default Godot = `STOP`) sebelum event jatuh ke
+`Button` induknya — beda bug class dari `icon_alignment` (2026-11-26/28)
+tapi akibatnya serupa: sebagian area visual kartu tidak merespons tap.
+Ketemu 2 kasus konkret: badge 96px di 4 kartu mode (`game_modes.gd`
+`_make_mode_card`) dan ikon `ModuleIcon` 96px di 6 kartu modul
+(`_make_module_tile`). Audit grep ke 11 file lain (`PanelContainer.new()`/
+`TextureRect.new()`) — SISANYA aman (dekorasi di luar `Button`, bukan di
+dalamnya). Fix: `UIStyle.make_fully_clickable(root)` — helper rekursif
+set `IGNORE` ke semua descendant non-`BaseButton`, dipanggil 1x di akhir
+tiap `_make_*_card`/`_make_*_tile` supaya bug class ini otomatis
+ketutup di modul baru juga, bukan cuma 2 kasus yang ketemu sekarang.
+
+**"Main Sendiri" reflow→modal**: dulu `_on_main_sendiri_pressed()` toggle
+`visible` sebuah wrapper INLINE di dalam `outer` (VBoxContainer
+center-aligned) — begitu grid 6 modul muncul, tinggi total `outer`
+membesar, SELURUH kolom (termasuk 4 kartu mode di atasnya) ikut
+bergeser. Fix: komponen baru `core/scripts/modal_overlay.gd`
+(`ModalOverlay`) — layer terpisah (backdrop dim + panel scale-in bounce,
+tap-backdrop/tombol × untuk tutup), konten modul grid dibangun on-demand
+lewat `_build_module_grid_content()`. Reusable untuk modul lain nanti.
+
+**Kartu "hambar"**: tambah `shadow_size`/`shadow_color`/`shadow_offset`
+ke `StyleBoxFlat` kartu (depth, bukan flat), `UIStyle.add_press_bounce()`
+(scale mengecil-lenting saat ditekan, feedback "juicy" ala game) dipasang
+ke semua kartu mode/modul + `play_button`/`choose_button` Home, badge
+kartu mode dibesarkan 96→132px (ilustrasi dominan, bukan teks), subtitle
+dipersingkat jadi 1 frasa pendek. Generate 1 aset tekstur kartu baru
+ditunda (scope dibatasi perbaikan kode dulu) — tetap tercatat terbuka di
+`obsidian-vault/RINGKASAN_BESAR.md` §6.
+
+**Fix awan snap**: `core/scripts/game_background.gd` — `_drift_once`
+lama bikin `Tween` baru tiap siklus dengan `screen_width` di-cache di
+AWAL siklus; kalau viewport resize di tengah tween, target lama jadi
+usang → snap di titik sambung siklus. Ganti ke `_process(delta)`
+kontinu, `screen_width` dibaca ULANG tiap frame (tidak pernah stale).
+
+**Diverifikasi**: `godot --headless --import` lalu semua 9 scene utama
+(`Home`, `GameModes`, `Settings`, 6 `feature_*`) di-run headless — semua
+lolos tanpa error baru (1 warning ObjectDB di `Hewan.tscn` pre-existing,
+tidak terkait perubahan ini). Belum dites sentuhan asli — perlu
+konfirmasi user begitu dicoba (klik tepat di badge/ikon tiap kartu, buka
+"Main Sendiri" pastikan 4 kartu mode tidak bergeser, amati awan).

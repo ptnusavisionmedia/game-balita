@@ -29,6 +29,18 @@ const CLOUD_CONFIGS := [
 	{"y_ratio": 0.18, "size": 80.0, "duration": 55.0, "start_ratio": 0.65},
 ]
 
+## Update 2026-11-28 (fix bug dilaporkan user: "awan sangat besar
+## tiba-tiba bergeser"): dulu posisi digerakkan `Tween` yang DIBUAT ULANG
+## tiap 1 siklus penuh, dengan `screen_width` dihitung ULANG persis di
+## awal tiap siklus itu — kalau viewport resize SELAMA tween jalan,
+## target akhir tween (`right_edge`) lama sudah tidak sesuai lebar layar
+## BARU, jadi di titik sambung siklus kelihatan lompat/snap. Sekarang
+## posisi digerakkan manual tiap frame lewat `_process` dan
+## `get_rect().size.x` dibaca ULANG TIAP FRAME (bukan di-cache per
+## siklus) — resize kapan pun tidak pernah bikin snap, karena posisi
+## selalu dihitung ulang relatif lebar layar SAAT ITU, bukan lebar lama.
+var _clouds: Array = []
+
 
 func _ready() -> void:
 	anchor_right = 1.0
@@ -56,10 +68,10 @@ func _ready() -> void:
 			_add_drifting_cloud(config)
 
 
-## 1 awan = 1 TextureRect yang digeser looping dari luar kiri layar ke
-## luar kanan layar pakai `Tween` (posisi relatif terhadap LEBAR LAYAR
-## SAAT INI, bukan angka piksel tetap, supaya tetap benar di device
-## rasio berapa pun — pola sama alasannya kayak semua anchor di app ini).
+## 1 awan = 1 TextureRect digeser tiap frame di `_process` (lihat
+## komentar `_clouds` di atas untuk alasan kenapa bukan `Tween` lagi).
+## `visible = false` sampai posisi awal valid — mencegah kedip 1 frame
+## di pojok kiri-atas (0,0) sebelum offset sungguhan diset.
 func _add_drifting_cloud(config: Dictionary) -> void:
 	var cloud := TextureRect.new()
 	cloud.texture = load(CLOUD_TEXTURE_PATH)
@@ -71,40 +83,36 @@ func _add_drifting_cloud(config: Dictionary) -> void:
 	cloud.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	cloud.anchor_top = config["y_ratio"]
 	cloud.anchor_bottom = config["y_ratio"]
+	cloud.visible = false
 	add_child(cloud)
 
-	var duration: float = config["duration"]
-	var start_ratio: float = config["start_ratio"]
-
-	# `call_deferred` + loop manual (bukan `Tween.set_loops()`) — supaya
-	# titik mulai tiap awan ditentukan `start_ratio` (awan tidak semua
-	# mulai dari tepi kiri bersamaan, terasa lebih alami), baru siklus
-	# berikutnya full dari luar-kiri ke luar-kanan.
-	_drift_once.call_deferred(cloud, duration, start_ratio)
+	_clouds.append({
+		"node": cloud,
+		"duration": float(config["duration"]),
+		"progress": float(config["start_ratio"]),
+	})
 
 
-func _drift_once(cloud: TextureRect, duration: float, start_ratio: float) -> void:
-	if not is_instance_valid(cloud):
+func _process(delta: float) -> void:
+	if _clouds.is_empty():
 		return
 	var screen_width := get_rect().size.x
 	if screen_width <= 0.0:
-		screen_width = 1280.0  # fallback kalau dipanggil sebelum layout siap
+		return  # layout belum siap, tunggu frame berikutnya (lihat komentar `_clouds`)
 
-	var cloud_width: float = cloud.size.x
-	var left_edge := -cloud_width
-	var right_edge := screen_width + cloud_width
-	var start_x: float = lerp(left_edge, right_edge, start_ratio)
+	for c in _clouds:
+		var cloud: TextureRect = c["node"]
+		if not is_instance_valid(cloud):
+			continue
+		var cloud_width: float = cloud.size.x
+		var progress: float = c["progress"] + delta / c["duration"]
+		c["progress"] = fmod(progress, 1.0)
 
-	cloud.offset_left = start_x
-	cloud.offset_right = start_x + cloud_width
-	cloud.offset_top = 0.0
-	cloud.offset_bottom = cloud_width
-
-	var remaining_ratio := (right_edge - start_x) / (right_edge - left_edge)
-	var tween := create_tween()
-	tween.tween_property(cloud, "offset_left", right_edge, duration * remaining_ratio)
-	tween.parallel().tween_property(cloud, "offset_right", right_edge + cloud_width, duration * remaining_ratio)
-	tween.tween_callback(func():
-		if is_instance_valid(cloud):
-			_drift_once(cloud, duration, 0.0)  # siklus berikutnya selalu dari tepi kiri
-	)
+		var left_edge := -cloud_width
+		var right_edge := screen_width + cloud_width
+		var x: float = lerp(left_edge, right_edge, c["progress"])
+		cloud.offset_left = x
+		cloud.offset_right = x + cloud_width
+		cloud.offset_top = 0.0
+		cloud.offset_bottom = cloud_width
+		cloud.visible = true

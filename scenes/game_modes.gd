@@ -22,9 +22,6 @@ extends Control
 
 const ParentGuideScenePath := "res://scenes/ParentGuide.tscn"
 
-var _module_grid: GridContainer
-var _module_grid_wrapper: Control
-
 
 func _ready() -> void:
 	anchor_right = 1.0
@@ -84,53 +81,30 @@ func _ready() -> void:
 	cards_row.add_child(_make_mode_card(
 		"res://core/assets/images/gui/mode_main_sendiri.png", "🧒", AppColors.SUNSHINE,
 		"Main Sendiri",
-		"Anak pilih sendiri mau main apa dari 6 permainan.",
+		"Pilih sendiri!",
 		_on_main_sendiri_pressed
 	))
 
 	cards_row.add_child(_make_mode_card(
 		"res://core/assets/images/gui/mode_bareng_ortu.png", "🤝", AppColors.LEAF,
 		"Bareng Orang Tua",
-		"Orang tua ajak anak nebak suara & gambar sambil ngobrol bareng.",
+		"Main berdua.",
 		_on_bareng_orang_tua_pressed
 	))
 
 	cards_row.add_child(_make_mode_card(
 		"res://core/assets/images/gui/mode_jelajah_kreatif.png", "🎨", AppColors.ACCENT_MEWARNAI,
 		"Jelajah Kreatif",
-		"Mewarnai & puzzle bebas — nggak ada benar/salah, cuma eksplor.",
+		"Bebas eksplor.",
 		_on_jelajah_kreatif_pressed
 	))
 
 	cards_row.add_child(_make_mode_card(
 		"res://core/assets/images/gui/mode_tantangan_harian.png", "⭐", AppColors.ACCENT_MUSIK,
 		"Tantangan Harian",
-		"1 permainan pilihan hari ini — sama sepanjang hari, ganti besok.",
+		"Spesial hari ini.",
 		_on_tantangan_harian_pressed
 	))
-
-	_module_grid_wrapper = VBoxContainer.new()
-	_module_grid_wrapper.visible = false
-	_module_grid_wrapper.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	_module_grid_wrapper.add_theme_constant_override("separation", 12)
-	outer.add_child(_module_grid_wrapper)
-
-	var grid_label := Label.new()
-	grid_label.text = "Pilih permainan:"
-	grid_label.add_theme_font_size_override("font_size", 24)
-	grid_label.add_theme_color_override("font_color", AppColors.INK)
-	grid_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_module_grid_wrapper.add_child(grid_label)
-
-	_module_grid = GridContainer.new()
-	_module_grid.columns = 3
-	_module_grid.add_theme_constant_override("h_separation", 24)
-	_module_grid.add_theme_constant_override("v_separation", 24)
-	_module_grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	_module_grid_wrapper.add_child(_module_grid)
-
-	for game in GameFlow.GAMES:
-		_module_grid.add_child(_make_module_tile(game))
 
 
 ## 1 kartu tema bergaya "flashcard" tegak: badge bulat warna aksen di
@@ -145,6 +119,11 @@ func _make_mode_card(icon_path: String, emoji: String, accent: Color, title_text
 	button.custom_minimum_size = Vector2(280, 320)
 	button.pressed.connect(callback)
 
+	# Update 2026-11-28 (dilaporkan user: "kartu hambar seperti website"):
+	# tambah shadow supaya kartu terasa "terangkat"/fisik, bukan kotak
+	# form flat. UIStyle.add_press_bounce di bawah tambah feedback tekan
+	# (scale mengecil lalu lenting) — dua-duanya bareng bikin kartu
+	# terasa seperti elemen game, bukan elemen HTML.
 	var style := StyleBoxFlat.new()
 	style.bg_color = AppColors.CREAM
 	style.border_color = accent
@@ -152,18 +131,24 @@ func _make_mode_card(icon_path: String, emoji: String, accent: Color, title_text
 	style.border_width_top = 14
 	style.set_corner_radius_all(20)
 	style.set_content_margin_all(20)
+	style.shadow_size = 14
+	style.shadow_color = Color(0, 0, 0, 0.18)
+	style.shadow_offset = Vector2(0, 6)
 	for state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(state, style)
+	UIStyle.add_press_bounce(button)
 
 	var column := VBoxContainer.new()
 	column.anchor_right = 1.0
 	column.anchor_bottom = 1.0
 	column.alignment = BoxContainer.ALIGNMENT_CENTER
 	column.add_theme_constant_override("separation", 16)
-	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_child(column)
 
-	const BADGE_DIAMETER := 96.0
+	# Update 2026-11-28: badge dibesarkan 96→132 — ilustrasi jadi porsi
+	# DOMINAN kartu (bukan teks), sesuai prinsip "minim teks" + komplain
+	# user "kesannya website isi teks, bukan game isi gambar".
+	const BADGE_DIAMETER := 132.0
 	var badge := PanelContainer.new()
 	badge.custom_minimum_size = Vector2(BADGE_DIAMETER, BADGE_DIAMETER)
 	badge.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -216,6 +201,7 @@ func _make_mode_card(icon_path: String, emoji: String, accent: Color, title_text
 	subtitle_label.autowrap_mode = TextServer.AUTOWRAP_WORD
 	column.add_child(subtitle_label)
 
+	UIStyle.make_fully_clickable(column)
 	return button
 
 
@@ -233,15 +219,18 @@ func _make_module_tile(game: Dictionary) -> Button:
 	style.border_color = accent
 	style.set_border_width_all(4)
 	style.set_corner_radius_all(20)
+	style.shadow_size = 12
+	style.shadow_color = Color(0, 0, 0, 0.18)
+	style.shadow_offset = Vector2(0, 5)
 	for state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(state, style)
+	UIStyle.add_press_bounce(button)
 
 	var tile_box := VBoxContainer.new()
 	tile_box.anchor_right = 1.0
 	tile_box.anchor_bottom = 1.0
 	tile_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	tile_box.add_theme_constant_override("separation", 14)
-	tile_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_child(tile_box)
 
 	var icon := ModuleIcon.new()
@@ -270,6 +259,7 @@ func _make_module_tile(game: Dictionary) -> Button:
 	label.add_theme_font_size_override("font_size", 30)
 	label_chip.add_child(label)
 
+	UIStyle.make_fully_clickable(tile_box)
 	return button
 
 
@@ -284,8 +274,43 @@ static func _accent_for(kind: String) -> Color:
 		_: return AppColors.SUNSHINE
 
 
+## Update 2026-11-28 (dilaporkan user: "tombol function malah mengeser
+## UI-nya, bukan page pop up/page baru"): dulu toggle `visible` INLINE
+## di dalam `outer` (VBoxContainer center-aligned) — begitu grid 6 modul
+## muncul, tinggi total `outer` membesar drastis, SELURUH kolom
+## (termasuk 4 kartu mode di atasnya) ikut bergeser ke atas. Sekarang
+## buka lewat `ModalOverlay` (layer terpisah, lihat
+## core/scripts/modal_overlay.gd) — 4 kartu mode di layar ini TIDAK
+## PERNAH bergeser lagi, apa pun yang terjadi di dalam modal.
 func _on_main_sendiri_pressed() -> void:
-	_module_grid_wrapper.visible = not _module_grid_wrapper.visible
+	var overlay := ModalOverlay.new()
+	add_child(overlay)
+	overlay.show_content(_build_module_grid_content())
+
+
+func _build_module_grid_content() -> Control:
+	var wrapper := VBoxContainer.new()
+	wrapper.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	wrapper.add_theme_constant_override("separation", 12)
+
+	var grid_label := Label.new()
+	grid_label.text = "Pilih permainan:"
+	grid_label.add_theme_font_size_override("font_size", 24)
+	grid_label.add_theme_color_override("font_color", AppColors.INK)
+	grid_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	wrapper.add_child(grid_label)
+
+	var grid := GridContainer.new()
+	grid.columns = 3
+	grid.add_theme_constant_override("h_separation", 24)
+	grid.add_theme_constant_override("v_separation", 24)
+	grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	wrapper.add_child(grid)
+
+	for game in GameFlow.GAMES:
+		grid.add_child(_make_module_tile(game))
+
+	return wrapper
 
 
 ## Jalan pintas ke `ParentGuide.tscn` yang sudah ada — isinya kartu per
