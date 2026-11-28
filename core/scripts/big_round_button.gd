@@ -12,6 +12,14 @@ func _ready() -> void:
 	custom_minimum_size = Vector2(120, 120)
 	add_theme_color_override("font_color", Color.WHITE)
 	add_theme_font_size_override("font_size", 34)
+	# Fix bug class 2026-11-26 (lihat UIStyle.apply_icon_frame &
+	# Decisions Log): default Button.icon_alignment Godot 4 itu LEFT,
+	# bukan CENTER — kelas ini TIDAK pakai UIStyle jadi miss fix itu.
+	# Dipakai icon-only (tanpa teks) di feature_warna/feature_musik;
+	# tanpa ini ikon kegeser/kepotong dari lingkaran bulat.
+	icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vertical_icon_alignment = VERTICAL_ALIGNMENT_CENTER
+	alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 	var style := StyleBoxFlat.new()
 	style.bg_color = accent_color

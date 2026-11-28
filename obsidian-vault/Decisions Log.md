@@ -904,3 +904,23 @@ Godot editor desktop sesi ini), kemungkinan besar bukan API bawaan
 Godot lagi yang jadi biang masalah (sudah dihindari), tapi cek dulu
 `DROP_MATCH_RADIUS` (80px, mungkin perlu disesuaikan ke ukuran
 layar/kepadatan piksel device asli) sebelum coba pendekatan lain.
+
+## 2026-11-28 — Audit "bisa dimainkan tanpa baca" + fix BigRoundButton icon
+
+Audit kritis 6 `feature_*` + `home.gd`/`game_modes.gd`/`touch_and_listen.gd`
+(atas permintaan user: "permainannya harus tidak ada bug sama sekali").
+Hasil: 1 bug nyata ditemukan, sisanya aman/sudah sesuai desain (teks
+"Bareng Orang Tua" di `feature_hewan` memang untuk orang tua, bukan
+anak; pola container full-rect penelan klik yang pernah ditemukan di
+back-button GameModes/Settings TIDAK terulang di modul manapun — semua
+tombol darurat 🏠 sudah di-`add_child` paling akhir).
+
+**Bug ditemukan**: `core/scripts/big_round_button.gd` (`BigRoundButton`)
+tidak set `icon_alignment`/`vertical_icon_alignment` — kelas ini
+terpisah dari `UIStyle` (yang sudah di-fix 2026-11-26) jadi miss fix
+yang sama. Dipakai icon-only (tanpa teks) di `feature_warna` (ikon
+buah) & `feature_musik` (ikon bilah xilofon) — berisiko ikon kegeser/
+kepotong dari lingkaran, gejala sama persis "keluar lingkaran" yang
+dilaporkan user sebelumnya di tombol back, cuma kali ini di gameplay
+inti. Fix: tambah 3 baris `icon_alignment`/`vertical_icon_alignment`/
+`alignment` CENTER di `_ready()`. Headless-verified 6 modul.
