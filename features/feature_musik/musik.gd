@@ -36,7 +36,9 @@ var _tap_count: int = 0
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
-	add_child(GameBackground.new())
+	var bg := GameBackground.new()
+	bg.tint_color = AppColors.ACCENT_MUSIK
+	add_child(bg)
 
 	var vbox := VBoxContainer.new()
 	vbox.anchor_right = 1.0

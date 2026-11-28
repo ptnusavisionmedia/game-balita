@@ -980,3 +980,35 @@ lolos tanpa error baru (1 warning ObjectDB di `Hewan.tscn` pre-existing,
 tidak terkait perubahan ini). Belum dites sentuhan asli — perlu
 konfirmasi user begitu dicoba (klik tepat di badge/ikon tiap kartu, buka
 "Main Sendiri" pastikan 4 kartu mode tidak bergeser, amati awan).
+
+---
+
+## 2026-11-28 — Tint background per modul (riset komposisi warna Pinterest)
+
+Atas permintaan user: riset UI game anak di Pinterest fokus KOMPOSISI
+WARNA (bukan fitur) — hasil: referensi yang "enak dipandang" selalu
+mewarnai BACKGROUND sesuai kategori/tema yang sedang dibuka (app hutan
+dengan mascot beruang: background rumput hijau tua + chrome UI coklat/
+krem senada, bukan background putih generik yang sama di semua layar).
+Dibandingkan ke `AppColors.gd` Wawa: sistem warna kita SUDAH benar di
+banyak hal (palet terdokumentasi, pastel-untuk-background vs
+jenuh-untuk-aksi, 1 warna aksen per modul via `ACCENT_*`) — tapi warna
+aksen itu baru dipakai di border+badge kartu, belum sampai ke
+background gameplay-nya sendiri. 6 modul masih pakai `GameBackground`
+yang identik, anak tidak dapat isyarat warna "lagi main yang mana"
+begitu layar terbuka.
+
+**Fix**: `core/scripts/game_background.gd` — tambah `@export var
+tint_color`, dirender sebagai `ColorRect` tipis (alpha 0.1, konstanta
+`TINT_ALPHA`) di ATAS ilustrasi background asli, BUKAN ganti gambarnya
+(prinsip sama dengan awan: nambah rasa, bukan elemen baru yang
+mengalihkan fokus). Tiap 1 dari 6 `feature_*.gd` sekarang set
+`bg.tint_color = AppColors.ACCENT_<modul>` sebelum `add_child(bg)` —
+Angka=biru, Warna=oranye, Hewan=hijau, Musik=ungu, Mewarnai=pink,
+Puzzle=teal (warna sama persis yang sudah dipakai border kartu modul
+itu di GameModes, konsisten). `Home`/`Settings`/`GameModes`/
+`TouchAndListen` SENGAJA dibiarkan netral (tanpa tint) — itu bukan
+layar 1 modul tertentu.
+
+**Diverifikasi**: `godot --headless --import` + re-run 9 scene utama —
+semua lolos tanpa error baru.

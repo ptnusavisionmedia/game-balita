@@ -44,7 +44,9 @@ var _drag_grab_offset: Vector2 = Vector2.ZERO
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
-	add_child(GameBackground.new())
+	var bg := GameBackground.new()
+	bg.tint_color = AppColors.ACCENT_PUZZLE
+	add_child(bg)
 
 	var puzzles := _load_puzzles()
 	if puzzles.is_empty():

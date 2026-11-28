@@ -25,7 +25,9 @@ var _choices_box: HBoxContainer
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
-	add_child(GameBackground.new())
+	var bg := GameBackground.new()
+	bg.tint_color = AppColors.ACCENT_ANGKA
+	add_child(bg)
 
 	randomize()
 	for i in range(QUESTIONS_PER_SESSION):

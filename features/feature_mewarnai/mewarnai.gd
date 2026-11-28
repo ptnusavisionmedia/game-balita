@@ -36,7 +36,9 @@ var _uses_mask_art: bool = false
 func _ready() -> void:
 	anchor_right = 1.0
 	anchor_bottom = 1.0
-	add_child(GameBackground.new())
+	var bg := GameBackground.new()
+	bg.tint_color = AppColors.ACCENT_MEWARNAI
+	add_child(bg)
 
 	var pictures := _load_pictures()
 	if pictures.is_empty():

@@ -16,6 +16,19 @@ class_name GameBackground
 
 const BACKGROUND_TEXTURE := preload("res://core/assets/images/home_background.png")
 
+## Update 2026-11-28 (hasil riset komposisi warna, lihat obsidian-vault/
+## Decisions Log.md): referensi game anak yang "enak dipandang" selalu
+## mewarnai BACKGROUND sesuai tema/kategori yang sedang dibuka, bukan 1
+## background generik yang sama di semua layar — anak langsung dapat
+## isyarat warna "saya lagi main yang mana" begitu layar terbuka, bukan
+## cuma dari judul teks. Set `tint_color` (biasanya `AppColors.ACCENT_*`
+## modulnya) SEBELUM `add_child(GameBackground.new())` di tiap `feature_*`.
+## Sengaja TINT TIPIS (~10% alpha) di ATAS ilustrasi asli, BUKAN ganti
+## gambar background — prinsip sama dengan awan: nambah "rasa", bukan
+## bikin elemen baru yang mengalihkan fokus dari konten utama.
+const TINT_ALPHA := 0.1
+@export var tint_color: Color = Color(0, 0, 0, 0)
+
 ## Update 2026-11-28 (atas permintaan user, "background hambar/statis"):
 ## tambah 1-2 awan kecil yang GESER PELAN horizontal di atas gambar statis
 ## (bukan ganti gambar background-nya) — supaya layar terasa hidup tanpa
@@ -62,6 +75,14 @@ func _ready() -> void:
 	texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	texture_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(texture_rect)
+
+	if tint_color.a > 0.0:
+		var tint_rect := ColorRect.new()
+		tint_rect.color = Color(tint_color.r, tint_color.g, tint_color.b, TINT_ALPHA)
+		tint_rect.anchor_right = 1.0
+		tint_rect.anchor_bottom = 1.0
+		tint_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(tint_rect)
 
 	if FileAccess.file_exists(CLOUD_TEXTURE_PATH):
 		for config in CLOUD_CONFIGS:
