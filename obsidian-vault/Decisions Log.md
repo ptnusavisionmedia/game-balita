@@ -1012,3 +1012,32 @@ layar 1 modul tertentu.
 
 **Diverifikasi**: `godot --headless --import` + re-run 9 scene utama —
 semua lolos tanpa error baru.
+
+---
+
+## 2026-11-28 — Pilot "tema ikut diwarnai" di GameModes (bukan cuma chrome UI)
+
+Rekomendasi #2 dari riset komposisi warna Pinterest (lihat entri tint
+background di atas): referensi yang enak dipandang mewarnai SATU
+kesatuan tema (background+chrome UI nyambung), bukan cuma kartu warna-
+warni ditaruh di atas background netral. Dipilih `scenes/game_modes.gd`
+sebagai PILOT (1 layar dulu, bukan semua sekaligus) — baru saja
+direnovasi jadi sudah paling gampang diverifikasi efeknya.
+
+**Yang diubah**: judul "Mode Permainan" dari `Label` polos jadi banner
+pil (`PanelContainer` bg `CREAM` + border `SUNSHINE` + shadow, konsisten
+gaya kartu). 4 kartu mode sekarang didudukkan di atas 1 "panggung"
+(`stage`, `PanelContainer` bg `CREAM` di-`lerp` ke `SUNSHINE` 12% +
+border tipis `SUNSHINE`, radius 32) — bukan mengambang langsung di atas
+`GameBackground`. `SUNSHINE` dipilih karena warna brand primer app
+(dipakai juga di tombol Play Home), BUKAN warna 1 modul tertentu —
+cocok untuk layar hub yang menaungi SEMUA modul, beda dari tint per-
+modul di `feature_*` (entri sebelumnya).
+
+**Belum diputuskan**: apakah pola ini diperluas ke layar lain (Home,
+Settings) — SENGAJA ditahan dulu sampai pilot ini dikonfirmasi user
+secara visual, sesuai prinsip "1 pilot dulu, bukan ubah semua sekaligus
+tanpa validasi".
+
+**Diverifikasi**: `godot --headless --import` + run `GameModes.tscn` —
+lolos tanpa error baru.

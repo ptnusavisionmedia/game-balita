@@ -63,12 +63,46 @@ func _ready() -> void:
 	outer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(outer)
 
+	# Update 2026-11-28 (pilot "tema ikut diwarnai", lihat obsidian-vault/
+	# Decisions Log.md — riset komposisi warna Pinterest): judul & 4 kartu
+	# dulu "chrome UI mengambang di atas background netral" — terpisah,
+	# bukan 1 kesatuan tema. Judul sekarang jadi banner pil (bukan teks
+	# polos) + 4 kartu didudukkan di atas 1 "panggung" hangat (tint SUNSHINE
+	# tipis), supaya layar ini kerasa 1 unit visual yang utuh, bukan
+	# sekadar kartu ditaruh di atas gambar langit-rumput generik.
+	var title_chip := PanelContainer.new()
+	title_chip.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var title_chip_style := StyleBoxFlat.new()
+	title_chip_style.bg_color = AppColors.CREAM
+	title_chip_style.border_color = AppColors.SUNSHINE
+	title_chip_style.set_border_width_all(4)
+	title_chip_style.set_corner_radius_all(999)
+	title_chip_style.content_margin_left = 32
+	title_chip_style.content_margin_right = 32
+	title_chip_style.content_margin_top = 10
+	title_chip_style.content_margin_bottom = 10
+	title_chip_style.shadow_size = 10
+	title_chip_style.shadow_color = Color(0, 0, 0, 0.15)
+	title_chip_style.shadow_offset = Vector2(0, 4)
+	title_chip.add_theme_stylebox_override("panel", title_chip_style)
+	outer.add_child(title_chip)
+
 	var title := Label.new()
 	title.text = "Mode Permainan"
-	title.add_theme_font_size_override("font_size", 38)
+	title.add_theme_font_size_override("font_size", 34)
 	title.add_theme_color_override("font_color", AppColors.INK)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	outer.add_child(title)
+	title_chip.add_child(title)
+
+	var stage := PanelContainer.new()
+	stage.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var stage_style := StyleBoxFlat.new()
+	stage_style.bg_color = AppColors.CREAM.lerp(AppColors.SUNSHINE, 0.12)
+	stage_style.border_color = AppColors.SUNSHINE
+	stage_style.set_border_width_all(2)
+	stage_style.set_corner_radius_all(32)
+	stage_style.set_content_margin_all(20)
+	outer.add_child(stage)
 
 	# Update 2026-11-26 (atas permintaan user): 4 kartu BERJAJAR HORIZONTAL
 	# (flashcard, bukan ditumpuk vertikal) — badge di atas, judul+deskripsi
@@ -76,7 +110,7 @@ func _ready() -> void:
 	var cards_row := HBoxContainer.new()
 	cards_row.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	cards_row.add_theme_constant_override("separation", 20)
-	outer.add_child(cards_row)
+	stage.add_child(cards_row)
 
 	cards_row.add_child(_make_mode_card(
 		"res://core/assets/images/gui/mode_main_sendiri.png", "🧒", AppColors.SUNSHINE,
